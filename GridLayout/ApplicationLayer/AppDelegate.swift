@@ -11,8 +11,6 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let resolver = LayoutArrangerImpl() as LayoutArranger
         let items = [
@@ -29,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             GridItem(tag: "-"),
             GridItem(tag: "7"),
             GridItem(tag: "8"),
-            GridItem(tag: "9"),
+            GridItem(tag: "9")
         ]
         let arrangement = resolver.arrange(items: items, columnsCount: 4)
         let stringRepresentation = arrangement.description
@@ -50,7 +48,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
-
 }
-

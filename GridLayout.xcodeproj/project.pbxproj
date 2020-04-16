@@ -19,9 +19,12 @@
 		3697EB1F244884F2005A82F8 /* ArrangedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB1E244884F2005A82F8 /* ArrangedItem.swift */; };
 		3697EB222448852E005A82F8 /* LayoutArrangement+description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB212448852E005A82F8 /* LayoutArrangement+description.swift */; };
 		3697EB282448862C005A82F8 /* LayoutArrangement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB272448862C005A82F8 /* LayoutArrangement.swift */; };
+		67639814D385032F0758888C /* Pods_GridLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191E369FACAC2ED9EC7B3972 /* Pods_GridLayout.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		191E369FACAC2ED9EC7B3972 /* Pods_GridLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GridLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FF30C8E9E5B9A819AEC6110 /* Pods-GridLayout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GridLayout.debug.xcconfig"; path = "Target Support Files/Pods-GridLayout/Pods-GridLayout.debug.xcconfig"; sourceTree = "<group>"; };
 		362C9CED2445AA7100A922DA /* GridLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GridLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		362C9CF02445AA7100A922DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		362C9CF22445AA7100A922DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +39,7 @@
 		3697EB1E244884F2005A82F8 /* ArrangedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrangedItem.swift; sourceTree = "<group>"; };
 		3697EB212448852E005A82F8 /* LayoutArrangement+description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LayoutArrangement+description.swift"; sourceTree = "<group>"; };
 		3697EB272448862C005A82F8 /* LayoutArrangement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutArrangement.swift; sourceTree = "<group>"; };
+		9F3828D17295FD1F09E3BE44 /* Pods-GridLayout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GridLayout.release.xcconfig"; path = "Target Support Files/Pods-GridLayout/Pods-GridLayout.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67639814D385032F0758888C /* Pods_GridLayout.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,6 +59,8 @@
 			children = (
 				362C9CEF2445AA7100A922DA /* GridLayout */,
 				362C9CEE2445AA7100A922DA /* Products */,
+				C6A73A58421D872BB82F1600 /* Pods */,
+				8EF017D2E135B2F56431B8FC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -149,6 +156,23 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		8EF017D2E135B2F56431B8FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				191E369FACAC2ED9EC7B3972 /* Pods_GridLayout.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C6A73A58421D872BB82F1600 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1FF30C8E9E5B9A819AEC6110 /* Pods-GridLayout.debug.xcconfig */,
+				9F3828D17295FD1F09E3BE44 /* Pods-GridLayout.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -156,6 +180,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 362C9D012445AA7900A922DA /* Build configuration list for PBXNativeTarget "GridLayout" */;
 			buildPhases = (
+				3697EB2A24488B54005A82F8 /* SwiftLint */,
+				0215111E9BEB92F5E3D56D85 /* [CP] Check Pods Manifest.lock */,
 				362C9CE92445AA7100A922DA /* Sources */,
 				362C9CEA2445AA7100A922DA /* Frameworks */,
 				362C9CEB2445AA7100A922DA /* Resources */,
@@ -214,6 +240,49 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0215111E9BEB92F5E3D56D85 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GridLayout-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3697EB2A24488B54005A82F8 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		362C9CE92445AA7100A922DA /* Sources */ = {
@@ -362,6 +431,7 @@
 		};
 		362C9D022445AA7900A922DA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1FF30C8E9E5B9A819AEC6110 /* Pods-GridLayout.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -382,6 +452,7 @@
 		};
 		362C9D032445AA7900A922DA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F3828D17295FD1F09E3BE44 /* Pods-GridLayout.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

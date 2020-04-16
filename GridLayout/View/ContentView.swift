@@ -10,28 +10,26 @@ import SwiftUI
 
 struct ContentView: View {
 
-    let sizeW: CGFloat = 50
-    let sizeH: CGFloat = 70
+    let rectWidth: CGFloat = 50
+    let rectHeight: CGFloat = 70
     let spacing: CGFloat = 0
     @State var gaps: CGFloat = 15
     
     let count = 4
-    lazy var totalWidth: CGFloat = CGFloat(count) * (sizeW + gaps) + 100
-    lazy var totalHeight: CGFloat = CGFloat(count) * (sizeH + gaps)
+    lazy var totalWidth: CGFloat = CGFloat(count) * (rectWidth + gaps) + 100
+    lazy var totalHeight: CGFloat = CGFloat(count) * (rectHeight + gaps)
     
-    func rectangle(w: Int, h: Int) -> some View {
+    func rectangle(rowSpan: Int = 1, columnSpan: Int = 1) -> some View {
         VStack {
             ZStack(alignment: .center) {
                 Rectangle()
-                    .foregroundColor(randomColor(index: w + h * 10))
-                    .frame(width: CGFloat(w) * (sizeW) + (CGFloat(w) - 1) * gaps,
-                           height: CGFloat(h) * (sizeH) + (CGFloat(h) - 1) * gaps,
+                    .foregroundColor(randomColor(index: rowSpan + columnSpan * 10))
+                    .frame(width: CGFloat(rowSpan) * (rectWidth) + (CGFloat(rowSpan) - 1) * gaps,
+                           height: CGFloat(columnSpan) * (rectHeight) + (CGFloat(columnSpan) - 1) * gaps,
                            alignment: .topLeading)
                     .padding(gaps / 2)
             }
         }
-
-
     }
     
     func randomColor(index: Int) -> Color {
@@ -54,34 +52,34 @@ struct ContentView: View {
          */
 
         return VStack {
-            GeometryReader { geometry in
+            GeometryReader { _ in
                 VStack(spacing: self.spacing) {
                     HStack(spacing: self.spacing) {
                         VStack(spacing: self.spacing) {
                             HStack(spacing: self.spacing) {
-                                self.rectangle(w: 1, h: 1)
-                                self.rectangle(w: 1, h: 1)
+                                self.rectangle()
+                                self.rectangle()
                             }
-                            self.rectangle(w: 2, h: 2)
+                            self.rectangle(rowSpan: 2, columnSpan: 2)
                         }
                         
                         VStack(spacing: self.spacing) {
                             HStack(spacing: self.spacing) {
-                                self.rectangle(w: 1, h: 2)
+                                self.rectangle(columnSpan: 2)
                                 VStack(spacing: self.spacing) {
-                                    self.rectangle(w: 1, h: 1)
-                                    self.rectangle(w: 1, h: 1)
+                                    self.rectangle()
+                                    self.rectangle()
                                 }
                             }
                             
-                            self.rectangle(w: 2, h: 1)
+                            self.rectangle(rowSpan: 2)
                         }
 
                     }
                     HStack(spacing: self.spacing) {
-                        self.rectangle(w: 3, h: 1)
+                        self.rectangle(rowSpan: 3)
 
-                        self.rectangle(w: 1, h: 1)
+                        self.rectangle()
                     }
                 }
                 .background(Color.black.opacity(0.3))

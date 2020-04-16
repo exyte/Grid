@@ -13,6 +13,7 @@
 		362C9CF72445AA7900A922DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 362C9CF62445AA7900A922DA /* Assets.xcassets */; };
 		362C9CFA2445AA7900A922DA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 362C9CF92445AA7900A922DA /* Preview Assets.xcassets */; };
 		362C9CFD2445AA7900A922DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362C9CFB2445AA7900A922DA /* LaunchScreen.storyboard */; };
+		3697EB1424484B51005A82F8 /* GridLayoutMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB1324484B50005A82F8 /* GridLayoutMath.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		362C9CF92445AA7900A922DA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		362C9CFC2445AA7900A922DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		362C9CFE2445AA7900A922DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3697EB1324484B50005A82F8 /* GridLayoutMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayoutMath.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				362C9CF02445AA7100A922DA /* AppDelegate.swift */,
 				362C9CF22445AA7100A922DA /* SceneDelegate.swift */,
 				362C9CF42445AA7100A922DA /* ContentView.swift */,
+				3697EB1324484B50005A82F8 /* GridLayoutMath.swift */,
 				362C9CF62445AA7900A922DA /* Assets.xcassets */,
 				362C9CFB2445AA7900A922DA /* LaunchScreen.storyboard */,
 				362C9CFE2445AA7900A922DA /* Info.plist */,
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				362C9CF12445AA7100A922DA /* AppDelegate.swift in Sources */,
+				3697EB1424484B51005A82F8 /* GridLayoutMath.swift in Sources */,
 				362C9CF32445AA7100A922DA /* SceneDelegate.swift in Sources */,
 				362C9CF52445AA7100A922DA /* ContentView.swift in Sources */,
 			);

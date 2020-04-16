@@ -14,7 +14,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        let resolver = LayoutArranger()
+        let items = [
+            GridItem(tag: "1"),
+            GridItem(tag: "2"),
+            GridItem(tag: "3"),
+            GridItem(tag: "*"),
+            GridItem(tag: "4"),
+            GridItem(tag: "5"),
+            GridItem(tag: "+", rowSpan: 3),
+            GridItem(tag: "0", columnSpan: 2),
+            GridItem(tag: "6"),
+            GridItem(tag: "=", columnSpan: 3),
+            GridItem(tag: "-"),
+            GridItem(tag: "7"),
+            GridItem(tag: "8"),
+            GridItem(tag: "9"),
+        ]
+        let arrangement = resolver.arrange(items: items, columnsCount: 4)
+        let stringRepresentation = arrangement.description
+        print(stringRepresentation)
         return true
     }
 

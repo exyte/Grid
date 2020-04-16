@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let resolver = LayoutArranger()
+        let resolver = LayoutArrangerImpl() as LayoutArranger
         let items = [
             GridItem(tag: "1"),
             GridItem(tag: "2"),

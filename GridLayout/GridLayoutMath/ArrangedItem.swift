@@ -10,7 +10,7 @@ import Foundation
 
 /// Result position of grid item.  Specfies the abstract position in grid view
 struct ArrangedItem {
-    let gridItem: GridItem
+    let gridItem: GridArrangeable
     let startPosition: GridPosition
     let endPosition: GridPosition
     

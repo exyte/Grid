@@ -20,6 +20,7 @@
 		3697EB1F244884F2005A82F8 /* ArrangedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB1E244884F2005A82F8 /* ArrangedItem.swift */; };
 		3697EB222448852E005A82F8 /* LayoutArrangement+description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB212448852E005A82F8 /* LayoutArrangement+description.swift */; };
 		3697EB282448862C005A82F8 /* LayoutArrangement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB272448862C005A82F8 /* LayoutArrangement.swift */; };
+		36DE350B2449A798009EA6E8 /* GridItemBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DE350A2449A798009EA6E8 /* GridItemBuilder.swift */; };
 		67639814D385032F0758888C /* Pods_GridLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191E369FACAC2ED9EC7B3972 /* Pods_GridLayout.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		3697EB1E244884F2005A82F8 /* ArrangedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrangedItem.swift; sourceTree = "<group>"; };
 		3697EB212448852E005A82F8 /* LayoutArrangement+description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LayoutArrangement+description.swift"; sourceTree = "<group>"; };
 		3697EB272448862C005A82F8 /* LayoutArrangement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutArrangement.swift; sourceTree = "<group>"; };
+		36DE350A2449A798009EA6E8 /* GridItemBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridItemBuilder.swift; sourceTree = "<group>"; };
 		9F3828D17295FD1F09E3BE44 /* Pods-GridLayout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GridLayout.release.xcconfig"; path = "Target Support Files/Pods-GridLayout/Pods-GridLayout.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -138,6 +140,7 @@
 				362C9CF42445AA7100A922DA /* ContentView.swift */,
 				362C9CFB2445AA7900A922DA /* LaunchScreen.storyboard */,
 				361AFEBE2449685E00A34687 /* GridView.swift */,
+				36DE350A2449A798009EA6E8 /* GridItemBuilder.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				362C9CF12445AA7100A922DA /* AppDelegate.swift in Sources */,
+				36DE350B2449A798009EA6E8 /* GridItemBuilder.swift in Sources */,
 				3697EB1424484B51005A82F8 /* LayoutArranger.swift in Sources */,
 				3697EB1F244884F2005A82F8 /* ArrangedItem.swift in Sources */,
 				3697EB1D244884D4005A82F8 /* GridPosition.swift in Sources */,

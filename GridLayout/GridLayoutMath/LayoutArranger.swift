@@ -13,12 +13,12 @@ protocol LayoutArranger {
     /// - Parameters:
     ///   - items: Grid items to arrange. They could specify row and columns spans
     ///   - columnsCount: Total count of columns in grid view
-    func arrange(items: [GridItem], columnsCount: Int) -> LayoutArrangement
+    func arrange(items: [GridArrangeable], columnsCount: Int) -> LayoutArrangement
 }
 
 class LayoutArrangerImpl: LayoutArranger {
     
-    func arrange(items: [GridItem], columnsCount: Int) -> LayoutArrangement {
+    func arrange(items: [GridArrangeable], columnsCount: Int) -> LayoutArrangement {
         guard columnsCount > 0 else { return LayoutArrangement(columnsCount: columnsCount, items: []) }
             
         var result: [ArrangedItem] = []

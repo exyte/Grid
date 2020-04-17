@@ -13,4 +13,7 @@ struct GridItem {
     var tag: String?
     var rowSpan = 1
     var columnSpan = 1
+    var view: AnyView?
+    var tag: String?
+    var id = AnyHashable(UUID())
 }

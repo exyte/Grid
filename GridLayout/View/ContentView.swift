@@ -8,6 +8,17 @@
 
 import SwiftUI
 
+func randomColor(index: Int? = nil) -> Color {
+    if let index = index {
+        srand48(index)
+    }
+    let red = CGFloat(drand48())
+    let green = CGFloat(drand48())
+    let blue = CGFloat(drand48())
+    let color = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+    return Color(color)
+}
+
 struct ContentView: View {
 
     let rectWidth: CGFloat = 50
@@ -30,15 +41,6 @@ struct ContentView: View {
                     .padding(gaps / 2)
             }
         }
-    }
-    
-    func randomColor(index: Int) -> Color {
-        srand48(index)
-        let red = CGFloat(drand48())
-        let green = CGFloat(drand48())
-        let blue = CGFloat(drand48())
-        let color = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
-        return Color(color)
     }
     
     var body: some View {

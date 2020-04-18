@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 /// User defined item in grid layout
 struct GridItem {
@@ -14,6 +15,5 @@ struct GridItem {
     var rowSpan = 1
     var columnSpan = 1
     var view: AnyView?
-    var tag: String?
     var id = AnyHashable(UUID())
 }

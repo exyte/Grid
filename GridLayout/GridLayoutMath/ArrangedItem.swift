@@ -22,6 +22,6 @@ struct ArrangedItem {
     }
     
     var area: Int {
-        return (startPosition.row - endPosition.row + 1) * (startPosition.column - endPosition.column + 1)
+        return (endPosition.row - startPosition.row + 1) * (endPosition.column - startPosition.column + 1)
     }
 }

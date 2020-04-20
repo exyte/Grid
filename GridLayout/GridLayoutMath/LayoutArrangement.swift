@@ -11,4 +11,10 @@ import Foundation
 struct LayoutArrangement {
     let columnsCount: Int
     var items: [ArrangedItem]
+    
+    subscript(gridItem: GridItem) -> ArrangedItem? {
+        get {
+            items.first(where: { $0.gridItem == gridItem })
+        }
+    }
 }

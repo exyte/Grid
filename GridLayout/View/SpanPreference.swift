@@ -16,8 +16,6 @@ struct SpanPreference: Equatable {
 }
 
 struct SpanPreferenceKey: PreferenceKey {
-    typealias Value = [SpanPreference]
-
     static var defaultValue = [SpanPreference()]
 
     static func reduce(value: inout [SpanPreference], nextValue: () -> [SpanPreference]) {

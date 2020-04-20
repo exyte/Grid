@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 protocol LayoutArranger {
     /// Arranges grid items into layout arrangement that specifies relations between abstract position in grid view and specific item

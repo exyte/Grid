@@ -27,7 +27,7 @@ extension LayoutArrangement: CustomStringConvertible {
                         continue columnsCycle
                     }
                 }
-                result += " "
+                result += "."
             }
             result += "\n"
         }

@@ -6,14 +6,26 @@
 //  Copyright © 2020 Denis Obukhov. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
-/// User defined item in grid layout
-struct GridItem {
-    var tag: String?
-    var rowSpan = 1
-    var columnSpan = 1
-    var view: AnyView?
-    var tag: String?
-    var id = AnyHashable(UUID())
+struct GridItem: Identifiable {
+    let id = UUID()
+    let view: AnyView
+    var tag: String? = "o"
+    
+    init<T: View>(_ view: T) {
+        self.view = AnyView(view)
+    }
+    
+    init<T: View>(_ view: T, tag: String?) {
+        self.init(view)
+        self.tag = tag
+    }
+}
+
+extension GridItem: Equatable {
+    static func == (lhs: GridItem,
+                    rhs: GridItem) -> Bool {
+        return lhs.id == rhs.id
+    }
 }

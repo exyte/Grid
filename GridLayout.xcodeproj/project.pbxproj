@@ -14,12 +14,16 @@
 		362C9CF72445AA7900A922DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 362C9CF62445AA7900A922DA /* Assets.xcassets */; };
 		362C9CFA2445AA7900A922DA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 362C9CF92445AA7900A922DA /* Preview Assets.xcassets */; };
 		362C9CFD2445AA7900A922DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362C9CFB2445AA7900A922DA /* LaunchScreen.storyboard */; };
+		36829D5E244B4783006D605B /* GridView+Inits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36829D5D244B4783006D605B /* GridView+Inits.swift */; };
+		36829D60244C193A006D605B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36829D5F244C1939006D605B /* Constants.swift */; };
+		36829D62244C1AEB006D605B /* GridSpan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36829D61244C1AEB006D605B /* GridSpan.swift */; };
 		3697EB1424484B51005A82F8 /* LayoutArranger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB1324484B50005A82F8 /* LayoutArranger.swift */; };
 		3697EB1B244884AC005A82F8 /* GridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB1A244884AC005A82F8 /* GridItem.swift */; };
 		3697EB1D244884D4005A82F8 /* GridPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB1C244884D4005A82F8 /* GridPosition.swift */; };
 		3697EB1F244884F2005A82F8 /* ArrangedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB1E244884F2005A82F8 /* ArrangedItem.swift */; };
 		3697EB222448852E005A82F8 /* LayoutArrangement+description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB212448852E005A82F8 /* LayoutArrangement+description.swift */; };
 		3697EB282448862C005A82F8 /* LayoutArrangement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB272448862C005A82F8 /* LayoutArrangement.swift */; };
+		36DE3524244B30A9009EA6E8 /* SpanPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DE3523244B30A9009EA6E8 /* SpanPreference.swift */; };
 		67639814D385032F0758888C /* Pods_GridLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191E369FACAC2ED9EC7B3972 /* Pods_GridLayout.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,12 +39,16 @@
 		362C9CF92445AA7900A922DA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		362C9CFC2445AA7900A922DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		362C9CFE2445AA7900A922DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		36829D5D244B4783006D605B /* GridView+Inits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GridView+Inits.swift"; sourceTree = "<group>"; };
+		36829D5F244C1939006D605B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		36829D61244C1AEB006D605B /* GridSpan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridSpan.swift; sourceTree = "<group>"; };
 		3697EB1324484B50005A82F8 /* LayoutArranger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutArranger.swift; sourceTree = "<group>"; };
 		3697EB1A244884AC005A82F8 /* GridItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridItem.swift; sourceTree = "<group>"; };
 		3697EB1C244884D4005A82F8 /* GridPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPosition.swift; sourceTree = "<group>"; };
 		3697EB1E244884F2005A82F8 /* ArrangedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrangedItem.swift; sourceTree = "<group>"; };
 		3697EB212448852E005A82F8 /* LayoutArrangement+description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LayoutArrangement+description.swift"; sourceTree = "<group>"; };
 		3697EB272448862C005A82F8 /* LayoutArrangement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutArrangement.swift; sourceTree = "<group>"; };
+		36DE3523244B30A9009EA6E8 /* SpanPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanPreference.swift; sourceTree = "<group>"; };
 		9F3828D17295FD1F09E3BE44 /* Pods-GridLayout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GridLayout.release.xcconfig"; path = "Target Support Files/Pods-GridLayout/Pods-GridLayout.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -119,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				362C9CFE2445AA7900A922DA /* Info.plist */,
+				36829D5F244C1939006D605B /* Constants.swift */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -138,6 +147,8 @@
 				362C9CF42445AA7100A922DA /* ContentView.swift */,
 				362C9CFB2445AA7900A922DA /* LaunchScreen.storyboard */,
 				361AFEBE2449685E00A34687 /* GridView.swift */,
+				36DE3523244B30A9009EA6E8 /* SpanPreference.swift */,
+				36829D5D244B4783006D605B /* GridView+Inits.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -155,6 +166,7 @@
 			children = (
 				3697EB1C244884D4005A82F8 /* GridPosition.swift */,
 				3697EB1A244884AC005A82F8 /* GridItem.swift */,
+				36829D61244C1AEB006D605B /* GridSpan.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -296,12 +308,16 @@
 				3697EB1424484B51005A82F8 /* LayoutArranger.swift in Sources */,
 				3697EB1F244884F2005A82F8 /* ArrangedItem.swift in Sources */,
 				3697EB1D244884D4005A82F8 /* GridPosition.swift in Sources */,
+				36DE3524244B30A9009EA6E8 /* SpanPreference.swift in Sources */,
+				36829D62244C1AEB006D605B /* GridSpan.swift in Sources */,
 				3697EB222448852E005A82F8 /* LayoutArrangement+description.swift in Sources */,
 				3697EB282448862C005A82F8 /* LayoutArrangement.swift in Sources */,
+				36829D60244C193A006D605B /* Constants.swift in Sources */,
 				3697EB1B244884AC005A82F8 /* GridItem.swift in Sources */,
 				362C9CF32445AA7100A922DA /* SceneDelegate.swift in Sources */,
 				361AFEBF2449685E00A34687 /* GridView.swift in Sources */,
 				362C9CF52445AA7100A922DA /* ContentView.swift in Sources */,
+				36829D5E244B4783006D605B /* GridView+Inits.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,12 +13,12 @@ protocol LayoutArranger {
     /// - Parameters:
     ///   - items: Grid items to arrange. They could specify row and columns spans
     ///   - columnsCount: Total count of columns in grid view
-    func arrange(items: [GridItem], columnsCount: Int) -> LayoutArrangement
+    func arrange(preferences: [SpanPreference], columnsCount: Int) -> LayoutArrangement
 }
 
 class LayoutArrangerImpl: LayoutArranger {
     
-    func arrange(items: [GridItem], columnsCount: Int) -> LayoutArrangement {
+    func arrange(preferences: [SpanPreference], columnsCount: Int) -> LayoutArrangement {
         guard columnsCount > 0 else { return LayoutArrangement(columnsCount: columnsCount, items: []) }
             
         var result: [ArrangedItem] = []
@@ -26,25 +26,30 @@ class LayoutArrangerImpl: LayoutArranger {
         
         var lastPosition = GridPosition(row: 0, column: 0)
         
-        for item in items {
-            guard item.columnSpan <= columnsCount else { continue } // TODO: Reduce span
+        for spanPreference in preferences {
+            guard
+                spanPreference.span.column <= columnsCount,
+                let gridItem = spanPreference.item
+            else {
+                continue
+            } // TODO: Reduce span
             
-            while occupiedPositions.contains(lastPosition, rowSpan: item.rowSpan, columnSpan: item.columnSpan)
-                || lastPosition.column + item.columnSpan > columnsCount {
+            while occupiedPositions.contains(lastPosition, rowSpan: spanPreference.span.row, columnSpan: spanPreference.span.column)
+                || lastPosition.column + spanPreference.span.column > columnsCount {
                     lastPosition = lastPosition.nextPosition(columnsCount: columnsCount)
             }
 
-            for row in lastPosition.row..<lastPosition.row + item.rowSpan {
-                for column in lastPosition.column..<lastPosition.column + item.columnSpan {
+            for row in lastPosition.row..<lastPosition.row + spanPreference.span.row {
+                for column in lastPosition.column..<lastPosition.column + spanPreference.span.column {
                     occupiedPositions.append(GridPosition(row: row, column: column))
                 }
             }
             
             let startPosition = lastPosition
-            let endPosition = GridPosition(row: startPosition.row + item.rowSpan - 1,
-                                           column: startPosition.column + item.columnSpan - 1)
+            let endPosition = GridPosition(row: startPosition.row + spanPreference.span.row - 1,
+                                           column: startPosition.column + spanPreference.span.column - 1)
 
-            result.append(ArrangedItem(gridItem: item, startPosition: startPosition, endPosition: endPosition))
+            result.append(ArrangedItem(gridItem: gridItem, startPosition: startPosition, endPosition: endPosition))
             lastPosition = lastPosition.nextPosition(columnsCount: columnsCount)
             
         }

@@ -11,7 +11,7 @@ import SwiftUI
 struct GridItem: Identifiable {
     let id = UUID()
     let view: AnyView
-    var tag: String? = "o"
+    var tag: String?
     
     init<T: View>(_ view: T) {
         self.view = AnyView(view)

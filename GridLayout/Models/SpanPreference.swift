@@ -15,7 +15,7 @@ struct SpanPreference: Equatable {
     static let `default` = SpanPreference()
 }
 
-struct SpanPreferenceKey: PreferenceKey {
+struct SpansPreferenceKey: PreferenceKey {
     static var defaultValue = [SpanPreference()]
 
     static func reduce(value: inout [SpanPreference], nextValue: () -> [SpanPreference]) {

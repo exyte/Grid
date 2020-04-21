@@ -14,8 +14,6 @@ struct LayoutArrangement {
     var items: [ArrangedItem]
     
     subscript(gridItem: GridItem) -> ArrangedItem? {
-        get {
-            items.first(where: { $0.gridItem == gridItem })
-        }
+        items.first(where: { $0.gridItem == gridItem })
     }
 }

@@ -1,5 +1,5 @@
 //
-//  GridView+Inits.swift
+//  Grid+Inits.swift
 //  GridLayout
 //
 //  Created by Denis Obukhov on 18.04.2020.
@@ -12,20 +12,20 @@ import SwiftUI
 
 extension Grid {
     public init<C0: View, C1: View>(columnsCount: Int, @ViewBuilder content: () -> Content) where Content == TupleView<(C0, C1)> {
-        self.columnsCount = columnsCount
+        self.columns = columnsCount
         self.items = [GridItem(AnyView(content().value.0)),
                       GridItem(AnyView(content().value.1))]
     }
     
     public init<C0: View, C1: View, C2: View>(columnsCount: Int, @ViewBuilder content: () -> Content) where Content == TupleView<(C0, C1, C2)> {
-        self.columnsCount = columnsCount
+        self.columns = columnsCount
         self.items = [GridItem(AnyView(content().value.0)),
                       GridItem(AnyView(content().value.1)),
                       GridItem(AnyView(content().value.2))]
     }
     
     public init<C0: View, C1: View, C2: View, C3: View>(columnsCount: Int, @ViewBuilder content: () -> Content) where Content == TupleView<(C0, C1, C2, C3)> {
-        self.columnsCount = columnsCount
+        self.columns = columnsCount
         self.items = [GridItem(AnyView(content().value.0)),
                       GridItem(AnyView(content().value.1)),
                       GridItem(AnyView(content().value.2)),
@@ -33,7 +33,7 @@ extension Grid {
     }
     
     public init<C0: View, C1: View, C2: View, C3: View, C4: View>(columnsCount: Int, @ViewBuilder content: () -> Content) where Content == TupleView<(C0, C1, C2, C3, C4)> {
-        self.columnsCount = columnsCount
+        self.columns = columnsCount
         self.items = [GridItem(AnyView(content().value.0)),
                       GridItem(AnyView(content().value.1)),
                       GridItem(AnyView(content().value.2)),
@@ -42,7 +42,7 @@ extension Grid {
     }
     
     public init<C0: View, C1: View, C2: View, C3: View, C4: View, C5: View>(columnsCount: Int, @ViewBuilder content: () -> Content) where Content == TupleView<(C0, C1, C2, C3, C4, C5)> {
-        self.columnsCount = columnsCount
+        self.columns = columnsCount
         self.items = [GridItem(AnyView(content().value.0)),
                       GridItem(AnyView(content().value.1)),
                       GridItem(AnyView(content().value.2)),
@@ -51,8 +51,8 @@ extension Grid {
                       GridItem(AnyView(content().value.5))]
     }
     
-    public init<C0: View, C1: View, C2: View, C3: View, C4: View, C5: View, C6: View>(columnsCount: Int, @ViewBuilder content: () -> Content) where Content == TupleView<(C0, C1, C2, C3, C4, C5, C6)> {
-        self.columnsCount = columnsCount
+    public init<C0: View, C1: View, C2: View, C3: View, C4: View, C5: View, C6: View>(columns: Int, @ViewBuilder content: () -> Content) where Content == TupleView<(C0, C1, C2, C3, C4, C5, C6)> {
+        self.columns = columns
         self.items = [GridItem(AnyView(content().value.0)),
                       GridItem(AnyView(content().value.1)),
                       GridItem(AnyView(content().value.2)),
@@ -63,7 +63,7 @@ extension Grid {
     }
     
     public init<C0: View, C1: View, C2: View, C3: View, C4: View, C5: View, C6: View, C7: View>(columnsCount: Int, @ViewBuilder content: () -> Content) where Content == TupleView<(C0, C1, C2, C3, C4, C5, C6, C7)> {
-        self.columnsCount = columnsCount
+        self.columns = columnsCount
         self.items = [GridItem(AnyView(content().value.0)),
                       GridItem(AnyView(content().value.1)),
                       GridItem(AnyView(content().value.2)),
@@ -75,7 +75,7 @@ extension Grid {
     }
     
     public init<C0: View, C1: View, C2: View, C3: View, C4: View, C5: View, C6: View, C7: View, C8: View>(columnsCount: Int, @ViewBuilder content: () -> Content) where Content == TupleView<(C0, C1, C2, C3, C4, C5, C6, C7, C8)> {
-        self.columnsCount = columnsCount
+        self.columns = columnsCount
         self.items = [GridItem(AnyView(content().value.0)),
                       GridItem(AnyView(content().value.1)),
                       GridItem(AnyView(content().value.2)),
@@ -88,7 +88,7 @@ extension Grid {
     }
     
     public init<C0: View, C1: View, C2: View, C3: View, C4: View, C5: View, C6: View, C7: View, C8: View, C9: View>(columnsCount: Int, @ViewBuilder content: () -> Content) where Content == TupleView<(C0, C1, C2, C3, C4, C5, C6, C7, C8, C9)> {
-        self.columnsCount = columnsCount
+        self.columns = columnsCount
         self.items = [GridItem(AnyView(content().value.0)),
                       GridItem(AnyView(content().value.1)),
                       GridItem(AnyView(content().value.2)),

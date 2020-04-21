@@ -1,5 +1,5 @@
 //
-//  GridLayoutMath.swift
+//  LayoutArranger.swift
 //  GridLayout
 //
 //  Created by Denis Obukhov on 16.04.2020.
@@ -14,12 +14,19 @@ protocol LayoutArranger {
     /// - Parameters:
     ///   - items: Grid items to arrange. They could specify row and columns spans
     ///   - columnsCount: Total count of columns in grid view
-    func arrange(preferences: [SpanPreference], columnsCount: Int) -> LayoutArrangement
+    func arrange(spanPreferences: [SpanPreference], columnsCount: Int) -> LayoutArrangement
+    
+    /// Recalculates positions based on layout arrangement and bounding size
+    /// - Parameters:
+    ///   - items: Items to reposition
+    ///   - arrangement: Previously calculated arrangement
+    ///   - size: Bounding size
+    func reposition(_ items: [PositionedItem], arrangement: LayoutArrangement, boundingSize: CGSize) -> [PositionedItem]
 }
 
 class LayoutArrangerImpl: LayoutArranger {
     
-    func arrange(preferences: [SpanPreference], columnsCount: Int) -> LayoutArrangement {
+    func arrange(spanPreferences: [SpanPreference], columnsCount: Int) -> LayoutArrangement {
         guard columnsCount > 0 else { return LayoutArrangement(columnsCount: columnsCount, rowsCount: 0, items: []) }
             
         var result: [ArrangedItem] = []
@@ -28,7 +35,7 @@ class LayoutArrangerImpl: LayoutArranger {
         var lastPosition = GridPosition(row: 0, column: 0)
         var rowsCount = 0
 
-        for spanPreference in preferences {
+        for spanPreference in spanPreferences {
             guard
                 spanPreference.span.column <= columnsCount,
                 let gridItem = spanPreference.item
@@ -58,6 +65,24 @@ class LayoutArrangerImpl: LayoutArranger {
             
         }
         return LayoutArrangement(columnsCount: columnsCount, rowsCount: rowsCount, items: result)
+    }
+    
+    func reposition(_ items: [PositionedItem], arrangement: LayoutArrangement, boundingSize: CGSize) -> [PositionedItem] {
+        var newPositions: [PositionedItem] = []
+        
+        for positionedItem in items {
+            guard let arrangedItem = arrangement[positionedItem.gridItem] else { continue }
+            let columnSize = boundingSize.width / CGFloat(arrangement.columnsCount)
+            let rowSize = boundingSize.height / CGFloat(arrangement.rowsCount)
+            let itemWidth = CGFloat(arrangedItem.columnsCount) * columnSize
+            let itemHeight = rowSize * CGFloat(arrangedItem.rowsCount)
+            let positionX = CGFloat(arrangedItem.startPosition.column) * columnSize
+            let positionY = rowSize * CGFloat(arrangedItem.startPosition.row)
+            let newBounds = CGRect(x: positionX, y: positionY, width: itemWidth, height: itemHeight)
+            newPositions.append(PositionedItem(bounds: newBounds, gridItem: positionedItem.gridItem))
+        }
+        
+        return newPositions
     }
 }
 

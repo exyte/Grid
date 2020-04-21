@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  PositionedItem.swift
 //  GridLayout
 //
 //  Created by Denis Obukhov on 20.04.2020.

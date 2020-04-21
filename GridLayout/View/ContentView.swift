@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct ContentView: View {
-
     var body: some View {
         Grid(columnsCount: 4) {
             Color(.blue).gridSpan(column: 4)

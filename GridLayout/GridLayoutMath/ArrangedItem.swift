@@ -14,18 +14,14 @@ struct ArrangedItem: Equatable {
     let startPosition: GridPosition
     let endPosition: GridPosition
     
+    var area: Int { self.rowsCount * self.columnsCount }
+    var columnsCount: Int { endPosition.column - startPosition.column + 1 }
+    var rowsCount: Int { endPosition.row - startPosition.row + 1 }
+    
     func contains(_ position: GridPosition) -> Bool {
         return position.column >= startPosition.column
             && position.column <= endPosition.column
             && position.row >= startPosition.row
             && position.row <= endPosition.row
     }
-    
-    var area: Int {
-        return self.rowsCount * self.columnsCount
-    }
-    
-    var columnsCount: Int { endPosition.column - startPosition.column + 1 }
-    
-    var rowsCount: Int { endPosition.row - startPosition.row + 1 }
 }

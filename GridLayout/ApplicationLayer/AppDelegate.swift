@@ -13,26 +13,6 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let resolver = LayoutArrangerImpl() as LayoutArranger
-        let items = [
-            SpanPreference(item: GridItem(EmptyView(), tag: "1")),
-            SpanPreference(item: GridItem(EmptyView(), tag: "2")),
-            SpanPreference(item: GridItem(EmptyView(), tag: "3")),
-            SpanPreference(item: GridItem(EmptyView(), tag: "*")),
-            SpanPreference(item: GridItem(EmptyView(), tag: "4")),
-            SpanPreference(item: GridItem(EmptyView(), tag: "5")),
-            SpanPreference(item: GridItem(EmptyView(), tag: "+"), span: .init(row: 1, column: 2)),
-            SpanPreference(item: GridItem(EmptyView(), tag: "0"), span: .init(row: 2)),
-            SpanPreference(item: GridItem(EmptyView(), tag: "6")),
-            SpanPreference(item: GridItem(EmptyView(), tag: "="), span: .init(column: 3)),
-            SpanPreference(item: GridItem(EmptyView(), tag: "-")),
-            SpanPreference(item: GridItem(EmptyView(), tag: "7")),
-            SpanPreference(item: GridItem(EmptyView(), tag: "8")),
-            SpanPreference(item: GridItem(EmptyView(), tag: "9"))
-        ]
-        let arrangement = resolver.arrange(preferences: items, columnsCount: 4)
-        let stringRepresentation = arrangement.description
-        print(stringRepresentation)
         return true
     }
 

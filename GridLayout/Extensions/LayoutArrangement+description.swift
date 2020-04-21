@@ -1,5 +1,5 @@
 //
-//  LayoutArrangement+sss.swift
+//  LayoutArrangement+description.swift
 //  GridLayout
 //
 //  Created by Denis Obukhov on 16.04.2020.

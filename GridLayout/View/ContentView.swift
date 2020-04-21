@@ -12,8 +12,10 @@ struct ContentView: View {
 
     var body: some View {
         Grid(columnsCount: 4) {
-            Color(.blue)
-            Color(.red).gridSpan(column: 1, row: 3)
+            Color(.blue).gridSpan(column: 4)
+            Color(.red).gridSpan(row: 3)
+            Color(.yellow)
+            Color(.purple).gridSpan(column: 2)
             Color(.green).gridSpan(column: 3, row: 3)
         }
     }

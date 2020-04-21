@@ -20,13 +20,14 @@ protocol LayoutArranger {
 class LayoutArrangerImpl: LayoutArranger {
     
     func arrange(preferences: [SpanPreference], columnsCount: Int) -> LayoutArrangement {
-        guard columnsCount > 0 else { return LayoutArrangement(columnsCount: columnsCount, items: []) }
+        guard columnsCount > 0 else { return LayoutArrangement(columnsCount: columnsCount, rowsCount: 0, items: []) }
             
         var result: [ArrangedItem] = []
         var occupiedPositions: [GridPosition] = []
         
         var lastPosition = GridPosition(row: 0, column: 0)
-        
+        var rowsCount = 0
+
         for spanPreference in preferences {
             guard
                 spanPreference.span.column <= columnsCount,
@@ -50,11 +51,13 @@ class LayoutArrangerImpl: LayoutArranger {
             let endPosition = GridPosition(row: startPosition.row + spanPreference.span.row - 1,
                                            column: startPosition.column + spanPreference.span.column - 1)
 
-            result.append(ArrangedItem(gridItem: gridItem, startPosition: startPosition, endPosition: endPosition))
+            let arrangedItem = ArrangedItem(gridItem: gridItem, startPosition: startPosition, endPosition: endPosition)
+            rowsCount = max(rowsCount, arrangedItem.endPosition.row + 1)
+            result.append(arrangedItem)
             lastPosition = lastPosition.nextPosition(columnsCount: columnsCount)
             
         }
-        return LayoutArrangement(columnsCount: columnsCount, items: result)
+        return LayoutArrangement(columnsCount: columnsCount, rowsCount: rowsCount, items: result)
     }
 }
 

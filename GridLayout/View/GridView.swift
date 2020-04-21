@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct Grid<Content>: View where Content: View {
-    @State var spanPreferences: [SpanPreference] = []
     @State var layout: LayoutArrangement?
     @State var positions: PositionPreference = .default
 
@@ -35,7 +34,10 @@ struct Grid<Content>: View where Content: View {
                                     PositionPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)])
                                 }
                         )
-                        .overlay(Text("x:\(0 - (self.positions[item]?.bounds.origin.x ?? 0)) y:\(0 - (self.positions[item]?.bounds.origin.y ?? 0))"))
+                        .overlay(
+                            Text("x:\(0 - (self.positions[item]?.bounds.origin.x ?? 0))" +
+                                " y:\(0 - (self.positions[item]?.bounds.origin.y ?? 0))")
+                        )
                 }
             }
             .transformPreference(PositionPreferenceKey.self) { positions in
@@ -46,11 +48,12 @@ struct Grid<Content>: View where Content: View {
                 for positionedItem in positions.items {
                     // TODO: Extract calculations
                     guard let arrangedItem = layout[positionedItem.gridItem] else { continue }
-                    let columnSize = mainGeometry.size.width / CGFloat(self.columnsCount)
+                    let columnSize = mainGeometry.size.width / CGFloat(layout.columnsCount)
+                    let rowSize = mainGeometry.size.height / CGFloat(layout.rowsCount)
                     let itemWidth = CGFloat(arrangedItem.columnsCount) * columnSize
-                    let itemHeight = columnSize * CGFloat(arrangedItem.rowsCount)
+                    let itemHeight = rowSize * CGFloat(arrangedItem.rowsCount)
                     let positionX = CGFloat(arrangedItem.startPosition.column) * columnSize
-                    let positionY = columnSize * CGFloat(arrangedItem.startPosition.row)
+                    let positionY = rowSize * CGFloat(arrangedItem.startPosition.row)
                     let newBounds = CGRect(x: positionX, y: positionY, width: itemWidth, height: itemHeight)
                     newPositions.items.append(PositionedItem(bounds: newBounds, gridItem: positionedItem.gridItem))
                 }
@@ -58,25 +61,22 @@ struct Grid<Content>: View where Content: View {
                 positions = newPositions
             }
         }
-        .onPreferenceChange(SpanPreferenceKey.self) { preferences in
+        .onPreferenceChange(SpanPreferenceKey.self) { spanPreferences in
             print("onPreferenceChange: ")
-            self.spanPreferences = preferences
-            self.calculateLayout(preferences: preferences)
+            self.calculateLayout(spanPreferences: spanPreferences)
         }
         .onPreferenceChange(PositionPreferenceKey.self) { preferences in
             self.positions = preferences
         }
-        .overlay(Text(layout?.description ?? ""))
+        .overlay(
+            Text(layout?.description ?? "")
+                .font(.system(size: 30, design: .monospaced))
+        )
     }
     
-    private func calculateLayout(preferences: SpanPreferenceKey.Value) {
-        
-        print("onPreferenceChange: ")
-        for preference in preferences {
-            print(preference)
-        }
-
-        let calculatedLayout = self.arranger.arrange(preferences: preferences, columnsCount: self.columnsCount)
+    private func calculateLayout(spanPreferences: SpanPreferenceKey.Value) {
+        let calculatedLayout = self.arranger.arrange(preferences: spanPreferences,
+                                                     columnsCount: self.columnsCount)
         self.layout = calculatedLayout
         print(calculatedLayout)
     }
@@ -86,8 +86,11 @@ struct GridView_Previews: PreviewProvider {
     static var previews: some View {
         return Grid(columnsCount: 4) {
             Color(.blue).gridSpan(column: 4)
-            Color(.red).gridSpan(column: 1, row: 3)
+            Color(.red).gridSpan(row: 3)
+            Color(.yellow)
+            Color(.purple).gridSpan(column: 2)
             Color(.green).gridSpan(column: 3, row: 3)
+            Color(.orange).gridSpan(column: 3, row: 3)
         }
     }
 }

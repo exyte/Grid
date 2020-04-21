@@ -11,11 +11,10 @@ import Foundation
 extension LayoutArrangement: CustomStringConvertible {
     var description: String {
         var result = ""
-        let maxRow = self.items.map(\.endPosition.row).max(by: <) ?? 0
-        
+
         var items = self.items.map { (arrangement: $0, area: $0.area) }
 
-        for row in 0...maxRow {
+        for row in 0...self.rowsCount {
             columnsCycle: for column in 0..<self.columnsCount {
                 for (index, item) in items.enumerated() {
                     if item.arrangement.contains(GridPosition(row: row, column: column)) {

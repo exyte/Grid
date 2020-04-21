@@ -22,7 +22,7 @@ struct ArrangedItem: Equatable {
     }
     
     var area: Int {
-        return self.rowsCount * self.rowsCount
+        return self.rowsCount * self.columnsCount
     }
     
     var columnsCount: Int { endPosition.column - startPosition.column + 1 }

@@ -6,10 +6,11 @@
 //  Copyright © 2020 Denis Obukhov. All rights reserved.
 //
 
-import Foundation
+import CoreGraphics
 
 struct LayoutArrangement {
     let columnsCount: Int
+    let rowsCount: Int
     var items: [ArrangedItem]
     
     subscript(gridItem: GridItem) -> ArrangedItem? {

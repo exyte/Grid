@@ -18,7 +18,7 @@ extension LayoutArrangement: CustomStringConvertible {
             columnsCycle: for column in 0..<self.columnsCount {
                 for (index, item) in items.enumerated() {
                     if item.arrangement.contains(GridPosition(row: row, column: column)) {
-                        result += item.arrangement.gridItem.tag ?? String(item.arrangement.gridItem.id.uuidString.prefix(1)) 
+                        result += item.arrangement.gridItem.tag ?? String(item.arrangement.gridItem.debugID.uuidString.prefix(1))
                         items[index].area -= 1
                         if items[index].area == 0 {
                             items.remove(at: index)

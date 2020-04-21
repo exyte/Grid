@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Grid(columnsCount: 4) {
+        Grid(columns: 4) {
             Color(.blue).gridSpan(column: 4)
             Color(.red).gridSpan(row: 3)
             Color(.yellow)

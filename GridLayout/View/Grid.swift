@@ -14,13 +14,19 @@ public struct Grid<Content>: View where Content: View {
 
     let items: [GridItem]
     let columns: Int
+    let spacing: CGFloat
+    
     private let arranger = LayoutArrangerImpl() as LayoutArranger
     
     public var body: some View {
         return GeometryReader { mainGeometry in
             ZStack(alignment: .topLeading) {
                 ForEach(self.items) { item in
-                    item.view
+                    Color.clear
+                        .overlay(
+                            item.view.padding(self.paddingEdges(item: item),
+                                              self.spacing)
+                        )
                         .frame(width: self.positions[item]?.bounds.width,
                                height: self.positions[item]?.bounds.height)
                         .alignmentGuide(.leading, computeValue: { _ in  -(self.positions[item]?.bounds.origin.x ?? 0) })
@@ -51,10 +57,6 @@ public struct Grid<Content>: View where Content: View {
         .onPreferenceChange(PositionsPreferenceKey.self) { positionsPreference in
             self.positions = positionsPreference
         }
-        .overlay(
-            Text(arrangement?.description ?? "")
-                .font(.system(size: 30, design: .monospaced))
-        )
     }
     
     private func calculateArrangement(spans: [SpanPreference]) {
@@ -63,11 +65,39 @@ public struct Grid<Content>: View where Content: View {
         self.arrangement = calculatedLayout
         print(calculatedLayout)
     }
+    
+    func paddingEdges(item: GridItem) -> Edge.Set {
+        var edges: Edge.Set = []
+        guard let arrangedItem = self.arrangement?[item] else { return edges }
+        if arrangedItem.startPosition.row != 0 {
+            edges.update(with: .top)
+        }
+        if arrangedItem.startPosition.column != 0 {
+            edges.update(with: .leading)
+        }
+        return edges
+    }
+}
+
+extension View {
+    public func gridSpan(column: Int = Constants.defaultColumnSpan, row: Int = Constants.defaultRowSpan) -> some View {
+        preference(key: SpansPreferenceKey.self,
+                   value: [SpanPreference(span: GridSpan(row: row,
+                                                         column: column))])
+    }
+}
+
+extension Array where Element == SpanPreference {
+    fileprivate mutating func shrinkToLast(with item: GridItem) {
+        guard var lastPreference = self.last else { return }
+        lastPreference.item = item
+        self = [lastPreference]
+    }
 }
 
 struct GridView_Previews: PreviewProvider {
     static var previews: some View {
-        Grid(columns: 4) {
+        Grid(columns: 4, spacing: 5) {
             HStack(spacing: 5) {
                 ForEach(0..<9, id: \.self) { _ in
                     Color(.brown)
@@ -92,22 +122,8 @@ struct GridView_Previews: PreviewProvider {
             
             Color(.orange)
                 .gridSpan(column: 3, row: 3)
+            
+            Color(.gray)
         }
-    }
-}
-
-extension View {
-    public func gridSpan(column: Int = Constants.defaultColumnSpan, row: Int = Constants.defaultRowSpan) -> some View {
-        preference(key: SpansPreferenceKey.self,
-                   value: [SpanPreference(span: GridSpan(row: row,
-                                                         column: column))])
-    }
-}
-
-extension Array where Element == SpanPreference {
-    fileprivate mutating func shrinkToLast(with item: GridItem) {
-        guard var lastPreference = self.last else { return }
-        lastPreference.item = item
-        self = [lastPreference]
     }
 }

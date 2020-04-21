@@ -11,4 +11,6 @@ import Foundation
 struct GridPosition: Equatable {
     var row: Int
     var column: Int
+    
+    static let zero = GridPosition(row: 0, column: 0)
 }

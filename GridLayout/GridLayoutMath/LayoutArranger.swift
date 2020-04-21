@@ -32,7 +32,7 @@ class LayoutArrangerImpl: LayoutArranger {
         var result: [ArrangedItem] = []
         var occupiedPositions: [GridPosition] = []
         
-        var lastPosition = GridPosition(row: 0, column: 0)
+        var lastPosition: GridPosition = .zero
         var rowsCount = 0
 
         for spanPreference in spanPreferences {

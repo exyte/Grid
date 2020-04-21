@@ -11,17 +11,11 @@ import SwiftUI
 public struct GridItem: Identifiable {
     public let id: AnyHashable
     public let view: AnyView
-    public var tag: String?
     let debugID = UUID()
     
     public init<T: View>(_ view: T, id: AnyHashable) {
         self.view = AnyView(view)
         self.id = id
-    }
-    
-    public init<T: View>(_ view: T, id: AnyHashable, tag: String?) {
-        self.init(view, id: id)
-        self.tag = tag
     }
 }
 

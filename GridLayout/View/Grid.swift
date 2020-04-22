@@ -33,7 +33,7 @@ public struct Grid<Content>: View where Content: View {
                                height: self.positions[item]?.bounds.height)
                         .alignmentGuide(.leading, computeValue: { _ in  -(self.positions[item]?.bounds.origin.x ?? 0) })
                         .alignmentGuide(.top, computeValue: { _ in  -(self.positions[item]?.bounds.origin.y ?? 0) })
-                        .transformPreference(SpansPreferenceKey.self) { $0.shrinkToLast(with: item) }
+                        .transformPreference(SpansPreferenceKey.self) { $0.shrinkToLast(assigning: item) }
                         .background(
                             Color.clear
                                 .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
@@ -69,7 +69,7 @@ public struct Grid<Content>: View where Content: View {
         print(calculatedLayout)
     }
     
-    func paddingEdges(item: GridItem) -> Edge.Set {
+    private func paddingEdges(item: GridItem) -> Edge.Set {
         var edges: Edge.Set = []
         guard let arrangedItem = self.arrangement?[item] else { return edges }
         if arrangedItem.startPosition.row != 0 {
@@ -91,7 +91,7 @@ extension View {
 }
 
 extension Array where Element == SpanPreference {
-    fileprivate mutating func shrinkToLast(with item: GridItem) {
+    fileprivate mutating func shrinkToLast(assigning item: GridItem) {
         guard var lastPreference = self.last else { return }
         lastPreference.item = item
         self = [lastPreference]

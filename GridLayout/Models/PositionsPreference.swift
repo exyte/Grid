@@ -19,7 +19,6 @@ struct PositionsPreference: Equatable {
 }
 
 struct PositionsPreferenceKey: PreferenceKey {
-    
     static var defaultValue = PositionsPreference.default
 
     static func reduce(value: inout PositionsPreference, nextValue: () -> PositionsPreference) {

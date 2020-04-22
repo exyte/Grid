@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+/// Fundamental identifiable element in a grid view
 public struct GridItem: Identifiable {
     public let id: AnyHashable
     public let view: AnyView

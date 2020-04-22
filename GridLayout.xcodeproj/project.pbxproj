@@ -95,9 +95,9 @@
 				3697EB17244883EE005A82F8 /* Configuration */,
 				3697EB202448851A005A82F8 /* Extensions */,
 				3697EB292448864B005A82F8 /* Models */,
-				3697EB182448840D005A82F8 /* Resources */,
 				3697EB15244883C6005A82F8 /* GridLayoutMath */,
 				3697EB192448841C005A82F8 /* View */,
+				3697EB182448840D005A82F8 /* Resources */,
 			);
 			path = GridLayout;
 			sourceTree = "<group>";
@@ -114,9 +114,6 @@
 			isa = PBXGroup;
 			children = (
 				3697EB1324484B50005A82F8 /* LayoutArranger.swift */,
-				3697EB1E244884F2005A82F8 /* ArrangedItem.swift */,
-				36829D65244D8F7C006D605B /* PositionedItem.swift */,
-				3697EB272448862C005A82F8 /* LayoutArrangement.swift */,
 			);
 			path = GridLayoutMath;
 			sourceTree = "<group>";
@@ -170,10 +167,13 @@
 		3697EB292448864B005A82F8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3697EB1A244884AC005A82F8 /* GridItem.swift */,
+				3697EB1E244884F2005A82F8 /* ArrangedItem.swift */,
+				36829D65244D8F7C006D605B /* PositionedItem.swift */,
+				3697EB272448862C005A82F8 /* LayoutArrangement.swift */,
 				36829D67244DA873006D605B /* PositionsPreference.swift */,
 				36DE3523244B30A9009EA6E8 /* SpanPreference.swift */,
 				3697EB1C244884D4005A82F8 /* GridPosition.swift */,
-				3697EB1A244884AC005A82F8 /* GridItem.swift */,
 				36829D61244C1AEB006D605B /* GridSpan.swift */,
 				367F235924500DB600931700 /* TrackSize.swift */,
 			);

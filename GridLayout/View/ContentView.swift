@@ -9,44 +9,79 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    enum Mode: CaseIterable {
+        case first, second
+    }
     
-    @State var redColumnSpan = 1
-    @State var gridSpacing = 10
+    @State var mode: Mode = .first
     
     var body: some View {
         VStack {
-            Grid(columns: 4, spacing: CGFloat(self.gridSpacing)) {
-                HStack(spacing: 5) {
-                    ForEach(0..<9, id: \.self) { _ in
-                        Color(.brown)
-                            .gridSpan(column: 33)
+            if self.mode == .first {
+                Grid(columns: 4, spacing: 0) {
+                    HStack(spacing: 5) {
+                        ForEach(0..<9, id: \.self) { _ in
+                            Color(.brown)
+                                .gridSpan(column: 33)
+                        }
                     }
-                }
-                .gridSpan(column: 4)
-                
-                Color(.blue)
                     .gridSpan(column: 4)
-                
-                Color(.red)
-                    .gridSpan(column: self.redColumnSpan, row: 3)
-                
-                Color(.yellow)
-                
-                Color(.purple)
-                    .gridSpan(column: 2)
-                Color(.gray)
-                Color(.green)
-                    .gridSpan(column: 3, row: 3)
-                
-                Color(.orange)
-                    .gridSpan(column: 3, row: 3)
-                
+                    
+                    Color(.blue)
+                        .gridSpan(column: 4)
+                    
+                    Color(.red)
+                        .gridSpan(column: 1, row: 3)
+                    
+                    Color(.yellow)
+                    
+                    Color(.purple)
+                        .gridSpan(column: 2, row: 2)
+                    Color(.gray)
+                    Color(.green)
+                        .gridSpan(column: 3, row: 3)
+                    
+                    Color(.orange)
+                        .gridSpan(column: 1, row: 1)
+                    
+                }
+                .animation(.spring(response: 0.4, dampingFraction: 0.5, blendDuration: 2))
+            } else {
+                Grid(columns: 4, spacing: 10) {
+                    HStack(spacing: 5) {
+                        ForEach(0..<9, id: \.self) { _ in
+                            Color(.brown)
+                                .gridSpan(column: 33)
+                        }
+                    }
+                    .gridSpan(column: 4, row: 2)
+                    
+                    Color(.blue)
+                        .gridSpan(column: 4, row: 2)
+                    
+                    Color(.red)
+                        .gridSpan(column: 3, row: 1)
+                    
+                    Color(.yellow)
+                    
+                    Color(.purple)
+                        .gridSpan(column: 3)
+                    
+                    Color(.gray)
+       
+                    Color(.green)
+                        .gridSpan(column: 2, row: 2)
+                    
+                    Color(.orange)
+                        .gridSpan(column: 2, row: 2)
+                    
+                }
+                .animation(.spring(response: 0.4, dampingFraction: 0.5, blendDuration: 2))
             }
-            .animation(.spring())
             
             Button(action: {
-                self.redColumnSpan = self.redColumnSpan == 1 ? 4 : 1
-                self.gridSpacing = self.gridSpacing == 10 ? 0 : 10
+                self.mode = Mode.allCases[(Mode.allCases.firstIndex(of: self.mode)! + 1) % Mode.allCases.count]
             }) {
                 Text("Toogle")
             }

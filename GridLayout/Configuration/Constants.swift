@@ -13,4 +13,5 @@ public struct Constants {
     public static let defaultColumnSpan = 1
     public static let defaultRowSpan = 1
     public static let defaultSpacing: CGFloat = 5
+    public static let defaultFractionSize = 1
 }

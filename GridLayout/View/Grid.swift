@@ -9,12 +9,14 @@
 import SwiftUI
 
 public struct Grid<Content>: View where Content: View {
+    
     @State var arrangement: LayoutArrangement?
     @State var positions: PositionsPreference = .default
 
     let items: [GridItem]
-    let columns: Int
+    let columnCount: Int
     let spacing: CGFloat
+    let trackSizes: [TrackSize]
     
     private let arranger = LayoutArrangerImpl() as LayoutArranger
     
@@ -39,8 +41,8 @@ public struct Grid<Content>: View where Content: View {
                                 }
                         )
                         .overlay(
-                            Text("x:\(-(self.positions[item]?.bounds.origin.x ?? 0))" +
-                                " y:\(-(self.positions[item]?.bounds.origin.y ?? 0))")
+                            Text("x:\(-(self.positions[item]?.bounds.origin.x.rounded() ?? 0))" +
+                                " y:\(-(self.positions[item]?.bounds.origin.y.rounded() ?? 0))")
                         )
                 }
             }
@@ -48,7 +50,8 @@ public struct Grid<Content>: View where Content: View {
                 guard let arrangement = self.arrangement else { return }
                 positionPreference.items = self.arranger.reposition(positionPreference.items,
                                                                     arrangement: arrangement,
-                                                                    boundingSize: mainGeometry.size)
+                                                                    boundingSize: mainGeometry.size,
+                                                                    tracks: self.trackSizes)
             }
         }
         .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
@@ -61,7 +64,7 @@ public struct Grid<Content>: View where Content: View {
     
     private func calculateArrangement(spans: [SpanPreference]) {
         let calculatedLayout = self.arranger.arrange(spanPreferences: spans,
-                                                     columnsCount: self.columns)
+                                                     columnsCount: self.columnCount)
         self.arrangement = calculatedLayout
         print(calculatedLayout)
     }
@@ -97,7 +100,7 @@ extension Array where Element == SpanPreference {
 
 struct GridView_Previews: PreviewProvider {
     static var previews: some View {
-        Grid(columns: 4, spacing: 5) {
+        Grid(columns: [.fr(1), .fr(2), .fr(3), .fr(10)], spacing: 5) {
             HStack(spacing: 5) {
                 ForEach(0..<9, id: \.self) { _ in
                     Color(.brown)

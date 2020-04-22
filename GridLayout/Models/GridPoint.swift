@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct GridPosition: Equatable {
+struct GridPoint: Equatable {
     var row: Int
     var column: Int
     
-    static let zero = GridPosition(row: 0, column: 0)
+    static let zero = GridPoint(row: 0, column: 0)
 }

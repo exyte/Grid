@@ -31,9 +31,9 @@ class LayoutArrangerImpl: LayoutArranger {
         guard columnsCount > 0 else { return LayoutArrangement(columnsCount: columnsCount, rowsCount: 0, items: []) }
             
         var result: [ArrangedItem] = []
-        var occupiedPositions: [GridPosition] = []
+        var occupiedPoints: [GridPoint] = []
         
-        var lastPosition: GridPosition = .zero
+        var lastPoint: GridPoint = .zero
         var rowsCount = 0
 
         for spanPreference in spanPreferences {
@@ -44,25 +44,25 @@ class LayoutArrangerImpl: LayoutArranger {
                 continue
             } // TODO: Reduce span
             
-            while occupiedPositions.contains(lastPosition, rowSpan: spanPreference.span.row, columnSpan: spanPreference.span.column)
-                || lastPosition.column + spanPreference.span.column > columnsCount {
-                    lastPosition = lastPosition.nextPosition(columnsCount: columnsCount)
+            while occupiedPoints.contains(lastPoint, rowSpan: spanPreference.span.row, columnSpan: spanPreference.span.column)
+                || lastPoint.column + spanPreference.span.column > columnsCount {
+                    lastPoint = lastPoint.nextPoint(columnsCount: columnsCount)
             }
 
-            for row in lastPosition.row..<lastPosition.row + spanPreference.span.row {
-                for column in lastPosition.column..<lastPosition.column + spanPreference.span.column {
-                    occupiedPositions.append(GridPosition(row: row, column: column))
+            for row in lastPoint.row..<lastPoint.row + spanPreference.span.row {
+                for column in lastPoint.column..<lastPoint.column + spanPreference.span.column {
+                    occupiedPoints.append(GridPoint(row: row, column: column))
                 }
             }
             
-            let startPosition = lastPosition
-            let endPosition = GridPosition(row: startPosition.row + spanPreference.span.row - 1,
-                                           column: startPosition.column + spanPreference.span.column - 1)
+            let startPoint = lastPoint
+            let endPoint = GridPoint(row: startPoint.row + spanPreference.span.row - 1,
+                                           column: startPoint.column + spanPreference.span.column - 1)
 
-            let arrangedItem = ArrangedItem(gridItem: gridItem, startPosition: startPosition, endPosition: endPosition)
-            rowsCount = max(rowsCount, arrangedItem.endPosition.row + 1)
+            let arrangedItem = ArrangedItem(gridItem: gridItem, startPoint: startPoint, endPoint: endPoint)
+            rowsCount = max(rowsCount, arrangedItem.endPoint.row + 1)
             result.append(arrangedItem)
-            lastPosition = lastPosition.nextPosition(columnsCount: columnsCount)
+            lastPoint = lastPoint.nextPoint(columnsCount: columnsCount)
         }
         
         return LayoutArrangement(columnsCount: columnsCount, rowsCount: rowsCount, items: result)
@@ -75,9 +75,9 @@ class LayoutArrangerImpl: LayoutArranger {
             guard let arrangedItem = arrangement[positionedItem.gridItem] else { continue }
             let rowSize = boundingSize.height / CGFloat(arrangement.rowsCount)
             let itemHeight = rowSize * CGFloat(arrangedItem.rowsCount)
-            let trackRange = arrangedItem.startPosition.column...arrangedItem.endPosition.column
+            let trackRange = arrangedItem.startPoint.column...arrangedItem.endPoint.column
             let track = tracks.trackPosition(in: trackRange, length: boundingSize.width)
-            let positionY = rowSize * CGFloat(arrangedItem.startPosition.row)
+            let positionY = rowSize * CGFloat(arrangedItem.startPoint.row)
             let newBounds = CGRect(x: track.start, y: positionY, width: track.size, height: itemHeight)
             newPositions.append(PositionedItem(bounds: newBounds, gridItem: positionedItem.gridItem))
         }
@@ -86,8 +86,8 @@ class LayoutArrangerImpl: LayoutArranger {
     }
 }
 
-extension GridPosition {
-    fileprivate func nextPosition(columnsCount: Int) -> GridPosition {
+extension GridPoint {
+    fileprivate func nextPoint(columnsCount: Int) -> GridPoint {
         var column = self.column
         var row = self.row
         
@@ -97,15 +97,15 @@ extension GridPosition {
             row += 1
         }
         
-        return GridPosition(row: row, column: column)
+        return GridPoint(row: row, column: column)
     }
 }
 
-extension Array where Element == GridPosition {
-    fileprivate func contains(_ startPosition: GridPosition, rowSpan: Int, columnSpan: Int) -> Bool {
-        for row in startPosition.row..<startPosition.row + rowSpan {
-            for column in startPosition.column..<startPosition.column + columnSpan {
-                if self.contains(GridPosition(row: row, column: column)) {
+extension Array where Element == GridPoint {
+    fileprivate func contains(_ startPoint: GridPoint, rowSpan: Int, columnSpan: Int) -> Bool {
+        for row in startPoint.row..<startPoint.row + rowSpan {
+            for column in startPoint.column..<startPoint.column + columnSpan {
+                if self.contains(GridPoint(row: row, column: column)) {
                     return true
                 }
             }

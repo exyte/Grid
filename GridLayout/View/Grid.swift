@@ -72,10 +72,10 @@ public struct Grid<Content>: View where Content: View {
     private func paddingEdges(item: GridItem) -> Edge.Set {
         var edges: Edge.Set = []
         guard let arrangedItem = self.arrangement?[item] else { return edges }
-        if arrangedItem.startPosition.row != 0 {
+        if arrangedItem.startPoint.row != 0 {
             edges.update(with: .top)
         }
-        if arrangedItem.startPosition.column != 0 {
+        if arrangedItem.startPoint.column != 0 {
             edges.update(with: .leading)
         }
         return edges

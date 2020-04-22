@@ -21,13 +21,8 @@ struct ContentView: View {
             Group {
                 if self.mode == .first {
                     Grid(columns: [.fr(4), .const(200), .fr(1), .fr(4)], spacing: 0) {
-                        HStack(spacing: 5) {
-                            ForEach(0..<9, id: \.self) { _ in
-                                Color(.brown)
-                                    .gridSpan(column: 33)
-                            }
-                        }
-                        .gridSpan(column: 4)
+                        Color(.brown)
+                            .gridSpan(column: 4)
                         
                         Color(.blue)
                             .gridSpan(column: 4)
@@ -39,13 +34,14 @@ struct ContentView: View {
                         
                         Color(.purple)
                             .gridSpan(column: 2, row: 2)
+                        
                         Color(.gray)
+                        
                         Color(.green)
                             .gridSpan(column: 3, row: 3)
                         
                         Color(.orange)
                             .gridSpan(column: 1, row: 1)
-                        
                     }
                 } else {
                     Grid(columns: 4, spacing: 10) {

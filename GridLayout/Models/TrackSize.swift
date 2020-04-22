@@ -12,6 +12,7 @@ import Foundation
 
 public enum TrackSize {
     case fr(Int)
+    case const(Int)
     
-    // TODO: Add .const(Int), .min(Int)
+    // TODO: Add .min(Int)
 }

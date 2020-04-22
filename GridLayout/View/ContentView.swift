@@ -20,7 +20,7 @@ struct ContentView: View {
         VStack {
             Group {
                 if self.mode == .first {
-                    Grid(columns: [.fr(4), .fr(2), .fr(1), .fr(4)], spacing: 0) {
+                    Grid(columns: [.fr(4), .const(200), .fr(1), .fr(4)], spacing: 0) {
                         HStack(spacing: 5) {
                             ForEach(0..<9, id: \.self) { _ in
                                 Color(.brown)
@@ -79,7 +79,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .animation(.spring(response: 0.4, dampingFraction: 0.5, blendDuration: 2))
+            .animation(.spring(response: 0.4, dampingFraction: 0.5, blendDuration: 1))
             
             Button(action: {
                 self.mode = Mode.allCases[(Mode.allCases.firstIndex(of: self.mode)! + 1) % Mode.allCases.count]

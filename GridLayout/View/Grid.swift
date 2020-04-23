@@ -40,10 +40,6 @@ public struct Grid<Content>: View where Content: View {
                                     PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)])
                                 }
                         )
-                        .overlay(
-                            Text("x:\(-(self.positions[item]?.bounds.origin.x.rounded() ?? 0))" +
-                                " y:\(-(self.positions[item]?.bounds.origin.y.rounded() ?? 0))")
-                        )
                 }
             }
             .transformPreference(PositionsPreferenceKey.self) { positionPreference in
@@ -100,33 +96,49 @@ extension Array where Element == SpanPreference {
 
 struct GridView_Previews: PreviewProvider {
     static var previews: some View {
-        Grid(columns: [.fr(1), .fr(2), .fr(3), .fr(10)], spacing: 5) {
-            HStack(spacing: 5) {
-                ForEach(0..<9, id: \.self) { _ in
-                    Color(.brown)
-                        .gridSpan(column: 33)
+        
+        VStack {
+            Grid(0..<30, columns: 5, spacing: 5) { item in
+                if item % 2 == 0 {
+                    Color(.red)
+                        .overlay(Text("\(item)").foregroundColor(.white))
+                        .gridSpan(column: 1, row: 2)
+                } else {
+                    Color(.blue)
+                        .overlay(Text("\(item)").foregroundColor(.white))
                 }
             }
-            .gridSpan(column: 4)
             
-            Color(.blue)
+            Divider()
+            
+            Grid(columns: [.fr(1), .fr(2), .fr(3), .fr(10)], spacing: 5) {
+                HStack(spacing: 5) {
+                    ForEach(0..<9, id: \.self) { _ in
+                        Color(.brown)
+                            .gridSpan(column: 33)
+                    }
+                }
                 .gridSpan(column: 4)
-            
-            Color(.red)
-                .gridSpan(row: 3)
-            
-            Color(.yellow)
-            
-            Color(.purple)
-                .gridSpan(column: 2)
-            
-            Color(.green)
-                .gridSpan(column: 3, row: 3)
-            
-            Color(.orange)
-                .gridSpan(column: 3, row: 3)
-            
-            Color(.gray)
+                
+                Color(.blue)
+                    .gridSpan(column: 4)
+                
+                Color(.red)
+                    .gridSpan(row: 3)
+                
+                Color(.yellow)
+                
+                Color(.purple)
+                    .gridSpan(column: 2)
+                
+                Color(.green)
+                    .gridSpan(column: 3, row: 3)
+                
+                Color(.orange)
+                    .gridSpan(column: 3, row: 3)
+                
+                Color(.gray)
+            }
         }
     }
 }

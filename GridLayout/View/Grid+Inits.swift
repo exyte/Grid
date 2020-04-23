@@ -119,3 +119,26 @@ extension Grid {
                       GridItem(AnyView(content().value.9), id: AnyHashable(9))]
     }
 }
+
+extension Grid {
+    public init<Data, Item>(_ data: Data, columns: [TrackSize], spacing: CGFloat = Constants.defaultSpacing, @ViewBuilder item: @escaping (Data.Element) -> Item) where Content == ForEach<Data, Data.Element.ID, Item>, Data: RandomAccessCollection, Item: View, Data.Element: Identifiable {
+        self.items = data.map { GridItem(AnyView(item($0)), id: AnyHashable($0.id)) }
+        self.trackSizes = columns
+        self.columnCount = self.trackSizes.count
+        self.spacing = spacing
+    }
+
+    public init<Data, ID, Item>(_ data: Data, columns: [TrackSize], spacing: CGFloat = Constants.defaultSpacing, id: KeyPath<Data.Element, ID>, @ViewBuilder item: @escaping (Data.Element) -> Item) where Content == ForEach<Data, ID, Item>, Data: RandomAccessCollection, ID: Hashable, Item: View {
+        self.items = data.map { GridItem(AnyView(item($0)), id: AnyHashable($0[keyPath: id])) }
+        self.trackSizes = columns
+        self.columnCount = self.trackSizes.count
+        self.spacing = spacing
+    }
+
+    public init<Item>(_ data: Range<Int>, columns: [TrackSize], spacing: CGFloat = Constants.defaultSpacing, @ViewBuilder item: @escaping (Int) -> Item) where Content == ForEach<Range<Int>, Int, Item>, Item: View {
+        self.items = data.map { GridItem(AnyView(item($0)), id: AnyHashable($0)) }
+        self.trackSizes = columns
+        self.columnCount = self.trackSizes.count
+        self.spacing = spacing
+    }
+}

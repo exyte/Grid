@@ -19,3 +19,10 @@ public enum TrackSize {
     
     // TODO: Add .min(Int)
 }
+
+extension Array: ExpressibleByIntegerLiteral where Element == TrackSize {
+    public typealias IntegerLiteralType = Int
+    public init(integerLiteral value: Self.IntegerLiteralType) {
+        self = .init(repeating: .fr(Constants.defaultFractionSize), count: value)
+    }
+}

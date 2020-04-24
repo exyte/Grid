@@ -12,12 +12,12 @@ public struct Grid<Content>: View where Content: View {
     
     @State var arrangement: LayoutArrangement?
     @State var positions: PositionsPreference = .default
-
+    @Environment(\.contentMode) private var contentMode
+    
     let items: [GridItem]
     let columnCount: Int
     let spacing: CGFloat
     let trackSizes: [TrackSize]
-    var spread: GridContentMode = .fill // TODO: Pass via Environment
     let flow: GridFlow = .columns // TODO: Handle rows
     
     private let arranger = LayoutArrangerImpl() as LayoutArranger
@@ -28,7 +28,9 @@ public struct Grid<Content>: View where Content: View {
                 ZStack(alignment: .topLeading) {
                     ForEach(self.items) { item in
                         item.view // TODO: Add spacing
-                            .frame(flow: self.flow, bounds: self.positions[item]?.bounds, spread: self.spread)
+                            .frame(flow: self.flow,
+                                   bounds: self.positions[item]?.bounds,
+                                   contentMode: self.contentMode)
                             .alignmentGuide(.leading, computeValue: { _ in  -(self.positions[item]?.bounds.origin.x ?? 0) })
                             .alignmentGuide(.top, computeValue: { _ in  -(self.positions[item]?.bounds.origin.y ?? 0) })
                             .overlay(
@@ -52,7 +54,7 @@ public struct Grid<Content>: View where Content: View {
                                                                         arrangement: arrangement,
                                                                         boundingSize: mainGeometry.size,
                                                                         tracks: self.trackSizes,
-                                                                        spread: self.spread)
+                                                                        contentMode: self.contentMode)
                 }
             }
         }
@@ -65,7 +67,7 @@ public struct Grid<Content>: View where Content: View {
     }
     
     private var scrollAxis: Axis.Set {
-        if self.spread == .fill {
+        if self.contentMode == .fill {
             return []
         }
         return self.flow == .columns ? .vertical : .horizontal
@@ -108,11 +110,11 @@ extension View {
                                                          column: column))])
     }
     
-    func frame(flow: GridFlow, bounds: CGRect?, spread: GridContentMode) -> some View {
+    fileprivate func frame(flow: GridFlow, bounds: CGRect?, contentMode: GridContentMode) -> some View {
         let width: CGFloat?
         let height: CGFloat?
         
-        switch spread {
+        switch contentMode {
         case .fill:
             width = bounds?.width
             height = bounds?.height

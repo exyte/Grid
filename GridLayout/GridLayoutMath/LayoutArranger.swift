@@ -22,7 +22,7 @@ protocol LayoutArranger {
     ///   - arrangement: Previously calculated arrangement
     ///   - size: Bounding size
     ///   - tracks: Sizes of tracks
-    func reposition(_ items: [PositionedItem], arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], spread: GridContentMode) -> [PositionedItem]
+    func reposition(_ items: [PositionedItem], arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode) -> [PositionedItem]
 }
 
 class LayoutArrangerImpl: LayoutArranger {
@@ -68,11 +68,11 @@ class LayoutArrangerImpl: LayoutArranger {
         return LayoutArrangement(columnsCount: columnsCount, rowsCount: rowsCount, items: result)
     }
     
-    func reposition(_ items: [PositionedItem], arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], spread: GridContentMode) -> [PositionedItem] {
+    func reposition(_ items: [PositionedItem], arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode) -> [PositionedItem] {
         var newPositions: [PositionedItem] = []
         
         var rowSizes: [CGFloat] = .init(repeating: 0, count: arrangement.rowsCount)
-        if spread == .scroll {
+        if contentMode == .scroll {
             // Calculate sizes of rows
             for positionedItem in items {
                 guard let arrangedItem = arrangement[positionedItem.gridItem] else { continue }
@@ -92,7 +92,7 @@ class LayoutArrangerImpl: LayoutArranger {
             let positionY: CGFloat
             
             // TODO: Handle spacing
-            switch spread {
+            switch contentMode {
             case .fill:
                 itemHeight = rowSize * CGFloat(arrangedItem.rowsCount)
                 positionY = rowSize * CGFloat(arrangedItem.startPoint.row)

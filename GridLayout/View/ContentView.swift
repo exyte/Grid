@@ -20,18 +20,15 @@ struct ContentView: View {
         Grid(columns: 3, spacing: 0) {
             
             Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit.")
-                .background(Color.gray)
+                .background(Color.orange)
                 .foregroundColor(Color.red)
-            //.gridSpan(column: 1, row: 2)
+            .gridSpan(column: 1, row: 2)
             
-            Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.")
-                .background(Color.pink)
-                .foregroundColor(Color.blue)
-                .gridSpan(column: 1, row: 1)
-            
+            Color.blue.frame(height: 100)
+
             Text("Lorem ipsum dolor sit amet. ")
                 .background(Color.green)
-                .foregroundColor(Color.yellow)
+                .foregroundColor(Color.white)
                 .gridSpan(column: 2, row: 1)
                 
             Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur.")
@@ -45,6 +42,17 @@ struct ContentView: View {
             Text("Lorem ipsum dolor sit.")
                 .background(Color.gray)
                 .foregroundColor(Color.red)
+            
+            Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur.")
+                .background(Color.purple)
+                .foregroundColor(Color.white)
+                .gridSpan(column: 2, row: 1)
+            
+            Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur.")
+                .background(Color.purple)
+                .foregroundColor(Color.white)
+                .gridSpan(column: 1, row: 1)
+            
         }
         .gridContentMode(.scroll(alignment: .top))
     }

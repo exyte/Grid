@@ -49,11 +49,8 @@ public struct Grid<Content>: View where Content: View {
                     }
                 }
                 .frame(minWidth: self.positions.size.width,
-                       idealWidth: mainGeometry.size.width,
-                       minHeight: self.positions.size.height,
-                       idealHeight: mainGeometry.size.height)
-                .frame(width: mainGeometry.size.width,
-                       height: mainGeometry.size.height, alignment: self.contentAlignment)
+                       minHeight: self.positions.size.height)
+
                 .transformPreference(PositionsPreferenceKey.self) { positionPreference in
                     guard let arrangement = self.arrangement else { return }
                     positionPreference = self.arranger.reposition(positionPreference,
@@ -63,6 +60,8 @@ public struct Grid<Content>: View where Content: View {
                                                                   contentMode: self.contentMode)
                 }
             }
+            .frame(width: mainGeometry.size.width,
+                   height: mainGeometry.size.height, alignment: self.contentAlignment)
         }
         .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
             self.calculateArrangement(spans: spanPreferences)

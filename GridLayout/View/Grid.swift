@@ -17,37 +17,43 @@ public struct Grid<Content>: View where Content: View {
     let columnCount: Int
     let spacing: CGFloat
     let trackSizes: [TrackSize]
+    var spread: GridContentMode = .fill // TODO: Pass via Environment
+    let flow: GridFlow = .columns // TODO: Handle rows
     
     private let arranger = LayoutArrangerImpl() as LayoutArranger
-    
+
     public var body: some View {
         return GeometryReader { mainGeometry in
-            ZStack(alignment: .topLeading) {
-                ForEach(self.items) { item in
-                    Color.clear
-                        .overlay(
-                            item.view.padding(self.paddingEdges(item: item),
-                                              self.spacing)
-                        )
-                        .frame(width: self.positions[item]?.bounds.width,
-                               height: self.positions[item]?.bounds.height)
-                        .alignmentGuide(.leading, computeValue: { _ in  -(self.positions[item]?.bounds.origin.x ?? 0) })
-                        .alignmentGuide(.top, computeValue: { _ in  -(self.positions[item]?.bounds.origin.y ?? 0) })
-                        .transformPreference(SpansPreferenceKey.self) { $0.shrinkToLast(assigning: item) }
-                        .background(
-                            Color.clear
-                                .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
-                                    PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)])
-                                }
-                        )
+            ScrollView(self.scrollAxis) {
+                ZStack(alignment: .topLeading) {
+                    ForEach(self.items) { item in
+                        item.view // TODO: Add spacing
+                            .frame(flow: self.flow, bounds: self.positions[item]?.bounds, spread: self.spread)
+                            .alignmentGuide(.leading, computeValue: { _ in  -(self.positions[item]?.bounds.origin.x ?? 0) })
+                            .alignmentGuide(.top, computeValue: { _ in  -(self.positions[item]?.bounds.origin.y ?? 0) })
+                            .overlay(
+                                Color.clear
+                                    .border(Color.black, width: 1)
+                                    .frame(width: self.positions[item]?.bounds.width,
+                                           height: self.positions[item]?.bounds.height)
+                            )
+                            .transformPreference(SpansPreferenceKey.self) { $0.shrinkToLast(assigning: item) }
+                            .background(
+                                Color.clear
+                                    .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
+                                        PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)])
+                                    }
+                            )
+                    }
                 }
-            }
-            .transformPreference(PositionsPreferenceKey.self) { positionPreference in
-                guard let arrangement = self.arrangement else { return }
-                positionPreference.items = self.arranger.reposition(positionPreference.items,
-                                                                    arrangement: arrangement,
-                                                                    boundingSize: mainGeometry.size,
-                                                                    tracks: self.trackSizes)
+                .transformPreference(PositionsPreferenceKey.self) { positionPreference in
+                    guard let arrangement = self.arrangement else { return }
+                    positionPreference.items = self.arranger.reposition(positionPreference.items,
+                                                                        arrangement: arrangement,
+                                                                        boundingSize: mainGeometry.size,
+                                                                        tracks: self.trackSizes,
+                                                                        spread: self.spread)
+                }
             }
         }
         .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
@@ -58,6 +64,13 @@ public struct Grid<Content>: View where Content: View {
         }
     }
     
+    private var scrollAxis: Axis.Set {
+        if self.spread == .fill {
+            return []
+        }
+        return self.flow == .columns ? .vertical : .horizontal
+    }
+
     private func calculateArrangement(spans: [SpanPreference]) {
         let calculatedLayout = self.arranger.arrange(spanPreferences: spans,
                                                      columnsCount: self.columnCount)
@@ -76,6 +89,16 @@ public struct Grid<Content>: View where Content: View {
         }
         return edges
     }
+    
+    private func positionPreference(geometry: GeometryProxy, item: GridItem) -> PositionsPreference {
+        let geometryWidth: CGFloat = geometry.size.width
+        let geometryHeight: CGFloat = geometry.size.height
+        let innerSize = CGSize(width: geometryWidth, height: geometryHeight)
+        let positionedItem = PositionedItem(bounds: CGRect(origin: self.positions[item]?.bounds.origin ?? .zero,
+                                                           size: innerSize),
+                                            gridItem: item)
+        return PositionsPreference(items: [positionedItem])
+    }
 }
 
 extension View {
@@ -83,6 +106,21 @@ extension View {
         preference(key: SpansPreferenceKey.self,
                    value: [SpanPreference(span: GridSpan(row: row,
                                                          column: column))])
+    }
+    
+    func frame(flow: GridFlow, bounds: CGRect?, spread: GridContentMode) -> some View {
+        let width: CGFloat?
+        let height: CGFloat?
+        
+        switch spread {
+        case .fill:
+            width = bounds?.width
+            height = bounds?.height
+        case .scroll:
+            width = (flow == .columns ? bounds?.width : nil)
+            height = (flow == .columns ? nil : bounds?.height)
+        }
+        return frame(width: width, height: height)
     }
 }
 

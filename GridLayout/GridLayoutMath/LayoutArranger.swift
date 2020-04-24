@@ -22,7 +22,7 @@ protocol LayoutArranger {
     ///   - arrangement: Previously calculated arrangement
     ///   - size: Bounding size
     ///   - tracks: Sizes of tracks
-    func reposition(_ items: [PositionedItem], arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize]) -> [PositionedItem]
+    func reposition(_ items: [PositionedItem], arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], spread: GridContentMode) -> [PositionedItem]
 }
 
 class LayoutArrangerImpl: LayoutArranger {
@@ -68,16 +68,47 @@ class LayoutArrangerImpl: LayoutArranger {
         return LayoutArrangement(columnsCount: columnsCount, rowsCount: rowsCount, items: result)
     }
     
-    func reposition(_ items: [PositionedItem], arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize]) -> [PositionedItem] {
+    func reposition(_ items: [PositionedItem], arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], spread: GridContentMode) -> [PositionedItem] {
         var newPositions: [PositionedItem] = []
+        
+        var rowSizes: [CGFloat] = .init(repeating: 0, count: arrangement.rowsCount)
+        if spread == .scroll {
+            // Calculate sizes of rows
+            for positionedItem in items {
+                guard let arrangedItem = arrangement[positionedItem.gridItem] else { continue }
+                
+                let itemSelfHeight = positionedItem.bounds.height
+                for index in arrangedItem.startPoint.row...arrangedItem.endPoint.row {
+                    rowSizes[index] = max(rowSizes[index], itemSelfHeight / CGFloat(arrangedItem.rowsCount))
+                }
+            }
+        }
         
         for positionedItem in items {
             guard let arrangedItem = arrangement[positionedItem.gridItem] else { continue }
             let rowSize = boundingSize.height / CGFloat(arrangement.rowsCount)
-            let itemHeight = rowSize * CGFloat(arrangedItem.rowsCount)
+            
+            let itemHeight: CGFloat
+            let positionY: CGFloat
+            
+            // TODO: Handle spacing
+            switch spread {
+            case .fill:
+                itemHeight = rowSize * CGFloat(arrangedItem.rowsCount)
+                positionY = rowSize * CGFloat(arrangedItem.startPoint.row)
+            case .scroll:
+                itemHeight = (arrangedItem.startPoint.row...arrangedItem.endPoint.row).reduce(0, { result, row in
+                    return result + rowSizes[row]
+                })
+                let centringYCorrection = (itemHeight - positionedItem.bounds.height) / 2
+                positionY = (0..<arrangedItem.startPoint.row).reduce(0, { result, row in
+                    return result + rowSizes[row]
+                }) + centringYCorrection
+            }
+            
             let trackRange = arrangedItem.startPoint.column...arrangedItem.endPoint.column
             let track = tracks.trackPosition(in: trackRange, length: boundingSize.width)
-            let positionY = rowSize * CGFloat(arrangedItem.startPoint.row)
+            
             let newBounds = CGRect(x: track.start, y: positionY, width: track.size, height: itemHeight)
             newPositions.append(PositionedItem(bounds: newBounds, gridItem: positionedItem.gridItem))
         }

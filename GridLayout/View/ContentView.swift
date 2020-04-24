@@ -17,71 +17,34 @@ struct ContentView: View {
     @State var mode: Mode = .first
     
     var body: some View {
-        VStack {
-            Group {
-                if self.mode == .first {
-                    Grid(columns: [.fr(4), .const(200), .fr(1), .fr(4)], spacing: 0) {
-                        Color(.brown)
-                            .gridSpan(column: 4)
-                        
-                        Color(.blue)
-                            .gridSpan(column: 4)
-                        
-                        Color(.red)
-                            .gridSpan(column: 1, row: 3)
-                        
-                        Color(.yellow)
-                        
-                        Color(.purple)
-                            .gridSpan(column: 2, row: 2)
-                        
-                        Color(.gray)
-                        
-                        Color(.green)
-                            .gridSpan(column: 3, row: 3)
-                        
-                        Color(.orange)
-                            .gridSpan(column: 1, row: 1)
-                    }
-                } else {
-                    Grid(columns: 4, spacing: 10) {
-                        HStack(spacing: 5) {
-                            ForEach(0..<9, id: \.self) { _ in
-                                Color(.brown)
-                                    .gridSpan(column: 33)
-                            }
-                        }
-                        .gridSpan(column: 4, row: 2)
-                        
-                        Color(.blue)
-                            .gridSpan(column: 4, row: 2)
-                        
-                        Color(.red)
-                            .gridSpan(column: 3, row: 1)
-                        
-                        Color(.yellow)
-                        
-                        Color(.purple)
-                            .gridSpan(column: 3)
-                        
-                        Color(.gray)
-           
-                        Color(.green)
-                            .gridSpan(column: 2, row: 2)
-                        
-                        Color(.orange)
-                            .gridSpan(column: 2, row: 2)
-                        
-                    }
-                }
-            }
-            .animation(.spring(response: 0.4, dampingFraction: 0.5, blendDuration: 1))
+        Grid(columns: 3, spacing: 0) {
             
-            Button(action: {
-                self.mode = Mode.allCases[(Mode.allCases.firstIndex(of: self.mode)! + 1) % Mode.allCases.count]
-            }) {
-                Text("Toogle")
-            }
+            Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit.")
+                .background(Color.gray)
+                .foregroundColor(Color.red)
+            //.gridSpan(column: 1, row: 2)
+            
+            Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.")
+                .background(Color.pink)
+                .foregroundColor(Color.blue)
+                .gridSpan(column: 1, row: 1)
+            
+            Text("Lorem ipsum dolor sit amet. ")
+                .background(Color.green)
+                .foregroundColor(Color.yellow)
+                .gridSpan(column: 2, row: 1)
+                
+            Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur.")
+                .background(Color.red)
+                .foregroundColor(Color.blue)
+                .gridSpan(column: 1, row: 2)
+            
+            Text("Lorem ipsum dolor sit.")
+                .background(Color.gray)
+                .foregroundColor(Color.red)
+            Text("Lorem ipsum dolor sit.")
+                .background(Color.gray)
+                .foregroundColor(Color.red)
         }
     }
 }

@@ -22,7 +22,7 @@ protocol LayoutArranger {
     ///   - arrangement: Previously calculated arrangement
     ///   - size: Bounding size
     ///   - tracks: Sizes of tracks
-    func reposition(_ items: [PositionedItem], arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode) -> [PositionedItem]
+    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode) -> PositionsPreference
 }
 
 class LayoutArrangerImpl: LayoutArranger {
@@ -68,13 +68,12 @@ class LayoutArrangerImpl: LayoutArranger {
         return LayoutArrangement(columnsCount: columnsCount, rowsCount: rowsCount, items: result)
     }
     
-    func reposition(_ items: [PositionedItem], arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode) -> [PositionedItem] {
+    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode) -> PositionsPreference {
         var newPositions: [PositionedItem] = []
-        
         var rowSizes: [CGFloat] = .init(repeating: 0, count: arrangement.rowsCount)
-        if contentMode == .scroll {
+        if case .scroll(_) = contentMode {
             // Calculate sizes of rows
-            for positionedItem in items {
+            for positionedItem in position.items {
                 guard let arrangedItem = arrangement[positionedItem.gridItem] else { continue }
                 
                 let itemSelfHeight = positionedItem.bounds.height
@@ -83,8 +82,8 @@ class LayoutArrangerImpl: LayoutArranger {
                 }
             }
         }
-        
-        for positionedItem in items {
+ 
+        for positionedItem in position.items {
             guard let arrangedItem = arrangement[positionedItem.gridItem] else { continue }
             let rowSize = boundingSize.height / CGFloat(arrangement.rowsCount)
             
@@ -113,7 +112,11 @@ class LayoutArrangerImpl: LayoutArranger {
             newPositions.append(PositionedItem(bounds: newBounds, gridItem: positionedItem.gridItem))
         }
         
-        return newPositions
+        let totalHeight = rowSizes.reduce(0, { result, trackSize in
+            return result + trackSize
+        })
+
+        return PositionsPreference(items: newPositions, size: CGSize(width: boundingSize.width, height: totalHeight))
     }
 }
 

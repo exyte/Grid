@@ -46,7 +46,7 @@ struct ContentView: View {
                 .background(Color.gray)
                 .foregroundColor(Color.red)
         }
-        .gridContentMode(.fill)
+        .gridContentMode(.scroll(alignment: .top))
     }
 }
 

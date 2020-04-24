@@ -43,18 +43,24 @@ public struct Grid<Content>: View where Content: View {
                             .background(
                                 Color.clear
                                     .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
-                                        PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)])
+                                        PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: .zero)
                                     }
                             )
                     }
                 }
+                .frame(minWidth: self.positions.size.width,
+                       idealWidth: mainGeometry.size.width,
+                       minHeight: self.positions.size.height,
+                       idealHeight: mainGeometry.size.height)
+                .frame(width: mainGeometry.size.width,
+                       height: mainGeometry.size.height, alignment: self.contentAlignment)
                 .transformPreference(PositionsPreferenceKey.self) { positionPreference in
                     guard let arrangement = self.arrangement else { return }
-                    positionPreference.items = self.arranger.reposition(positionPreference.items,
-                                                                        arrangement: arrangement,
-                                                                        boundingSize: mainGeometry.size,
-                                                                        tracks: self.trackSizes,
-                                                                        contentMode: self.contentMode)
+                    positionPreference = self.arranger.reposition(positionPreference,
+                                                                  arrangement: arrangement,
+                                                                  boundingSize: mainGeometry.size,
+                                                                  tracks: self.trackSizes,
+                                                                  contentMode: self.contentMode)
                 }
             }
         }
@@ -67,7 +73,7 @@ public struct Grid<Content>: View where Content: View {
     }
     
     private var scrollAxis: Axis.Set {
-        if self.contentMode == .fill {
+        if case .fill = self.contentMode {
             return []
         }
         return self.flow == .columns ? .vertical : .horizontal
@@ -92,14 +98,13 @@ public struct Grid<Content>: View where Content: View {
         return edges
     }
     
-    private func positionPreference(geometry: GeometryProxy, item: GridItem) -> PositionsPreference {
-        let geometryWidth: CGFloat = geometry.size.width
-        let geometryHeight: CGFloat = geometry.size.height
-        let innerSize = CGSize(width: geometryWidth, height: geometryHeight)
-        let positionedItem = PositionedItem(bounds: CGRect(origin: self.positions[item]?.bounds.origin ?? .zero,
-                                                           size: innerSize),
-                                            gridItem: item)
-        return PositionsPreference(items: [positionedItem])
+    private var contentAlignment: Alignment {
+        switch self.contentMode {
+        case .scroll(let alignment):
+            return alignment
+        case .fill:
+            return .center
+        }
     }
 }
 
@@ -152,13 +157,8 @@ struct GridView_Previews: PreviewProvider {
             Divider()
             
             Grid(columns: [.fr(1), .fr(2), .fr(3), .fr(10)], spacing: 5) {
-                HStack(spacing: 5) {
-                    ForEach(0..<9, id: \.self) { _ in
-                        Color(.brown)
-                            .gridSpan(column: 33)
-                    }
-                }
-                .gridSpan(column: 4)
+                Color(.brown)
+                    .gridSpan(column: 4)
                 
                 Color(.blue)
                     .gridSpan(column: 4)

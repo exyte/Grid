@@ -6,12 +6,12 @@
 //  Copyright © 2020 Denis Obukhov. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 
 /// Grid behaviour inside its parent
 public enum GridContentMode {
     /// Scrolls inside parent container
-    case scroll
+    case scroll(alignment: Alignment)
     
     /// Fills the entire space of the parent container
     case fill

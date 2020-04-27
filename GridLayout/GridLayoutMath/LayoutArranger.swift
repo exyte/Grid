@@ -71,7 +71,7 @@ class LayoutArrangerImpl: LayoutArranger {
     func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode) -> PositionsPreference {
         var newPositions: [PositionedItem] = []
         var rowSizes: [CGFloat] = .init(repeating: 0, count: arrangement.rowsCount)
-        if case .scroll(_) = contentMode {
+        if case .scroll = contentMode {
             // Calculate sizes of rows
             for positionedItem in position.items {
                 guard let arrangedItem = arrangement[positionedItem.gridItem] else { continue }

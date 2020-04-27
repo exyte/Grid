@@ -48,9 +48,6 @@ public struct Grid<Content>: View where Content: View {
                             )
                     }
                 }
-                .frame(minWidth: self.positions.size.width,
-                       minHeight: self.positions.size.height)
-
                 .transformPreference(PositionsPreferenceKey.self) { positionPreference in
                     guard let arrangement = self.arrangement else { return }
                     positionPreference = self.arranger.reposition(positionPreference,
@@ -59,9 +56,12 @@ public struct Grid<Content>: View where Content: View {
                                                                   tracks: self.trackSizes,
                                                                   contentMode: self.contentMode)
                 }
+                .frame(minWidth: self.positions.size.width,
+                       maxWidth: .infinity,
+                       minHeight: self.positions.size.height,
+                       maxHeight: .infinity,
+                       alignment: .top)
             }
-            .frame(width: mainGeometry.size.width,
-                   height: mainGeometry.size.height, alignment: self.contentAlignment)
         }
         .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
             self.calculateArrangement(spans: spanPreferences)
@@ -96,15 +96,7 @@ public struct Grid<Content>: View where Content: View {
         }
         return edges
     }
-    
-    private var contentAlignment: Alignment {
-        switch self.contentMode {
-        case .scroll(let alignment):
-            return alignment
-        case .fill:
-            return .center
-        }
-    }
+
 }
 
 extension View {

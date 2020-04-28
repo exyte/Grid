@@ -8,58 +8,72 @@
 
 import SwiftUI
 
-struct ContentView: View {
-
-    enum Mode: CaseIterable {
-        case first, second
-    }
+struct CardView: View {
     
-    @State var mode: Mode = .first
+    let text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor psum dolor sit amet."
     
     var body: some View {
-        Grid(columns: 3, spacing: 0) {
+        VStack {
+            Image("dog")
+                .resizable()
+                .scaledToFill()
+                .frame(minWidth: 0,
+                       minHeight: 0,
+                      maxHeight: 200
+                )
+                .clipped()
             
-            Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit.")
-                .background(Color.orange)
-                .foregroundColor(Color.red)
-            .gridSpan(column: 1, row: 2)
-            
-            Color.blue.frame(height: 100)
-
-            Text("Lorem ipsum dolor sit amet. ")
-                .background(Color.green)
-                .foregroundColor(Color.white)
-                .gridSpan(column: 2, row: 1)
-                
-            Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur.")
-                .background(Color.red)
-                .foregroundColor(Color.blue)
-                .gridSpan(column: 1, row: 2)
-            
-            Text("Lorem ipsum dolor sit.")
-                .background(Color.gray)
-                .foregroundColor(Color.red)
-            Text("Lorem ipsum dolor sit.")
-                .background(Color.gray)
-                .foregroundColor(Color.red)
-            
-            Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur.")
-                .background(Color.purple)
-                .foregroundColor(Color.white)
-                .gridSpan(column: 2, row: 1)
-            
-            Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur.")
-                .background(Color.purple)
-                .foregroundColor(Color.white)
-                .gridSpan(column: 1, row: 1)
-            
+            Text(self.text)
         }
-        .gridContentMode(.scroll(alignment: .top))
+        .gridCellBackground { bounds in
+            Color(.green)
+                .frame(width: bounds?.width, height: bounds?.height)
+        }
+        .background(Color.red)
+    }
+}
+
+struct ContentView: View {
+    
+    enum Mode: CaseIterable {
+        case scroll, fill
+    }
+    
+    var mode: Mode = .scroll
+    
+    let firstGridColumns: [TrackSize] = [.fr(1), .fr(2), .const(200)]
+    let secondGridColumns: [TrackSize] = 6
+    
+    var body: some View {
+        Group {
+            if self.mode == .scroll {
+                Grid(0..<40, columns: firstGridColumns, spacing: 0) { _ in
+                    CardView()
+                        .gridSpan(column: self.randomSpan(self.firstGridColumns.count),
+                                  row: self.randomSpan(3))
+                }
+                .gridContentMode(.scroll)
+            } else {
+                Grid(0..<6, columns: secondGridColumns, spacing: 0) { _ in
+                    CardView()
+                        .gridSpan(column: self.randomSpan(self.secondGridColumns.count),
+                                  row: self.randomSpan(3))
+                }
+                .gridContentMode(.fill)
+            }
+        }
+    }
+    
+    func randomSpan(_ max: Int) -> Int {
+        1 + Int(arc4random_uniform(UInt32(max)))
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        Group {
+            ContentView(mode: .scroll)
+            ContentView(mode: .fill)
+        }
     }
 }

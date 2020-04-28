@@ -40,12 +40,9 @@ public struct Grid<Content>: View where Content: View {
                                            height: self.positions[item]?.bounds.height)
                             )
                             .transformPreference(SpansPreferenceKey.self) { $0.shrinkToLast(assigning: item) }
-                            .background(
-                                Color.clear
-                                    .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
-                                        PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: .zero)
-                                    }
-                            )
+                            .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
+                                PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: .zero)
+                            }
                             .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
                                 preference.content(self.positions[item]?.bounds)
                             }

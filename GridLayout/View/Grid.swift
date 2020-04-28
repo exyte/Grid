@@ -46,6 +46,12 @@ public struct Grid<Content>: View where Content: View {
                                         PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: .zero)
                                     }
                             )
+                            .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
+                                preference.content(self.positions[item]?.bounds)
+                            }
+                            .overlayPreferenceValue(GridOverlayPreferenceKey.self) { preference in
+                                preference.content(self.positions[item]?.bounds)
+                            }
                     }
                 }
                 .transformPreference(PositionsPreferenceKey.self) { positionPreference in
@@ -61,7 +67,7 @@ public struct Grid<Content>: View where Content: View {
                        minHeight: self.positions.size.height,
                        maxHeight: .infinity,
                        alignment: .top)
-            }
+                }
         }
         .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
             self.calculateArrangement(spans: spanPreferences)
@@ -100,13 +106,8 @@ public struct Grid<Content>: View where Content: View {
 }
 
 extension View {
-    public func gridSpan(column: Int = Constants.defaultColumnSpan, row: Int = Constants.defaultRowSpan) -> some View {
-        preference(key: SpansPreferenceKey.self,
-                   value: [SpanPreference(span: GridSpan(row: row,
-                                                         column: column))])
-    }
-    
-    fileprivate func frame(flow: GridFlow, bounds: CGRect?, contentMode: GridContentMode) -> some View {
+    fileprivate func frame(flow: GridFlow, bounds: CGRect?,
+                           contentMode: GridContentMode) -> some View {
         let width: CGFloat?
         let height: CGFloat?
         

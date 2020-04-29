@@ -19,7 +19,7 @@ extension View {
     }
     
     public func gridCellOverlay<Content: View>(
-        @ViewBuilder content: @escaping (CGRect?) -> Content
+        @ViewBuilder content: @escaping (CGSize?) -> Content
     ) -> some View {
         preference(
             key: GridOverlayPreferenceKey.self,
@@ -30,7 +30,7 @@ extension View {
     }
     
     public func gridCellBackground<Content: View>(
-        @ViewBuilder content: @escaping (CGRect?) -> Content
+        @ViewBuilder content: @escaping (CGSize?) -> Content
     ) -> some View {
         preference(
             key: GridBackgroundPreferenceKey.self,

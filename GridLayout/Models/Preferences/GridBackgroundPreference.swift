@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-struct GridBackgroundPreference {
-    var content: (_ rect: CGRect?) -> AnyView
+struct GridBackgroundPreference: GridCellPreference {
+    var content: (_ rect: CGSize) -> AnyView
 }
 
 struct GridBackgroundPreferenceKey: PreferenceKey {

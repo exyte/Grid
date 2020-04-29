@@ -33,6 +33,7 @@
 		3697EB222448852E005A82F8 /* LayoutArrangement+description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB212448852E005A82F8 /* LayoutArrangement+description.swift */; };
 		3697EB282448862C005A82F8 /* LayoutArrangement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB272448862C005A82F8 /* LayoutArrangement.swift */; };
 		36DE3524244B30A9009EA6E8 /* SpanPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DE3523244B30A9009EA6E8 /* SpanPreference.swift */; };
+		36ED05CF24593D1500873501 /* GridCellPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36ED05CE24593D1500873501 /* GridCellPreference.swift */; };
 		67639814D385032F0758888C /* Pods_GridLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191E369FACAC2ED9EC7B3972 /* Pods_GridLayout.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,7 @@
 		3697EB212448852E005A82F8 /* LayoutArrangement+description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LayoutArrangement+description.swift"; sourceTree = "<group>"; };
 		3697EB272448862C005A82F8 /* LayoutArrangement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutArrangement.swift; sourceTree = "<group>"; };
 		36DE3523244B30A9009EA6E8 /* SpanPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanPreference.swift; sourceTree = "<group>"; };
+		36ED05CE24593D1500873501 /* GridCellPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCellPreference.swift; sourceTree = "<group>"; };
 		9F3828D17295FD1F09E3BE44 /* Pods-GridLayout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GridLayout.release.xcconfig"; path = "Target Support Files/Pods-GridLayout/Pods-GridLayout.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -181,14 +183,11 @@
 		3697EB292448864B005A82F8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				36ED05D02459407B00873501 /* Preferences */,
 				3697EB1A244884AC005A82F8 /* GridItem.swift */,
 				3697EB1E244884F2005A82F8 /* ArrangedItem.swift */,
 				36829D65244D8F7C006D605B /* PositionedItem.swift */,
 				3697EB272448862C005A82F8 /* LayoutArrangement.swift */,
-				36829D67244DA873006D605B /* PositionsPreference.swift */,
-				36DE3523244B30A9009EA6E8 /* SpanPreference.swift */,
-				365DFD00245707A6001541E3 /* GridOverlayPreference.swift */,
-				368E4E8424581532009D1665 /* GridBackgroundPreference.swift */,
 				3697EB1C244884D4005A82F8 /* GridPoint.swift */,
 				36829D61244C1AEB006D605B /* GridSpan.swift */,
 				367F235924500DB600931700 /* TrackSize.swift */,
@@ -196,6 +195,18 @@
 				36780DD22452DB7A00B7AAAB /* GridFlow.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		36ED05D02459407B00873501 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				36829D67244DA873006D605B /* PositionsPreference.swift */,
+				36DE3523244B30A9009EA6E8 /* SpanPreference.swift */,
+				36ED05CE24593D1500873501 /* GridCellPreference.swift */,
+				365DFD00245707A6001541E3 /* GridOverlayPreference.swift */,
+				368E4E8424581532009D1665 /* GridBackgroundPreference.swift */,
+			);
+			path = Preferences;
 			sourceTree = "<group>";
 		};
 		8EF017D2E135B2F56431B8FC /* Frameworks */ = {
@@ -347,6 +358,7 @@
 				368E4E8524581532009D1665 /* GridBackgroundPreference.swift in Sources */,
 				36829D68244DA873006D605B /* PositionsPreference.swift in Sources */,
 				365DFD01245707A6001541E3 /* GridOverlayPreference.swift in Sources */,
+				36ED05CF24593D1500873501 /* GridCellPreference.swift in Sources */,
 				36829D60244C193A006D605B /* Constants.swift in Sources */,
 				3697EB1B244884AC005A82F8 /* GridItem.swift in Sources */,
 				36829D66244D8F7C006D605B /* PositionedItem.swift in Sources */,

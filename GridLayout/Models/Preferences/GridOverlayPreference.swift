@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-struct GridOverlayPreference {
-    var content: (_ rect: CGRect?) -> AnyView
+struct GridOverlayPreference: GridCellPreference {
+    var content: (_ rect: CGSize) -> AnyView
 }
 
 struct GridOverlayPreferenceKey: PreferenceKey {

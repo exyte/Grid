@@ -90,7 +90,6 @@ class LayoutArrangerImpl: LayoutArranger {
             let itemHeight: CGFloat
             let positionY: CGFloat
             
-            // TODO: Handle spacing
             switch contentMode {
             case .fill:
                 itemHeight = rowSize * CGFloat(arrangedItem.rowsCount)

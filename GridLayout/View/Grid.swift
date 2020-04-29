@@ -27,7 +27,8 @@ public struct Grid<Content>: View where Content: View {
             ScrollView(self.scrollAxis) {
                 ZStack(alignment: .topLeading) {
                     ForEach(self.items) { item in
-                        item.view // TODO: Add spacing
+                        item.view
+                            .padding(self.paddingEdges(item: item), self.spacing)
                             .frame(flow: self.flow,
                                    bounds: self.positions[item]?.bounds,
                                    contentMode: self.contentMode)
@@ -44,10 +45,10 @@ public struct Grid<Content>: View where Content: View {
                                 PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: .zero)
                             }
                             .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
-                                preference.content(self.positions[item]?.bounds)
+                                self.cellPreferenceView(item: item, preference: preference)
                             }
                             .overlayPreferenceValue(GridOverlayPreferenceKey.self) { preference in
-                                preference.content(self.positions[item]?.bounds)
+                                self.cellPreferenceView(item: item, preference: preference)
                             }
                     }
                 }
@@ -99,7 +100,16 @@ public struct Grid<Content>: View where Content: View {
         }
         return edges
     }
-
+    
+    @ViewBuilder
+    private func cellPreferenceView<T: GridCellPreference>(item: GridItem, preference: T) -> some View {
+        GeometryReader { geometry in
+            preference.content(geometry.size)
+        }
+        .padding(self.paddingEdges(item: item), self.spacing)
+        .frame(width: self.positions[item]?.bounds.width,
+               height: self.positions[item]?.bounds.height)
+    }
 }
 
 extension View {

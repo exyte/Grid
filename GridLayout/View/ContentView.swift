@@ -25,9 +25,8 @@ struct CardView: View {
             
             Text(self.text)
         }
-        .gridCellBackground { bounds in
+        .gridCellBackground { _ in
             Color(.green)
-                .frame(width: bounds?.width, height: bounds?.height)
         }
         .background(Color.red)
     }
@@ -47,14 +46,14 @@ struct ContentView: View {
     var body: some View {
         Group {
             if self.mode == .scroll {
-                Grid(0..<40, columns: firstGridColumns, spacing: 0) { _ in
+                Grid(0..<40, columns: firstGridColumns, spacing: 5) { _ in
                     CardView()
                         .gridSpan(column: self.randomSpan(self.firstGridColumns.count),
                                   row: self.randomSpan(3))
                 }
                 .gridContentMode(.scroll)
             } else {
-                Grid(0..<6, columns: secondGridColumns, spacing: 0) { _ in
+                Grid(0..<6, columns: secondGridColumns, spacing: 5) { _ in
                     CardView()
                         .gridSpan(column: self.randomSpan(self.secondGridColumns.count),
                                   row: self.randomSpan(3))

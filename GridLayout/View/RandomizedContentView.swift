@@ -17,10 +17,8 @@ struct CardView: View {
             Image("dog")
                 .resizable()
                 .scaledToFill()
-                .frame(minWidth: 0,
-                       minHeight: 0,
-                      maxHeight: 200
-                )
+                .frame(minWidth: 0, minHeight: 0,
+                       idealHeight: 200, maxHeight: 200)
                 .clipped()
             
             Text(self.text)

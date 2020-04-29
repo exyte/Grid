@@ -12,6 +12,11 @@ struct CardView: View {
     
     let text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor psum dolor sit amet."
     
+    var randomFrame: CGFloat? {
+        let value = Int.random(in: 200..<300)
+        return  CGFloat(value)
+    }
+    
     var body: some View {
         VStack {
             Image("dog")
@@ -21,10 +26,12 @@ struct CardView: View {
                        minHeight: 0,
                       maxHeight: 200
                 )
+                
                 .clipped()
             
             Text(self.text)
         }
+        .frame(width: self.randomFrame)
         .gridCellBackground { _ in
             Color(.green)
         }
@@ -40,7 +47,7 @@ struct RandomizedContentView: View {
     
     var mode: Mode = .scroll
     
-    let firstGridColumns: [TrackSize] = [.fr(1), .fr(2), .const(200)]
+    let firstGridColumns: [TrackSize] = [.auto, .auto, .auto]
     let secondGridColumns: [TrackSize] = 6
     
     var body: some View {
@@ -48,8 +55,8 @@ struct RandomizedContentView: View {
             if self.mode == .scroll {
                 Grid(0..<40, columns: firstGridColumns, spacing: 5) { _ in
                     CardView()
-                        .gridSpan(column: self.randomSpan(self.firstGridColumns.count),
-                                  row: self.randomSpan(3))
+//                        .gridSpan(column: self.randomSpan(self.firstGridColumns.count),
+//                                  row: self.randomSpan(3))
                 }
                 .gridContentMode(.scroll)
             } else {

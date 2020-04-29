@@ -70,7 +70,7 @@ class LayoutArrangerImpl: LayoutArranger {
     
     func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode) -> PositionsPreference {
         let rowSizes: [CGFloat] = self.calculateSizes(position: position, arrangement: arrangement, contentMode: contentMode)
-        let columnSizes = self.calculateSizes(tracks: tracks, boundingLength: boundingSize.width)
+        let columnSizes = self.calculateSizes(position: position, arrangement: arrangement, boundingLength: boundingSize.width, tracks: tracks)
         var newPositions: [PositionedItem] = []
         
         for positionedItem in position.items {
@@ -94,23 +94,38 @@ class LayoutArrangerImpl: LayoutArranger {
                 }) + centringYCorrection
             }
 
-            let trackStart = columnSizes[0..<arrangedItem.startPoint.column].reduce(0) { $0 + $1 }
-            let trackSize = columnSizes[arrangedItem.startPoint.column...arrangedItem.endPoint.column].reduce(0) { $0 + $1 }
+            let trackStart = columnSizes[0..<arrangedItem.startPoint.column].reduce(0, +)
+            let trackSize = columnSizes[arrangedItem.startPoint.column...arrangedItem.endPoint.column].reduce(0, +)
             
             let newBounds = CGRect(x: trackStart, y: positionY, width: trackSize, height: itemHeight)
             newPositions.append(PositionedItem(bounds: newBounds, gridItem: positionedItem.gridItem))
         }
         
-        let totalHeight = rowSizes.reduce(0, { result, trackSize in
-            return result + trackSize
-        })
+        let totalHeight = rowSizes.reduce(0, +)
 
         return PositionsPreference(items: newPositions, size: CGSize(width: boundingSize.width, height: totalHeight))
     }
     
-    private func calculateSizes(tracks: [TrackSize], boundingLength: CGFloat) -> [CGFloat] {
+    private func calculateSizes(position: PositionsPreference, arrangement: LayoutArrangement, boundingLength: CGFloat, tracks: [TrackSize]) -> [CGFloat] {
+        var sizes: [CGFloat] = .init(repeating: 0, count: tracks.count)
         var fractionCount = 0
         var totalConsts = 0
+
+        /// 1. Resolve minMax tracks
+        for (index, track) in tracks.enumerated() {
+            guard case .auto = track else { continue }
+            for positionedItem in position.items {
+                guard let arrangedItem = arrangement[positionedItem.gridItem],
+                    arrangedItem.startPoint.column <= index,
+                    arrangedItem.endPoint.column >= index
+                else { continue }
+                
+                let itemSelfWidth = positionedItem.bounds.width
+                for index in arrangedItem.startPoint.column...arrangedItem.endPoint.column {
+                    sizes[index] = max(sizes[index], min(boundingLength / CGFloat(tracks.count), itemSelfWidth / CGFloat(arrangedItem.columnsCount)))
+                }
+            }
+        }
         
         for track in tracks {
             switch track {
@@ -118,18 +133,22 @@ class LayoutArrangerImpl: LayoutArranger {
                 fractionCount += fraction
             case .const(let constLength):
                 totalConsts += constLength
+            case .auto:
+                ()
             }
         }
         
-        let correctedLength = boundingLength - CGFloat(totalConsts)
-        let fractionSize = correctedLength / CGFloat(fractionCount)
+        let correctedLength = max(0, boundingLength - CGFloat(totalConsts) - sizes.reduce(0, +))
+        let fractionSize = correctedLength / max(1, CGFloat(fractionCount))
 
-        return tracks.map { track in
+        return tracks.enumerated().map { index, track in
             switch track {
             case .fr(let fraction):
-                return CGFloat(fraction) * fractionSize
+                return max(sizes[index], CGFloat(fraction) * fractionSize)
             case .const(let constLength):
-                return CGFloat(constLength)
+                return max(sizes[index], CGFloat(constLength))
+            case .auto:
+                return sizes[index]
             }
         }
     }

@@ -10,12 +10,18 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Grid(columns: 3, spacing: 5) {
-            CardView().gridSpan(column: 2, row: 3)
+        Grid(columns: [.auto, .auto, .auto], spacing: 0) {
+            CardView()
+                .gridSpan(column: 2, row: 1)
                 .frame(width: 100)
-            CardView().gridSpan(column: 1, row: 2)
-            CardView().gridSpan(column: 3, row: 1)
-            CardView().gridSpan(column: 1, row: 1)                
+                
+            CardView()
+                .frame(width: 200)
+            CardView()
+                .frame(width: 150)
+            .gridSpan(column: 2, row: 1)
+            CardView()
+                .frame(width: 130)
         }
         .gridContentMode(.scroll)
     }

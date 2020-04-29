@@ -42,7 +42,11 @@ public struct Grid<Content>: View where Content: View {
                             )
                             .transformPreference(SpansPreferenceKey.self) { $0.shrinkToLast(assigning: item) }
                             .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
-                                PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: .zero)
+                                guard self.arrangement?[item] != nil
+                                else {
+                                    return PositionsPreference(items: [], size: .zero)
+                                }
+                                return PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: .zero)
                             }
                             .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
                                 self.cellPreferenceView(item: item, preference: preference)

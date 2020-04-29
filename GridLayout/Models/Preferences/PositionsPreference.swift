@@ -9,9 +9,10 @@
 import SwiftUI
 
 struct PositionsPreference: Equatable {
-    var items: [PositionedItem]
+    let items: [PositionedItem]
+    let size: CGSize
     
-    static let `default` = PositionsPreference(items: [])
+    static let `default` = PositionsPreference(items: [], size: .zero)
     
     subscript(gridItem: GridItem) -> PositionedItem? {
         items.first(where: { $0.gridItem == gridItem })
@@ -22,6 +23,6 @@ struct PositionsPreferenceKey: PreferenceKey {
     static var defaultValue = PositionsPreference.default
 
     static func reduce(value: inout PositionsPreference, nextValue: () -> PositionsPreference) {
-        value = PositionsPreference(items: value.items + nextValue().items)
+        value = PositionsPreference(items: value.items + nextValue().items, size: value.size)
     }
 }

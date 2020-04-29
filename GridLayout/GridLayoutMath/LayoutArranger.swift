@@ -22,7 +22,7 @@ protocol LayoutArranger {
     ///   - arrangement: Previously calculated arrangement
     ///   - size: Bounding size
     ///   - tracks: Sizes of tracks
-    func reposition(_ items: [PositionedItem], arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize]) -> [PositionedItem]
+    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode) -> PositionsPreference
 }
 
 class LayoutArrangerImpl: LayoutArranger {
@@ -68,21 +68,85 @@ class LayoutArrangerImpl: LayoutArranger {
         return LayoutArrangement(columnsCount: columnsCount, rowsCount: rowsCount, items: result)
     }
     
-    func reposition(_ items: [PositionedItem], arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize]) -> [PositionedItem] {
+    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode) -> PositionsPreference {
+        let rowSizes: [CGFloat] = self.calculateSizes(position: position, arrangement: arrangement, contentMode: contentMode)
+        let columnSizes = self.calculateSizes(tracks: tracks, boundingLength: boundingSize.width)
         var newPositions: [PositionedItem] = []
         
-        for positionedItem in items {
+        for positionedItem in position.items {
             guard let arrangedItem = arrangement[positionedItem.gridItem] else { continue }
             let rowSize = boundingSize.height / CGFloat(arrangement.rowsCount)
-            let itemHeight = rowSize * CGFloat(arrangedItem.rowsCount)
-            let trackRange = arrangedItem.startPoint.column...arrangedItem.endPoint.column
-            let track = tracks.trackPosition(in: trackRange, length: boundingSize.width)
-            let positionY = rowSize * CGFloat(arrangedItem.startPoint.row)
-            let newBounds = CGRect(x: track.start, y: positionY, width: track.size, height: itemHeight)
+            
+            let itemHeight: CGFloat
+            let positionY: CGFloat
+            
+            switch contentMode {
+            case .fill:
+                itemHeight = rowSize * CGFloat(arrangedItem.rowsCount)
+                positionY = rowSize * CGFloat(arrangedItem.startPoint.row)
+            case .scroll:
+                itemHeight = (arrangedItem.startPoint.row...arrangedItem.endPoint.row).reduce(0, { result, row in
+                    return result + rowSizes[row]
+                })
+                let centringYCorrection = (itemHeight - positionedItem.bounds.height) / 2
+                positionY = (0..<arrangedItem.startPoint.row).reduce(0, { result, row in
+                    return result + rowSizes[row]
+                }) + centringYCorrection
+            }
+
+            let trackStart = columnSizes[0..<arrangedItem.startPoint.column].reduce(0) { $0 + $1 }
+            let trackSize = columnSizes[arrangedItem.startPoint.column...arrangedItem.endPoint.column].reduce(0) { $0 + $1 }
+            
+            let newBounds = CGRect(x: trackStart, y: positionY, width: trackSize, height: itemHeight)
             newPositions.append(PositionedItem(bounds: newBounds, gridItem: positionedItem.gridItem))
         }
         
-        return newPositions
+        let totalHeight = rowSizes.reduce(0, { result, trackSize in
+            return result + trackSize
+        })
+
+        return PositionsPreference(items: newPositions, size: CGSize(width: boundingSize.width, height: totalHeight))
+    }
+    
+    private func calculateSizes(tracks: [TrackSize], boundingLength: CGFloat) -> [CGFloat] {
+        var fractionCount = 0
+        var totalConsts = 0
+        
+        for track in tracks {
+            switch track {
+            case .fr(let fraction):
+                fractionCount += fraction
+            case .const(let constLength):
+                totalConsts += constLength
+            }
+        }
+        
+        let correctedLength = boundingLength - CGFloat(totalConsts)
+        let fractionSize = correctedLength / CGFloat(fractionCount)
+
+        return tracks.map { track in
+            switch track {
+            case .fr(let fraction):
+                return CGFloat(fraction) * fractionSize
+            case .const(let constLength):
+                return CGFloat(constLength)
+            }
+        }
+    }
+    
+    private func calculateSizes(position: PositionsPreference, arrangement: LayoutArrangement, contentMode: GridContentMode) -> [CGFloat] {
+        var sizes: [CGFloat] = .init(repeating: 0, count: arrangement.rowsCount)
+        if case .scroll = contentMode {
+            for positionedItem in position.items {
+                guard let arrangedItem = arrangement[positionedItem.gridItem] else { continue }
+                
+                let itemSelfHeight = positionedItem.bounds.height
+                for index in arrangedItem.startPoint.row...arrangedItem.endPoint.row {
+                    sizes[index] = max(sizes[index], itemSelfHeight / CGFloat(arrangedItem.rowsCount))
+                }
+            }
+        }
+        return sizes
     }
 }
 
@@ -112,49 +176,5 @@ extension Array where Element == GridPoint {
         }
         
         return false
-    }
-}
-
-extension Array where Element == TrackSize {
-    fileprivate func trackPosition(in range: ClosedRange<Int>, length: CGFloat) -> (start: CGFloat, size: CGFloat) {
-        var result = (fractionCount: 0, upcomingFractions: 0, totalConsts: 0, upcomingConsts: 0)
-        result = self.enumerated().reduce(result) { result, item in
-            var fractionCount = result.fractionCount
-            var upcomingFractions = result.upcomingFractions
-            var upcomingConsts = result.upcomingConsts
-            var totalConsts = result.totalConsts
-            
-            switch item.element {
-            case .fr(let fraction):
-                fractionCount += fraction
-                if range.lowerBound > item.offset {
-                    upcomingFractions += fraction
-                }
-            case .const(let constLength):
-                totalConsts += constLength
-                if range.lowerBound > item.offset {
-                    upcomingConsts += constLength
-                }
-            }
-
-            return (fractionCount: fractionCount,
-                    upcomingFractions: upcomingFractions,
-                    totalConsts: totalConsts,
-                    upcomingConsts: upcomingConsts)
-        }
-        
-        let correctedLength = length - CGFloat(result.totalConsts)
-        let fractionSize = correctedLength / CGFloat(result.fractionCount)
-        let trackStart = CGFloat(result.upcomingFractions) * fractionSize + CGFloat(result.upcomingConsts)
-        let trackSize: CGFloat = range.reduce(0) { trackSize, index in
-            switch self[index] {
-            case .fr(let fraction):
-                return trackSize + CGFloat(fraction) * fractionSize
-            case .const(let constLength):
-                return trackSize + CGFloat(constLength)
-            }
-        }
-        
-        return (start: trackStart, size: trackSize)
     }
 }

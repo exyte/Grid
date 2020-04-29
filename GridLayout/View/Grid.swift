@@ -15,10 +15,10 @@ public struct Grid<Content>: View where Content: View {
     @Environment(\.contentMode) private var contentMode
     
     let items: [GridItem]
-    let columnCount: Int
+    let tracksCount: Int
     let spacing: CGFloat
     let trackSizes: [TrackSize]
-    let flow: GridFlow = .columns // TODO: Handle rows
+    let flow: GridFlow = .rows
     
     private let arranger = LayoutArrangerImpl() as LayoutArranger
 
@@ -40,7 +40,7 @@ public struct Grid<Content>: View where Content: View {
                                     .frame(width: self.positions[item]?.bounds.width,
                                            height: self.positions[item]?.bounds.height)
                             )
-                            .transformPreference(SpansPreferenceKey.self) { $0.shrinkToLast(assigning: item) }
+
                             .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
                                 PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: .zero)
                             }
@@ -50,7 +50,18 @@ public struct Grid<Content>: View where Content: View {
                             .overlayPreferenceValue(GridOverlayPreferenceKey.self) { preference in
                                 self.cellPreferenceView(item: item, preference: preference)
                             }
+                            .transformPreference(SpansPreferenceKey.self) { preference in
+                                preference.shrinkToLast(assigning: item)
+
+                            }
                     }
+                }
+
+                .frame(minWidth: self.positions.size.width,
+                       maxWidth: .infinity,
+                       minHeight: self.positions.size.height,
+                       maxHeight: .infinity,
+                       alignment: .top)
                 }
                 .transformPreference(PositionsPreferenceKey.self) { positionPreference in
                     guard let arrangement = self.arrangement else { return }
@@ -58,13 +69,8 @@ public struct Grid<Content>: View where Content: View {
                                                                   arrangement: arrangement,
                                                                   boundingSize: mainGeometry.size,
                                                                   tracks: self.trackSizes,
-                                                                  contentMode: self.contentMode)
-                }
-                .frame(minWidth: self.positions.size.width,
-                       maxWidth: .infinity,
-                       minHeight: self.positions.size.height,
-                       maxHeight: .infinity,
-                       alignment: .top)
+                                                                  contentMode: self.contentMode,
+                                                                  flow: self.flow)
                 }
         }
         .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
@@ -84,7 +90,8 @@ public struct Grid<Content>: View where Content: View {
 
     private func calculateArrangement(spans: [SpanPreference]) {
         let calculatedLayout = self.arranger.arrange(spanPreferences: spans,
-                                                     columnsCount: self.columnCount)
+                                                     tracksCount: self.tracksCount,
+                                                     flow: self.flow)
         self.arrangement = calculatedLayout
         print(calculatedLayout)
     }

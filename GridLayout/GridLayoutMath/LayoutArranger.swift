@@ -94,16 +94,14 @@ class LayoutArrangerImpl: LayoutArranger {
                 }) + centringYCorrection
             }
 
-            let trackStart = columnSizes[0..<arrangedItem.startPoint.column].reduce(0) { $0 + $1 }
-            let trackSize = columnSizes[arrangedItem.startPoint.column...arrangedItem.endPoint.column].reduce(0) { $0 + $1 }
+            let trackStart = columnSizes[0..<arrangedItem.startPoint.column].reduce(0, +)
+            let trackSize = columnSizes[arrangedItem.startPoint.column...arrangedItem.endPoint.column].reduce(0, +)
             
             let newBounds = CGRect(x: trackStart, y: positionY, width: trackSize, height: itemHeight)
             newPositions.append(PositionedItem(bounds: newBounds, gridItem: positionedItem.gridItem))
         }
         
-        let totalHeight = rowSizes.reduce(0, { result, trackSize in
-            return result + trackSize
-        })
+        let totalHeight = rowSizes.reduce(0, +)
 
         return PositionsPreference(items: newPositions, size: CGSize(width: boundingSize.width, height: totalHeight))
     }

@@ -151,7 +151,7 @@ struct GridView_Previews: PreviewProvider {
     static var previews: some View {
         
         VStack {
-            Grid(0..<15, columns: 5, spacing: 5) { item in
+            Grid(0..<15, tracks: 5, spacing: 5) { item in
                 if item % 2 == 0 {
                     Color(.red)
                         .overlay(Text("\(item)").foregroundColor(.white))
@@ -164,7 +164,7 @@ struct GridView_Previews: PreviewProvider {
             
             Divider()
             
-            Grid(columns: [.fr(1), .fr(2), .fr(3), .fr(10)], spacing: 5) {
+            Grid(tracks: [.fr(1), .fr(2), .fr(3), .fr(10)], spacing: 5) {
                 Color(.brown)
                     .gridSpan(column: 4)
                 

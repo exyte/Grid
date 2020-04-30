@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Grid(columns: 2, spacing: 0) {
+        Grid(tracks: 2, spacing: 0) {
             HorizontalCardView()
                 .overlay(Text("1"))
                 .gridSpan(column: 1, row: 2)

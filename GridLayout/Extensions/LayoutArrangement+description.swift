@@ -10,8 +10,8 @@ import Foundation
 
 extension LayoutArrangement: CustomStringConvertible {
     var description: String {
+        guard !items.isEmpty else { return "" }
         var result = ""
-
         var items = self.items.map { (arrangement: $0, area: $0.area) }
 
         for row in 0...self.rowsCount {

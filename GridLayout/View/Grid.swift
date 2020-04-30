@@ -13,12 +13,12 @@ public struct Grid<Content>: View where Content: View {
     @State var arrangement: LayoutArrangement?
     @State var positions: PositionsPreference = .default
     @Environment(\.contentMode) private var contentMode
+    @Environment(\.flow) private var flow
     
     let items: [GridItem]
-    let columnCount: Int
+    let tracksCount: Int
     let spacing: CGFloat
     let trackSizes: [TrackSize]
-    let flow: GridFlow = .columns // TODO: Handle rows
     
     private let arranger = LayoutArrangerImpl() as LayoutArranger
 
@@ -28,6 +28,9 @@ public struct Grid<Content>: View where Content: View {
                 ZStack(alignment: .topLeading) {
                     ForEach(self.items) { item in
                         item.view
+                            .transformPreference(SpansPreferenceKey.self) { preference in
+                                preference.shrinkToLast(assigning: item)
+                            }
                             .padding(self.paddingEdges(item: item), self.spacing)
                             .frame(flow: self.flow,
                                    bounds: self.positions[item]?.bounds,
@@ -40,7 +43,7 @@ public struct Grid<Content>: View where Content: View {
                                     .frame(width: self.positions[item]?.bounds.width,
                                            height: self.positions[item]?.bounds.height)
                             )
-                            .transformPreference(SpansPreferenceKey.self) { $0.shrinkToLast(assigning: item) }
+
                             .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
                                 PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: .zero)
                             }
@@ -52,20 +55,25 @@ public struct Grid<Content>: View where Content: View {
                             }
                     }
                 }
+
+                .frame(minWidth: self.positions.size.width,
+                       maxWidth: .infinity,
+                       minHeight: self.positions.size.height,
+                       maxHeight: .infinity,
+                       alignment: .topLeading)
+                }
                 .transformPreference(PositionsPreferenceKey.self) { positionPreference in
                     guard let arrangement = self.arrangement else { return }
                     positionPreference = self.arranger.reposition(positionPreference,
                                                                   arrangement: arrangement,
                                                                   boundingSize: mainGeometry.size,
                                                                   tracks: self.trackSizes,
-                                                                  contentMode: self.contentMode)
+                                                                  contentMode: self.contentMode,
+                                                                  flow: self.flow)
                 }
-                .frame(minWidth: self.positions.size.width,
-                       maxWidth: .infinity,
-                       minHeight: self.positions.size.height,
-                       maxHeight: .infinity,
-                       alignment: .top)
-                }
+        }
+        .transformPreference(SpansPreferenceKey.self) { preference in
+            preference = preference.filter { $0.item != nil }
         }
         .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
             self.calculateArrangement(spans: spanPreferences)
@@ -84,7 +92,8 @@ public struct Grid<Content>: View where Content: View {
 
     private func calculateArrangement(spans: [SpanPreference]) {
         let calculatedLayout = self.arranger.arrange(spanPreferences: spans,
-                                                     columnsCount: self.columnCount)
+                                                     fixedTracksCount: self.tracksCount,
+                                                     flow: self.flow)
         self.arrangement = calculatedLayout
         print(calculatedLayout)
     }
@@ -142,11 +151,11 @@ struct GridView_Previews: PreviewProvider {
     static var previews: some View {
         
         VStack {
-            Grid(0..<30, columns: 5, spacing: 5) { item in
+            Grid(0..<15, tracks: 5, spacing: 5) { item in
                 if item % 2 == 0 {
                     Color(.red)
                         .overlay(Text("\(item)").foregroundColor(.white))
-                        .gridSpan(column: 1, row: 2)
+                        .gridSpan(column: 2, row: 1)
                 } else {
                     Color(.blue)
                         .overlay(Text("\(item)").foregroundColor(.white))
@@ -155,7 +164,7 @@ struct GridView_Previews: PreviewProvider {
             
             Divider()
             
-            Grid(columns: [.fr(1), .fr(2), .fr(3), .fr(10)], spacing: 5) {
+            Grid(tracks: [.fr(1), .fr(2), .fr(3), .fr(10)], spacing: 5) {
                 Color(.brown)
                     .gridSpan(column: 4)
                 
@@ -179,5 +188,6 @@ struct GridView_Previews: PreviewProvider {
                 Color(.gray)
             }
         }
+        .gridFlow(.rows)
     }
 }

@@ -28,6 +28,9 @@ public struct Grid<Content>: View where Content: View {
                 ZStack(alignment: .topLeading) {
                     ForEach(self.items) { item in
                         item.view
+                            .transformPreference(SpansPreferenceKey.self) { preference in
+                                preference.shrinkToLast(assigning: item)
+                            }
                             .padding(self.paddingEdges(item: item), self.spacing)
                             .frame(flow: self.flow,
                                    bounds: self.positions[item]?.bounds,
@@ -50,10 +53,6 @@ public struct Grid<Content>: View where Content: View {
                             .overlayPreferenceValue(GridOverlayPreferenceKey.self) { preference in
                                 self.cellPreferenceView(item: item, preference: preference)
                             }
-                            .transformPreference(SpansPreferenceKey.self) { preference in
-                                preference.shrinkToLast(assigning: item)
-
-                            }
                     }
                 }
 
@@ -73,8 +72,12 @@ public struct Grid<Content>: View where Content: View {
                                                                   flow: self.flow)
                 }
         }
+        .transformPreference(SpansPreferenceKey.self) { preference in
+            preference = preference.filter { $0.item != nil }
+        }
         .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
             self.calculateArrangement(spans: spanPreferences)
+            print("Ololo")
         }
         .onPreferenceChange(PositionsPreferenceKey.self) { positionsPreference in
             self.positions = positionsPreference

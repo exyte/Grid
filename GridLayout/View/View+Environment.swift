@@ -13,15 +13,30 @@ extension View {
     public func gridContentMode(_ contentMode: GridContentMode) -> some View {
         return self.environment(\.contentMode, contentMode)
     }
+    
+    public func gridFlow(_ flow: GridFlow) -> some View {
+        return self.environment(\.flow, flow)
+    }
 }
 
 extension EnvironmentValues {
     var contentMode: GridContentMode {
-        get { self[ContentModeKey.self] }
-        set { self[ContentModeKey.self] = newValue }
+        get { self[EnvironmentKeys.ContentMode.self] }
+        set { self[EnvironmentKeys.ContentMode.self] = newValue }
+    }
+    
+    var flow: GridFlow {
+        get { self[EnvironmentKeys.Flow.self] }
+        set { self[EnvironmentKeys.Flow.self] = newValue }
     }
 }
 
-struct ContentModeKey: EnvironmentKey {
-    static let defaultValue = GridContentMode.fill
+struct EnvironmentKeys {
+    struct ContentMode: EnvironmentKey {
+        static let defaultValue = GridContentMode.fill
+    }
+
+    struct Flow: EnvironmentKey {
+        static let defaultValue = GridFlow.columns
+    }
 }

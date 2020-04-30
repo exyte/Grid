@@ -8,7 +8,7 @@
 
 import CoreGraphics
 
-enum GridFlow {
+public enum GridFlow {
     case columns
     case rows
 }

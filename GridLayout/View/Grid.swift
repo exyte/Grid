@@ -13,12 +13,12 @@ public struct Grid<Content>: View where Content: View {
     @State var arrangement: LayoutArrangement?
     @State var positions: PositionsPreference = .default
     @Environment(\.contentMode) private var contentMode
+    @Environment(\.flow) private var flow
     
     let items: [GridItem]
     let tracksCount: Int
     let spacing: CGFloat
     let trackSizes: [TrackSize]
-    let flow: GridFlow = .rows
     
     private let arranger = LayoutArrangerImpl() as LayoutArranger
 

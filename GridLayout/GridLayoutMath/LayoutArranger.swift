@@ -12,16 +12,19 @@ import CoreGraphics
 protocol LayoutArranger {
     /// Arranges grid items into layout arrangement that specifies relations between abstract position in grid view and specific item
     /// - Parameters:
-    ///   - items: Grid items to arrange. They could specify row and columns spans
-    ///   - columnsCount: Total count of columns in grid view
+    ///   - spanPreferences: Grid items to arrange. They could specify row and columns spans
+    ///   - fixedTracksCount: Total count of fixed tracks in grid view
+    ///   - flow: Distribution order of grid items
     func arrange(spanPreferences: [SpanPreference], fixedTracksCount: Int, flow: GridFlow) -> LayoutArrangement
     
     /// Recalculates positions based on layout arrangement and bounding size
     /// - Parameters:
-    ///   - items: Items to reposition
+    ///   - position: Items to reposition
     ///   - arrangement: Previously calculated arrangement
-    ///   - size: Bounding size
+    ///   - boundingSize: Bounding size
     ///   - tracks: Sizes of tracks
+    ///   - contentMode: Where the content will be scrolled or filled inside a grid
+    ///   - flow: Distribution order of grid items
     func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode, flow: GridFlow) -> PositionsPreference
 }
 

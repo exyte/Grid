@@ -42,8 +42,12 @@ extension GridFlow {
         (self == .columns ? \ArrangedItem.rowsCount : \ArrangedItem.columnsCount)
     }
 
-    var growingArrangementCount: KeyPath<LayoutArrangement, Int> {
+    var growingArrangementCount: WritableKeyPath<LayoutArrangement, Int> {
         (self == .columns ? \LayoutArrangement.rowsCount : \LayoutArrangement.columnsCount)
+    }
+    
+    var fixedArrangementCount: WritableKeyPath<LayoutArrangement, Int> {
+        (self == .rows ? \LayoutArrangement.rowsCount : \LayoutArrangement.columnsCount)
     }
     
     var fixedCGPointIndex: WritableKeyPath<CGPoint, CGFloat> {

@@ -14,7 +14,7 @@ protocol LayoutArranger {
     /// - Parameters:
     ///   - items: Grid items to arrange. They could specify row and columns spans
     ///   - columnsCount: Total count of columns in grid view
-    func arrange(spanPreferences: [SpanPreference], tracksCount: Int, flow: GridFlow) -> LayoutArrangement
+    func arrange(spanPreferences: [SpanPreference], fixedTracksCount: Int, flow: GridFlow) -> LayoutArrangement
     
     /// Recalculates positions based on layout arrangement and bounding size
     /// - Parameters:
@@ -27,26 +27,26 @@ protocol LayoutArranger {
 
 class LayoutArrangerImpl: LayoutArranger {
     
-    func arrange(spanPreferences: [SpanPreference], tracksCount: Int, flow: GridFlow) -> LayoutArrangement {
-        guard tracksCount > 0 else { return LayoutArrangement(columnsCount: tracksCount, rowsCount: 0, items: []) }
+    func arrange(spanPreferences: [SpanPreference], fixedTracksCount: Int, flow: GridFlow) -> LayoutArrangement {
+        guard fixedTracksCount > 0 else { return .zero }
             
         var result: [ArrangedItem] = []
         var occupiedPoints: [GridPoint] = []
         
         var lastPoint: GridPoint = .zero
-        var orthogonalTracksCount = 0
+        var growingTracksCount = 0
 
         for spanPreference in spanPreferences {
             guard
-                spanPreference.span[keyPath: flow.fixedIndex] <= tracksCount,
+                spanPreference.span[keyPath: flow.fixedIndex] <= fixedTracksCount,
                 let gridItem = spanPreference.item
             else {
                 continue
             } // TODO: Reduce span
             
             while occupiedPoints.contains(lastPoint, rowSpan: spanPreference.span.row, columnSpan: spanPreference.span.column)
-                || lastPoint[keyPath: flow.fixedIndex] + spanPreference.span[keyPath: flow.fixedIndex] > tracksCount {
-                    lastPoint = lastPoint.nextPoint(tracksCount: tracksCount, flow: flow)
+                || lastPoint[keyPath: flow.fixedIndex] + spanPreference.span[keyPath: flow.fixedIndex] > fixedTracksCount {
+                    lastPoint = lastPoint.nextPoint(tracksCount: fixedTracksCount, flow: flow)
             }
 
             for row in lastPoint.row..<lastPoint.row + spanPreference.span.row {
@@ -60,12 +60,14 @@ class LayoutArrangerImpl: LayoutArranger {
                                            column: startPoint.column + spanPreference.span.column - 1)
 
             let arrangedItem = ArrangedItem(gridItem: gridItem, startPoint: startPoint, endPoint: endPoint)
-            orthogonalTracksCount = max(orthogonalTracksCount, arrangedItem.endPoint[keyPath: flow.growingIndex] + 1)
+            growingTracksCount = max(growingTracksCount, arrangedItem.endPoint[keyPath: flow.growingIndex] + 1)
             result.append(arrangedItem)
-            lastPoint = lastPoint.nextPoint(tracksCount: tracksCount, flow: flow)
+            lastPoint = lastPoint.nextPoint(tracksCount: fixedTracksCount, flow: flow)
         }
-        
-        return LayoutArrangement(columnsCount: tracksCount, rowsCount: orthogonalTracksCount, items: result)
+        var arrangement = LayoutArrangement(columnsCount: 0, rowsCount: 0, items: result)
+        arrangement[keyPath: flow.fixedArrangementCount] = fixedTracksCount
+        arrangement[keyPath: flow.growingArrangementCount] = growingTracksCount
+        return arrangement
     }
     
     func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode, flow: GridFlow) -> PositionsPreference {

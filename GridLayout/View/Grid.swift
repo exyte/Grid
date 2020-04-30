@@ -60,7 +60,7 @@ public struct Grid<Content>: View where Content: View {
                        maxWidth: .infinity,
                        minHeight: self.positions.size.height,
                        maxHeight: .infinity,
-                       alignment: .top)
+                       alignment: .topLeading)
                 }
                 .transformPreference(PositionsPreferenceKey.self) { positionPreference in
                     guard let arrangement = self.arrangement else { return }
@@ -77,7 +77,6 @@ public struct Grid<Content>: View where Content: View {
         }
         .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
             self.calculateArrangement(spans: spanPreferences)
-            print("Ololo")
         }
         .onPreferenceChange(PositionsPreferenceKey.self) { positionsPreference in
             self.positions = positionsPreference
@@ -93,7 +92,7 @@ public struct Grid<Content>: View where Content: View {
 
     private func calculateArrangement(spans: [SpanPreference]) {
         let calculatedLayout = self.arranger.arrange(spanPreferences: spans,
-                                                     tracksCount: self.tracksCount,
+                                                     fixedTracksCount: self.tracksCount,
                                                      flow: self.flow)
         self.arrangement = calculatedLayout
         print(calculatedLayout)

@@ -10,18 +10,24 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Grid(columns: 3, spacing: 0) {
-            CardView()
-            CardView()//.gridSpan(column: 1, row: 2)
-            CardView()//.gridSpan(column: 3, row: 1)
-            CardView()//.gridSpan(column: 1, row: 1)                
+        Grid(columns: 2, spacing: 0) {
+            HorizontalCardView()
+                .overlay(Text("1"))
+                .gridSpan(column: 1, row: 2)
+            HorizontalCardView()
+                .gridSpan(column: 1, row: 2)
+                .overlay(Text("2"))
+            
+            HorizontalCardView()
+
         }
-        .gridContentMode(.scroll)
+        .gridContentMode(.fill)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .gridFlow(.columns)
     }
 }

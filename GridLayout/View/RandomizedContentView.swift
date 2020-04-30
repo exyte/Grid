@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct CardView: View {
+struct HorizontalCardView: View {
     
     let text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor psum dolor sit amet."
     
@@ -21,6 +21,27 @@ struct CardView: View {
                 .clipped()
             
             Text(self.text).frame(minWidth: 0, idealWidth: 200, maxWidth: 200, minHeight: 0)
+        }
+        .gridCellBackground { _ in
+            Color(.green)
+        }
+        .background(Color.red)
+    }
+}
+
+struct VerticalCardView: View {
+    
+    let text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor psum dolor sit amet."
+    
+    var body: some View {
+       VStack {
+            Image("dog")
+                .resizable()
+                .scaledToFill()
+                .frame(minWidth: 0, minHeight: 0, idealHeight: 200, maxHeight: 200)
+                .clipped()
+            
+            Text(self.text).frame(minWidth: 0, minHeight: 0, idealHeight: 200, maxHeight: 200)
         }
         .gridCellBackground { _ in
             Color(.green)
@@ -44,14 +65,14 @@ struct RandomizedContentView: View {
         Group {
             if self.mode == .scroll {
                 Grid(0..<40, columns: firstGridColumns, spacing: 5) { _ in
-                    CardView()
+                    VerticalCardView()
                         .gridSpan(column: self.randomSpan(3),
                                   row: self.randomSpan(self.firstGridColumns.count))
                 }
                 .gridContentMode(.scroll)
             } else {
                 Grid(0..<6, columns: secondGridColumns, spacing: 5) { _ in
-                    CardView()
+                    VerticalCardView()
                         .gridSpan(column: self.randomSpan(3),
                                   row: self.randomSpan(self.secondGridColumns.count))
                 }

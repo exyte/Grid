@@ -151,11 +151,11 @@ struct GridView_Previews: PreviewProvider {
     static var previews: some View {
         
         VStack {
-            Grid(0..<30, columns: 5, spacing: 5) { item in
+            Grid(0..<15, columns: 5, spacing: 5) { item in
                 if item % 2 == 0 {
                     Color(.red)
                         .overlay(Text("\(item)").foregroundColor(.white))
-                        .gridSpan(column: 1, row: 2)
+                        .gridSpan(column: 2, row: 1)
                 } else {
                     Color(.blue)
                         .overlay(Text("\(item)").foregroundColor(.white))
@@ -188,5 +188,6 @@ struct GridView_Previews: PreviewProvider {
                 Color(.gray)
             }
         }
+        .gridFlow(.rows)
     }
 }

@@ -14,20 +14,20 @@ public enum GridFlow {
 }
 
 extension GridFlow {
-    var fixedIndex: WritableKeyPath<GridIndexing, Int> {
-        (self == .columns ? \GridIndexing.column : \GridIndexing.row)
+    var fixedIndex: WritableKeyPath<GridPointing, Int> {
+        (self == .columns ? \GridPointing.column : \GridPointing.row)
     }
     
-    var growingIndex: WritableKeyPath<GridIndexing, Int> {
-         (self == .rows ? \GridIndexing.column : \GridIndexing.row)
+    var growingIndex: WritableKeyPath<GridPointing, Int> {
+         (self == .rows ? \GridPointing.column : \GridPointing.row)
     }
     
-    var fixedPointIndex: WritableKeyPath<GridPoint, Int> {
-        (self == .columns ? \GridPoint.column : \GridPoint.row)
+    var fixedIndexIndex: WritableKeyPath<GridIndex, Int> {
+        (self == .columns ? \GridIndex.column : \GridIndex.row)
     }
     
-    var growingPointIndex: WritableKeyPath<GridPoint, Int> {
-         (self == .rows ? \GridPoint.column : \GridPoint.row)
+    var growingIndexIndex: WritableKeyPath<GridIndex, Int> {
+         (self == .rows ? \GridIndex.column : \GridIndex.row)
     }
     
     var fixedSize: WritableKeyPath<CGSize, CGFloat> {

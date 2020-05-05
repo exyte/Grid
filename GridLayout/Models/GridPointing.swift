@@ -1,5 +1,5 @@
 //
-//  GridIndexing.swift
+//  GridPointing.swift
 //  GridLayout
 //
 //  Created by Denis Obukhov on 29.04.2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol GridIndexing {
+protocol GridPointing {
     var row: Int { get set }
     var column: Int { get set }
 }

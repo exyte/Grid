@@ -1,5 +1,5 @@
 //
-//  GridPosition.swift
+//  GridIndex.swift
 //  GridLayout
 //
 //  Created by Denis Obukhov on 16.04.2020.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct GridPoint: GridIndexing, Equatable {
+struct GridIndex: GridPointing, Equatable {
     var row: Int
     var column: Int
     
-    static let zero = GridPoint(row: 0, column: 0)
+    static let zero = GridIndex(row: 0, column: 0)
 }

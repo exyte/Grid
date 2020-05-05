@@ -35,9 +35,9 @@ class LayoutArrangerImpl: LayoutArranger {
         guard fixedTracksCount > 0 else { return .zero }
             
         var result: [ArrangedItem] = []
-        var occupiedPoints: [GridPoint] = []
+        var occupiedIndices: [GridIndex] = []
         
-        var lastPoint: GridPoint = .zero
+        var lastIndex: GridIndex = .zero
         var growingTracksCount = 0
 
         for spanPreference in spanPreferences {
@@ -48,33 +48,33 @@ class LayoutArrangerImpl: LayoutArranger {
                 continue
             } // TODO: Reduce span
             
-            var currentPoint: GridPoint
+            var currentIndex: GridIndex
             
             switch packing {
             case .sparse:
-                currentPoint = lastPoint
+                currentIndex = lastIndex
             case .dense:
-                currentPoint = .zero // TODO: Improve dense algorithm
+                currentIndex = .zero // TODO: Improve dense algorithm
             }
-            while occupiedPoints.contains(currentPoint, rowSpan: spanPreference.span.row, columnSpan: spanPreference.span.column)
-                || currentPoint[keyPath: flow.fixedIndex] + spanPreference.span[keyPath: flow.fixedIndex] > fixedTracksCount {
-                    currentPoint = currentPoint.nextPoint(tracksCount: fixedTracksCount, flow: flow)
+            while occupiedIndices.contains(currentIndex, rowSpan: spanPreference.span.row, columnSpan: spanPreference.span.column)
+                || currentIndex[keyPath: flow.fixedIndex] + spanPreference.span[keyPath: flow.fixedIndex] > fixedTracksCount {
+                    currentIndex = currentIndex.nextIndex(tracksCount: fixedTracksCount, flow: flow)
             }
 
-            for row in currentPoint.row..<currentPoint.row + spanPreference.span.row {
-                for column in currentPoint.column..<currentPoint.column + spanPreference.span.column {
-                    occupiedPoints.append(GridPoint(row: row, column: column))
+            for row in currentIndex.row..<currentIndex.row + spanPreference.span.row {
+                for column in currentIndex.column..<currentIndex.column + spanPreference.span.column {
+                    occupiedIndices.append(GridIndex(row: row, column: column))
                 }
             }
             
-            let startPoint = currentPoint
-            let endPoint = GridPoint(row: startPoint.row + spanPreference.span.row - 1,
-                                           column: startPoint.column + spanPreference.span.column - 1)
+            let startIndex = currentIndex
+            let endIndex = GridIndex(row: startIndex.row + spanPreference.span.row - 1,
+                                           column: startIndex.column + spanPreference.span.column - 1)
 
-            let arrangedItem = ArrangedItem(gridItem: gridItem, startPoint: startPoint, endPoint: endPoint)
-            growingTracksCount = max(growingTracksCount, arrangedItem.endPoint[keyPath: flow.growingIndex] + 1)
+            let arrangedItem = ArrangedItem(gridItem: gridItem, startIndex: startIndex, endIndex: endIndex)
+            growingTracksCount = max(growingTracksCount, arrangedItem.endIndex[keyPath: flow.growingIndex] + 1)
             result.append(arrangedItem)
-            lastPoint = currentPoint.nextPoint(tracksCount: fixedTracksCount, flow: flow)
+            lastIndex = currentIndex.nextIndex(tracksCount: fixedTracksCount, flow: flow)
         }
         var arrangement = LayoutArrangement(columnsCount: 0, rowsCount: 0, items: result)
         arrangement[keyPath: flow.fixedArrangementCount] = fixedTracksCount
@@ -99,19 +99,19 @@ class LayoutArrangerImpl: LayoutArranger {
             case .fill:
                 let growingSize = boundingSize[keyPath: flow.growingSize] / CGFloat(arrangement[keyPath: flow.growingArrangementCount])
                 itemGrowingSize = growingSize * CGFloat(arrangedItem[keyPath: flow.arrangedItemGrowingCount])
-                growingPosition = growingSize * CGFloat(arrangedItem.startPoint[keyPath: flow.growingIndex])
+                growingPosition = growingSize * CGFloat(arrangedItem.startIndex[keyPath: flow.growingIndex])
             case .scroll:
-                itemGrowingSize = (arrangedItem.startPoint[keyPath: flow.growingIndex]...arrangedItem.endPoint[keyPath: flow.growingIndex]).reduce(0, { result, index in
+                itemGrowingSize = (arrangedItem.startIndex[keyPath: flow.growingIndex]...arrangedItem.endIndex[keyPath: flow.growingIndex]).reduce(0, { result, index in
                     return result + growingTracksSizes[index]
                 })
                 let centringCorrection = (itemGrowingSize - positionedItem.bounds.size[keyPath: flow.growingSize]) / 2
-                growingPosition = (0..<arrangedItem.startPoint[keyPath: flow.growingIndex]).reduce(0, { result, index in
+                growingPosition = (0..<arrangedItem.startIndex[keyPath: flow.growingIndex]).reduce(0, { result, index in
                     return result + growingTracksSizes[index]
                 }) + centringCorrection
             }
 
-            let fixedTrackStart = fixedTracksSizes[0..<arrangedItem.startPoint[keyPath: flow.fixedIndex]].reduce(0, +)
-            let fixedTrackSize = fixedTracksSizes[arrangedItem.startPoint[keyPath: flow.fixedIndex]...arrangedItem.endPoint[keyPath: flow.fixedIndex]].reduce(0, +)
+            let fixedTrackStart = fixedTracksSizes[0..<arrangedItem.startIndex[keyPath: flow.fixedIndex]].reduce(0, +)
+            let fixedTrackSize = fixedTracksSizes[arrangedItem.startIndex[keyPath: flow.fixedIndex]...arrangedItem.endIndex[keyPath: flow.fixedIndex]].reduce(0, +)
             
             var newBounds = CGRect.zero
             newBounds.size[keyPath: flow.growingSize] = itemGrowingSize.rounded()
@@ -163,8 +163,8 @@ class LayoutArrangerImpl: LayoutArranger {
                 guard let arrangedItem = arrangement[positionedItem.gridItem] else { continue }
                 
                 let itemSelfSize = positionedItem.bounds.size[keyPath: flow.growingSize]
-                let itemRangeStart = arrangedItem.startPoint[keyPath: flow.growingIndex]
-                let itemRangeEnd = arrangedItem.endPoint[keyPath: flow.growingIndex]
+                let itemRangeStart = arrangedItem.startIndex[keyPath: flow.growingIndex]
+                let itemRangeEnd = arrangedItem.endIndex[keyPath: flow.growingIndex]
                 for index in itemRangeStart...itemRangeEnd {
                     let growingCount = arrangedItem[keyPath: flow.arrangedItemGrowingCount]
                     sizes[index] = max(sizes[index], itemSelfSize / CGFloat(growingCount))
@@ -175,10 +175,10 @@ class LayoutArrangerImpl: LayoutArranger {
     }
 }
 
-extension GridPoint {
-    fileprivate func nextPoint(tracksCount: Int, flow: GridFlow) -> GridPoint {
-        var fixedSize = self[keyPath: flow.fixedPointIndex]
-        var growingSize = self[keyPath: flow.growingPointIndex]
+extension GridIndex {
+    fileprivate func nextIndex(tracksCount: Int, flow: GridFlow) -> GridIndex {
+        var fixedSize = self[keyPath: flow.fixedIndexIndex]
+        var growingSize = self[keyPath: flow.growingIndexIndex]
         
         fixedSize += 1
         if fixedSize >= tracksCount {
@@ -186,18 +186,18 @@ extension GridPoint {
             growingSize += 1
         }
         
-        var nextPoint = GridPoint.zero
-        nextPoint[keyPath: flow.fixedPointIndex] = fixedSize
-        nextPoint[keyPath: flow.growingPointIndex] = growingSize
-        return nextPoint
+        var nextIndex = GridIndex.zero
+        nextIndex[keyPath: flow.fixedIndexIndex] = fixedSize
+        nextIndex[keyPath: flow.growingIndexIndex] = growingSize
+        return nextIndex
     }
 }
 
-extension Array where Element == GridPoint {
-    fileprivate func contains(_ startPoint: GridPoint, rowSpan: Int, columnSpan: Int) -> Bool {
-        for row in startPoint.row..<startPoint.row + rowSpan {
-            for column in startPoint.column..<startPoint.column + columnSpan {
-                if self.contains(GridPoint(row: row, column: column)) {
+extension Array where Element == GridIndex {
+    fileprivate func contains(_ startIndex: GridIndex, rowSpan: Int, columnSpan: Int) -> Bool {
+        for row in startIndex.row..<startIndex.row + rowSpan {
+            for column in startIndex.column..<startIndex.column + columnSpan {
+                if self.contains(GridIndex(row: row, column: column)) {
                     return true
                 }
             }

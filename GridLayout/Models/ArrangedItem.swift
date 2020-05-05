@@ -11,17 +11,17 @@ import Foundation
 /// Specfies the abstract position of a grid item in a grid view
 struct ArrangedItem {
     let gridItem: GridItem
-    let startPoint: GridPoint
-    let endPoint: GridPoint
+    let startIndex: GridIndex
+    let endIndex: GridIndex
     
     var area: Int { self.rowsCount * self.columnsCount }
-    var columnsCount: Int { endPoint.column - startPoint.column + 1 }
-    var rowsCount: Int { endPoint.row - startPoint.row + 1 }
+    var columnsCount: Int { endIndex.column - startIndex.column + 1 }
+    var rowsCount: Int { endIndex.row - startIndex.row + 1 }
     
-    func contains(_ point: GridPoint) -> Bool {
-        return point.column >= startPoint.column
-            && point.column <= endPoint.column
-            && point.row >= startPoint.row
-            && point.row <= endPoint.row
+    func contains(_ index: GridIndex) -> Bool {
+        return index.column >= startIndex.column
+            && index.column <= endIndex.column
+            && index.row >= startIndex.row
+            && index.row <= endIndex.row
     }
 }

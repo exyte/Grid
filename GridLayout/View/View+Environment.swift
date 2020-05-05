@@ -18,8 +18,8 @@ extension View {
         return self.environment(\.gridFlow, flow)
     }
     
-    public func gridPacking(_ flow: GridPacking) -> some View {
-        return self.environment(\.gridPacking, flow)
+    public func gridPacking(_ packing: GridPacking) -> some View {
+        return self.environment(\.gridPacking, packing)
     }
 }
 

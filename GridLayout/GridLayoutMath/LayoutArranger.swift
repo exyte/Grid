@@ -105,18 +105,18 @@ class LayoutArrangerImpl: LayoutArranger {
             let fixedTrackSize = fixedTracksSizes[arrangedItem.startPoint[keyPath: flow.fixedIndex]...arrangedItem.endPoint[keyPath: flow.fixedIndex]].reduce(0, +)
             
             var newBounds = CGRect.zero
-            newBounds.size[keyPath: flow.growingSize] = itemGrowingSize
-            newBounds.size[keyPath: flow.fixedSize] = fixedTrackSize
-            newBounds.origin[keyPath: flow.growingCGPointIndex] = growingPosition
-            newBounds.origin[keyPath: flow.fixedCGPointIndex] = fixedTrackStart
+            newBounds.size[keyPath: flow.growingSize] = itemGrowingSize.rounded()
+            newBounds.size[keyPath: flow.fixedSize] = fixedTrackSize.rounded()
+            newBounds.origin[keyPath: flow.growingCGPointIndex] = growingPosition.rounded()
+            newBounds.origin[keyPath: flow.fixedCGPointIndex] = fixedTrackStart.rounded()
 
             newPositions.append(PositionedItem(bounds: newBounds, gridItem: positionedItem.gridItem))
         }
         
         let totalGrowingSize = growingTracksSizes.reduce(0, +)
         var totalSize = CGSize.zero
-        totalSize[keyPath: flow.fixedSize] = boundingSize[keyPath: flow.fixedSize]
-        totalSize[keyPath: flow.growingSize] = totalGrowingSize
+        totalSize[keyPath: flow.fixedSize] = boundingSize[keyPath: flow.fixedSize].rounded()
+        totalSize[keyPath: flow.growingSize] = totalGrowingSize.rounded()
         return PositionsPreference(items: newPositions, size: totalSize)
     }
     
@@ -148,7 +148,7 @@ class LayoutArrangerImpl: LayoutArranger {
     
     private func calculateSizes(position: PositionsPreference, arrangement: LayoutArrangement,
                                 contentMode: GridContentMode, flow: GridFlow) -> [CGFloat] {
-        var sizes: [CGFloat] = .init(repeating: 0, count: arrangement.rowsCount)
+        var sizes: [CGFloat] = .init(repeating: 0, count: arrangement[keyPath: flow.growingArrangementCount])
         if case .scroll = contentMode {
             for positionedItem in position.items {
                 guard let arrangedItem = arrangement[positionedItem.gridItem] else { continue }

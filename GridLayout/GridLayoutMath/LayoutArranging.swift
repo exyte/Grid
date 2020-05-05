@@ -1,5 +1,5 @@
 //
-//  LayoutArranger.swift
+//  LayoutArranging.swift
 //  GridLayout
 //
 //  Created by Denis Obukhov on 16.04.2020.
@@ -9,7 +9,7 @@
 import Foundation
 import CoreGraphics
 
-protocol LayoutArranger {
+protocol LayoutArranging {
     /// Arranges grid items into layout arrangement that specifies relations between abstract position in grid view and specific item
     /// - Parameters:
     ///   - spanPreferences: Grid items to arrange. They could specify row and columns spans
@@ -29,7 +29,7 @@ protocol LayoutArranger {
     func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode, flow: GridFlow) -> PositionsPreference
 }
 
-class LayoutArrangerImpl: LayoutArranger {
+extension LayoutArranging {
     
     func arrange(spanPreferences: [SpanPreference], fixedTracksCount: Int, flow: GridFlow, packing: GridPacking) -> LayoutArrangement {
         guard fixedTracksCount > 0 else { return .zero }

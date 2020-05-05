@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public struct Grid<Content>: View where Content: View {
+public struct Grid<Content>: View, LayoutArranging where Content: View {
     
     @State var arrangement: LayoutArrangement?
     @State var positions: PositionsPreference = .default
@@ -20,8 +20,6 @@ public struct Grid<Content>: View where Content: View {
     let tracksCount: Int
     let spacing: CGFloat
     let trackSizes: [TrackSize]
-    
-    private let arranger = LayoutArrangerImpl() as LayoutArranger
 
     public var body: some View {
         return GeometryReader { mainGeometry in
@@ -63,13 +61,13 @@ public struct Grid<Content>: View where Content: View {
                 }
                 .transformPreference(PositionsPreferenceKey.self) { positionPreference in
                     guard let arrangement = self.arrangement else { return }
-                    positionPreference = self.arranger.reposition(positionPreference,
-                                                                  arrangement: arrangement,
-                                                                  boundingSize: mainGeometry.size,
-                                                                  tracks: self.trackSizes,
-                                                                  contentMode: self.contentMode,
-                                                                  flow: self.flow)
-                }
+                    positionPreference = self.reposition(positionPreference,
+                                                         arrangement: arrangement,
+                                                         boundingSize: mainGeometry.size,
+                                                         tracks: self.trackSizes,
+                                                         contentMode: self.contentMode,
+                                                         flow: self.flow)
+            }
         }
         .transformPreference(SpansPreferenceKey.self) { preference in
             preference = preference.filter { $0.item != nil }
@@ -90,10 +88,10 @@ public struct Grid<Content>: View where Content: View {
     }
 
     private func calculateArrangement(spans: [SpanPreference]) {
-        let calculatedLayout = self.arranger.arrange(spanPreferences: spans,
-                                                     fixedTracksCount: self.tracksCount,
-                                                     flow: self.flow,
-                                                     packing: self.packing)
+        let calculatedLayout = self.arrange(spanPreferences: spans,
+                                            fixedTracksCount: self.tracksCount,
+                                            flow: self.flow,
+                                            packing: self.packing)
         self.arrangement = calculatedLayout
         print(calculatedLayout)
     }

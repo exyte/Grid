@@ -14,6 +14,7 @@ public struct Grid<Content>: View where Content: View {
     @State var positions: PositionsPreference = .default
     @Environment(\.gridContentMode) private var contentMode
     @Environment(\.gridFlow) private var flow
+    @Environment(\.gridPacking) private var packing
     
     let items: [GridItem]
     let tracksCount: Int
@@ -54,7 +55,6 @@ public struct Grid<Content>: View where Content: View {
                             }
                     }
                 }
-
                 .frame(minWidth: self.positions.size.width,
                        maxWidth: .infinity,
                        minHeight: self.positions.size.height,
@@ -92,7 +92,8 @@ public struct Grid<Content>: View where Content: View {
     private func calculateArrangement(spans: [SpanPreference]) {
         let calculatedLayout = self.arranger.arrange(spanPreferences: spans,
                                                      fixedTracksCount: self.tracksCount,
-                                                     flow: self.flow)
+                                                     flow: self.flow,
+                                                     packing: self.packing)
         self.arrangement = calculatedLayout
         print(calculatedLayout)
     }
@@ -188,5 +189,6 @@ struct GridView_Previews: PreviewProvider {
             }
         }
         .gridFlow(.rows)
+        .gridPacking(.dense)
     }
 }

@@ -17,6 +17,10 @@ extension View {
     public func gridFlow(_ flow: GridFlow) -> some View {
         return self.environment(\.gridFlow, flow)
     }
+    
+    public func gridPacking(_ flow: GridPacking) -> some View {
+        return self.environment(\.gridPacking, flow)
+    }
 }
 
 extension EnvironmentValues {
@@ -29,6 +33,11 @@ extension EnvironmentValues {
         get { self[EnvironmentKeys.Flow.self] }
         set { self[EnvironmentKeys.Flow.self] = newValue }
     }
+    
+    var gridPacking: GridPacking {
+        get { self[EnvironmentKeys.Packing.self] }
+        set { self[EnvironmentKeys.Packing.self] = newValue }
+    }
 }
 
 struct EnvironmentKeys {
@@ -38,5 +47,9 @@ struct EnvironmentKeys {
 
     struct Flow: EnvironmentKey {
         static let defaultValue = GridFlow.columns
+    }
+    
+    struct Packing: EnvironmentKey {
+        static let defaultValue = GridPacking.sparse
     }
 }

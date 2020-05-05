@@ -11,21 +11,21 @@ import SwiftUI
 // MARK: GridContentMode
 extension View {
     public func gridContentMode(_ contentMode: GridContentMode) -> some View {
-        return self.environment(\.contentMode, contentMode)
+        return self.environment(\.gridContentMode, contentMode)
     }
     
     public func gridFlow(_ flow: GridFlow) -> some View {
-        return self.environment(\.flow, flow)
+        return self.environment(\.gridFlow, flow)
     }
 }
 
 extension EnvironmentValues {
-    var contentMode: GridContentMode {
+    var gridContentMode: GridContentMode {
         get { self[EnvironmentKeys.ContentMode.self] }
         set { self[EnvironmentKeys.ContentMode.self] = newValue }
     }
     
-    var flow: GridFlow {
+    var gridFlow: GridFlow {
         get { self[EnvironmentKeys.Flow.self] }
         set { self[EnvironmentKeys.Flow.self] = newValue }
     }

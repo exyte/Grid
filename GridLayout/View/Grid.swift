@@ -12,8 +12,8 @@ public struct Grid<Content>: View where Content: View {
     
     @State var arrangement: LayoutArrangement?
     @State var positions: PositionsPreference = .default
-    @Environment(\.contentMode) private var contentMode
-    @Environment(\.flow) private var flow
+    @Environment(\.gridContentMode) private var contentMode
+    @Environment(\.gridFlow) private var flow
     
     let items: [GridItem]
     let tracksCount: Int
@@ -43,7 +43,6 @@ public struct Grid<Content>: View where Content: View {
                                     .frame(width: self.positions[item]?.bounds.width,
                                            height: self.positions[item]?.bounds.height)
                             )
-
                             .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
                                 PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: .zero)
                             }

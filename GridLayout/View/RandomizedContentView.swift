@@ -9,44 +9,52 @@
 import SwiftUI
 
 struct HorizontalCardView: View {
-    
-    let text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor psum dolor sit amet."
-    
+
+    let text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+
     var body: some View {
-       HStack {
-            Image("dog")
-                .resizable()
-                .scaledToFill()
-                .frame(minWidth: 0, idealWidth: 200, maxWidth: 200, minHeight: 0)
+        HStack {
+            Rectangle()
+                .overlay(
+                    Image("dog")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                )
+                .frame(maxWidth: 200)
                 .clipped()
-            
-            Text(self.text).frame(minWidth: 0, idealWidth: 200, maxWidth: 200, minHeight: 0)
+
+            Text(self.text)
+                .frame(maxWidth: 200)
         }
+        .background(Color.red)
         .gridCellBackground { _ in
             Color(.green)
         }
-        .background(Color.red)
     }
 }
 
 struct VerticalCardView: View {
     
-    let text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor psum dolor sit amet."
+    let text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor psum dolor sit amet. Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
     
     var body: some View {
-       VStack {
-            Image("dog")
-                .resizable()
-                .scaledToFill()
-                .frame(minWidth: 0, minHeight: 0, idealHeight: 200, maxHeight: 200)
+        VStack {
+            Rectangle()
+                .overlay(
+                    Image("dog")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                )
+                .frame(maxHeight: 200)
                 .clipped()
-            
-            Text(self.text).frame(minWidth: 0, minHeight: 0, idealHeight: 200, maxHeight: 200)
+
+            Text(self.text)
+                
         }
+        .background(Color.red)
         .gridCellBackground { _ in
             Color(.green)
         }
-        .background(Color.red)
     }
 }
 
@@ -58,27 +66,29 @@ struct RandomizedContentView: View {
     
     var mode: Mode = .scroll
     
-    let firstGridTracks: [TrackSize] = [.fr(1), .fr(2), .const(200)]
+    let firstGridTracks: [TrackSize] =  4
     let secondGridTracks: [TrackSize] = 6
     
     var body: some View {
         Group {
             if self.mode == .scroll {
-                Grid(0..<40, tracks: firstGridTracks, spacing: 5) { _ in
-                    VerticalCardView()
-                        .gridSpan(column: self.randomSpan(3),
-                                  row: self.randomSpan(self.firstGridTracks.count))
+                Grid(0..<2, tracks: firstGridTracks, spacing: 0) { _ in
+                    HorizontalCardView()
+                        .gridSpan(column: 1,
+                                  row: 1)
                 }
                 .gridContentMode(.scroll)
             } else {
                 Grid(0..<6, tracks: secondGridTracks, spacing: 5) { _ in
-                    VerticalCardView()
-                        .gridSpan(column: self.randomSpan(3),
-                                  row: self.randomSpan(self.secondGridTracks.count))
+                    HorizontalCardView()
+                        .gridSpan(column: self.randomSpan(2),
+                                  row: self.randomSpan(2))
                 }
                 .gridContentMode(.fill)
             }
         }
+        .gridFlow(.rows)
+        //.gridPacking(.dense)
     }
     
     func randomSpan(_ max: Int) -> Int {

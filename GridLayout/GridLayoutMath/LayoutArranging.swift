@@ -26,7 +26,8 @@ protocol LayoutArranging {
     ///   - tracks: Sizes of tracks
     ///   - contentMode: Where the content will be scrolled or filled inside a grid
     ///   - flow: Distribution order of grid items
-    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode, flow: GridFlow) -> PositionsPreference
+    ///   - spacing: Spacing between items
+    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode, flow: GridFlow, spacing: CGFloat) -> PositionsPreference
 }
 
 extension LayoutArranging {
@@ -81,12 +82,12 @@ extension LayoutArranging {
         return arrangement
     }
     
-    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode, flow: GridFlow) -> PositionsPreference {
+    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode, flow: GridFlow, spacing: CGFloat) -> PositionsPreference {
         let growingTracksSizes: [CGFloat] = self.calculateSizes(position: position,
                                                                 arrangement: arrangement,
                                                                 contentMode: contentMode,
                                                                 flow: flow)
-        let fixedTracksSizes = self.calculateSizes(tracks: tracks, boundingLength: boundingSize[keyPath: flow.fixedSize])
+        let fixedTracksSizes = self.calculateSizes(tracks: tracks, boundingLength: boundingSize[keyPath: flow.fixedSize], spacing: spacing)
         var newPositions: [PositionedItem] = []
         
         for positionedItem in position.items {
@@ -128,7 +129,7 @@ extension LayoutArranging {
         return PositionsPreference(items: newPositions, size: totalSize)
     }
     
-    private func calculateSizes(tracks: [TrackSize], boundingLength: CGFloat) -> [CGFloat] {
+    private func calculateSizes(tracks: [TrackSize], boundingLength: CGFloat, spacing: CGFloat) -> [CGFloat] {
         var fractionCount = 0
         var totalConsts = 0
         
@@ -141,16 +142,22 @@ extension LayoutArranging {
             }
         }
         
-        let correctedLength = boundingLength - CGFloat(totalConsts)
+        let correctedLength = boundingLength - CGFloat(totalConsts) - CGFloat(tracks.count - 1) * spacing
         let fractionSize = correctedLength / CGFloat(fractionCount)
 
-        return tracks.map { track in
+        return tracks.enumerated().map { index, track in
+            var trackSize: CGFloat
             switch track {
             case .fr(let fraction):
-                return CGFloat(fraction) * fractionSize
+                trackSize = CGFloat(fraction) * fractionSize
             case .const(let constLength):
-                return CGFloat(constLength)
+                trackSize = CGFloat(constLength)
             }
+            
+            if index != 0 {
+                trackSize += spacing
+            }
+            return trackSize
         }
     }
     
@@ -205,3 +212,4 @@ extension Array where Element == GridIndex {
         return false
     }
 }
+

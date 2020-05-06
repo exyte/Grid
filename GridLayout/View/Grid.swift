@@ -43,7 +43,13 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
                                            height: self.positions[item]?.bounds.height)
                             )
                             .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
-                                PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: .zero)
+                                let padding = self.paddingEdges(item: item)
+                                let additionalWidth = padding.contains(.leading) ? self.spacing : 0
+                                let additionalHeight = padding.contains(.top) ? self.spacing : 0
+                                var bounds = mainGeometry[$0]
+                                bounds.size.width += 300
+                                bounds.size.height += additionalHeight
+                                return PositionsPreference(items: [PositionedItem(bounds: bounds, gridItem: item)], size: .zero)
                             }
                             .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
                                 self.cellPreferenceView(item: item, preference: preference)
@@ -66,7 +72,8 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
                                                          boundingSize: mainGeometry.size,
                                                          tracks: self.trackSizes,
                                                          contentMode: self.contentMode,
-                                                         flow: self.flow)
+                                                         flow: self.flow,
+                                                         spacing: self.spacing)
             }
         }
         .transformPreference(SpansPreferenceKey.self) { preference in
@@ -162,31 +169,32 @@ struct GridView_Previews: PreviewProvider {
             
             Divider()
             
-            Grid(tracks: [.fr(1), .fr(2), .fr(3), .fr(10)], spacing: 5) {
+            Grid(tracks: 4, spacing: 5) {
                 Color(.brown)
-                    .gridSpan(column: 4)
+                    .gridSpan(column: 3, row: 1)
                 
                 Color(.blue)
-                    .gridSpan(column: 4)
+                    .gridSpan(column: 2, row: 2)
                 
                 Color(.red)
-                    .gridSpan(row: 3)
+                    .gridSpan(column: 1, row: 1)
                 
                 Color(.yellow)
-                
+                    .gridSpan(column: 1, row: 1)
+
                 Color(.purple)
-                    .gridSpan(column: 2)
-                
+                    .gridSpan(column: 1, row: 2)
+
                 Color(.green)
-                    .gridSpan(column: 3, row: 3)
-                
+                    .gridSpan(column: 2, row: 3)
+
                 Color(.orange)
-                    .gridSpan(column: 3, row: 3)
+                    .gridSpan(column: 1, row: 3)
                 
                 Color(.gray)
             }
         }
-        .gridFlow(.rows)
-        .gridPacking(.dense)
+        .gridFlow(.columns)
+        .gridPacking(.sparse)
     }
 }

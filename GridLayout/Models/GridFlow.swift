@@ -30,6 +30,14 @@ extension GridFlow {
          (self == .rows ? \GridIndex.column : \GridIndex.row)
     }
     
+    var fixedSpanIndex: WritableKeyPath<GridSpan, Int> {
+        (self == .columns ? \GridSpan.column : \GridSpan.row)
+    }
+    
+    var growingSpanIndex: WritableKeyPath<GridSpan, Int> {
+         (self == .rows ? \GridSpan.column : \GridSpan.row)
+    }
+    
     var fixedSize: WritableKeyPath<CGSize, CGFloat> {
         (self == .columns ? \CGSize.width : \CGSize.height)
     }

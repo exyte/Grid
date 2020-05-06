@@ -41,13 +41,10 @@ extension LayoutArranging {
         var growingTracksCount = 0
 
         for spanPreference in spanPreferences {
-            guard
-                spanPreference.span[keyPath: flow.fixedIndex] <= fixedTracksCount,
-                let gridItem = spanPreference.item
-            else {
-                continue
-            } // TODO: Reduce span
+            guard let gridItem = spanPreference.item else { continue }
             
+            var correctedSpan = spanPreference.span
+            correctedSpan[keyPath: flow.fixedSpanIndex] = min(fixedTracksCount, correctedSpan[keyPath: flow.fixedSpanIndex])
             var currentIndex: GridIndex
             
             switch packing {
@@ -56,20 +53,22 @@ extension LayoutArranging {
             case .dense:
                 currentIndex = .zero // TODO: Improve dense algorithm
             }
-            while occupiedIndices.contains(currentIndex, rowSpan: spanPreference.span.row, columnSpan: spanPreference.span.column)
-                || currentIndex[keyPath: flow.fixedIndex] + spanPreference.span[keyPath: flow.fixedIndex] > fixedTracksCount {
+            
+            while occupiedIndices.contains(currentIndex, rowSpan: correctedSpan.row, columnSpan: correctedSpan.column)
+                || currentIndex[keyPath: flow.fixedIndex] + correctedSpan[keyPath: flow.fixedSpanIndex] > fixedTracksCount {
                     currentIndex = currentIndex.nextIndex(tracksCount: fixedTracksCount, flow: flow)
             }
 
-            for row in currentIndex.row..<currentIndex.row + spanPreference.span.row {
-                for column in currentIndex.column..<currentIndex.column + spanPreference.span.column {
+            for row in currentIndex.row..<currentIndex.row + correctedSpan.row {
+                for column in currentIndex.column..<currentIndex.column + correctedSpan.column {
                     occupiedIndices.append(GridIndex(row: row, column: column))
                 }
             }
             
             let startIndex = currentIndex
-            let endIndex = GridIndex(row: startIndex.row + spanPreference.span.row - 1,
-                                           column: startIndex.column + spanPreference.span.column - 1)
+            var endIndex: GridIndex = .zero
+            endIndex[keyPath: flow.fixedIndexIndex] = startIndex[keyPath: flow.fixedIndexIndex] + correctedSpan[keyPath: flow.fixedSpanIndex] - 1
+            endIndex[keyPath: flow.growingIndexIndex] = startIndex[keyPath: flow.growingIndexIndex] + correctedSpan[keyPath: flow.growingSpanIndex] - 1
 
             let arrangedItem = ArrangedItem(gridItem: gridItem, startIndex: startIndex, endIndex: endIndex)
             growingTracksCount = max(growingTracksCount, arrangedItem.endIndex[keyPath: flow.growingIndex] + 1)

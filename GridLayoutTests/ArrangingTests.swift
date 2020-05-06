@@ -18,13 +18,13 @@ class ArrangingTests: XCTestCase {
     private let gridItems = (0..<7).map { GridItem(AnyView(EmptyView()), id: AnyHashable($0)) }
     
     private lazy var spanPreferences = [
-        SpanPreference(item: gridItems[0], span: GridSpan(row: 1, column: 3)),
-        SpanPreference(item: gridItems[1], span: GridSpan(row: 2, column: 2)),
-        SpanPreference(item: gridItems[2], span: GridSpan(row: 1, column: 1)),
-        SpanPreference(item: gridItems[3], span: GridSpan(row: 1, column: 1)),
-        SpanPreference(item: gridItems[4], span: GridSpan(row: 2, column: 1)),
-        SpanPreference(item: gridItems[5], span: GridSpan(row: 3, column: 2)),
-        SpanPreference(item: gridItems[6], span: GridSpan(row: 3, column: 1))
+        SpanPreference(item: gridItems[0], span: GridSpan(column: 3, row: 1)),
+        SpanPreference(item: gridItems[1], span: GridSpan(column: 2, row: 2)),
+        SpanPreference(item: gridItems[2], span: GridSpan(column: 1, row: 1)),
+        SpanPreference(item: gridItems[3], span: GridSpan(column: 1, row: 1)),
+        SpanPreference(item: gridItems[4], span: GridSpan(column: 1, row: 2)),
+        SpanPreference(item: gridItems[5], span: GridSpan(column: 2, row: 3)),
+        SpanPreference(item: gridItems[6], span: GridSpan(column: 1, row: 3))
     ]
     
     private let fixedPerfomanceTracksCount = 4
@@ -37,7 +37,7 @@ class ArrangingTests: XCTestCase {
         
         let gridItems = (0..<100).map { GridItem(AnyView(EmptyView()), id: AnyHashable($0)) }
         return gridItems.map {
-            SpanPreference(item: $0, span: GridSpan(row: randomSpan(), column: randomSpan()))
+            SpanPreference(item: $0, span: GridSpan(column: randomSpan(), row: randomSpan()))
         }
     }()
 
@@ -50,25 +50,25 @@ class ArrangingTests: XCTestCase {
         XCTAssertEqual(arrangement, LayoutArrangement(columnsCount: 4, rowsCount: 6, items: [
             ArrangedItem(gridItem: gridItems[0],
                          startIndex: GridIndex.zero,
-                         endIndex: GridIndex(row: 0, column: 2)),
+                         endIndex: GridIndex(column: 2, row: 0)),
             ArrangedItem(gridItem: gridItems[1],
-                         startIndex: GridIndex(row: 1, column: 0),
-                         endIndex: GridIndex(row: 2, column: 1)),
+                         startIndex: GridIndex(column: 0, row: 1),
+                         endIndex: GridIndex(column: 1, row: 2)),
             ArrangedItem(gridItem: gridItems[2],
-                         startIndex: GridIndex(row: 1, column: 2),
-                         endIndex: GridIndex(row: 1, column: 2)),
+                         startIndex: GridIndex(column: 2, row: 1),
+                         endIndex: GridIndex(column: 2, row: 1)),
             ArrangedItem(gridItem: gridItems[3],
-                         startIndex: GridIndex(row: 1, column: 3),
-                         endIndex: GridIndex(row: 1, column: 3)),
+                         startIndex: GridIndex(column: 3, row: 1),
+                         endIndex: GridIndex(column: 3, row: 1)),
             ArrangedItem(gridItem: gridItems[4],
-                         startIndex: GridIndex(row: 2, column: 2),
-                         endIndex: GridIndex(row: 3, column: 2)),
+                         startIndex: GridIndex(column: 2, row: 2),
+                         endIndex: GridIndex(column: 2, row: 3)),
             ArrangedItem(gridItem: gridItems[5],
-                         startIndex: GridIndex(row: 3, column: 0),
-                         endIndex: GridIndex(row: 5, column: 1)),
+                         startIndex: GridIndex(column: 0, row: 3),
+                         endIndex: GridIndex(column: 1, row: 5)),
             ArrangedItem(gridItem: gridItems[6],
-                         startIndex: GridIndex(row: 3, column: 3),
-                         endIndex: GridIndex(row: 5, column: 3))
+                         startIndex: GridIndex(column: 3, row: 3),
+                         endIndex: GridIndex(column: 3, row: 5))
         ]))
     }
     
@@ -81,25 +81,25 @@ class ArrangingTests: XCTestCase {
         XCTAssertEqual(arrangement, LayoutArrangement(columnsCount: 4, rowsCount: 6, items: [
             ArrangedItem(gridItem: gridItems[0],
                          startIndex: GridIndex.zero,
-                         endIndex: GridIndex(row: 0, column: 2)),
+                         endIndex: GridIndex(column: 2, row: 0)),
             ArrangedItem(gridItem: gridItems[1],
-                         startIndex: GridIndex(row: 1, column: 0),
-                         endIndex: GridIndex(row: 2, column: 1)),
+                         startIndex: GridIndex(column: 0, row: 1),
+                         endIndex: GridIndex(column: 1, row: 2)),
             ArrangedItem(gridItem: gridItems[2],
-                         startIndex: GridIndex(row: 0, column: 3),
-                         endIndex: GridIndex(row: 0, column: 3)),
+                         startIndex: GridIndex(column: 3, row: 0),
+                         endIndex: GridIndex(column: 3, row: 0)),
             ArrangedItem(gridItem: gridItems[3],
-                         startIndex: GridIndex(row: 1, column: 2),
-                         endIndex: GridIndex(row: 1, column: 2)),
+                         startIndex: GridIndex(column: 2, row: 1),
+                         endIndex: GridIndex(column: 2, row: 1)),
             ArrangedItem(gridItem: gridItems[4],
-                         startIndex: GridIndex(row: 1, column: 3),
-                         endIndex: GridIndex(row: 2, column: 3)),
+                         startIndex: GridIndex(column: 3, row: 1),
+                         endIndex: GridIndex(column: 3, row: 2)),
             ArrangedItem(gridItem: gridItems[5],
-                         startIndex: GridIndex(row: 3, column: 0),
-                         endIndex: GridIndex(row: 5, column: 1)),
+                         startIndex: GridIndex(column: 0, row: 3),
+                         endIndex: GridIndex(column: 1, row: 5)),
             ArrangedItem(gridItem: gridItems[6],
-                         startIndex: GridIndex(row: 2, column: 2),
-                         endIndex: GridIndex(row: 4, column: 2))
+                         startIndex: GridIndex(column: 2, row: 2),
+                         endIndex: GridIndex(column: 2, row: 4))
         ]))
     }
 

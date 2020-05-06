@@ -17,7 +17,7 @@ extension LayoutArrangement: CustomStringConvertible {
         for row in 0...self.rowsCount {
             columnsCycle: for column in 0..<self.columnsCount {
                 for (index, item) in items.enumerated() {
-                    if item.arrangement.contains(GridIndex(row: row, column: column)) {
+                    if item.arrangement.contains(GridIndex(column: column, row: row)) {
                         result += String(item.arrangement.gridItem.debugID.uuidString.prefix(1))
                         items[index].area -= 1
                         if items[index].area == 0 {

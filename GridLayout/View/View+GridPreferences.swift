@@ -14,8 +14,8 @@ extension View {
     ) -> some View {
         preference(
             key: SpansPreferenceKey.self,
-            value: [SpanPreference(span: GridSpan(row: row,
-                                                  column: column))])
+            value: [SpanPreference(span: GridSpan(column: column,
+                                                  row: row))])
     }
     
     public func gridCellOverlay<Content: View>(

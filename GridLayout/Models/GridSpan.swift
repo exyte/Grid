@@ -9,8 +9,8 @@
 import Foundation
 
 struct GridSpan: Equatable {
-    var row: Int = Constants.defaultRowSpan
     var column: Int = Constants.defaultColumnSpan
+    var row: Int = Constants.defaultRowSpan
     
     static let `default` = GridSpan()
 }

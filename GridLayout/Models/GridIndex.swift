@@ -9,8 +9,8 @@
 import Foundation
 
 struct GridIndex: Equatable {
-    var row: Int
     var column: Int
+    var row: Int
     
-    static let zero = GridIndex(row: 0, column: 0)
+    static let zero = GridIndex(column: 0, row: 0)
 }

@@ -61,7 +61,7 @@ extension LayoutArranging {
 
             for row in currentIndex.row..<currentIndex.row + correctedSpan.row {
                 for column in currentIndex.column..<currentIndex.column + correctedSpan.column {
-                    occupiedIndices.append(GridIndex(row: row, column: column))
+                    occupiedIndices.append(GridIndex(column: column, row: row))
                 }
             }
             
@@ -196,7 +196,7 @@ extension Array where Element == GridIndex {
     fileprivate func contains(_ startIndex: GridIndex, rowSpan: Int, columnSpan: Int) -> Bool {
         for row in startIndex.row..<startIndex.row + rowSpan {
             for column in startIndex.column..<startIndex.column + columnSpan {
-                if self.contains(GridIndex(row: row, column: column)) {
+                if self.contains(GridIndex(column: column, row: row)) {
                     return true
                 }
             }

@@ -14,19 +14,11 @@ public enum GridFlow {
 }
 
 extension GridFlow {
-    var fixedIndex: WritableKeyPath<GridPointing, Int> {
-        (self == .columns ? \GridPointing.column : \GridPointing.row)
-    }
-    
-    var growingIndex: WritableKeyPath<GridPointing, Int> {
-         (self == .rows ? \GridPointing.column : \GridPointing.row)
-    }
-    
-    var fixedIndexIndex: WritableKeyPath<GridIndex, Int> {
+    var fixedIndex: WritableKeyPath<GridIndex, Int> {
         (self == .columns ? \GridIndex.column : \GridIndex.row)
     }
     
-    var growingIndexIndex: WritableKeyPath<GridIndex, Int> {
+    var growingIndex: WritableKeyPath<GridIndex, Int> {
          (self == .rows ? \GridIndex.column : \GridIndex.row)
     }
     

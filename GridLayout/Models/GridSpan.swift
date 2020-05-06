@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GridSpan: GridPointing, Equatable {
+struct GridSpan: Equatable {
     var row: Int = Constants.defaultRowSpan
     var column: Int = Constants.defaultColumnSpan
     

@@ -15,7 +15,6 @@
 		362C9CFA2445AA7900A922DA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 362C9CF92445AA7900A922DA /* Preview Assets.xcassets */; };
 		362C9CFD2445AA7900A922DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 362C9CFB2445AA7900A922DA /* LaunchScreen.storyboard */; };
 		365DFD01245707A6001541E3 /* GridOverlayPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DFD00245707A6001541E3 /* GridOverlayPreference.swift */; };
-		36702EA82459B18B009AB177 /* GridPointing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36702EA72459B18B009AB177 /* GridPointing.swift */; };
 		36780DD12452D58A00B7AAAB /* GridContentMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36780DD02452D58A00B7AAAB /* GridContentMode.swift */; };
 		36780DD32452DB7A00B7AAAB /* GridFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36780DD22452DB7A00B7AAAB /* GridFlow.swift */; };
 		36780DD52452E9F200B7AAAB /* View+Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36780DD42452E9F200B7AAAB /* View+Environment.swift */; };
@@ -53,7 +52,6 @@
 		362C9CFC2445AA7900A922DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		362C9CFE2445AA7900A922DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		365DFD00245707A6001541E3 /* GridOverlayPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridOverlayPreference.swift; sourceTree = "<group>"; };
-		36702EA72459B18B009AB177 /* GridPointing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPointing.swift; sourceTree = "<group>"; };
 		36780DD02452D58A00B7AAAB /* GridContentMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridContentMode.swift; sourceTree = "<group>"; };
 		36780DD22452DB7A00B7AAAB /* GridFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridFlow.swift; sourceTree = "<group>"; };
 		36780DD42452E9F200B7AAAB /* View+Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Environment.swift"; sourceTree = "<group>"; };
@@ -195,7 +193,6 @@
 				3697EB1E244884F2005A82F8 /* ArrangedItem.swift */,
 				36829D65244D8F7C006D605B /* PositionedItem.swift */,
 				3697EB272448862C005A82F8 /* LayoutArrangement.swift */,
-				36702EA72459B18B009AB177 /* GridPointing.swift */,
 				3697EB1C244884D4005A82F8 /* GridIndex.swift */,
 				36829D61244C1AEB006D605B /* GridSpan.swift */,
 				367F235924500DB600931700 /* TrackSize.swift */,
@@ -357,7 +354,6 @@
 				3697EB1424484B51005A82F8 /* LayoutArranging.swift in Sources */,
 				3697EB1F244884F2005A82F8 /* ArrangedItem.swift in Sources */,
 				3697EB1D244884D4005A82F8 /* GridIndex.swift in Sources */,
-				36702EA82459B18B009AB177 /* GridPointing.swift in Sources */,
 				36DE3524244B30A9009EA6E8 /* SpanPreference.swift in Sources */,
 				36780DD12452D58A00B7AAAB /* GridContentMode.swift in Sources */,
 				36829D62244C1AEB006D605B /* GridSpan.swift in Sources */,

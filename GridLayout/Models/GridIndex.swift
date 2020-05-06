@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GridIndex: GridPointing, Equatable {
+struct GridIndex: Equatable {
     var row: Int
     var column: Int
     

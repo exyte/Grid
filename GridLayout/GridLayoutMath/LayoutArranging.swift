@@ -67,8 +67,8 @@ extension LayoutArranging {
             
             let startIndex = currentIndex
             var endIndex: GridIndex = .zero
-            endIndex[keyPath: flow.fixedIndexIndex] = startIndex[keyPath: flow.fixedIndexIndex] + correctedSpan[keyPath: flow.fixedSpanIndex] - 1
-            endIndex[keyPath: flow.growingIndexIndex] = startIndex[keyPath: flow.growingIndexIndex] + correctedSpan[keyPath: flow.growingSpanIndex] - 1
+            endIndex[keyPath: flow.fixedIndex] = startIndex[keyPath: flow.fixedIndex] + correctedSpan[keyPath: flow.fixedSpanIndex] - 1
+            endIndex[keyPath: flow.growingIndex] = startIndex[keyPath: flow.growingIndex] + correctedSpan[keyPath: flow.growingSpanIndex] - 1
 
             let arrangedItem = ArrangedItem(gridItem: gridItem, startIndex: startIndex, endIndex: endIndex)
             growingTracksCount = max(growingTracksCount, arrangedItem.endIndex[keyPath: flow.growingIndex] + 1)
@@ -176,8 +176,8 @@ extension LayoutArranging {
 
 extension GridIndex {
     fileprivate func nextIndex(tracksCount: Int, flow: GridFlow) -> GridIndex {
-        var fixedSize = self[keyPath: flow.fixedIndexIndex]
-        var growingSize = self[keyPath: flow.growingIndexIndex]
+        var fixedSize = self[keyPath: flow.fixedIndex]
+        var growingSize = self[keyPath: flow.growingIndex]
         
         fixedSize += 1
         if fixedSize >= tracksCount {
@@ -186,8 +186,8 @@ extension GridIndex {
         }
         
         var nextIndex = GridIndex.zero
-        nextIndex[keyPath: flow.fixedIndexIndex] = fixedSize
-        nextIndex[keyPath: flow.growingIndexIndex] = growingSize
+        nextIndex[keyPath: flow.fixedIndex] = fixedSize
+        nextIndex[keyPath: flow.growingIndex] = growingSize
         return nextIndex
     }
 }

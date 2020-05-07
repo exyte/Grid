@@ -25,3 +25,27 @@ extension ForEach: GridForEachID where Content: View {
         self.data.map { AnyView(self.content($0)) }
     }
 }
+
+#if DEBUG
+
+// To be available on preview canvas
+
+extension ModifiedContent: GridForEachRangeInt where Content: GridForEachRangeInt, Modifier == _IdentifiedModifier<__DesignTimeSelectionIdentifier> {
+    var contentViews: [AnyView] {
+        return self.content.contentViews
+    }
+}
+
+extension ModifiedContent: GridForEachIdentifiable where Content: GridForEachIdentifiable, Modifier == _IdentifiedModifier<__DesignTimeSelectionIdentifier> {
+    var contentViews: [AnyView] {
+        return self.content.contentViews
+    }
+}
+
+extension ModifiedContent: GridForEachID where Content: GridForEachID, Modifier == _IdentifiedModifier<__DesignTimeSelectionIdentifier> {
+    var contentViews: [AnyView] {
+        return self.content.contentViews
+    }
+}
+
+#endif

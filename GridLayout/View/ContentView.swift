@@ -24,6 +24,10 @@ struct ContentView: View {
             ForEach([Foo(id: 1), Foo(id: 2)]) { _ in
                 VCardView()
             }
+            
+            ForEach([1, 2], id: \.self) { _ in
+                VCardView()
+            }
         }
     }
 }

@@ -26,7 +26,6 @@ extension Grid {
             content().data.enumerated().map { GridItem(AnyView(content().content($0.element)), id: AnyHashable(($0.offset))) }
     }
     
-    
     // TODO: Fix this init
 //    public init<Data: RandomAccessCollection, ID>(_ data: Data, tracks: [TrackSize], spacing: CGFloat = Constants.defaultSpacing, @ViewBuilder content: () -> ForEach<Data, ID, Content>) {
 //        self.trackSizes = tracks

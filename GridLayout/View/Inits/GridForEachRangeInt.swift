@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-
 protocol GridForEachRangeInt {
     var contentViews: [AnyView] { get }
 }

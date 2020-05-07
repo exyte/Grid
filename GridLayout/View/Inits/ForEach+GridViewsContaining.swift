@@ -8,8 +8,20 @@
 
 import SwiftUI
 
-extension ForEach: GridViewsContaining where Data == Range<Int>, ID == Int, Content: View {
-    var views: [AnyView] {
+extension ForEach: GridForEachRangeInt where Data == Range<Int>, ID == Int, Content: View {
+    var contentViews: [AnyView] {
+        self.data.map { AnyView(self.content($0)) }
+    }
+}
+
+extension ForEach: GridForEachIdentifiable where ID == Data.Element.ID, Content: View, Data.Element: Identifiable {
+    var contentViews: [AnyView] {
+        self.data.map { AnyView(self.content($0)) }
+    }
+}
+
+extension ForEach: GridForEachID where Content: View {
+    var contentViews: [AnyView] {
         self.data.map { AnyView(self.content($0)) }
     }
 }

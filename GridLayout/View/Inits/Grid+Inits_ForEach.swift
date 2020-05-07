@@ -10,11 +10,30 @@ import SwiftUI
 
 //Single ForEach init
 extension Grid {
-    public init<T: View>(tracks: [TrackSize], spacing: CGFloat = Constants.defaultSpacing, @ViewBuilder content: () -> Content) where Content == TupleView<(ForEach<Range<Int>, Int, T>)> {
+    public init(tracks: [TrackSize], spacing: CGFloat = Constants.defaultSpacing, @ViewBuilder content: () -> ForEach<Range<Int>, Int, Content>) {
         self.trackSizes = tracks
         self.tracksCount = self.trackSizes.count
         self.spacing = spacing
         self.items =
-            content().value.data.map { GridItem(AnyView(content().value.content($0)), id: AnyHashable(($0 + 10))) }
+            content().data.enumerated().map { GridItem(AnyView(content().content($0.element)), id: AnyHashable(($0.offset))) }
     }
+    
+    public init<Data>(tracks: [TrackSize], spacing: CGFloat = Constants.defaultSpacing, @ViewBuilder content: () -> ForEach<Data, Data.Element.ID, Content>) where Data: RandomAccessCollection, Data.Element: Identifiable {
+        self.trackSizes = tracks
+        self.tracksCount = self.trackSizes.count
+        self.spacing = spacing
+        self.items =
+            content().data.enumerated().map { GridItem(AnyView(content().content($0.element)), id: AnyHashable(($0.offset))) }
+    }
+    
+    
+    // TODO: Fix this init
+//    public init<Data: RandomAccessCollection, ID>(_ data: Data, tracks: [TrackSize], spacing: CGFloat = Constants.defaultSpacing, @ViewBuilder content: () -> ForEach<Data, ID, Content>) {
+//        self.trackSizes = tracks
+//        self.tracksCount = self.trackSizes.count
+//        self.spacing = spacing
+//        self.items =
+//            content().data.enumerated().map { GridItem(AnyView(content().content($0.element)), id: AnyHashable(($0.offset))) }
+//    }
+
 }

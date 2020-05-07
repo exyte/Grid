@@ -10,17 +10,22 @@ import SwiftUI
 
 extension View {
     func asGridItems(index: inout Int) -> [GridItem] {
-        if let container = self as? GridViewsContaining {
-            let containerItems =
-                container.views
-                    .enumerated()
-                    .map { GridItem($0.element, id: AnyHashable($0.offset + index)) }
-            index += containerItems.count
-            return containerItems
+        let contentViews: [AnyView]
+        if let container = self as? GridForEachRangeInt {
+            contentViews = container.contentViews
+        } else if let container = self as? GridForEachIdentifiable {
+            contentViews = container.contentViews
+        } else if let container = self as? GridForEachID {
+            contentViews = container.contentViews
+        } else {
+            contentViews = [AnyView(self)]
         }
-        
-        let item = GridItem(AnyView(self), id: AnyHashable(index))
-        index += 1
-        return [item]
+
+        let containerItems =
+            contentViews
+                .enumerated()
+                .map { GridItem($0.element, id: AnyHashable($0.offset + index)) }
+        index += containerItems.count
+        return containerItems
     }
 }

@@ -8,17 +8,20 @@
 
 import SwiftUI
 
+struct Foo: Identifiable {
+    let id: Int
+}
+
 struct ContentView: View {
     var body: some View {
-
         Grid(tracks: 3) { 
-            ForEach(0..<2) { _ in
-                VCardView()
-            }
-            
             VCardView()
 
-            ForEach(0..<3) { _ in
+            ForEach(0..<4) { _ in
+                VCardView()
+            }
+
+            ForEach([Foo(id: 1), Foo(id: 2)]) { _ in
                 VCardView()
             }
         }

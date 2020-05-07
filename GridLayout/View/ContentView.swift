@@ -11,14 +11,14 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         Grid(tracks: 2, spacing: 0) {
-            HorizontalCardView()
+            HCardView()
                 .overlay(Text("1"))
                 .gridSpan(column: 1, row: 2)
-            HorizontalCardView()
+            HCardView()
                 .gridSpan(column: 1, row: 2)
                 .overlay(Text("2"))
             
-            HorizontalCardView()
+            HCardView()
 
         }
         .gridContentMode(.fill)

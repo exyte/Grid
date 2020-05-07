@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct HorizontalCardView: View {
+struct HCardView: View {
 
     let text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
 
@@ -33,7 +33,7 @@ struct HorizontalCardView: View {
     }
 }
 
-struct VerticalCardView: View {
+struct VCardView: View {
     
     let text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor psum dolor sit amet. Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
     
@@ -64,31 +64,31 @@ struct RandomizedContentView: View {
         case scroll, fill
     }
     
-    var mode: Mode = .scroll
+    var mode: Mode = .fill
     
-    let firstGridTracks: [TrackSize] =  4
+    let firstGridTracks: [TrackSize] = [.fr(2), .const(150), .fr(1)]
     let secondGridTracks: [TrackSize] = 6
     
     var body: some View {
         Group {
             if self.mode == .scroll {
-                Grid(0..<2, tracks: firstGridTracks, spacing: 0) { _ in
-                    HorizontalCardView()
-                        .gridSpan(column: 1,
-                                  row: 1)
+                Grid(0..<20, tracks: firstGridTracks, spacing: 5) { _ in
+                    VCardView()
+                        .gridSpan(column: self.randomSpan(2),
+                                  row: self.randomSpan(2))
                 }
                 .gridContentMode(.scroll)
             } else {
                 Grid(0..<6, tracks: secondGridTracks, spacing: 5) { _ in
-                    HorizontalCardView()
+                    VCardView()
                         .gridSpan(column: self.randomSpan(2),
                                   row: self.randomSpan(2))
                 }
                 .gridContentMode(.fill)
             }
         }
-        .gridFlow(.rows)
-        //.gridPacking(.dense)
+        .gridFlow(.columns)
+        .gridPacking(.sparse)
     }
     
     func randomSpan(_ max: Int) -> Int {

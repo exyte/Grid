@@ -212,4 +212,3 @@ extension Array where Element == GridIndex {
         return false
     }
 }
-

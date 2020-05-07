@@ -10,18 +10,18 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Grid(tracks: 2, spacing: 0) {
-            HCardView()
-                .overlay(Text("1"))
-                .gridSpan(column: 1, row: 2)
-            HCardView()
-                .gridSpan(column: 1, row: 2)
-                .overlay(Text("2"))
-            
-            HCardView()
 
+        Grid(tracks: 3) { 
+            ForEach(0..<2) { _ in
+                VCardView()
+            }
+            
+            VCardView()
+
+            ForEach(0..<3) { _ in
+                VCardView()
+            }
         }
-        .gridContentMode(.fill)
     }
 }
 

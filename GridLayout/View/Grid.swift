@@ -164,6 +164,10 @@ struct GridView_Previews: PreviewProvider {
             Divider()
             
             Grid(tracks: 4, spacing: 5) {
+                
+                ForEach(0..<10) { _ in
+                    Color.black
+                }
                 Color(.brown)
                     .gridSpan(column: 3, row: 1)
                 
@@ -189,6 +193,6 @@ struct GridView_Previews: PreviewProvider {
             }
         }
         .gridFlow(.columns)
-        .gridPacking(.sparse)
+        .gridPacking(.dense)
     }
 }

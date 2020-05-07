@@ -142,13 +142,3 @@ extension Grid {
         self.spacing = spacing
     }
 }
-
-extension Grid {
-    public init<Item>(tracks: [TrackSize], spacing: CGFloat = Constants.defaultSpacing, @ViewBuilder content: () -> Content) where Content == ForEach<Range<Int>, Int, Item>, Item: View {
-        let content = content()
-        self.items = content.data.map { GridItem(AnyView(content.content($0)), id: AnyHashable($0)) }
-        self.trackSizes = tracks
-        self.tracksCount = self.trackSizes.count
-        self.spacing = spacing
-    }
-}

@@ -43,13 +43,7 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
                                            height: self.positions[item]?.bounds.height)
                             )
                             .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
-                                let padding = self.paddingEdges(item: item)
-                                let additionalWidth = padding.contains(.leading) ? self.spacing : 0
-                                let additionalHeight = padding.contains(.top) ? self.spacing : 0
-                                var bounds = mainGeometry[$0]
-                                bounds.size.width += 300
-                                bounds.size.height += additionalHeight
-                                return PositionsPreference(items: [PositionedItem(bounds: bounds, gridItem: item)], size: .zero)
+                                PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: .zero)
                             }
                             .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
                                 self.cellPreferenceView(item: item, preference: preference)

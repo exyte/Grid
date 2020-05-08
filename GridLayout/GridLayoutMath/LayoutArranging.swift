@@ -30,6 +30,12 @@ protocol LayoutArranging {
     func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode, flow: GridFlow, spacing: CGFloat) -> PositionsPreference
 }
 
+struct PositionedTrack {
+    let track: TrackSize
+    var baseSize: CGFloat
+    var growthLimit: CGFloat
+}
+
 extension LayoutArranging {
     
     func arrange(spanPreferences: [SpanPreference], fixedTracksCount: Int, flow: GridFlow, packing: GridPacking) -> LayoutArrangement {
@@ -83,11 +89,83 @@ extension LayoutArranging {
     }
     
     func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode, flow: GridFlow, spacing: CGFloat) -> PositionsPreference {
+        
+        /// 1. Calculate growing track sizes as max of all the items within a track
         let growingTracksSizes: [CGFloat] = self.calculateSizes(position: position,
                                                                 arrangement: arrangement,
                                                                 contentMode: contentMode,
                                                                 flow: flow)
-        let fixedTracksSizes = self.calculateSizes(tracks: tracks, boundingLength: boundingSize[keyPath: flow.fixedSize], spacing: spacing)
+        
+        // 2. Calculate fixed flow track sizes
+        
+        // 2.1. Initial sizes
+        var fixedTracksSizes: [PositionedTrack] =
+            tracks.map { track in
+                switch track {
+                case .fr:
+                    return PositionedTrack(track: track, baseSize: 0, growthLimit: 0)
+                case .const(let size):
+                    return PositionedTrack(track: track, baseSize: CGFloat(size), growthLimit: CGFloat(size))
+                case .fitContent:
+                    return PositionedTrack(track: track, baseSize: 0, growthLimit: .infinity)
+                }
+        }
+
+        let totalConstsSize = fixedTracksSizes.map(\.baseSize).reduce(0, +)
+        let totalAvailableLength = max(0, boundingSize[keyPath: flow.fixedSize] - totalConstsSize - CGFloat(tracks.count - 1) * spacing)
+        
+         // 2.2 Resolve Intrinsic Track Sizes
+        
+        /// 2.2.1 Size tracks to fit non-spanning items
+        for (trackIndex, _) in fixedTracksSizes.enumerated().filter({ $0.element.track.isIntrinsic }) {
+            let arrangedNoSpanItems = arrangement.items.filter { $0.startIndex[keyPath: flow.fixedIndex] == trackIndex }
+            let positionedNoSpanItems = arrangedNoSpanItems.compactMap { position[$0] }
+            let maxSize = positionedNoSpanItems
+                .map(\.bounds.size)
+                .map { $0[keyPath: flow.fixedSize] }
+                .max(by: >)
+            
+            fixedTracksSizes[trackIndex].baseSize = maxSize ?? fixedTracksSizes[trackIndex].baseSize
+        }
+        
+        /// 2.2.2 Increase sizes to accommodate spanning items
+        let arrangedSpannedItems = arrangement.items
+            .filter { $0.span[keyPath: flow.fixedSpanIndex] > 1}
+  
+        var spansMap: [Int: [ArrangedItem]] = [:]
+        arrangedSpannedItems.forEach { arrangedItem in
+            let items = spansMap[arrangedItem.span[keyPath: flow.fixedSpanIndex]] ?? []
+            spansMap[arrangedItem.span[keyPath: flow.fixedSpanIndex]] = items + [arrangedItem]
+        }
+
+        for span in spansMap.keys.sorted(by: >) {
+            var plannedIncreases = [CGFloat](repeating: 0, count: fixedTracksSizes.count)
+            for arrangedItem in spansMap[span] ?? [] {
+                let start = arrangedItem.startIndex[keyPath: flow.fixedIndex]
+                let end = arrangedItem.endIndex[keyPath: flow.fixedIndex]
+                let trackSizes = fixedTracksSizes[start...end].map(\.baseSize).reduce(0, +)
+                let itemSize = position[arrangedItem]?.bounds.size[keyPath: flow.fixedSize]
+                let spaceToDistribute = max(0, (itemSize ?? 0) - trackSizes)
+                (start...end).forEach { plannedIncreases[$0] += spaceToDistribute / CGFloat(span) }
+            }
+
+            //let existingSizes = fixedTracksSizes.map(\.baseSize).reduce(0, +)
+            //let totalPlannedIncrease = plannedIncreases.reduce(0, +)
+
+            //let exceedIncrease = max(0, totalAvailableLength - existingSizes + totalPlannedIncrease)
+            //let correctionRatio = exceedIncrease / totalPlannedIncrease
+
+            for (index, plannedIncrease) in plannedIncreases.enumerated() {
+                fixedTracksSizes[index].baseSize += plannedIncrease //* correctionRatio
+            }
+        }
+
+        // 3  Expand Flexible Tracks
+        
+        
+
+        //------------------
+        //let fixedTracksSizes = self.calculateSizes(tracks: tracks, boundingLength: boundingSize[keyPath: flow.fixedSize], spacing: spacing)
         var newPositions: [PositionedItem] = []
         
         for positionedItem in position.items {
@@ -110,8 +188,8 @@ extension LayoutArranging {
                 }) + centringCorrection
             }
 
-            let fixedTrackStart = fixedTracksSizes[0..<arrangedItem.startIndex[keyPath: flow.fixedIndex]].reduce(0, +)
-            let fixedTrackSize = fixedTracksSizes[arrangedItem.startIndex[keyPath: flow.fixedIndex]...arrangedItem.endIndex[keyPath: flow.fixedIndex]].reduce(0, +)
+            let fixedTrackStart = fixedTracksSizes[0..<arrangedItem.startIndex[keyPath: flow.fixedIndex]].map(\.baseSize).reduce(0, +)
+            let fixedTrackSize = fixedTracksSizes[arrangedItem.startIndex[keyPath: flow.fixedIndex]...arrangedItem.endIndex[keyPath: flow.fixedIndex]].map(\.baseSize).reduce(0, +)
             
             var newBounds = CGRect.zero
             newBounds.size[keyPath: flow.growingSize] = itemGrowingSize.rounded()
@@ -123,13 +201,19 @@ extension LayoutArranging {
         }
         
         let totalGrowingSize = growingTracksSizes.reduce(0, +)
+        let totalFixedSize = fixedTracksSizes.map(\.baseSize).reduce(0, +)
         var totalSize = CGSize.zero
-        totalSize[keyPath: flow.fixedSize] = boundingSize[keyPath: flow.fixedSize].rounded()
+        totalSize[keyPath: flow.fixedSize] = totalFixedSize.rounded()
         totalSize[keyPath: flow.growingSize] = totalGrowingSize.rounded()
         return PositionsPreference(items: newPositions, size: totalSize)
     }
     
-    private func calculateSizes(tracks: [TrackSize], boundingLength: CGFloat, spacing: CGFloat) -> [CGFloat] {
+    /*
+    
+    private func calculateSizes(_ position: PositionsPreference, arrangement: LayoutArrangement, tracks: [TrackSize], boundingLength: CGFloat, spacing: CGFloat) -> [PositionedTrack] {
+        
+
+        
         var fractionCount = 0
         var totalConsts = 0
         
@@ -160,7 +244,7 @@ extension LayoutArranging {
             return trackSize
         }
     }
-    
+    */
     private func calculateSizes(position: PositionsPreference, arrangement: LayoutArrangement,
                                 contentMode: GridContentMode, flow: GridFlow) -> [CGFloat] {
         var sizes: [CGFloat] = .init(repeating: 0, count: arrangement[keyPath: flow.growingArrangementCount])

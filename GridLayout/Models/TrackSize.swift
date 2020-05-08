@@ -6,7 +6,7 @@
 //  Copyright © 2020 Denis Obukhov. All rights reserved.
 //
 
-import Foundation
+import CoreGraphics
 
 // swiftlint:disable identifier_name
 
@@ -14,10 +14,22 @@ import Foundation
 /// fr(N) sizes a track proportionally to the bounding rect with the respect of specified fraction N as a part of total fractions count.
 /// const(N) sizes a track to be equal to the specified size N.
 public enum TrackSize {
-    case fr(Int)
-    case const(Int)
+    case fr(CGFloat)
+    case const(CGFloat)
+    case fitContent
     
     // TODO: Add .min(Int)
+    
+    var isIntrinsic: Bool {
+        switch self {
+        case .fr:
+            return false
+        case .const:
+            return false
+        case .fitContent:
+            return true
+        }
+    }
 }
 
 extension Array: ExpressibleByIntegerLiteral where Element == TrackSize {

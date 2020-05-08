@@ -14,21 +14,41 @@ struct Foo: Identifiable {
 
 struct ContentView: View {
     var body: some View {
-        Grid(tracks: 3) { 
-            VCardView()
+        Grid(tracks: [.fitContent, .fitContent, .fitContent], spacing: 0) {
+                Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit.")
+                    .frame(maxWidth: 88)
+                    .gridSpan(column: 1, row: 1)
+                    .background(Color.red)
+                    .gridCellBackground { _ in
+                        Color.yellow
+                    }
 
-            ForEach(0..<4) { _ in
-                VCardView()
-            }
+                Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit.")
+                    .frame(maxWidth: 42)
+                    .gridSpan(column: 1, row: 1)
+                    .background(Color.blue)
+                    .gridCellBackground { _ in
+                        Color.yellow
+                    }
 
-            ForEach([Foo(id: 1), Foo(id: 2)]) { _ in
-                VCardView()
-            }
+                Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit.")
+                    .frame(maxWidth: 69)
+                    .gridSpan(column: 1, row: 1)
+                    .background(Color.green)
+                    .gridCellBackground { _ in
+                        Color.yellow
+                    }
             
-            ForEach([1, 2], id: \.self) { _ in
-                VCardView()
-            }
+            Text("Lorem ipsum dolor sit amet, consectetuer adipiscing elit.")
+                .frame(maxWidth: 69)
+                .gridSpan(column: 1, row: 1)
+                .background(Color.green)
+                .gridCellBackground { _ in
+                    Color.yellow
+                }
+                .gridSpan(column: 2, row: 1)
         }
+        .gridContentMode(.scroll)
     }
 }
 

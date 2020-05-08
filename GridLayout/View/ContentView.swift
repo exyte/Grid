@@ -8,20 +8,27 @@
 
 import SwiftUI
 
+struct Foo: Identifiable {
+    let id: Int
+}
+
 struct ContentView: View {
     var body: some View {
-        Grid(tracks: 2, spacing: 0) {
-            HCardView()
-                .overlay(Text("1"))
-                .gridSpan(column: 1, row: 2)
-            HCardView()
-                .gridSpan(column: 1, row: 2)
-                .overlay(Text("2"))
-            
-            HCardView()
+        Grid(tracks: 3) { 
+            VCardView()
 
+            ForEach(0..<4) { _ in
+                VCardView()
+            }
+
+            ForEach([Foo(id: 1), Foo(id: 2)]) { _ in
+                VCardView()
+            }
+            
+            ForEach([1, 2], id: \.self) { _ in
+                VCardView()
+            }
         }
-        .gridContentMode(.fill)
     }
 }
 

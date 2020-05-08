@@ -19,7 +19,7 @@
 		36780DD32452DB7A00B7AAAB /* GridFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36780DD22452DB7A00B7AAAB /* GridFlow.swift */; };
 		36780DD52452E9F200B7AAAB /* View+Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36780DD42452E9F200B7AAAB /* View+Environment.swift */; };
 		367F235A24500DB600931700 /* TrackSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 367F235924500DB600931700 /* TrackSize.swift */; };
-		36829D5E244B4783006D605B /* Grid+Inits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36829D5D244B4783006D605B /* Grid+Inits.swift */; };
+		36829D5E244B4783006D605B /* Grid+Inits_TupleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36829D5D244B4783006D605B /* Grid+Inits_TupleView.swift */; };
 		36829D60244C193A006D605B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36829D5F244C1939006D605B /* Constants.swift */; };
 		36829D62244C1AEB006D605B /* GridSpan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36829D61244C1AEB006D605B /* GridSpan.swift */; };
 		36829D66244D8F7C006D605B /* PositionedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36829D65244D8F7C006D605B /* PositionedItem.swift */; };
@@ -32,11 +32,16 @@
 		3697EB1F244884F2005A82F8 /* ArrangedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB1E244884F2005A82F8 /* ArrangedItem.swift */; };
 		3697EB222448852E005A82F8 /* LayoutArrangement+description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB212448852E005A82F8 /* LayoutArrangement+description.swift */; };
 		3697EB282448862C005A82F8 /* LayoutArrangement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697EB272448862C005A82F8 /* LayoutArrangement.swift */; };
+		369C0DE424646A3A00052776 /* Grid+Inits_Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369C0DE324646A3A00052776 /* Grid+Inits_Data.swift */; };
+		369C0DE624646A5D00052776 /* Grid+Inits_ForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369C0DE524646A5D00052776 /* Grid+Inits_ForEach.swift */; };
 		36A70E2824619EB700FE76A3 /* GridPacking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A70E2724619EB700FE76A3 /* GridPacking.swift */; };
 		36DE3524244B30A9009EA6E8 /* SpanPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DE3523244B30A9009EA6E8 /* SpanPreference.swift */; };
 		36E276CD2462A01B000EC77C /* ArrangingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E276BD24629FBF000EC77C /* ArrangingTests.swift */; };
 		36ED05CF24593D1500873501 /* GridCellPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36ED05CE24593D1500873501 /* GridCellPreference.swift */; };
 		36ED05D224594D5400873501 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36ED05D124594D5400873501 /* ContentView.swift */; };
+		36F2F9492464625D004A5B18 /* GridItem+asGridItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F2F9482464625D004A5B18 /* GridItem+asGridItems.swift */; };
+		36F9B6A02464566800E2AE98 /* GridForEachRangeInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F9B69F2464566800E2AE98 /* GridForEachRangeInt.swift */; };
+		36F9B6A32464571100E2AE98 /* ForEach+GridViewsContaining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F9B6A22464571100E2AE98 /* ForEach+GridViewsContaining.swift */; };
 		67639814D385032F0758888C /* Pods_GridLayout.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 191E369FACAC2ED9EC7B3972 /* Pods_GridLayout.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,7 +72,7 @@
 		36780DD22452DB7A00B7AAAB /* GridFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridFlow.swift; sourceTree = "<group>"; };
 		36780DD42452E9F200B7AAAB /* View+Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Environment.swift"; sourceTree = "<group>"; };
 		367F235924500DB600931700 /* TrackSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackSize.swift; sourceTree = "<group>"; };
-		36829D5D244B4783006D605B /* Grid+Inits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grid+Inits.swift"; sourceTree = "<group>"; };
+		36829D5D244B4783006D605B /* Grid+Inits_TupleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grid+Inits_TupleView.swift"; sourceTree = "<group>"; };
 		36829D5F244C1939006D605B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		36829D61244C1AEB006D605B /* GridSpan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridSpan.swift; sourceTree = "<group>"; };
 		36829D65244D8F7C006D605B /* PositionedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionedItem.swift; sourceTree = "<group>"; };
@@ -80,6 +85,8 @@
 		3697EB1E244884F2005A82F8 /* ArrangedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrangedItem.swift; sourceTree = "<group>"; };
 		3697EB212448852E005A82F8 /* LayoutArrangement+description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LayoutArrangement+description.swift"; sourceTree = "<group>"; };
 		3697EB272448862C005A82F8 /* LayoutArrangement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutArrangement.swift; sourceTree = "<group>"; };
+		369C0DE324646A3A00052776 /* Grid+Inits_Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grid+Inits_Data.swift"; sourceTree = "<group>"; };
+		369C0DE524646A5D00052776 /* Grid+Inits_ForEach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Grid+Inits_ForEach.swift"; sourceTree = "<group>"; };
 		36A70E2724619EB700FE76A3 /* GridPacking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPacking.swift; sourceTree = "<group>"; };
 		36DE3523244B30A9009EA6E8 /* SpanPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpanPreference.swift; sourceTree = "<group>"; };
 		36E276BD24629FBF000EC77C /* ArrangingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrangingTests.swift; sourceTree = "<group>"; };
@@ -87,6 +94,9 @@
 		36E276C72462A00C000EC77C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		36ED05CE24593D1500873501 /* GridCellPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCellPreference.swift; sourceTree = "<group>"; };
 		36ED05D124594D5400873501 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		36F2F9482464625D004A5B18 /* GridItem+asGridItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GridItem+asGridItems.swift"; sourceTree = "<group>"; };
+		36F9B69F2464566800E2AE98 /* GridForEachRangeInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridForEachRangeInt.swift; sourceTree = "<group>"; };
+		36F9B6A22464571100E2AE98 /* ForEach+GridViewsContaining.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ForEach+GridViewsContaining.swift"; sourceTree = "<group>"; };
 		9F3828D17295FD1F09E3BE44 /* Pods-GridLayout.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GridLayout.release.xcconfig"; path = "Target Support Files/Pods-GridLayout/Pods-GridLayout.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -189,11 +199,11 @@
 		3697EB192448841C005A82F8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				36F9B6A1246456E700E2AE98 /* Inits */,
 				362C9CFB2445AA7900A922DA /* LaunchScreen.storyboard */,
 				362C9CF42445AA7100A922DA /* RandomizedContentView.swift */,
 				36ED05D124594D5400873501 /* ContentView.swift */,
 				361AFEBE2449685E00A34687 /* Grid.swift */,
-				36829D5D244B4783006D605B /* Grid+Inits.swift */,
 				36780DD42452E9F200B7AAAB /* View+Environment.swift */,
 				368E4E862458198C009D1665 /* View+GridPreferences.swift */,
 			);
@@ -245,6 +255,19 @@
 				368E4E8424581532009D1665 /* GridBackgroundPreference.swift */,
 			);
 			path = Preferences;
+			sourceTree = "<group>";
+		};
+		36F9B6A1246456E700E2AE98 /* Inits */ = {
+			isa = PBXGroup;
+			children = (
+				36829D5D244B4783006D605B /* Grid+Inits_TupleView.swift */,
+				369C0DE324646A3A00052776 /* Grid+Inits_Data.swift */,
+				369C0DE524646A5D00052776 /* Grid+Inits_ForEach.swift */,
+				36F9B69F2464566800E2AE98 /* GridForEachRangeInt.swift */,
+				36F9B6A22464571100E2AE98 /* ForEach+GridViewsContaining.swift */,
+				36F2F9482464625D004A5B18 /* GridItem+asGridItems.swift */,
+			);
+			path = Inits;
 			sourceTree = "<group>";
 		};
 		8EF017D2E135B2F56431B8FC /* Frameworks */ = {
@@ -413,7 +436,10 @@
 				362C9CF12445AA7100A922DA /* AppDelegate.swift in Sources */,
 				36ED05D224594D5400873501 /* ContentView.swift in Sources */,
 				367F235A24500DB600931700 /* TrackSize.swift in Sources */,
+				36F9B6A32464571100E2AE98 /* ForEach+GridViewsContaining.swift in Sources */,
+				369C0DE624646A5D00052776 /* Grid+Inits_ForEach.swift in Sources */,
 				3697EB1424484B51005A82F8 /* LayoutArranging.swift in Sources */,
+				369C0DE424646A3A00052776 /* Grid+Inits_Data.swift in Sources */,
 				3697EB1F244884F2005A82F8 /* ArrangedItem.swift in Sources */,
 				3697EB1D244884D4005A82F8 /* GridIndex.swift in Sources */,
 				36DE3524244B30A9009EA6E8 /* SpanPreference.swift in Sources */,
@@ -430,12 +456,14 @@
 				365DFD01245707A6001541E3 /* GridOverlayPreference.swift in Sources */,
 				36ED05CF24593D1500873501 /* GridCellPreference.swift in Sources */,
 				36829D60244C193A006D605B /* Constants.swift in Sources */,
+				36F2F9492464625D004A5B18 /* GridItem+asGridItems.swift in Sources */,
 				3697EB1B244884AC005A82F8 /* GridItem.swift in Sources */,
 				36829D66244D8F7C006D605B /* PositionedItem.swift in Sources */,
+				36F9B6A02464566800E2AE98 /* GridForEachRangeInt.swift in Sources */,
 				362C9CF32445AA7100A922DA /* SceneDelegate.swift in Sources */,
 				361AFEBF2449685E00A34687 /* Grid.swift in Sources */,
 				362C9CF52445AA7100A922DA /* RandomizedContentView.swift in Sources */,
-				36829D5E244B4783006D605B /* Grid+Inits.swift in Sources */,
+				36829D5E244B4783006D605B /* Grid+Inits_TupleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

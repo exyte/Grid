@@ -19,7 +19,7 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
     let items: [GridItem]
     let tracksCount: Int
     let spacing: CGFloat
-    let trackSizes: [TrackSize]
+    let trackSizes: [GridTrack]
 
     public var body: some View {
         return GeometryReader { mainGeometry in
@@ -31,25 +31,21 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
                                 preference.shrinkToLast(assigning: item)
                             }
                             .padding(self.paddingEdges(item: item), self.spacing)
+                            .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
+                                PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: nil)
+                            }
                             .frame(flow: self.flow,
                                    size: self.positions[item]?.bounds.size,
                                    contentMode: self.contentMode)
                             .alignmentGuide(.leading, computeValue: { _ in  -(self.positions[item]?.bounds.origin.x ?? 0) })
                             .alignmentGuide(.top, computeValue: { _ in  -(self.positions[item]?.bounds.origin.y ?? 0) })
-//                            .overlay(
-//                                Color.clear
-//                                    .border(Color.black, width: 1)
-//                                    .frame(width: self.positions[item]?.bounds.width,
-//                                           height: self.positions[item]?.bounds.height)
-//                            )
-                            .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
-                                PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: nil)
-                            }
+
                             .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
                                 self.cellPreferenceView(item: item, preference: preference)
                             }
                             .overlayPreferenceValue(GridOverlayPreferenceKey.self) { preference in
                                 self.cellPreferenceView(item: item, preference: preference)
+                                    .border(Color.black, width: 1)
                             }
                     }
                 }
@@ -113,7 +109,6 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
         return edges
     }
     
-    @ViewBuilder
     private func cellPreferenceView<T: GridCellPreference>(item: GridItem, preference: T) -> some View {
         GeometryReader { geometry in
             preference.content(geometry.size)

@@ -1,5 +1,5 @@
 //
-//  TrackSize.swift
+//  GridTrack.swift
 //  GridLayout
 //
 //  Created by Denis Obukhov on 22.04.2020.
@@ -13,7 +13,7 @@ import CoreGraphics
 /// Size of the each track.
 /// fr(N) sizes a track proportionally to the bounding rect with the respect of specified fraction N as a part of total fractions count.
 /// const(N) sizes a track to be equal to the specified size N.
-public enum TrackSize {
+public enum GridTrack {
     case fr(CGFloat)
     case const(CGFloat)
     case fitContent
@@ -30,9 +30,20 @@ public enum TrackSize {
             return true
         }
     }
+    
+    var isFlexible: Bool {
+        switch self {
+        case .fr:
+            return true
+        case .const:
+            return false
+        case .fitContent:
+            return false
+        }
+    }
 }
 
-extension Array: ExpressibleByIntegerLiteral where Element == TrackSize {
+extension Array: ExpressibleByIntegerLiteral where Element == GridTrack {
     public typealias IntegerLiteralType = Int
     public init(integerLiteral value: Self.IntegerLiteralType) {
         self = .init(repeating: .fr(Constants.defaultFractionSize), count: value)

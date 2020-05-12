@@ -165,6 +165,8 @@ extension LayoutArranging {
     
     private func calculateFixedTrackSizes(position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [GridTrack], flow: GridFlow, spacing: CGFloat) -> [CGFloat] {
         /// 1. Initialize sizes
+        let totalAvailableSpace = boundingSize[keyPath: flow.fixedSize]
+        
         var fixedTracksSizes: [PositionedTrack] =
             tracks.map { track in
                 switch track {
@@ -176,12 +178,7 @@ extension LayoutArranging {
                     return PositionedTrack(track: track, baseSize: 0)
                 }
         }
-        
-        let totalSpacingLength = self.totalSpacingLength(arrangement: arrangement,
-                                                         flow: flow,
-                                                         spacing: spacing)
-        let totalAvailableSpace = boundingSize[keyPath: flow.fixedSize]  - totalSpacingLength
-        
+
         /// 2. Resolve Intrinsic Track Sizes
         
         /// 2.1. Size tracks to fit non-spanning items
@@ -273,27 +270,8 @@ extension LayoutArranging {
                 fixedTracksSizes[trackIndex].baseSize = max(fraction * fractionValue, baseSize)
             }
         }
-        
-        print("Used space: \(fixedTracksSizes.map(\.baseSize).reduce(0, +) + totalSpacingLength)")
-        print("Available: \(boundingSize[keyPath: flow.fixedSize])")
+
         return fixedTracksSizes.map(\.baseSize)
-    }
-    
-    private func totalSpacingLength(arrangement: LayoutArrangement, flow: GridFlow, spacing: CGFloat) -> CGFloat {
-        let maxUniqueCount =
-            Array(0..<arrangement[keyPath: flow.growingArrangementCount])
-                .map { trackIndex in
-                    arrangement.items
-                        .filter {
-                            let start = $0.startIndex[keyPath: flow.growingIndex]
-                            let end = $0.endIndex[keyPath: flow.growingIndex]
-                            return (start...end).contains(trackIndex)
-                        }
-                        .count
-                }
-                .max()
-        let result = CGFloat(max(0, (maxUniqueCount ?? 0) - 1)) * spacing
-        return result
     }
 }
 

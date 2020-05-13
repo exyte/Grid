@@ -59,7 +59,10 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
                        alignment: .topLeading)
                 }
                 .transformPreference(PositionsPreferenceKey.self) { positionPreference in
-                    guard let arrangement = self.arrangement else { return }
+                    guard let arrangement = self.arrangement else {
+                        positionPreference = PositionsPreference.default
+                        return
+                    }
                     positionPreference = self.reposition(positionPreference,
                                                          arrangement: arrangement,
                                                          boundingSize: mainGeometry.size,
@@ -130,7 +133,7 @@ extension View {
             height = size?.height
         case .scroll:
             width = (flow == .columns ? size?.width : nil)
-            height = (flow == .columns ? nil : size?.height)
+            height = (flow == .rows ? size?.height : nil)
         }
         return frame(width: width, height: height)
     }

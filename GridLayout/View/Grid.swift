@@ -65,8 +65,7 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
                                                          boundingSize: mainGeometry.size,
                                                          tracks: self.trackSizes,
                                                          contentMode: self.contentMode,
-                                                         flow: self.flow,
-                                                         spacing: self.spacing)
+                                                         flow: self.flow)
             }
         }
         .transformPreference(SpansPreferenceKey.self) { preference in

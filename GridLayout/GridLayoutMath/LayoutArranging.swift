@@ -26,8 +26,7 @@ protocol LayoutArranging {
     ///   - tracks: Sizes of tracks
     ///   - contentMode: Where the content will be scrolled or filled inside a grid
     ///   - flow: Distribution order of grid items
-    ///   - spacing: Spacing between items
-    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [GridTrack], contentMode: GridContentMode, flow: GridFlow, spacing: CGFloat) -> PositionsPreference
+    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [GridTrack], contentMode: GridContentMode, flow: GridFlow) -> PositionsPreference
 }
 
 private struct PositionedTrack {
@@ -87,7 +86,7 @@ extension LayoutArranging {
         return arrangement
     }
     
-    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [GridTrack], contentMode: GridContentMode, flow: GridFlow, spacing: CGFloat) -> PositionsPreference {
+    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [GridTrack], contentMode: GridContentMode, flow: GridFlow) -> PositionsPreference {
         
         /// 1. Calculate growing track sizes as max of all the items within a track
         let growingTracks: [GridTrack]

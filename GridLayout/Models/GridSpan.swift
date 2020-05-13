@@ -14,3 +14,10 @@ struct GridSpan: Equatable {
     
     static let `default` = GridSpan()
 }
+
+extension GridSpan: ExpressibleByArrayLiteral {
+    init(arrayLiteral elements: Int...) {
+        assert(elements.count == 2)
+        self = GridSpan(column: elements[0], row: elements[1])
+    }
+}

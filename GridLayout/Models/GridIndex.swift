@@ -14,3 +14,10 @@ struct GridIndex: Equatable {
     
     static let zero = GridIndex(column: 0, row: 0)
 }
+
+extension GridIndex: ExpressibleByArrayLiteral {
+    init(arrayLiteral elements: Int...) {
+        assert(elements.count == 2)
+        self = GridIndex(column: elements[0], row: elements[1])
+    }
+}

@@ -13,48 +13,64 @@ public enum GridFlow {
     case rows
 }
 
+enum GridFlowDimension {
+    case fixed
+    case growing
+}
+
 extension GridFlow {
-    var fixedIndex: WritableKeyPath<GridIndex, Int> {
-        (self == .columns ? \GridIndex.column : \GridIndex.row)
+    
+    func index(_ dimension: GridFlowDimension) -> WritableKeyPath<GridIndex, Int> {
+        switch dimension {
+        case .fixed:
+            return (self == .columns ? \GridIndex.column : \GridIndex.row)
+        case .growing:
+            return (self == .rows ? \GridIndex.column : \GridIndex.row)
+        }
     }
     
-    var growingIndex: WritableKeyPath<GridIndex, Int> {
-         (self == .rows ? \GridIndex.column : \GridIndex.row)
-    }
-    
-    var fixedSpanIndex: WritableKeyPath<GridSpan, Int> {
-        (self == .columns ? \GridSpan.column : \GridSpan.row)
-    }
-    
-    var growingSpanIndex: WritableKeyPath<GridSpan, Int> {
-         (self == .rows ? \GridSpan.column : \GridSpan.row)
-    }
-    
-    var fixedSize: WritableKeyPath<CGSize, CGFloat> {
-        (self == .columns ? \CGSize.width : \CGSize.height)
-    }
-    
-    var growingSize: WritableKeyPath<CGSize, CGFloat> {
-        (self == .rows ? \CGSize.width : \CGSize.height)
+    func spanIndex(_ dimension: GridFlowDimension) -> WritableKeyPath<GridSpan, Int> {
+        switch dimension {
+        case .fixed:
+            return (self == .columns ? \GridSpan.column : \GridSpan.row)
+        case .growing:
+            return (self == .rows ? \GridSpan.column : \GridSpan.row)
+        }
     }
 
-    var arrangedItemGrowingCount: KeyPath<ArrangedItem, Int> {
-        (self == .columns ? \ArrangedItem.rowsCount : \ArrangedItem.columnsCount)
-    }
-
-    var growingArrangementCount: WritableKeyPath<LayoutArrangement, Int> {
-        (self == .columns ? \LayoutArrangement.rowsCount : \LayoutArrangement.columnsCount)
-    }
-    
-    var fixedArrangementCount: WritableKeyPath<LayoutArrangement, Int> {
-        (self == .rows ? \LayoutArrangement.rowsCount : \LayoutArrangement.columnsCount)
+    func size(_ dimension: GridFlowDimension) -> WritableKeyPath<CGSize, CGFloat> {
+        switch dimension {
+        case .fixed:
+            return (self == .columns ? \CGSize.width : \CGSize.height)
+        case .growing:
+            return (self == .rows ? \CGSize.width : \CGSize.height)
+        }
     }
     
-    var fixedCGPointIndex: WritableKeyPath<CGPoint, CGFloat> {
-        (self == .columns ? \CGPoint.x : \CGPoint.y)
+    func arrangedItemCount(_ dimension: GridFlowDimension) -> KeyPath<ArrangedItem, Int> {
+        switch dimension {
+        case .fixed:
+            return (self == .rows ? \ArrangedItem.rowsCount : \ArrangedItem.columnsCount)
+        case .growing:
+            return (self == .columns ? \ArrangedItem.rowsCount : \ArrangedItem.columnsCount)
+        }
     }
     
-    var growingCGPointIndex: WritableKeyPath<CGPoint, CGFloat> {
-         (self == .rows ? \CGPoint.x : \CGPoint.y)
+    func arrangementCount(_ dimension: GridFlowDimension) -> WritableKeyPath<LayoutArrangement, Int> {
+        switch dimension {
+        case .fixed:
+            return (self == .rows ? \LayoutArrangement.rowsCount : \LayoutArrangement.columnsCount)
+        case .growing:
+            return (self == .columns ? \LayoutArrangement.rowsCount : \LayoutArrangement.columnsCount)
+        }
+    }
+    
+    func cgPointIndex(_ dimension: GridFlowDimension) -> WritableKeyPath<CGPoint, CGFloat> {
+        switch dimension {
+        case .fixed:
+            return (self == .columns ? \CGPoint.x : \CGPoint.y)
+        case .growing:
+            return (self == .rows ? \CGPoint.x : \CGPoint.y)
+        }
     }
 }

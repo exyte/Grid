@@ -17,6 +17,8 @@ struct ArrangedItem: Equatable {
     var area: Int { self.rowsCount * self.columnsCount }
     var columnsCount: Int { endIndex.column - startIndex.column + 1 }
     var rowsCount: Int { endIndex.row - startIndex.row + 1 }
+    var span: GridSpan { return GridSpan(column: endIndex.column - startIndex.column + 1,
+                                         row: endIndex.row - startIndex.row + 1) }
     
     func contains(_ index: GridIndex) -> Bool {
         return index.column >= startIndex.column

@@ -27,7 +27,12 @@ protocol LayoutArranging {
     ///   - contentMode: Where the content will be scrolled or filled inside a grid
     ///   - flow: Distribution order of grid items
     ///   - spacing: Spacing between items
-    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode, flow: GridFlow, spacing: CGFloat) -> PositionsPreference
+    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [GridTrack], contentMode: GridContentMode, flow: GridFlow, spacing: CGFloat) -> PositionsPreference
+}
+
+private struct PositionedTrack {
+    let track: GridTrack
+    var baseSize: CGFloat
 }
 
 extension LayoutArranging {
@@ -45,7 +50,7 @@ extension LayoutArranging {
             guard let gridItem = spanPreference.item else { continue }
             
             var correctedSpan = spanPreference.span
-            correctedSpan[keyPath: flow.fixedSpanIndex] = min(fixedTracksCount, correctedSpan[keyPath: flow.fixedSpanIndex])
+            correctedSpan[keyPath: flow.spanIndex(.fixed)] = min(fixedTracksCount, correctedSpan[keyPath: flow.spanIndex(.fixed)])
             var currentIndex: GridIndex
             
             switch packing {
@@ -56,7 +61,7 @@ extension LayoutArranging {
             }
             
             while occupiedIndices.contains(currentIndex, rowSpan: correctedSpan.row, columnSpan: correctedSpan.column)
-                || currentIndex[keyPath: flow.fixedIndex] + correctedSpan[keyPath: flow.fixedSpanIndex] > fixedTracksCount {
+                || currentIndex[keyPath: flow.index(.fixed)] + correctedSpan[keyPath: flow.spanIndex(.fixed)] > fixedTracksCount {
                     currentIndex = currentIndex.nextIndex(tracksCount: fixedTracksCount, flow: flow)
             }
 
@@ -68,26 +73,48 @@ extension LayoutArranging {
             
             let startIndex = currentIndex
             var endIndex: GridIndex = .zero
-            endIndex[keyPath: flow.fixedIndex] = startIndex[keyPath: flow.fixedIndex] + correctedSpan[keyPath: flow.fixedSpanIndex] - 1
-            endIndex[keyPath: flow.growingIndex] = startIndex[keyPath: flow.growingIndex] + correctedSpan[keyPath: flow.growingSpanIndex] - 1
+            endIndex[keyPath: flow.index(.fixed)] = startIndex[keyPath: flow.index(.fixed)] + correctedSpan[keyPath: flow.spanIndex(.fixed)] - 1
+            endIndex[keyPath: flow.index(.growing)] = startIndex[keyPath: flow.index(.growing)] + correctedSpan[keyPath: flow.spanIndex(.growing)] - 1
 
             let arrangedItem = ArrangedItem(gridItem: gridItem, startIndex: startIndex, endIndex: endIndex)
-            growingTracksCount = max(growingTracksCount, arrangedItem.endIndex[keyPath: flow.growingIndex] + 1)
+            growingTracksCount = max(growingTracksCount, arrangedItem.endIndex[keyPath: flow.index(.growing)] + 1)
             result.append(arrangedItem)
             lastIndex = currentIndex.nextIndex(tracksCount: fixedTracksCount, flow: flow)
         }
         var arrangement = LayoutArrangement(columnsCount: 0, rowsCount: 0, items: result)
-        arrangement[keyPath: flow.fixedArrangementCount] = fixedTracksCount
-        arrangement[keyPath: flow.growingArrangementCount] = growingTracksCount
+        arrangement[keyPath: flow.arrangementCount(.fixed)] = fixedTracksCount
+        arrangement[keyPath: flow.arrangementCount(.growing)] = growingTracksCount
         return arrangement
     }
     
-    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [TrackSize], contentMode: GridContentMode, flow: GridFlow, spacing: CGFloat) -> PositionsPreference {
-        let growingTracksSizes: [CGFloat] = self.calculateSizes(position: position,
-                                                                arrangement: arrangement,
-                                                                contentMode: contentMode,
-                                                                flow: flow)
-        let fixedTracksSizes = self.calculateSizes(tracks: tracks, boundingLength: boundingSize[keyPath: flow.fixedSize], spacing: spacing)
+    func reposition(_ position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGSize, tracks: [GridTrack], contentMode: GridContentMode, flow: GridFlow, spacing: CGFloat) -> PositionsPreference {
+        
+        /// 1. Calculate growing track sizes as max of all the items within a track
+        let growingTracks: [GridTrack]
+        let growingBoundingSize: CGFloat
+        if contentMode == .scroll {
+            growingTracks = [GridTrack](repeating: .fitContent, count: arrangement[keyPath: flow.arrangementCount(.growing)])
+            growingBoundingSize = .infinity
+        } else {
+            growingTracks = [GridTrack](repeating: .fr(1), count: arrangement[keyPath: flow.arrangementCount(.growing)])
+            growingBoundingSize = boundingSize[keyPath: flow.size(.growing)]
+        }
+        
+        let growingTracksSizes: [CGFloat] = self.calculateTrackSizes(position: position,
+                                                                     arrangement: arrangement,
+                                                                     boundingSize: growingBoundingSize,
+                                                                     tracks: growingTracks,
+                                                                     flow: flow,
+                                                                     dimension: .growing)
+        
+        /// 2. Calculate fixed track sizes
+        let fixedTracksSizes = self.calculateTrackSizes(position: position,
+                                                        arrangement: arrangement,
+                                                        boundingSize: boundingSize[keyPath: flow.size(.fixed)],
+                                                        tracks: tracks,
+                                                        flow: flow,
+                                                        dimension: .fixed)
+        /// 4. Position items using calculated track sizes
         var newPositions: [PositionedItem] = []
         
         for positionedItem in position.items {
@@ -97,94 +124,157 @@ extension LayoutArranging {
             
             switch contentMode {
             case .fill:
-                let growingSize = boundingSize[keyPath: flow.growingSize] / CGFloat(arrangement[keyPath: flow.growingArrangementCount])
-                itemGrowingSize = growingSize * CGFloat(arrangedItem[keyPath: flow.arrangedItemGrowingCount])
-                growingPosition = growingSize * CGFloat(arrangedItem.startIndex[keyPath: flow.growingIndex])
+                let growingSize = boundingSize[keyPath: flow.size(.growing)] / CGFloat(arrangement[keyPath: flow.arrangementCount(.growing)])
+                itemGrowingSize = growingSize * CGFloat(arrangedItem[keyPath: flow.arrangedItemCount(.growing)])
+                growingPosition = growingSize * CGFloat(arrangedItem.startIndex[keyPath: flow.index(.growing)])
             case .scroll:
-                itemGrowingSize = (arrangedItem.startIndex[keyPath: flow.growingIndex]...arrangedItem.endIndex[keyPath: flow.growingIndex]).reduce(0, { result, index in
+                itemGrowingSize = (arrangedItem.startIndex[keyPath: flow.index(.growing)]...arrangedItem.endIndex[keyPath: flow.index(.growing)]).reduce(0, { result, index in
                     return result + growingTracksSizes[index]
                 })
-                let centringCorrection = (itemGrowingSize - positionedItem.bounds.size[keyPath: flow.growingSize]) / 2
-                growingPosition = (0..<arrangedItem.startIndex[keyPath: flow.growingIndex]).reduce(0, { result, index in
+                let centringCorrection = (itemGrowingSize - positionedItem.bounds.size[keyPath: flow.size(.growing)]) / 2
+                growingPosition = (0..<arrangedItem.startIndex[keyPath: flow.index(.growing)]).reduce(0, { result, index in
                     return result + growingTracksSizes[index]
                 }) + centringCorrection
             }
 
-            let fixedTrackStart = fixedTracksSizes[0..<arrangedItem.startIndex[keyPath: flow.fixedIndex]].reduce(0, +)
-            let fixedTrackSize = fixedTracksSizes[arrangedItem.startIndex[keyPath: flow.fixedIndex]...arrangedItem.endIndex[keyPath: flow.fixedIndex]].reduce(0, +)
+            let fixedTrackStart = fixedTracksSizes[0..<arrangedItem.startIndex[keyPath: flow.index(.fixed)]].reduce(0, +)
+            let fixedTrackSize = fixedTracksSizes[arrangedItem.startIndex[keyPath: flow.index(.fixed)]...arrangedItem.endIndex[keyPath: flow.index(.fixed)]].reduce(0, +)
             
             var newBounds = CGRect.zero
-            newBounds.size[keyPath: flow.growingSize] = itemGrowingSize.rounded()
-            newBounds.size[keyPath: flow.fixedSize] = fixedTrackSize.rounded()
-            newBounds.origin[keyPath: flow.growingCGPointIndex] = growingPosition.rounded()
-            newBounds.origin[keyPath: flow.fixedCGPointIndex] = fixedTrackStart.rounded()
+            newBounds.size[keyPath: flow.size(.growing)] = itemGrowingSize.rounded()
+            newBounds.size[keyPath: flow.size(.fixed)] = fixedTrackSize.rounded()
+            newBounds.origin[keyPath: flow.cgPointIndex(.growing)] = growingPosition.rounded()
+            newBounds.origin[keyPath: flow.cgPointIndex(.fixed)] = fixedTrackStart.rounded()
 
             newPositions.append(PositionedItem(bounds: newBounds, gridItem: positionedItem.gridItem))
         }
         
         let totalGrowingSize = growingTracksSizes.reduce(0, +)
+        let totalFixedSize = fixedTracksSizes.reduce(0, +)
         var totalSize = CGSize.zero
-        totalSize[keyPath: flow.fixedSize] = boundingSize[keyPath: flow.fixedSize].rounded()
-        totalSize[keyPath: flow.growingSize] = totalGrowingSize.rounded()
+        totalSize[keyPath: flow.size(.fixed)] = totalFixedSize.rounded()
+        totalSize[keyPath: flow.size(.growing)] = totalGrowingSize.rounded()
         return PositionsPreference(items: newPositions, size: totalSize)
     }
     
-    private func calculateSizes(tracks: [TrackSize], boundingLength: CGFloat, spacing: CGFloat) -> [CGFloat] {
-        var fractionCount = 0
-        var totalConsts = 0
-        
-        for track in tracks {
-            switch track {
-            case .fr(let fraction):
-                fractionCount += fraction
-            case .const(let constLength):
-                totalConsts += constLength
-            }
+    private func calculateTrackSizes(position: PositionsPreference, arrangement: LayoutArrangement, boundingSize: CGFloat, tracks: [GridTrack], flow: GridFlow, dimension: GridFlowDimension) -> [CGFloat] {
+        /// 1. Initialize sizes
+        var growingTracksSizes: [PositionedTrack] =
+            tracks.map { track in
+                switch track {
+                case .fr:
+                    return PositionedTrack(track: track, baseSize: 0)
+                case .const(let size):
+                    return PositionedTrack(track: track, baseSize: CGFloat(size))
+                case .fitContent:
+                    return PositionedTrack(track: track, baseSize: 0)
+                }
         }
-        
-        let correctedLength = boundingLength - CGFloat(totalConsts) - CGFloat(tracks.count - 1) * spacing
-        let fractionSize = correctedLength / CGFloat(fractionCount)
 
-        return tracks.enumerated().map { index, track in
-            var trackSize: CGFloat
-            switch track {
-            case .fr(let fraction):
-                trackSize = CGFloat(fraction) * fractionSize
-            case .const(let constLength):
-                trackSize = CGFloat(constLength)
+        /// 2. Resolve Intrinsic Track Sizes
+        
+        /// 2.1. Size tracks to fit non-spanning items
+        for (trackIndex, _) in growingTracksSizes.enumerated().filter({ $0.element.track.isIntrinsic }) {
+            let arrangedNoSpanItems = arrangement.items.filter {
+                ($0.startIndex[keyPath: flow.index(dimension)] == trackIndex) && ($0.span[keyPath: flow.spanIndex(dimension)] == 1)
             }
+            let positionedNoSpanItems = arrangedNoSpanItems.compactMap { position[$0] }
+            let maxSize = positionedNoSpanItems
+                .map(\.bounds.size)
+                .map { $0[keyPath: flow.size(dimension)] }
+                .max()
             
-            if index != 0 {
-                trackSize += spacing
-            }
-            return trackSize
+            growingTracksSizes[trackIndex].baseSize = maxSize ?? growingTracksSizes[trackIndex].baseSize
         }
-    }
-    
-    private func calculateSizes(position: PositionsPreference, arrangement: LayoutArrangement,
-                                contentMode: GridContentMode, flow: GridFlow) -> [CGFloat] {
-        var sizes: [CGFloat] = .init(repeating: 0, count: arrangement[keyPath: flow.growingArrangementCount])
-        if case .scroll = contentMode {
-            for positionedItem in position.items {
-                guard let arrangedItem = arrangement[positionedItem.gridItem] else { continue }
+        
+        /// 2.2. Increase sizes to accommodate spanning items
+        let arrangedSpannedItems = arrangement.items
+            .filter { $0.span[keyPath: flow.spanIndex(dimension)] > 1 }
+        
+        var spansMap: [Int: [ArrangedItem]] = [:]
+        arrangedSpannedItems.forEach { arrangedItem in
+            let items = spansMap[arrangedItem.span[keyPath: flow.spanIndex(dimension)]] ?? []
+            spansMap[arrangedItem.span[keyPath: flow.spanIndex(dimension)]] = items + [arrangedItem]
+        }
+        
+        for span in spansMap.keys.sorted(by: <) {
+            var plannedIncreases = [CGFloat?](repeating: 0, count: growingTracksSizes.count)
+            for arrangedItem in spansMap[span] ?? [] {
+                let start = arrangedItem.startIndex[keyPath: flow.index(dimension)]
+                let end = arrangedItem.endIndex[keyPath: flow.index(dimension)]
                 
-                let itemSelfSize = positionedItem.bounds.size[keyPath: flow.growingSize]
-                let itemRangeStart = arrangedItem.startIndex[keyPath: flow.growingIndex]
-                let itemRangeEnd = arrangedItem.endIndex[keyPath: flow.growingIndex]
-                for index in itemRangeStart...itemRangeEnd {
-                    let growingCount = arrangedItem[keyPath: flow.arrangedItemGrowingCount]
-                    sizes[index] = max(sizes[index], itemSelfSize / CGFloat(growingCount))
+                ///Consider the items that do not span a track with a flexible size
+                if (tracks[start...end].contains { $0.isFlexible }) { continue }
+                
+                let trackSizes = growingTracksSizes[start...end].map(\.baseSize).reduce(0, +)
+                let itemSize = position[arrangedItem]?.bounds.size[keyPath: flow.size(dimension)]
+                let spaceToDistribute = max(0, (itemSize ?? 0) - trackSizes)
+                (start...end).forEach {
+                    let plannedIncrease = plannedIncreases[$0] ?? 0
+                    plannedIncreases[$0] = max(plannedIncrease, spaceToDistribute / CGFloat(span))
                 }
             }
+            
+            plannedIncreases = plannedIncreases.map { ($0?.rounded() ?? 0) > 0.0 ? $0?.rounded() : nil }
+
+            let existingSizes = growingTracksSizes.map(\.baseSize).reduce(0, +)
+            let totalPlannedIncrease = plannedIncreases.compactMap({ $0 }).reduce(0, +)
+            let freeSpace = max(0, boundingSize - existingSizes)
+            let exceededIncrease = max(0, totalPlannedIncrease - freeSpace)
+
+            /// 2.2.1 Subtract exceeded increase proportionally to the planned ones
+            if let minValue = plannedIncreases.compactMap({ $0 }).min() {
+                let normalizedIncreases = plannedIncreases.map { increase -> CGFloat? in
+                    guard let plannedIncrease = increase else { return increase }
+                    return plannedIncrease / minValue
+                }
+                let fractionValue = exceededIncrease / normalizedIncreases.compactMap({ $0 }).reduce(0, +)
+                for (index, plannedIncrease) in plannedIncreases.enumerated() {
+                    guard
+                        let plannedIncrease = plannedIncrease,
+                        let normalizedIncrease = normalizedIncreases[index]
+                    else {
+                        continue
+                    }
+                    plannedIncreases[index] = plannedIncrease - normalizedIncrease * fractionValue
+                }
+            }
+
+            for (index, plannedIncrease) in plannedIncreases.enumerated() {
+                guard let plannedIncrease = plannedIncrease else {
+                    continue
+                }
+                growingTracksSizes[index].baseSize += plannedIncrease
+            }
         }
-        return sizes
+        
+        /// 3. Expand Flexible Tracks
+        let totalConstsSize = growingTracksSizes.map(\.baseSize).reduce(0, +)
+        let fractionsCount: CGFloat = growingTracksSizes.reduce(0) { result, positionedTrack in
+            if case .fr(let fraction) = positionedTrack.track {
+                return result + fraction
+            }
+            return result
+        }
+
+        let freeSpace = max(0, boundingSize - totalConstsSize)
+        let fractionValue = max(0, freeSpace / fractionsCount)
+        
+        for (trackIndex, positionedTrack) in growingTracksSizes.enumerated() {
+            if case .fr(let fraction) = positionedTrack.track {
+                let baseSize = growingTracksSizes[trackIndex].baseSize
+                growingTracksSizes[trackIndex].baseSize = max(fraction * fractionValue, baseSize)
+            }
+        }
+
+        return growingTracksSizes.map(\.baseSize)
     }
 }
 
 extension GridIndex {
     fileprivate func nextIndex(tracksCount: Int, flow: GridFlow) -> GridIndex {
-        var fixedSize = self[keyPath: flow.fixedIndex]
-        var growingSize = self[keyPath: flow.growingIndex]
+        var fixedSize = self[keyPath: flow.index(.fixed)]
+        var growingSize = self[keyPath: flow.index(.growing)]
         
         fixedSize += 1
         if fixedSize >= tracksCount {
@@ -193,8 +283,8 @@ extension GridIndex {
         }
         
         var nextIndex = GridIndex.zero
-        nextIndex[keyPath: flow.fixedIndex] = fixedSize
-        nextIndex[keyPath: flow.growingIndex] = growingSize
+        nextIndex[keyPath: flow.index(.fixed)] = fixedSize
+        nextIndex[keyPath: flow.index(.growing)] = growingSize
         return nextIndex
     }
 }

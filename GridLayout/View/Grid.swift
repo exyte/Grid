@@ -19,7 +19,7 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
     let items: [GridItem]
     let tracksCount: Int
     let spacing: CGFloat
-    let trackSizes: [TrackSize]
+    let trackSizes: [GridTrack]
 
     public var body: some View {
         return GeometryReader { mainGeometry in
@@ -31,31 +31,30 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
                                 preference.shrinkToLast(assigning: item)
                             }
                             .padding(self.paddingEdges(item: item), self.spacing)
+                            .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
+                                PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: nil)
+                            }
                             .frame(flow: self.flow,
-                                   bounds: self.positions[item]?.bounds,
+                                   size: self.positions[item]?.bounds.size,
                                    contentMode: self.contentMode)
                             .alignmentGuide(.leading, computeValue: { _ in  -(self.positions[item]?.bounds.origin.x ?? 0) })
                             .alignmentGuide(.top, computeValue: { _ in  -(self.positions[item]?.bounds.origin.y ?? 0) })
-                            .overlay(
-                                Color.clear
-                                    .border(Color.black, width: 1)
-                                    .frame(width: self.positions[item]?.bounds.width,
-                                           height: self.positions[item]?.bounds.height)
-                            )
-                            .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
-                                PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: .zero)
-                            }
+
                             .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
                                 self.cellPreferenceView(item: item, preference: preference)
                             }
                             .overlayPreferenceValue(GridOverlayPreferenceKey.self) { preference in
                                 self.cellPreferenceView(item: item, preference: preference)
+                                    .border(Color.black, width: 1)
                             }
                     }
                 }
-                .frame(minWidth: self.positions.size.width,
+                .frame(flow: self.flow,
+                       size: mainGeometry.size,
+                       contentMode: self.contentMode)
+                .frame(minWidth: self.positions.size?.width,
                        maxWidth: .infinity,
-                       minHeight: self.positions.size.height,
+                       minHeight: self.positions.size?.height,
                        maxHeight: .infinity,
                        alignment: .topLeading)
                 }
@@ -74,6 +73,7 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
             preference = preference.filter { $0.item != nil }
         }
         .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
+            guard !spanPreferences.isEmpty else { return }
             self.calculateArrangement(spans: spanPreferences)
         }
         .onPreferenceChange(PositionsPreferenceKey.self) { positionsPreference in
@@ -109,7 +109,6 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
         return edges
     }
     
-    @ViewBuilder
     private func cellPreferenceView<T: GridCellPreference>(item: GridItem, preference: T) -> some View {
         GeometryReader { geometry in
             preference.content(geometry.size)
@@ -121,18 +120,18 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
 }
 
 extension View {
-    fileprivate func frame(flow: GridFlow, bounds: CGRect?,
+    fileprivate func frame(flow: GridFlow, size: CGSize?,
                            contentMode: GridContentMode) -> some View {
         let width: CGFloat?
         let height: CGFloat?
         
         switch contentMode {
         case .fill:
-            width = bounds?.width
-            height = bounds?.height
+            width = size?.width
+            height = size?.height
         case .scroll:
-            width = (flow == .columns ? bounds?.width : nil)
-            height = (flow == .columns ? nil : bounds?.height)
+            width = (flow == .columns ? size?.width : nil)
+            height = (flow == .columns ? nil : size?.height)
         }
         return frame(width: width, height: height)
     }

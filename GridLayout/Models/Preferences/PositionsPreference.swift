@@ -10,12 +10,16 @@ import SwiftUI
 
 struct PositionsPreference: Equatable {
     let items: [PositionedItem]
-    let size: CGSize
+    let size: CGSize?
     
-    static let `default` = PositionsPreference(items: [], size: .zero)
+    static let `default` = PositionsPreference(items: [], size: nil)
     
     subscript(gridItem: GridItem) -> PositionedItem? {
         items.first(where: { $0.gridItem == gridItem })
+    }
+    
+    subscript(arrangedItem: ArrangedItem) -> PositionedItem? {
+        items.first(where: { $0.gridItem == arrangedItem.gridItem })
     }
 }
 

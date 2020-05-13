@@ -10,7 +10,7 @@ import SwiftUI
 
 //Single ForEach init
 extension Grid {
-    public init(tracks: [TrackSize], spacing: CGFloat = Constants.defaultSpacing, @ViewBuilder content: () -> ForEach<Range<Int>, Int, Content>) {
+    public init(tracks: [GridTrack], spacing: CGFloat = Constants.defaultSpacing, @ViewBuilder content: () -> ForEach<Range<Int>, Int, Content>) {
         self.trackSizes = tracks
         self.tracksCount = self.trackSizes.count
         self.spacing = spacing
@@ -18,7 +18,7 @@ extension Grid {
             content().data.enumerated().map { GridItem(AnyView(content().content($0.element)), id: AnyHashable(($0.offset))) }
     }
     
-    public init<Data>(tracks: [TrackSize], spacing: CGFloat = Constants.defaultSpacing, @ViewBuilder content: () -> ForEach<Data, Data.Element.ID, Content>) where Data: RandomAccessCollection, Data.Element: Identifiable {
+    public init<Data>(tracks: [GridTrack], spacing: CGFloat = Constants.defaultSpacing, @ViewBuilder content: () -> ForEach<Data, Data.Element.ID, Content>) where Data: RandomAccessCollection, Data.Element: Identifiable {
         self.trackSizes = tracks
         self.tracksCount = self.trackSizes.count
         self.spacing = spacing

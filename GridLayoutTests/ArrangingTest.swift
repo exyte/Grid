@@ -43,6 +43,7 @@ class ArrangingTest: XCTestCase {
 
     func testArrangementSparseColumns() throws {
         let arrangement = arranger.arrange(spanPreferences: spanPreferences,
+                                           startPreferences: [],
                                            fixedTracksCount: 4,
                                            flow: .columns,
                                            packing: .sparse)
@@ -60,6 +61,7 @@ class ArrangingTest: XCTestCase {
     
     func testArrangementDenseColumns() throws {
         let arrangement = arranger.arrange(spanPreferences: spanPreferences,
+                                           startPreferences: [],
                                            fixedTracksCount: 4,
                                            flow: .columns,
                                            packing: .dense)
@@ -79,6 +81,7 @@ class ArrangingTest: XCTestCase {
         let preferences = self.perfomancePreferences
         self.measure {
             _ = arranger.arrange(spanPreferences: preferences,
+                                 startPreferences: [],
                                  fixedTracksCount: self.fixedPerfomanceTracksCount,
                                  flow: .columns,
                                  packing: .sparse)
@@ -89,6 +92,7 @@ class ArrangingTest: XCTestCase {
         let preferences = self.perfomancePreferences
         self.measure {
             _ = arranger.arrange(spanPreferences: preferences,
+                                 startPreferences: [],
                                  fixedTracksCount: self.fixedPerfomanceTracksCount,
                                  flow: .columns,
                                  packing: .dense)

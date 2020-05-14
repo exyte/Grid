@@ -12,8 +12,8 @@ import SwiftUI
 
 class PositionRowsScrollTest: XCTestCase {
 
-    private struct MockArranger: LayoutArranging {}
-    private let arranger = MockArranger()
+    private struct MockPositioner: LayoutPositioning {}
+    private let positioner = MockPositioner()
     private let mockView = AnyView(EmptyView())
     
     func testScrollModeRowsFlowStage1() throws {
@@ -43,12 +43,12 @@ class PositionRowsScrollTest: XCTestCase {
         ]
         let arrangement = LayoutArrangement(columnsCount: 5, rowsCount: 3, items: arrangedItems)
         
-        let positions = self.arranger.reposition(position,
-                                                 arrangement: arrangement,
-                                                 boundingSize: CGSize(width: 375.0, height: 647.0),
-                                                 tracks: [.fr(1), .fitContent, .fitContent],
-                                                 contentMode: .scroll,
-                                                 flow: .rows)
+        let positions = self.positioner.reposition(position,
+                                                   arrangement: arrangement,
+                                                   boundingSize: CGSize(width: 375.0, height: 647.0),
+                                                   tracks: [.fr(1), .fitContent, .fitContent],
+                                                   contentMode: .scroll,
+                                                   flow: .rows)
         
         let referencePositionedItems = [
             PositionedItem(bounds: CGRect(x: 1.0, y: 0.0, width: 252.0, height: 522.0), gridItem: gridItems[0]),
@@ -90,12 +90,12 @@ class PositionRowsScrollTest: XCTestCase {
         ]
         let arrangement = LayoutArrangement(columnsCount: 5, rowsCount: 3, items: arrangedItems)
         
-        let positions = self.arranger.reposition(position,
-                                                 arrangement: arrangement,
-                                                 boundingSize: CGSize(width: 375.0, height: 647.0),
-                                                 tracks: [.fr(1), .fitContent, .fitContent],
-                                                 contentMode: .scroll,
-                                                 flow: .rows)
+        let positions = self.positioner.reposition(position,
+                                                   arrangement: arrangement,
+                                                   boundingSize: CGSize(width: 375.0, height: 647.0),
+                                                   tracks: [.fr(1), .fitContent, .fitContent],
+                                                   contentMode: .scroll,
+                                                   flow: .rows)
         
         let referencePositionedItems = [
             PositionedItem(bounds: CGRect(x: 1.0, y: 0.0, width: 252.0, height: 522.0), gridItem: gridItems[0]),

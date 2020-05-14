@@ -12,8 +12,8 @@ import SwiftUI
 
 class PositionColumnScrollTest: XCTestCase {
 
-    private struct MockArranger: LayoutArranging {}
-    private let arranger = MockArranger()
+    private struct MockPositioner: LayoutPositioning {}
+    private let positioner = MockPositioner()
     private let mockView = AnyView(EmptyView())
     
     func testScrollModeColumnsFlowStage1() throws {
@@ -43,7 +43,7 @@ class PositionColumnScrollTest: XCTestCase {
         ]
         let arrangement = LayoutArrangement(columnsCount: 3, rowsCount: 3, items: arrangedItems)
         
-        let positions = self.arranger.reposition(position,
+        let positions = self.positioner.reposition(position,
                                                  arrangement: arrangement,
                                                  boundingSize: CGSize(width: 375.0, height: 647.0),
                                                  tracks: [.fr(1), .fitContent, .fitContent],
@@ -90,7 +90,7 @@ class PositionColumnScrollTest: XCTestCase {
         ]
         let arrangement = LayoutArrangement(columnsCount: 3, rowsCount: 3, items: arrangedItems)
         
-        let positions = self.arranger.reposition(position,
+        let positions = self.positioner.reposition(position,
                                                  arrangement: arrangement,
                                                  boundingSize: CGSize(width: 375.0, height: 647.0),
                                                  tracks: [.fr(1), .fitContent, .fitContent],
@@ -137,7 +137,7 @@ class PositionColumnScrollTest: XCTestCase {
         ]
         let arrangement = LayoutArrangement(columnsCount: 3, rowsCount: 3, items: arrangedItems)
         
-        let positions = self.arranger.reposition(position,
+        let positions = self.positioner.reposition(position,
                                                  arrangement: arrangement,
                                                  boundingSize: CGSize(width: 375.0, height: 647.0),
                                                  tracks: [.fr(1), .fitContent, .fitContent],

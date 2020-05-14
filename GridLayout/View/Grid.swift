@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public struct Grid<Content>: View, LayoutArranging where Content: View {
+public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Content: View {
     
     @State var arrangement: LayoutArrangement?
     @State var positions: PositionsPreference = .default

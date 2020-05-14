@@ -3,6 +3,7 @@
 ### Roadmap:
 
 - [ ] grid item explicit row and/or column position
+- [ ] Add GridGroup
 - [ ] dual dimension track sizes (grid-template-rows, grid-template-columns).
 - [ ] grid-auto-rows, grid-auto-columns
 - [ ] grid min/ideal sizes

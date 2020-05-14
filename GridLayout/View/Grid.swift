@@ -18,7 +18,7 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
     
     let items: [GridItem]
     let tracksCount: Int
-    let spacing: CGFloat
+    let spacing: GridSpacing
     let trackSizes: [GridTrack]
 
     public var body: some View {
@@ -30,7 +30,7 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
                             .transformPreference(SpansPreferenceKey.self) { preference in
                                 preference.shrinkToLast(assigning: item)
                             }
-                            .padding(self.paddingEdges(item: item), self.spacing)
+                            .padding(item: self.arrangement?[item], spacing: self.spacing)
                             .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
                                 PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: nil)
                             }
@@ -99,23 +99,11 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
         print(calculatedLayout)
     }
     
-    private func paddingEdges(item: GridItem) -> Edge.Set {
-        var edges: Edge.Set = []
-        guard let arrangedItem = self.arrangement?[item] else { return edges }
-        if arrangedItem.startIndex.row != 0 {
-            edges.update(with: .top)
-        }
-        if arrangedItem.startIndex.column != 0 {
-            edges.update(with: .leading)
-        }
-        return edges
-    }
-    
     private func cellPreferenceView<T: GridCellPreference>(item: GridItem, preference: T) -> some View {
         GeometryReader { geometry in
             preference.content(geometry.size)
         }
-        .padding(self.paddingEdges(item: item), self.spacing)
+        .padding(item: self.arrangement?[item], spacing: self.spacing)
         .frame(width: self.positions[item]?.bounds.width,
                height: self.positions[item]?.bounds.height)
     }
@@ -136,6 +124,18 @@ extension View {
             height = (flow == .rows ? size?.height : nil)
         }
         return frame(width: width, height: height)
+    }
+    
+    fileprivate func padding(item: ArrangedItem?, spacing: GridSpacing) -> some View {
+        var edgeInsets = EdgeInsets()
+        guard let arrangedItem = item else { return self.padding(edgeInsets) }
+        if arrangedItem.startIndex.row != 0 {
+            edgeInsets.top = spacing.vertical
+        }
+        if arrangedItem.startIndex.column != 0 {
+            edgeInsets.leading = spacing.horizontal
+        }
+        return self.padding(edgeInsets)
     }
 }
 

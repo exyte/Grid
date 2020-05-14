@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct SpanPreference: Equatable {
+struct SpanPreference: Equatable, GridItemContaining {
     var item: GridItem?
     var span = GridSpan.default
 

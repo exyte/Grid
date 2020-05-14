@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		361AFEBF2449685E00A34687 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361AFEBE2449685E00A34687 /* Grid.swift */; };
+		361C7DBE246D073E009A3DA6 /* GridStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C7DBD246D073E009A3DA6 /* GridStart.swift */; };
+		361C7DC0246D07C3009A3DA6 /* StartPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C7DBF246D07C3009A3DA6 /* StartPreference.swift */; };
+		361C7DC2246D0B0E009A3DA6 /* GridItemContaining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361C7DC1246D0B0E009A3DA6 /* GridItemContaining.swift */; };
 		362C9CF12445AA7100A922DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362C9CF02445AA7100A922DA /* AppDelegate.swift */; };
 		362C9CF32445AA7100A922DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362C9CF22445AA7100A922DA /* SceneDelegate.swift */; };
 		362C9CF52445AA7100A922DA /* RandomizedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362C9CF42445AA7100A922DA /* RandomizedContentView.swift */; };
@@ -62,6 +65,9 @@
 		191E369FACAC2ED9EC7B3972 /* Pods_GridLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GridLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FF30C8E9E5B9A819AEC6110 /* Pods-GridLayout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GridLayout.debug.xcconfig"; path = "Target Support Files/Pods-GridLayout/Pods-GridLayout.debug.xcconfig"; sourceTree = "<group>"; };
 		361AFEBE2449685E00A34687 /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		361C7DBD246D073E009A3DA6 /* GridStart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridStart.swift; sourceTree = "<group>"; };
+		361C7DBF246D07C3009A3DA6 /* StartPreference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPreference.swift; sourceTree = "<group>"; };
+		361C7DC1246D0B0E009A3DA6 /* GridItemContaining.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridItemContaining.swift; sourceTree = "<group>"; };
 		362C9CED2445AA7100A922DA /* GridLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GridLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		362C9CF02445AA7100A922DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		362C9CF22445AA7100A922DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -234,6 +240,7 @@
 				3697EB272448862C005A82F8 /* LayoutArrangement.swift */,
 				3697EB1C244884D4005A82F8 /* GridIndex.swift */,
 				36829D61244C1AEB006D605B /* GridSpan.swift */,
+				361C7DBD246D073E009A3DA6 /* GridStart.swift */,
 				367F235924500DB600931700 /* GridTrack.swift */,
 				36780DD02452D58A00B7AAAB /* GridContentMode.swift */,
 				36780DD22452DB7A00B7AAAB /* GridFlow.swift */,
@@ -257,8 +264,10 @@
 		36ED05D02459407B00873501 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				361C7DC1246D0B0E009A3DA6 /* GridItemContaining.swift */,
 				36829D67244DA873006D605B /* PositionsPreference.swift */,
 				36DE3523244B30A9009EA6E8 /* SpanPreference.swift */,
+				361C7DBF246D07C3009A3DA6 /* StartPreference.swift */,
 				36ED05CE24593D1500873501 /* GridCellPreference.swift */,
 				365DFD00245707A6001541E3 /* GridOverlayPreference.swift */,
 				368E4E8424581532009D1665 /* GridBackgroundPreference.swift */,
@@ -452,13 +461,16 @@
 				3697EB1F244884F2005A82F8 /* ArrangedItem.swift in Sources */,
 				3697EB1D244884D4005A82F8 /* GridIndex.swift in Sources */,
 				36DE3524244B30A9009EA6E8 /* SpanPreference.swift in Sources */,
+				361C7DBE246D073E009A3DA6 /* GridStart.swift in Sources */,
 				36780DD12452D58A00B7AAAB /* GridContentMode.swift in Sources */,
 				36829D62244C1AEB006D605B /* GridSpan.swift in Sources */,
 				36780DD52452E9F200B7AAAB /* View+Environment.swift in Sources */,
 				368E4E872458198C009D1665 /* View+GridPreferences.swift in Sources */,
 				36780DD32452DB7A00B7AAAB /* GridFlow.swift in Sources */,
+				361C7DC0246D07C3009A3DA6 /* StartPreference.swift in Sources */,
 				36A70E2824619EB700FE76A3 /* GridPacking.swift in Sources */,
 				3697EB222448852E005A82F8 /* LayoutArrangement+description.swift in Sources */,
+				361C7DC2246D0B0E009A3DA6 /* GridItemContaining.swift in Sources */,
 				3697EB282448862C005A82F8 /* LayoutArrangement.swift in Sources */,
 				368E4E8524581532009D1665 /* GridBackgroundPreference.swift in Sources */,
 				36829D68244DA873006D605B /* PositionsPreference.swift in Sources */,

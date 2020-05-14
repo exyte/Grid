@@ -95,7 +95,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
         if case .fill = self.contentMode {
             return []
         }
-        return self.flow == .columns ? .vertical : .horizontal
+        return self.flow == .rows ? .vertical : .horizontal
     }
 
     private func calculateArrangement(spans: [SpanPreference], starts: [StartPreference]) {
@@ -129,8 +129,8 @@ extension View {
             width = size?.width
             height = size?.height
         case .scroll:
-            width = (flow == .columns ? size?.width : nil)
-            height = (flow == .rows ? size?.height : nil)
+            width = (flow == .rows ? size?.width : nil)
+            height = (flow == .columns ? size?.height : nil)
         }
         return frame(width: width, height: height)
     }
@@ -202,7 +202,7 @@ struct GridView_Previews: PreviewProvider {
                 Color(.gray)
             }
         }
-        .gridFlow(.columns)
+        .gridFlow(.rows)
         .gridPacking(.dense)
     }
 }

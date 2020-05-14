@@ -48,7 +48,7 @@ class PositionRowsScrollTest: XCTestCase {
                                                    boundingSize: CGSize(width: 375.0, height: 647.0),
                                                    tracks: [.fr(1), .fitContent, .fitContent],
                                                    contentMode: .scroll,
-                                                   flow: .rows)
+                                                   flow: .columns)
         
         let referencePositionedItems = [
             PositionedItem(bounds: CGRect(x: 1.0, y: 0.0, width: 252.0, height: 522.0), gridItem: gridItems[0]),
@@ -95,7 +95,7 @@ class PositionRowsScrollTest: XCTestCase {
                                                    boundingSize: CGSize(width: 375.0, height: 647.0),
                                                    tracks: [.fr(1), .fitContent, .fitContent],
                                                    contentMode: .scroll,
-                                                   flow: .rows)
+                                                   flow: .columns)
         
         let referencePositionedItems = [
             PositionedItem(bounds: CGRect(x: 1.0, y: 0.0, width: 252.0, height: 522.0), gridItem: gridItems[0]),

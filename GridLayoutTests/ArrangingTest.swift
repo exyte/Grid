@@ -47,7 +47,7 @@ class ArrangingTest: XCTestCase {
         let arrangement = arranger.arrange(spanPreferences: spanPreferences,
                                            startPreferences: startPreferences,
                                            fixedTracksCount: 4,
-                                           flow: .columns,
+                                           flow: .rows,
                                            packing: .sparse)
  
         XCTAssertEqual(arrangement, LayoutArrangement(columnsCount: 4, rowsCount: 6, items: [
@@ -65,7 +65,7 @@ class ArrangingTest: XCTestCase {
         let arrangement = arranger.arrange(spanPreferences: spanPreferences,
                                            startPreferences: startPreferences,
                                            fixedTracksCount: 4,
-                                           flow: .columns,
+                                           flow: .rows,
                                            packing: .dense)
 
         XCTAssertEqual(arrangement, LayoutArrangement(columnsCount: 4, rowsCount: 6, items: [
@@ -85,7 +85,7 @@ class ArrangingTest: XCTestCase {
             _ = arranger.arrange(spanPreferences: preferences,
                                  startPreferences: [],
                                  fixedTracksCount: self.fixedPerfomanceTracksCount,
-                                 flow: .columns,
+                                 flow: .rows,
                                  packing: .sparse)
         }
     }
@@ -96,7 +96,7 @@ class ArrangingTest: XCTestCase {
             _ = arranger.arrange(spanPreferences: preferences,
                                  startPreferences: [],
                                  fixedTracksCount: self.fixedPerfomanceTracksCount,
-                                 flow: .columns,
+                                 flow: .rows,
                                  packing: .dense)
         }
     }

@@ -13,7 +13,7 @@ public enum GridFlow {
     case rows
 }
 
-enum GridFlowDimension {
+enum GridFlowDimension: CaseIterable {
     case fixed
     case growing
 }
@@ -71,6 +71,15 @@ extension GridFlow {
             return (self == .columns ? \CGPoint.x : \CGPoint.y)
         case .growing:
             return (self == .rows ? \CGPoint.x : \CGPoint.y)
+        }
+    }
+    
+    func startIndex(_ dimension: GridFlowDimension) -> WritableKeyPath<GridStart, Int?> {
+        switch dimension {
+        case .fixed:
+            return (self == .columns ? \GridStart.column : \GridStart.row)
+        case .growing:
+            return (self == .rows ? \GridStart.column : \GridStart.row)
         }
     }
 }

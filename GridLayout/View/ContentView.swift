@@ -39,26 +39,39 @@ struct TextBox: View {
 struct ContentView: View {
     var body: some View {
 
-        Grid(tracks: [.fr(1), .fitContent, .fitContent], spacing: 10) {
-            TextBox(text: self.placeholderText, color: .red)
-                .gridSpan(column: 1, row: 1)
+        Grid(tracks: 4, spacing: 5) {
             
-            TextBox(text: String(self.placeholderText.prefix(30)), color: .orange)
-                .frame(maxWidth: 70)
-                .gridSpan(column: 1, row: 1)
+            ForEach(0..<8) { _ in
+                Color.black
+            }
+            Color(.brown)
+                .gridSpan(column: 3, row: 1)
             
-            TextBox(text: String(self.placeholderText.prefix(120)), color: .green)
-                .frame(maxWidth: 100)
-                .gridSpan(column: 1, row: 2)
-            
-            TextBox(text: String(self.placeholderText.prefix(160)), color: .magenta)
+            Color(.blue)
                 .gridSpan(column: 2, row: 1)
             
-            TextBox(text: String(self.placeholderText.prefix(200)), color: .cyan)
-                .gridSpan(column: 3, row: 1)
+            Color(.red)
+                .gridSpan(column: 3, row: 2)
+                .gridStart(column: 5, row: 1)
+            
+            Color(.yellow)
+                .gridSpan(column: 1, row: 1)
+                .gridStart(column: nil, row: 2)
 
+            Color(.purple)
+                .gridSpan(column: 1, row: 2)
+                .gridStart(column: nil, row: 2)
+
+            Color(.green)
+                .gridSpan(column: 2, row: 3)
+
+            Color(.orange)
+                .gridSpan(column: 1, row: 3)
+            
+            Color(.gray)
+                .gridStart(column: nil, row: 3)
         }
-        .gridContentMode(.scroll)
+        .gridPacking(.dense)
     }
     
     //swiftlint:disable line_length

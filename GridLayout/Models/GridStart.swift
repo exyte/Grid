@@ -9,8 +9,8 @@
 import Foundation
 
 struct GridStart: Equatable {
-    let column: Int?
-    let row: Int?
+    var column: Int?
+    var row: Int?
     
     static let `default` = GridStart(column: nil, row: nil)
 }

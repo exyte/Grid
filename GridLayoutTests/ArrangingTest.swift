@@ -27,6 +27,8 @@ class ArrangingTest: XCTestCase {
         SpanPreference(item: gridItems[6], span: [1, 3])
     ]
     
+    private lazy var startPreferences = gridItems.map { StartPreference(item: $0, start: .default) }
+    
     private let fixedPerfomanceTracksCount = 4
     
     private lazy var perfomancePreferences: [SpanPreference] = {
@@ -43,7 +45,7 @@ class ArrangingTest: XCTestCase {
 
     func testArrangementSparseColumns() throws {
         let arrangement = arranger.arrange(spanPreferences: spanPreferences,
-                                           startPreferences: [],
+                                           startPreferences: startPreferences,
                                            fixedTracksCount: 4,
                                            flow: .columns,
                                            packing: .sparse)
@@ -61,7 +63,7 @@ class ArrangingTest: XCTestCase {
     
     func testArrangementDenseColumns() throws {
         let arrangement = arranger.arrange(spanPreferences: spanPreferences,
-                                           startPreferences: [],
+                                           startPreferences: startPreferences,
                                            fixedTracksCount: 4,
                                            flow: .columns,
                                            packing: .dense)

@@ -9,20 +9,20 @@
 import CoreGraphics
 
 public struct GridSpacing {
-    let vertical: CGFloat
     let horizontal: CGFloat
-    static let zero = GridSpacing(vertical: 0, horizontal: 0)
+    let vertical: CGFloat
+    static let zero = GridSpacing(horizontal: 0, vertical: 0)
 }
 
 extension GridSpacing: ExpressibleByFloatLiteral {
     public init(floatLiteral value: Double) {
-        self = Self.init(vertical: CGFloat(value), horizontal: CGFloat(value))
+        self = Self.init(horizontal: CGFloat(value), vertical: CGFloat(value))
     }
 }
 
 extension GridSpacing: ExpressibleByIntegerLiteral {
     public init(integerLiteral value: Int) {
-        self = Self.init(vertical: CGFloat(value), horizontal: CGFloat(value))
+        self = Self.init(horizontal: CGFloat(value), vertical: CGFloat(value))
     }
 }
 
@@ -33,14 +33,14 @@ extension GridSpacing: ExpressibleByArrayLiteral {
         var horizontal: CGFloat = 0
         
         if elements.count > 1 {
-            vertical = elements[0]
-            horizontal = elements[1]
+            horizontal = elements[0]
+            vertical = elements[1]
         } else if elements.count == 1 {
             vertical = elements[0]
             horizontal = elements[0]
         }
 
-        self = Self.init(vertical: vertical, horizontal: horizontal)
+        self = Self.init(horizontal: horizontal, vertical: vertical)
     }
 }
 

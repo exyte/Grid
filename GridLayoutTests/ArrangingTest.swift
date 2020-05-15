@@ -43,7 +43,7 @@ class ArrangingTest: XCTestCase {
         }
     }()
 
-    func testArrangementSparseColumns() throws {
+    func testArrangementSparseRows() throws {
         let arrangement = arranger.arrange(spanPreferences: spanPreferences,
                                            startPreferences: startPreferences,
                                            fixedTracksCount: 4,
@@ -61,7 +61,7 @@ class ArrangingTest: XCTestCase {
         ]))
     }
     
-    func testArrangementDenseColumns() throws {
+    func testArrangementDenseRows() throws {
         let arrangement = arranger.arrange(spanPreferences: spanPreferences,
                                            startPreferences: startPreferences,
                                            fixedTracksCount: 4,

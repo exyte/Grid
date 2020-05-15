@@ -16,7 +16,7 @@ class PositionRowsScrollTest: XCTestCase {
     private let positioner = MockPositioner()
     private let mockView = AnyView(EmptyView())
     
-    func testScrollModeRowsFlowStage1() throws {
+    func testScrollModeColumnsFlowStage1() throws {
         let gridItems = [
             GridItem(self.mockView, id: AnyHashable(0)),
             GridItem(self.mockView, id: AnyHashable(1)),
@@ -63,7 +63,7 @@ class PositionRowsScrollTest: XCTestCase {
         XCTAssertEqual(positions, referencePosition)
     }
     
-    func testScrollModeRowsFlowStage2() throws {
+    func testScrollModeColumnsFlowStage2() throws {
         let gridItems = [
             GridItem(self.mockView, id: AnyHashable(0)),
             GridItem(self.mockView, id: AnyHashable(1)),

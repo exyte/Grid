@@ -39,39 +39,44 @@ struct TextBox: View {
 struct ContentView: View {
     var body: some View {
 
-        Grid(tracks: 4, spacing: 5) {
-            
-            ForEach(0..<8) { _ in
-                Color.black
-            }
-            Color(.brown)
-                .gridSpan(column: 3, row: 1)
-            
-            Color(.blue)
-                .gridSpan(column: 2, row: 1)
-            
-            Color(.red)
-                .gridSpan(column: 3, row: 2)
-                .gridStart(column: 5, row: 1)
-            
-            Color(.yellow)
-                .gridSpan(column: 1, row: 1)
-                .gridStart(column: nil, row: 2)
+Grid(tracks: [.const(50), .fr(1), .fr(1.5), .fitContent], spacing: [5, 10]) {
+    ForEach(0..<6) { _ in
+        Color.black
+    }
+    
+    Color(.brown)
+        .gridSpan(column: 3)
+    
+    Color(.blue)
+        .gridSpan(column: 2)
+    
+    Color(.red)
+        .gridStart(column: 5, row: 1)
+        .gridSpan(column: 2, row: 2)
+    
+    Color(.yellow)
+        .gridStart(row: 2)
 
-            Color(.purple)
-                .gridSpan(column: 1, row: 2)
-                .gridStart(column: nil, row: 2)
+    Color(.purple)
+        .frame(maxWidth: 50)
+        .gridStart(column: 3, row: 0)
+        .gridSpan(row: 10)
 
-            Color(.green)
-                .gridSpan(column: 2, row: 3)
+    Color(.green)
+        .gridSpan(column: 2, row: 3)
 
-            Color(.orange)
-                .gridSpan(column: 1, row: 3)
-            
-            Color(.gray)
-                .gridStart(column: nil, row: 3)
-        }
-        .gridPacking(.dense)
+    Color(.orange)
+        .gridSpan(row: 3)
+    
+    Color(.gray)
+        .gridStart(column: 2)
+    
+    Color(.cyan)
+}
+.gridPacking(.dense)
+.gridFlow(.rows)
+        
+        
     }
     
     //swiftlint:disable line_length
@@ -83,7 +88,7 @@ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-            .gridFlow(.columns)
+            .gridFlow(.rows)
     }
 }
 

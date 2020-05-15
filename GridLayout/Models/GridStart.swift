@@ -21,3 +21,9 @@ extension GridStart: ExpressibleByArrayLiteral {
         self = GridStart(column: elements[0], row: elements[1])
     }
 }
+
+extension GridStart: ExpressibleByNilLiteral {
+    public init(nilLiteral: ()) {
+        self = .default
+    }
+}

@@ -47,7 +47,6 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                             }
                             .overlayPreferenceValue(GridOverlayPreferenceKey.self) { preference in
                                 self.cellPreferenceView(item: item, preference: preference)
-                                    .border(Color.black, width: 1)
                             }
                     }
                 }

@@ -32,51 +32,53 @@ struct TextBox: View {
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
                     .strokeBorder(self.borderColor, lineWidth: 5)
-            )
+        )
     }
 }
 
 struct ContentView: View {
     var body: some View {
-
-Grid(tracks: [.const(50), .fr(1), .fr(1.5), .fitContent], spacing: [5, 10]) {
-    ForEach(0..<6) { _ in
-        Color.black
-    }
-    
-    Color(.brown)
-        .gridSpan(column: 3)
-    
-    Color(.blue)
-        .gridSpan(column: 2)
-    
-    Color(.red)
-        .gridStart(column: 5, row: 1)
-        .gridSpan(column: 2, row: 2)
-    
-    Color(.yellow)
-        .gridStart(row: 2)
-
-    Color(.purple)
-        .frame(maxWidth: 50)
-        .gridStart(column: 3, row: 0)
-        .gridSpan(row: 10)
-
-    Color(.green)
-        .gridSpan(column: 2, row: 3)
-
-    Color(.orange)
-        .gridSpan(row: 3)
-    
-    Color(.gray)
-        .gridStart(column: 2)
-    
-    Color(.cyan)
-}
-.gridPacking(.dense)
-.gridFlow(.rows)
-        
-        
+        Grid(tracks: [.const(50), .fr(1), .fr(1.5), .fitContent], spacing: [5, 10]) {
+            
+            ForEach(0..<6) { _ in
+                Color.black
+            }
+            
+            Color(.brown)
+                .gridSpan(column: 3)
+            
+            Color(.blue)
+                .gridSpan(column: 2)
+            
+            Color(.red)
+                .gridStart(column: 5, row: 1)
+                .gridSpan(column: 2, row: 2)
+            
+            Color(.yellow)
+                .gridStart(row: 2)
+            
+            Color(.purple)
+                .frame(maxWidth: 50)
+                .gridStart(column: 3, row: 0)
+                .gridSpan(row: 10)
+            
+            Color(.green)
+                .gridSpan(column: 2, row: 3)
+            
+            Color(.orange)
+                .gridSpan(row: 3)
+            
+            Color(.gray)
+                .gridStart(column: 2)
+            
+            GridGroup {
+                Color(.cyan)
+                
+                Color(.magenta)
+            }
+        }
+        .gridPacking(.dense)
+        .gridFlow(.rows)
     }
     
     //swiftlint:disable line_length

@@ -21,12 +21,14 @@ protocol LayoutArranging {
 }
 
 extension LayoutArranging {
-    func arrange(spanPreferences: [SpanPreference], startPreferences: [StartPreference], fixedTracksCount: Int, flow: GridFlow, packing: GridPacking) -> LayoutArrangement {
+    private typealias ArrangementInfo = (item: GridItem, span: GridSpan, start: GridStart)
+    
+    func arrange(spanPreferences: [SpanPreference], startPreferences: [StartPreference],
+                 fixedTracksCount: Int, flow: GridFlow, packing: GridPacking) -> LayoutArrangement {
         guard fixedTracksCount > 0 else { return .zero }
             
-        var result: [ArrangedItem] = []
+        var arrangedItems: [ArrangedItem] = []
         var occupiedIndices: [GridIndex] = []
- 
         var growingTracksCount = 0
 
         var items: [(item: GridItem, span: GridSpan, start: GridStart)] =
@@ -48,28 +50,53 @@ extension LayoutArranging {
                 return (gridItem, correctedSpan, correctedStart)
         }
         
+        arrangedItems += self.arrangeFullyFrozenItems(&items,
+                                                      flow: flow,
+                                                      occupiedIndices: &occupiedIndices,
+                                                      growingTracksCount: &growingTracksCount)
+        arrangedItems += self.arrangeSemiFrozenItems(&items,
+                                                     flow: flow,
+                                                     fixedTracksCount: fixedTracksCount,
+                                                     occupiedIndices: &occupiedIndices,
+                                                     growingTracksCount: &growingTracksCount)
+        arrangedItems += self.arrangeNonFrozenItem(items,
+                                                   flow: flow,
+                                                   fixedTracksCount: fixedTracksCount,
+                                                   packing: packing,
+                                                   occupiedIndices: &occupiedIndices,
+                                                   growingTracksCount: &growingTracksCount)
+        
+        var arrangement = LayoutArrangement(columnsCount: 0, rowsCount: 0, items: arrangedItems)
+        arrangement[keyPath: flow.arrangementCount(.fixed)] = fixedTracksCount
+        arrangement[keyPath: flow.arrangementCount(.growing)] = growingTracksCount
+        return arrangement
+    }
+    
+    private func arrangeFullyFrozenItems(_ items: inout [ArrangementInfo], flow: GridFlow, occupiedIndices: inout [GridIndex],
+                                         growingTracksCount: inout Int) -> [ArrangedItem] {
+        var result: [ArrangedItem] = []
         let staticItems: [(item: GridItem, span: GridSpan, start: GridIndex)] =
             items.compactMap {
                 guard
                     let columnStart = $0.start.column,
                     let rowStart = $0.start.row
-                else {
-                    return nil
+                    else {
+                        return nil
                 }
                 return ($0.item, $0.span, GridIndex(column: columnStart, row: rowStart))
-            }
+        }
         
         // Arrange fully static items
         staticItems.forEach { staticItem in
             let itemIndex = items.firstIndex(where: { $0.item == staticItem.item })!
             guard
                 !occupiedIndices.contains(staticItem.start, span: staticItem.span) else {
-                print("Warning: grid item position is occupied: \(staticItem.start), \(staticItem.span)")
-                
-                //Place that item automatically
-                let prevItem = items[itemIndex]
-                items[itemIndex...itemIndex] = [(prevItem.item, prevItem.span, GridStart.default)]
-                return
+                    print("Warning: grid item position is occupied: \(staticItem.start), \(staticItem.span)")
+                    
+                    //Place that item automatically
+                    let prevItem = items[itemIndex]
+                    items[itemIndex...itemIndex] = [(prevItem.item, prevItem.span, GridStart.default)]
+                    return
             }
             occupiedIndices.appendPointsFrom(index: staticItem.start, span: staticItem.span)
             let arrangedItem = ArrangedItem(item: staticItem.item,
@@ -79,10 +106,15 @@ extension LayoutArranging {
             result.append(arrangedItem)
             items.remove(at: itemIndex)
         }
-        
+        return result
+    }
+    
+    private func arrangeSemiFrozenItems(_ items: inout [ArrangementInfo], flow: GridFlow, fixedTracksCount: Int,
+                                        occupiedIndices: inout [GridIndex], growingTracksCount: inout Int) -> [ArrangedItem] {
+        var result: [ArrangedItem] = []
         // Arrange static items with frozen start in fixed flow dimension
         for dimension in GridFlowDimension.allCases {
-            let semiStaticFixed: [(item: GridItem, span: GridSpan, start: GridStart)] = items.compactMap {
+            let semiStaticFixedItems: [(item: GridItem, span: GridSpan, start: GridStart)] = items.compactMap {
                 guard let frozenIndex = $0.start[keyPath: flow.startIndex(dimension)] else {
                     return nil
                 }
@@ -93,8 +125,8 @@ extension LayoutArranging {
                 }
                 return ($0.item, correctedSpan, $0.start)
             }
-
-            semiStaticFixed.forEach { semiStaticItem in
+            
+            semiStaticFixedItems.forEach { semiStaticItem in
                 let itemIndex = items.firstIndex(where: { $0.item == semiStaticItem.item })!
                 let frozenIndex = semiStaticItem.start[keyPath: flow.startIndex(dimension)]!
                 
@@ -106,13 +138,13 @@ extension LayoutArranging {
                                                                  flow: flow,
                                                                  span: semiStaticItem.span,
                                                                  frozenDimension: dimension)
-                    else {
-                        print("Warning: unable to place semi-fixed grid item with start: \(semiStaticItem.start), span: \(semiStaticItem.span)")
-                        //Place that item automatically
-                        
-                        let prevItem = items[itemIndex]
-                        items[itemIndex...itemIndex] = [(prevItem.item, prevItem.span, GridStart.default)]
-                        return
+                        else {
+                            print("Warning: unable to place semi-fixed grid item with start: \(semiStaticItem.start), span: \(semiStaticItem.span)")
+                            //Place that item automatically
+                            
+                            let prevItem = items[itemIndex]
+                            items[itemIndex...itemIndex] = [(prevItem.item, prevItem.span, GridStart.default)]
+                            return
                     }
                     currentIndex = nextIndex
                 }
@@ -126,9 +158,13 @@ extension LayoutArranging {
                 items.remove(at: itemIndex)
             }
         }
-
+        return result
+    }
+    
+    private func arrangeNonFrozenItem(_ items: [ArrangementInfo], flow: GridFlow, fixedTracksCount: Int, packing: GridPacking,
+                                      occupiedIndices: inout [GridIndex], growingTracksCount: inout Int) -> [ArrangedItem] {
         // Arrange dynamic items
-        
+        var result: [ArrangedItem] = []
         var lastIndex: GridIndex = .zero
         for spanPreference in items {
             var currentIndex: GridIndex
@@ -145,20 +181,17 @@ extension LayoutArranging {
                                                       flow: flow,
                                                       span: spanPreference.span)!
             }
-
+            
             occupiedIndices.appendPointsFrom(index: currentIndex, span: spanPreference.span)
             let arrangedItem = ArrangedItem(item: spanPreference.item,
                                             startIndex: currentIndex,
                                             span: spanPreference.span)
-
+            
             growingTracksCount = max(growingTracksCount, arrangedItem.endIndex[keyPath: flow.index(.growing)] + 1)
             result.append(arrangedItem)
             lastIndex = currentIndex
         }
-        var arrangement = LayoutArrangement(columnsCount: 0, rowsCount: 0, items: result)
-        arrangement[keyPath: flow.arrangementCount(.fixed)] = fixedTracksCount
-        arrangement[keyPath: flow.arrangementCount(.growing)] = growingTracksCount
-        return arrangement
+        return result
     }
 }
 
@@ -168,7 +201,7 @@ fileprivate extension GridIndex {
         var growingIndex = self[keyPath: flow.index(.growing)]
         let fixedSpan = span[keyPath: flow.spanIndex(.fixed)]
 
-        let outerIncrementer = {
+        func outerIncrementer() {
             switch frozenDimension {
             case .fixed:
                 ()
@@ -179,7 +212,7 @@ fileprivate extension GridIndex {
             }
         }
         
-        let nextTrackTrigger: () -> Bool? = {
+        func nextTrackTrigger() -> Bool? {
             switch frozenDimension {
             case .fixed:
                 return true
@@ -193,7 +226,7 @@ fileprivate extension GridIndex {
             }
         }
         
-        let innerIncrementer = {
+        func innerIncrementer() {
             switch frozenDimension {
             case .fixed:
                 growingIndex += 1

@@ -86,7 +86,13 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
             self.calculateArrangement(spans: self.spanPreferences, starts: startPreferences)
         }
         .onPreferenceChange(PositionsPreferenceKey.self) { positionsPreference in
-            self.positions = positionsPreference
+            if self.positions.items.isEmpty {
+                self.positions = positionsPreference
+            } else {
+                DispatchQueue.main.async {
+                    self.positions = positionsPreference
+                }
+            }
         }
     }
     

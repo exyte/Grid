@@ -80,17 +80,18 @@ extension LayoutPositioning {
             let fixedTrackSize = fixedTracksSizes[arrangedItem.startIndex[keyPath: flow.index(.fixed)]...arrangedItem.endIndex[keyPath: flow.index(.fixed)]].reduce(0, +)
             
             var newBounds = CGRect.zero
-            newBounds.size[keyPath: flow.size(.growing)] = itemGrowingSize.rounded()
-            newBounds.size[keyPath: flow.size(.fixed)] = fixedTrackSize.rounded()
-            newBounds.origin[keyPath: flow.cgPointIndex(.growing)] = growingPosition.rounded()
-            newBounds.origin[keyPath: flow.cgPointIndex(.fixed)] = fixedTrackStart.rounded()
-
+            newBounds.size[keyPath: flow.size(.growing)] = itemGrowingSize
+            newBounds.size[keyPath: flow.size(.fixed)] = fixedTrackSize
+            newBounds.origin[keyPath: flow.cgPointIndex(.growing)] = growingPosition
+            newBounds.origin[keyPath: flow.cgPointIndex(.fixed)] = fixedTrackStart
+            newBounds = newBounds.integral
             newPositions.append(PositionedItem(bounds: newBounds, gridItem: positionedItem.gridItem))
         }
         
         let totalGrowingSize = growingTracksSizes.reduce(0, +)
         let totalFixedSize = fixedTracksSizes.reduce(0, +)
         var totalSize = CGSize.zero
+        
         totalSize[keyPath: flow.size(.fixed)] = totalFixedSize.rounded()
         totalSize[keyPath: flow.size(.growing)] = totalGrowingSize.rounded()
         return PositionsPreference(items: newPositions, size: totalSize)

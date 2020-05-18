@@ -8,16 +8,16 @@
 
 import SwiftUI
 
-public struct Grid<Content>: View, LayoutArranging where Content: View {
+public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Content: View {
     
     @State var arrangement: LayoutArrangement?
     @State var positions: PositionsPreference = .default
+    @State var spanPreferences: [SpanPreference] = []
     @Environment(\.gridContentMode) private var contentMode
     @Environment(\.gridFlow) private var flow
     @Environment(\.gridPacking) private var packing
     
     let items: [GridItem]
-    let tracksCount: Int
     let spacing: GridSpacing
     let trackSizes: [GridTrack]
 
@@ -30,6 +30,9 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
                             .transformPreference(SpansPreferenceKey.self) { preference in
                                 preference.shrinkToLast(assigning: item)
                             }
+                            .transformPreference(StartPreferenceKey.self) { preference in
+                                preference.shrinkToLast(assigning: item)
+                            }
                             .padding(item: self.arrangement?[item], spacing: self.spacing)
                             .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
                                 PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: nil)
@@ -39,13 +42,11 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
                                    contentMode: self.contentMode)
                             .alignmentGuide(.leading, computeValue: { _ in  -(self.positions[item]?.bounds.origin.x ?? 0) })
                             .alignmentGuide(.top, computeValue: { _ in  -(self.positions[item]?.bounds.origin.y ?? 0) })
-
                             .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
                                 self.cellPreferenceView(item: item, preference: preference)
                             }
                             .overlayPreferenceValue(GridOverlayPreferenceKey.self) { preference in
                                 self.cellPreferenceView(item: item, preference: preference)
-                                    .border(Color.black, width: 1)
                             }
                     }
                 }
@@ -74,9 +75,15 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
         .transformPreference(SpansPreferenceKey.self) { preference in
             preference = preference.filter { $0.item != nil }
         }
+        .transformPreference(StartPreferenceKey.self) { preference in
+            preference = preference.filter { $0.item != nil }
+        }
         .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
-            guard !spanPreferences.isEmpty else { return }
-            self.calculateArrangement(spans: spanPreferences)
+            self.spanPreferences = spanPreferences
+        }
+        .onPreferenceChange(StartPreferenceKey.self) { startPreferences in
+            guard !startPreferences.isEmpty, !self.spanPreferences.isEmpty else { return }
+            self.calculateArrangement(spans: self.spanPreferences, starts: startPreferences)
         }
         .onPreferenceChange(PositionsPreferenceKey.self) { positionsPreference in
             self.positions = positionsPreference
@@ -87,12 +94,13 @@ public struct Grid<Content>: View, LayoutArranging where Content: View {
         if case .fill = self.contentMode {
             return []
         }
-        return self.flow == .columns ? .vertical : .horizontal
+        return self.flow == .rows ? .vertical : .horizontal
     }
 
-    private func calculateArrangement(spans: [SpanPreference]) {
+    private func calculateArrangement(spans: [SpanPreference], starts: [StartPreference]) {
         let calculatedLayout = self.arrange(spanPreferences: spans,
-                                            fixedTracksCount: self.tracksCount,
+                                            startPreferences: starts,
+                                            fixedTracksCount: self.trackSizes.count,
                                             flow: self.flow,
                                             packing: self.packing)
         self.arrangement = calculatedLayout
@@ -120,8 +128,8 @@ extension View {
             width = size?.width
             height = size?.height
         case .scroll:
-            width = (flow == .columns ? size?.width : nil)
-            height = (flow == .rows ? size?.height : nil)
+            width = (flow == .rows ? size?.width : nil)
+            height = (flow == .columns ? size?.height : nil)
         }
         return frame(width: width, height: height)
     }
@@ -139,7 +147,7 @@ extension View {
     }
 }
 
-extension Array where Element == SpanPreference {
+extension Array where Element: GridItemContaining {
     fileprivate mutating func shrinkToLast(assigning item: GridItem) {
         guard var lastPreference = self.last else { return }
         lastPreference.item = item
@@ -193,7 +201,7 @@ struct GridView_Previews: PreviewProvider {
                 Color(.gray)
             }
         }
-        .gridFlow(.columns)
+        .gridFlow(.rows)
         .gridPacking(.dense)
     }
 }

@@ -18,6 +18,13 @@ extension View {
                                                   row: row))])
     }
     
+    public func gridStart(column: Int? = nil, row: Int? = nil) -> some View {
+        preference(
+            key: StartPreferenceKey.self,
+            value: [StartPreference(start: GridStart(column: column,
+                                                     row: row))])
+    }
+    
     public func gridCellOverlay<Content: View>(
         @ViewBuilder content: @escaping (CGSize?) -> Content
     ) -> some View {

@@ -27,3 +27,11 @@ struct ArrangedItem: Equatable {
             && index.row <= endIndex.row
     }
 }
+
+extension ArrangedItem {
+    init(item: GridItem, startIndex: GridIndex, span: GridSpan) {
+        let endRow: Int = startIndex.row + span.row - 1
+        let endColumn: Int = startIndex.column + span.column - 1
+        self = ArrangedItem(gridItem: item, startIndex: startIndex, endIndex: GridIndex(column: endColumn, row: endRow))
+    }
+}

@@ -46,7 +46,7 @@ struct EnvironmentKeys {
     }
 
     struct Flow: EnvironmentKey {
-        static let defaultValue = GridFlow.columns
+        static let defaultValue = GridFlow.rows
     }
     
     struct Packing: EnvironmentKey {

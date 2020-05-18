@@ -97,7 +97,7 @@ struct RandomizedContentView: View {
                 .gridContentMode(.fill)
             }
         }
-        .gridFlow(.columns)
+        .gridFlow(.rows)
         .gridPacking(.sparse)
     }
     

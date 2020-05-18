@@ -225,6 +225,7 @@
 				361AFEBE2449685E00A34687 /* Grid.swift */,
 				36780DD42452E9F200B7AAAB /* View+Environment.swift */,
 				368E4E862458198C009D1665 /* View+GridPreferences.swift */,
+				36E829102472AB5C00D06197 /* GridGroup.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -253,7 +254,6 @@
 				36780DD22452DB7A00B7AAAB /* GridFlow.swift */,
 				36A70E2724619EB700FE76A3 /* GridPacking.swift */,
 				3684BAC8246CF5BD0071B75E /* GridSpacing.swift */,
-				36E829102472AB5C00D06197 /* GridGroup.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

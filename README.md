@@ -2,14 +2,14 @@
 
 ### Roadmap:
 
-- [ ] grid item explicit row and/or column position
-- [ ] Add GridGroup
 - [ ] dual dimension track sizes (grid-template-rows, grid-template-columns).
 - [ ] grid-auto-rows, grid-auto-columns
 - [ ] grid min/ideal sizes
 - [ ] improve dense placement algorithm
 - [ ] ? landscape/portrait layout
 - [ ] ? calculate layout in background thread
+- [x] add GridGroup
+- [x] grid item explicit row and/or column position
 - [x] different spacing for rows and columns
 - [x] intrinsic sized tracks (fit-content)
 - [x] forEach support

@@ -3,7 +3,7 @@
 //  ExyteGrid
 //
 //  Created by Denis Obukhov on 07.05.2020.
-//  Copyright © 2020 Denis Obukhov. All rights reserved.
+//  Copyright © 2020 Exyte. All rights reserved.
 //
 
 // swiftlint:disable line_length

@@ -3,7 +3,7 @@
 //  ExyteGridTests
 //
 //  Created by Denis Obukhov on 13.05.2020.
-//  Copyright © 2020 Denis Obukhov. All rights reserved.
+//  Copyright © 2020 Exyte. All rights reserved.
 //
 
 import XCTest

@@ -1,0 +1,16 @@
+PODS:
+  - ExyteGrid (0.0.1)
+
+DEPENDENCIES:
+  - ExyteGrid (from `../`)
+
+EXTERNAL SOURCES:
+  ExyteGrid:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ExyteGrid: da9f13dd2f6881c12e387bf1534f8f237e5e940d
+
+PODFILE CHECKSUM: 212cb5e437c30789c905d83718895b9db2c23c36
+
+COCOAPODS: 1.9.1

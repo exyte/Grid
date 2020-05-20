@@ -1,13 +1,13 @@
 //
 //  RandomizedContentView.swift
-//  GridLayout
+//  ExyteGrid_Example
 //
 //  Created by Denis Obukhov on 14.04.2020.
 //  Copyright © 2020 Denis Obukhov. All rights reserved.
 //
 
 import SwiftUI
-import Grid
+import ExyteGrid
 
 struct HCardView: View {
 

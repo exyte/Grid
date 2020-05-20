@@ -1,6 +1,6 @@
 //
 //  Grid+Inits_TupleView.swift
-//  GridLayout
+//  ExyteGrid
 //
 //  Created by Denis Obukhov on 18.04.2020.
 //  Copyright © 2020 Denis Obukhov. All rights reserved.

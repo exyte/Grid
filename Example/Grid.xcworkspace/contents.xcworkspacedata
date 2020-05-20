@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Grid.xcodeproj">
+      location = "group:/Users/denisobukhov/exyte/projects/Grid/Example/ExyteGrid.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

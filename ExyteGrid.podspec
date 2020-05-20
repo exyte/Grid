@@ -7,7 +7,7 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'Grid'
+  s.name             = 'ExyteGrid'
   s.version          = '0.0.1'
   s.summary          = 'SwiftUI Grid implementation'
 

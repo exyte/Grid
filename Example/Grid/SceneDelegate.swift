@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  GridLayout
+//  ExyteGrid_Example
 //
 //  Created by Denis Obukhov on 14.04.2020.
 //  Copyright © 2020 Denis Obukhov. All rights reserved.

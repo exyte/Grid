@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-               BuildableName = "Grid_Example.app"
-               BlueprintName = "Grid_Example"
-               ReferencedContainer = "container:Grid.xcodeproj">
+               BuildableName = "ExyteGrid_Example.app"
+               BlueprintName = "ExyteGrid_Example"
+               ReferencedContainer = "container:ExyteGrid.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "Grid_Tests.xctest"
-               BlueprintName = "Grid_Tests"
-               ReferencedContainer = "container:Grid.xcodeproj">
+               BuildableName = "ExyteGrid_Tests.xctest"
+               BlueprintName = "ExyteGrid_Tests"
+               ReferencedContainer = "container:ExyteGrid.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "Grid_Example.app"
-            BlueprintName = "Grid_Example"
-            ReferencedContainer = "container:Grid.xcodeproj">
+            BuildableName = "ExyteGrid_Example.app"
+            BlueprintName = "ExyteGrid_Example"
+            ReferencedContainer = "container:ExyteGrid.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -56,9 +56,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "Grid_Tests.xctest"
-               BlueprintName = "Grid_Tests"
-               ReferencedContainer = "container:Grid.xcodeproj">
+               BuildableName = "ExyteGrid_Tests.xctest"
+               BlueprintName = "ExyteGrid_Tests"
+               ReferencedContainer = "container:ExyteGrid.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -78,9 +78,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "Grid_Example.app"
-            BlueprintName = "Grid_Example"
-            ReferencedContainer = "container:Grid.xcodeproj">
+            BuildableName = "ExyteGrid_Example.app"
+            BlueprintName = "ExyteGrid_Example"
+            ReferencedContainer = "container:ExyteGrid.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "Grid_Example.app"
-            BlueprintName = "Grid_Example"
-            ReferencedContainer = "container:Grid.xcodeproj">
+            BuildableName = "ExyteGrid_Example.app"
+            BlueprintName = "ExyteGrid_Example"
+            ReferencedContainer = "container:ExyteGrid.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

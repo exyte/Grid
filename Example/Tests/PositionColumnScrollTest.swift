@@ -1,6 +1,6 @@
 //
 //  PositionColumnScrollTest.swift
-//  GridLayoutTests
+//  ExyteGridTests
 //
 //  Created by Denis Obukhov on 13.05.2020.
 //  Copyright © 2020 Denis Obukhov. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 import SwiftUI
-@testable import Grid
+@testable import ExyteGrid
 
 class PositionColumnScrollTest: XCTestCase {
 

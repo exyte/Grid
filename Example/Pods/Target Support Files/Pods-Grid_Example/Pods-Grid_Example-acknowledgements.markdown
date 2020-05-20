@@ -1,7 +1,7 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
-## Grid
+## ExyteGrid
 
 Copyright (c) 2020 Denis Obukhov <denis.obukhov@exyte.com>
 

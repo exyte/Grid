@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double GridVersionNumber;
-FOUNDATION_EXPORT const unsigned char GridVersionString[];
+FOUNDATION_EXPORT double ExyteGridVersionNumber;
+FOUNDATION_EXPORT const unsigned char ExyteGridVersionString[];
 

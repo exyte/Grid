@@ -1,6 +1,6 @@
 //
 //  GridPacking.swift
-//  GridLayout
+//  ExyteGrid
 //
 //  Created by Denis Obukhov on 05.05.2020.
 //  Copyright © 2020 Denis Obukhov. All rights reserved.

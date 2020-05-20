@@ -15,12 +15,10 @@ ___
 
 </br></br>
 
-# Grid
-
 [![Twitter](https://img.shields.io/badge/Twitter-@exyteHQ-blue.svg?style=flat)](http://twitter.com/exyteHQ)
-[![Version](https://img.shields.io/cocoapods/v/Grid.svg?style=flat)](https://cocoapods.org/pods/Grid)
-[![License](https://img.shields.io/cocoapods/l/Grid.svg?style=flat)](https://cocoapods.org/pods/Grid)
-[![Platform](https://img.shields.io/cocoapods/p/Grid.svg?style=flat)](https://cocoapods.org/pods/Grid)
+[![Version](https://img.shields.io/cocoapods/v/ExyteGrid.svg?style=flat)](https://cocoapods.org/pods/ExyteGrid)
+[![License](https://img.shields.io/cocoapods/l/ExyteGrid.svg?style=flat)](https://cocoapods.org/pods/ExyteGrid)
+[![Platform](https://img.shields.io/cocoapods/p/ExyteGrid.svg?style=flat)](https://cocoapods.org/pods/ExyteGrid)
 
 ## Example
 
@@ -33,7 +31,7 @@ Grid is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Grid'
+pod 'ExyteGrid'
 ```
 
 ## Requirements

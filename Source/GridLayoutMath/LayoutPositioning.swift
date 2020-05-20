@@ -32,7 +32,7 @@ extension LayoutPositioning {
         let growingTracks: [GridTrack]
         let growingBoundingSize: CGFloat
         if contentMode == .scroll {
-            growingTracks = [GridTrack](repeating: .fitContent, count: arrangement[keyPath: flow.arrangementCount(.growing)])
+            growingTracks = [GridTrack](repeating: .fit, count: arrangement[keyPath: flow.arrangementCount(.growing)])
             growingBoundingSize = .infinity
         } else {
             growingTracks = [GridTrack](repeating: .fr(1), count: arrangement[keyPath: flow.arrangementCount(.growing)])
@@ -104,9 +104,9 @@ extension LayoutPositioning {
                 switch track {
                 case .fr:
                     return PositionedTrack(track: track, baseSize: 0)
-                case .const(let size):
+                case .pt(let size):
                     return PositionedTrack(track: track, baseSize: CGFloat(size))
-                case .fitContent:
+                case .fit:
                     return PositionedTrack(track: track, baseSize: 0)
                 }
         }

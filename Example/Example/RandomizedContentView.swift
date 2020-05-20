@@ -77,7 +77,7 @@ struct RandomizedContentView: View {
     
     var mode: Mode = .fill
     
-    let firstGridTracks: [GridTrack] = [.fitContent, .fitContent, .fr(1)]
+    let firstGridTracks: [GridTrack] = [.fit, .fit, .fr(1)]
     let secondGridTracks: [GridTrack] = 6
     
     var body: some View {

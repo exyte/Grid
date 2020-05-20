@@ -1,0 +1,6 @@
+framework module Grid {
+  umbrella header "Grid-umbrella.h"
+
+  export *
+  module * { export * }
+}

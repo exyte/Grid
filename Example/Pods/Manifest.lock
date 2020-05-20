@@ -1,0 +1,16 @@
+PODS:
+  - Grid (0.0.1)
+
+DEPENDENCIES:
+  - Grid (from `../`)
+
+EXTERNAL SOURCES:
+  Grid:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Grid: a68dd10f2a6ad453a2217e21da96136a23d967e1
+
+PODFILE CHECKSUM: a99132e7a7cdd3a9f229f0da4904f687a264dd84
+
+COCOAPODS: 1.9.1

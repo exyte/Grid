@@ -8,7 +8,7 @@
 
 import XCTest
 import SwiftUI
-@testable import ExyteGrid
+@testable import Grid
 
 class ArrangingWithStartsTest: XCTestCase {
     

@@ -4,10 +4,4 @@ platform :ios, '13.0'
 
 target 'Grid_Example' do
   pod 'ExyteGrid', :path => '../'
-
-  target 'Grid_Tests' do
-    inherit! :search_paths
-
-    
-  end
 end

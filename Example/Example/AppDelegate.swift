@@ -3,7 +3,7 @@
 //  Grid_Example
 //
 //  Created by Denis Obukhov on 05/20/2020.
-//  Copyright (c) 2020 Denis Obukhov. All rights reserved.
+//  Copyright (c) 2020 Exyte. All rights reserved.
 //
 
 import SwiftUI

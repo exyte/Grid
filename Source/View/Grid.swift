@@ -10,7 +10,7 @@ import SwiftUI
 
 public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Content: View {
     
-    @State var arrangement: LayoutArrangement?
+    @State var arrangement: LayoutArrangement? = nil
     @State var positions: PositionsPreference = .default
     @State var spanPreferences: [SpanPreference] = []
     @Environment(\.gridContentMode) private var contentMode
@@ -33,7 +33,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                             .transformPreference(StartPreferenceKey.self) { preference in
                                 preference.shrinkToLast(assigning: item)
                             }
-                            .padding(item: self.arrangement?[item], spacing: self.spacing)
+                            .padding(spacing: self.spacing)
                             .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
                                 PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: nil)
                             }
@@ -66,7 +66,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                     }
                     positionPreference = self.reposition(positionPreference,
                                                          arrangement: arrangement,
-                                                         boundingSize: mainGeometry.size,
+                                                         boundingSize: self.corrected(size: mainGeometry.size),
                                                          tracks: self.trackSizes,
                                                          contentMode: self.contentMode,
                                                          flow: self.flow)
@@ -96,6 +96,11 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
         }
     }
     
+    private func corrected(size: CGSize) -> CGSize {
+        return CGSize(width: size.width - self.spacing.horizontal,
+                      height: size.height - self.spacing.vertical)
+    }
+    
     private var scrollAxis: Axis.Set {
         if case .fill = self.contentMode {
             return []
@@ -117,7 +122,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
         GeometryReader { geometry in
             preference.content(geometry.size)
         }
-        .padding(item: self.arrangement?[item], spacing: self.spacing)
+        .padding(spacing: self.spacing)
         .frame(width: self.positions[item]?.bounds.width,
                height: self.positions[item]?.bounds.height)
     }
@@ -140,15 +145,12 @@ extension View {
         return frame(width: width, height: height)
     }
     
-    fileprivate func padding(item: ArrangedItem?, spacing: GridSpacing) -> some View {
+    fileprivate func padding(spacing: GridSpacing) -> some View {
         var edgeInsets = EdgeInsets()
-        guard let arrangedItem = item else { return self.padding(edgeInsets) }
-        if arrangedItem.startIndex.row != 0 {
-            edgeInsets.top = spacing.vertical
-        }
-        if arrangedItem.startIndex.column != 0 {
-            edgeInsets.leading = spacing.horizontal
-        }
+        edgeInsets.top = spacing.vertical / 2
+        edgeInsets.bottom = spacing.vertical / 2
+        edgeInsets.leading = spacing.horizontal / 2
+        edgeInsets.trailing = spacing.horizontal / 2
         return self.padding(edgeInsets)
     }
 }

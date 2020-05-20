@@ -1,0 +1,24 @@
+//
+//  SpanPreference.swift
+//  ExyteGrid
+//
+//  Created by Denis Obukhov on 18.04.2020.
+//  Copyright © 2020 Exyte. All rights reserved.
+//
+
+import SwiftUI
+
+struct SpanPreference: Equatable, GridItemContaining {
+    var item: GridItem?
+    var span = GridSpan.default
+
+    static let `default` = SpanPreference()
+}
+
+struct SpansPreferenceKey: PreferenceKey {
+    static var defaultValue = [SpanPreference()]
+
+    static func reduce(value: inout [SpanPreference], nextValue: () -> [SpanPreference]) {
+        value.append(contentsOf: nextValue())
+    }
+}

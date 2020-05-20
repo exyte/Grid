@@ -17,8 +17,8 @@
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		6D4D2FF4BFFBCDDF3BE448DD /* Pods_ExyteGrid_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A1C35574BC7ECB36499AB9 /* Pods_ExyteGrid_Example.framework */; };
-		CF074DF78B091958ECABF7D9 /* Pods_ExyteGrid_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F5AC477DAFA605660244E63 /* Pods_ExyteGrid_Tests.framework */; };
+		6DB84004BDCDB3E244BC58C9 /* Pods_Grid_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8227AC46577333E3B853DEAD /* Pods_Grid_Example.framework */; };
+		955203857E66E4BDFA9EFFDA /* Pods_Grid_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C68935F4E18E41139939750 /* Pods_Grid_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,7 +33,8 @@
 
 /* Begin PBXFileReference section */
 		019A245A777705E4C76B5F54 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		218A6F663A58DCA686487676 /* Pods-ExyteGrid_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExyteGrid_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ExyteGrid_Tests/Pods-ExyteGrid_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		0833308489F0B873C5807507 /* Pods-Grid_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grid_Example.debug.xcconfig"; path = "Target Support Files/Pods-Grid_Example/Pods-Grid_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		12A7EC269198315771622BE7 /* Pods-Grid_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grid_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Grid_Tests/Pods-Grid_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		2477FB68660CBB45AE904BD3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		366B25042474F77000F1DD09 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		366B25062474F78E00F1DD09 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -43,18 +44,17 @@
 		366BDB512474F98F0034794C /* ArrangingTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrangingTest.swift; sourceTree = "<group>"; };
 		366BDB522474F9900034794C /* PositionColumnScrollTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PositionColumnScrollTest.swift; sourceTree = "<group>"; };
 		366BDB572474FB770034794C /* RandomizedContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomizedContentView.swift; sourceTree = "<group>"; };
-		4FDE50CEF5B464DCC006EE81 /* Pods-ExyteGrid_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExyteGrid_Example.debug.xcconfig"; path = "Target Support Files/Pods-ExyteGrid_Example/Pods-ExyteGrid_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		5DFCD147ECF64996B5B71693 /* Pods-ExyteGrid_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExyteGrid_Example.release.xcconfig"; path = "Target Support Files/Pods-ExyteGrid_Example/Pods-ExyteGrid_Example.release.xcconfig"; sourceTree = "<group>"; };
-		607FACD01AFB9204008FA782 /* ExyteGrid_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExyteGrid_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACD01AFB9204008FA782 /* Grid_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grid_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		607FACE51AFB9204008FA782 /* ExyteGrid_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExyteGrid_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACE51AFB9204008FA782 /* Grid_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Grid_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6730D4566EAD45BC081F304E /* Pods-Grid_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grid_Tests.release.xcconfig"; path = "Target Support Files/Pods-Grid_Tests/Pods-Grid_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		6C68935F4E18E41139939750 /* Pods_Grid_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Grid_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		743618E75BFB071D0A54A0AB /* Grid.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Grid.podspec; path = ../Grid.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		7F5AC477DAFA605660244E63 /* Pods_ExyteGrid_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExyteGrid_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		91A1C35574BC7ECB36499AB9 /* Pods_ExyteGrid_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExyteGrid_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EFC7640B27040593C508A062 /* Pods-ExyteGrid_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExyteGrid_Tests.release.xcconfig"; path = "Target Support Files/Pods-ExyteGrid_Tests/Pods-ExyteGrid_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		8227AC46577333E3B853DEAD /* Pods_Grid_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Grid_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3A3FC714787907DA28B8F91 /* Pods-Grid_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grid_Example.release.xcconfig"; path = "Target Support Files/Pods-Grid_Example/Pods-Grid_Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D4D2FF4BFFBCDDF3BE448DD /* Pods_ExyteGrid_Example.framework in Frameworks */,
+				6DB84004BDCDB3E244BC58C9 /* Pods_Grid_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF074DF78B091958ECABF7D9 /* Pods_ExyteGrid_Tests.framework in Frameworks */,
+				955203857E66E4BDFA9EFFDA /* Pods_Grid_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,10 +80,10 @@
 		191E4E911CBE64D7ECF0BCE6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				4FDE50CEF5B464DCC006EE81 /* Pods-ExyteGrid_Example.debug.xcconfig */,
-				5DFCD147ECF64996B5B71693 /* Pods-ExyteGrid_Example.release.xcconfig */,
-				218A6F663A58DCA686487676 /* Pods-ExyteGrid_Tests.debug.xcconfig */,
-				EFC7640B27040593C508A062 /* Pods-ExyteGrid_Tests.release.xcconfig */,
+				0833308489F0B873C5807507 /* Pods-Grid_Example.debug.xcconfig */,
+				A3A3FC714787907DA28B8F91 /* Pods-Grid_Example.release.xcconfig */,
+				12A7EC269198315771622BE7 /* Pods-Grid_Tests.debug.xcconfig */,
+				6730D4566EAD45BC081F304E /* Pods-Grid_Tests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -92,24 +92,24 @@
 			isa = PBXGroup;
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
-				607FACD21AFB9204008FA782 /* Example for ExyteGrid */,
+				607FACD21AFB9204008FA782 /* Example for Grid */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				191E4E911CBE64D7ECF0BCE6 /* Pods */,
-				9A9DFC1CC77F1316E96A58B4 /* Frameworks */,
+				A84CF2FA145C230BBC6B8B3A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD01AFB9204008FA782 /* ExyteGrid_Example.app */,
-				607FACE51AFB9204008FA782 /* ExyteGrid_Tests.xctest */,
+				607FACD01AFB9204008FA782 /* Grid_Example.app */,
+				607FACE51AFB9204008FA782 /* Grid_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		607FACD21AFB9204008FA782 /* Example for ExyteGrid */ = {
+		607FACD21AFB9204008FA782 /* Example for Grid */ = {
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
@@ -120,8 +120,8 @@
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
-			name = "Example for ExyteGrid";
-			path = Grid;
+			name = "Example for Grid";
+			path = Example;
 			sourceTree = "<group>";
 		};
 		607FACD31AFB9204008FA782 /* Supporting Files */ = {
@@ -162,11 +162,11 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		9A9DFC1CC77F1316E96A58B4 /* Frameworks */ = {
+		A84CF2FA145C230BBC6B8B3A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				91A1C35574BC7ECB36499AB9 /* Pods_ExyteGrid_Example.framework */,
-				7F5AC477DAFA605660244E63 /* Pods_ExyteGrid_Tests.framework */,
+				8227AC46577333E3B853DEAD /* Pods_Grid_Example.framework */,
+				6C68935F4E18E41139939750 /* Pods_Grid_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -174,30 +174,30 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		607FACCF1AFB9204008FA782 /* ExyteGrid_Example */ = {
+		607FACCF1AFB9204008FA782 /* Grid_Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "ExyteGrid_Example" */;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Grid_Example" */;
 			buildPhases = (
-				C534512FB7E666D7E51A61E8 /* [CP] Check Pods Manifest.lock */,
+				E7A93EF196EB6F4BE51D9B8C /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				7505AE2EF26B8FD39248CAAB /* [CP] Embed Pods Frameworks */,
+				990FEF095A7ACC148B730574 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = ExyteGrid_Example;
+			name = Grid_Example;
 			productName = Grid;
-			productReference = 607FACD01AFB9204008FA782 /* ExyteGrid_Example.app */;
+			productReference = 607FACD01AFB9204008FA782 /* Grid_Example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		607FACE41AFB9204008FA782 /* ExyteGrid_Tests */ = {
+		607FACE41AFB9204008FA782 /* Grid_Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "ExyteGrid_Tests" */;
+			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Grid_Tests" */;
 			buildPhases = (
-				48011804F8769BBCAB5E7750 /* [CP] Check Pods Manifest.lock */,
+				4755873F76F1CBFE1136505D /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
@@ -207,9 +207,9 @@
 			dependencies = (
 				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
 			);
-			name = ExyteGrid_Tests;
+			name = Grid_Tests;
 			productName = Tests;
-			productReference = 607FACE51AFB9204008FA782 /* ExyteGrid_Tests.xctest */;
+			productReference = 607FACE51AFB9204008FA782 /* Grid_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -235,7 +235,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "ExyteGrid" */;
+			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "Example" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -248,8 +248,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				607FACCF1AFB9204008FA782 /* ExyteGrid_Example */,
-				607FACE41AFB9204008FA782 /* ExyteGrid_Tests */,
+				607FACCF1AFB9204008FA782 /* Grid_Example */,
+				607FACE41AFB9204008FA782 /* Grid_Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -274,7 +274,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		48011804F8769BBCAB5E7750 /* [CP] Check Pods Manifest.lock */ = {
+		4755873F76F1CBFE1136505D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -289,20 +289,20 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ExyteGrid_Tests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Grid_Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7505AE2EF26B8FD39248CAAB /* [CP] Embed Pods Frameworks */ = {
+		990FEF095A7ACC148B730574 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ExyteGrid_Example/Pods-ExyteGrid_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Grid_Example/Pods-Grid_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ExyteGrid/ExyteGrid.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -311,10 +311,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ExyteGrid_Example/Pods-ExyteGrid_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Grid_Example/Pods-Grid_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C534512FB7E666D7E51A61E8 /* [CP] Check Pods Manifest.lock */ = {
+		E7A93EF196EB6F4BE51D9B8C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -329,7 +329,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ExyteGrid_Example-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Grid_Example-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -366,7 +366,7 @@
 /* Begin PBXTargetDependency section */
 		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 607FACCF1AFB9204008FA782 /* ExyteGrid_Example */;
+			target = 607FACCF1AFB9204008FA782 /* Grid_Example */;
 			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -488,41 +488,43 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4FDE50CEF5B464DCC006EE81 /* Pods-ExyteGrid_Example.debug.xcconfig */;
+			baseConfigurationReference = 0833308489F0B873C5807507 /* Pods-Grid_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = TP875UJ4PG;
-				INFOPLIST_FILE = Grid/Info.plist;
+				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = exyte.Grid;
-				PRODUCT_NAME = ExyteGrid_Example;
+				PRODUCT_BUNDLE_IDENTIFIER = exyte.GridExample;
+				PRODUCT_NAME = Grid_Example;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5DFCD147ECF64996B5B71693 /* Pods-ExyteGrid_Example.release.xcconfig */;
+			baseConfigurationReference = A3A3FC714787907DA28B8F91 /* Pods-Grid_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = TP875UJ4PG;
-				INFOPLIST_FILE = Grid/Info.plist;
+				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = exyte.Grid;
-				PRODUCT_NAME = ExyteGrid_Example;
+				PRODUCT_BUNDLE_IDENTIFIER = exyte.GridExample;
+				PRODUCT_NAME = Grid_Example;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 218A6F663A58DCA686487676 /* Pods-ExyteGrid_Tests.debug.xcconfig */;
+			baseConfigurationReference = 12A7EC269198315771622BE7 /* Pods-Grid_Tests.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = TP875UJ4PG;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -539,13 +541,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ExyteGrid_Example.app/ExyteGrid_Example";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Grid_Example.app/Grid_Example";
 			};
 			name = Debug;
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EFC7640B27040593C508A062 /* Pods-ExyteGrid_Tests.release.xcconfig */;
+			baseConfigurationReference = 6730D4566EAD45BC081F304E /* Pods-Grid_Tests.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = TP875UJ4PG;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -558,14 +560,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ExyteGrid_Example.app/ExyteGrid_Example";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Grid_Example.app/Grid_Example";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "ExyteGrid" */ = {
+		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACED1AFB9204008FA782 /* Debug */,
@@ -574,7 +576,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "ExyteGrid_Example" */ = {
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Grid_Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF01AFB9204008FA782 /* Debug */,
@@ -583,7 +585,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "ExyteGrid_Tests" */ = {
+		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Grid_Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF31AFB9204008FA782 /* Debug */,

@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Grid.xcodeproj">
+      location = "self:/Users/denisobukhov/exyte/projects/ExyteGrid/Example/Grid.xcodeproj">
    </FileRef>
 </Workspace>

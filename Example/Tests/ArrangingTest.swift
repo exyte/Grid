@@ -1,6 +1,6 @@
 //
 //  ArrangingTest.swift
-//  ExyteGridTests
+//  GridTests
 //
 //  Created by Denis Obukhov on 06.05.2020.
 //  Copyright © 2020 Exyte. All rights reserved.

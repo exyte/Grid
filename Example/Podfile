@@ -2,10 +2,10 @@ use_frameworks!
 
 platform :ios, '13.0'
 
-target 'ExyteGrid_Example' do
+target 'Grid_Example' do
   pod 'ExyteGrid', :path => '../'
 
-  target 'ExyteGrid_Tests' do
+  target 'Grid_Tests' do
     inherit! :search_paths
 
     

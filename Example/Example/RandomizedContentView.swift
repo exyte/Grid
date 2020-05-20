@@ -1,6 +1,6 @@
 //
 //  RandomizedContentView.swift
-//  ExyteGrid_Example
+//  Grid_Example
 //
 //  Created by Denis Obukhov on 14.04.2020.
 //  Copyright © 2020 Exyte. All rights reserved.

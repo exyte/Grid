@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  ExyteGrid_Example
+//  Grid_Example
 //
 //  Created by Denis Obukhov on 05/20/2020.
 //  Copyright (c) 2020 Denis Obukhov. All rights reserved.

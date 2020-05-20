@@ -45,6 +45,7 @@ pod 'ExyteGrid'
 - [ ] grid-auto-rows, grid-auto-columns
 - [ ] grid min/ideal sizes
 - [ ] improve dense placement algorithm
+- [ ] support if clauses
 - [ ] ? landscape/portrait layout
 - [ ] ? calculate layout in background thread
 - [x] add GridGroup

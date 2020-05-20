@@ -1,6 +1,0 @@
-framework module Pods_Grid_Tests {
-  umbrella header "Pods-Grid_Tests-umbrella.h"
-
-  export *
-  module * { export * }
-}

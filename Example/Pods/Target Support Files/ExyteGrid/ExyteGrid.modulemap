@@ -1,6 +1,0 @@
-framework module ExyteGrid {
-  umbrella header "ExyteGrid-umbrella.h"
-
-  export *
-  module * { export * }
-}

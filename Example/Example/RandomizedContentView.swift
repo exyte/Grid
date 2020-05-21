@@ -90,7 +90,7 @@ struct RandomizedContentView: View {
                 }
                 .gridContentMode(.scroll)
             } else {
-                Grid(0..<6, tracks: secondGridTracks, spacing: 0) { _ in
+                Grid(0..<6, tracks: secondGridTracks, spacing: 4) { _ in
                     VCardView()
                         .gridSpan(column: self.randomSpan(2),
                                   row: self.randomSpan(2))

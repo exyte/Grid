@@ -10,6 +10,8 @@
 		366B25052474F77000F1DD09 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B25042474F77000F1DD09 /* SceneDelegate.swift */; };
 		366B25072474F78E00F1DD09 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B25062474F78E00F1DD09 /* ContentView.swift */; };
 		366BDB592474FB9E0034794C /* RandomizedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366BDB572474FB770034794C /* RandomizedContentView.swift */; };
+		36B11E512475539700CDAE27 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B11E502475539700CDAE27 /* Calculator.swift */; };
+		36F6C22A2476D919001818F2 /* Color+hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F6C2292476D919001818F2 /* Color+hex.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
@@ -23,6 +25,8 @@
 		366B25062474F78E00F1DD09 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		366B25082474F7FA00F1DD09 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		366BDB572474FB770034794C /* RandomizedContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomizedContentView.swift; sourceTree = "<group>"; };
+		36B11E502475539700CDAE27 /* Calculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
+		36F6C2292476D919001818F2 /* Color+hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+hex.swift"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* Grid_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grid_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -54,6 +58,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		36F6C2282476D8F4001818F2 /* Extesions */ = {
+			isa = PBXGroup;
+			children = (
+				36F6C2292476D919001818F2 /* Color+hex.swift */,
+			);
+			name = Extesions;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -76,10 +88,12 @@
 		607FACD21AFB9204008FA782 /* Example for Grid */ = {
 			isa = PBXGroup;
 			children = (
+				36F6C2282476D8F4001818F2 /* Extesions */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				366B25042474F77000F1DD09 /* SceneDelegate.swift */,
 				366BDB572474FB770034794C /* RandomizedContentView.swift */,
 				366B25062474F78E00F1DD09 /* ContentView.swift */,
+				36B11E502475539700CDAE27 /* Calculator.swift */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -253,6 +267,8 @@
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				366BDB592474FB9E0034794C /* RandomizedContentView.swift in Sources */,
 				366B25052474F77000F1DD09 /* SceneDelegate.swift in Sources */,
+				36F6C22A2476D919001818F2 /* Color+hex.swift in Sources */,
+				36B11E512475539700CDAE27 /* Calculator.swift in Sources */,
 				366B25072474F78E00F1DD09 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -388,7 +404,7 @@
 				PRODUCT_NAME = Grid_Example;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -406,7 +422,7 @@
 				PRODUCT_NAME = Grid_Example;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

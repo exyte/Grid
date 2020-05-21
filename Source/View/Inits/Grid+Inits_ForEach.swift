@@ -21,6 +21,6 @@ extension Grid {
         self.trackSizes = tracks
         self.spacing = spacing
         self.items =
-            content().data.enumerated().map { GridItem(AnyView(content().content($0.element)), id: AnyHashable(($0.offset))) }
+            content().data.enumerated().map { GridItem(AnyView(content().content($0.element)), id: AnyHashable($0.element.id)) }
     }
 }

@@ -91,20 +91,12 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                 guard let arrangement = self.arrangement else {
                     return
                 }
-                let newPositions = self.reposition(positionsPreference,
+                self.positions = self.reposition(positionsPreference,
                                                    arrangement: arrangement,
                                                    boundingSize: self.corrected(size: mainGeometry.size),
                                                    tracks: self.trackSizes,
                                                    contentMode: self.contentMode,
                                                    flow: self.flow)
-                
-                if self.positions.items.isEmpty {
-                    self.positions = newPositions
-                } else {
-                    DispatchQueue.main.async {
-                        self.positions = newPositions
-                    }
-                }
             }
         }
         

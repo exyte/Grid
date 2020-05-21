@@ -41,6 +41,7 @@ pod 'ExyteGrid'
 
 ## Roadmap:
 
+- [ ] add GridIdentified-like item to track the same View in animations 
 - [ ] dual dimension track sizes (grid-template-rows, grid-template-columns).
 - [ ] grid-auto-rows, grid-auto-columns
 - [ ] grid min/ideal sizes

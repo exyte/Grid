@@ -109,6 +109,10 @@ struct Calculator: View {
         self.isPortrait ? 4 : 10
     }
     
+    var digitButtons: [MathOperation] {
+        (1..<10).map { .digit($0) }
+    }
+    
     func proportionalSize(geometry: GeometryProxy) -> CGSize {
         let height: CGFloat
         if self.isPortrait {
@@ -137,8 +141,8 @@ struct Calculator: View {
                         CalcButton(.percent)
                     }
   
-                    ForEach(1..<10, id: \.self) {
-                        CalcButton(.digit($0))
+                    ForEach(self.digitButtons, id: \.self) {
+                        CalcButton($0)
                     }
 
                     CalcButton(.digit(0)).gridSpan(column: 2)

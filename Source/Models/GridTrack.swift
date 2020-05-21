@@ -49,3 +49,5 @@ extension Array: ExpressibleByIntegerLiteral where Element == GridTrack {
         self = .init(repeating: .fr(Constants.defaultFractionSize), count: value)
     }
 }
+
+extension GridTrack: Equatable { }

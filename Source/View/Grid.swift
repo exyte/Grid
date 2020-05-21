@@ -31,7 +31,10 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                                 preference.shrinkToLast(assigning: item)
                             }
                             .transformPreference(StartPreferenceKey.self) { preference in
-                                preference.shrinkToLast(assigning: item)
+                                if var lastStart = preference?.starts.last {
+                                    lastStart.item = item
+                                    preference?.starts = [lastStart]
+                                }
                             }
                             .padding(spacing: self.spacing)
                             .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
@@ -58,42 +61,53 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                        minHeight: self.positions.size?.height,
                        maxHeight: .infinity,
                        alignment: .topLeading)
+            }
+            .transformPreference(SpansPreferenceKey.self) { preference in
+                preference = preference.filter { $0.item != nil }
+            }
+            .transformPreference(StartPreferenceKey.self) { preference in
+                preference = StartPreference(starts: preference?.starts ?? [],
+                                             environment: .init(tracks: self.trackSizes,
+                                                                flow: self.flow,
+                                                                packing: self.packing,
+                                                                spans: self.spanPreferences))
+            }
+            .transformPreference(PositionsPreferenceKey.self) { preference in
+                guard let arrangement = self.arrangement else { return }
+                preference.environment = .init(arrangement: arrangement,
+                                               boundingSize: self.corrected(size: mainGeometry.size),
+                                               tracks: self.trackSizes,
+                                               contentMode: self.contentMode,
+                                               flow: self.flow)
+            }
+            .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
+                self.spanPreferences = spanPreferences
+            }
+            .onPreferenceChange(StartPreferenceKey.self) { startPreferences in
+                guard let starts = startPreferences, !self.spanPreferences.isEmpty else { return }
+                self.calculateArrangement(spans: self.spanPreferences, starts: starts)
+            }
+            .onPreferenceChange(PositionsPreferenceKey.self) { positionsPreference in
+                guard let arrangement = self.arrangement else {
+                    return
                 }
-                .transformPreference(PositionsPreferenceKey.self) { positionPreference in
-                    guard let arrangement = self.arrangement else {
-                        positionPreference = PositionsPreference.default
-                        return
+                let newPositions = self.reposition(positionsPreference,
+                                                   arrangement: arrangement,
+                                                   boundingSize: self.corrected(size: mainGeometry.size),
+                                                   tracks: self.trackSizes,
+                                                   contentMode: self.contentMode,
+                                                   flow: self.flow)
+                
+                if self.positions.items.isEmpty {
+                    self.positions = newPositions
+                } else {
+                    DispatchQueue.main.async {
+                        self.positions = newPositions
                     }
-                    positionPreference = self.reposition(positionPreference,
-                                                         arrangement: arrangement,
-                                                         boundingSize: self.corrected(size: mainGeometry.size),
-                                                         tracks: self.trackSizes,
-                                                         contentMode: self.contentMode,
-                                                         flow: self.flow)
-            }
-        }
-        .transformPreference(SpansPreferenceKey.self) { preference in
-            preference = preference.filter { $0.item != nil }
-        }
-        .transformPreference(StartPreferenceKey.self) { preference in
-            preference = preference.filter { $0.item != nil }
-        }
-        .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
-            self.spanPreferences = spanPreferences
-        }
-        .onPreferenceChange(StartPreferenceKey.self) { startPreferences in
-            guard !startPreferences.isEmpty, !self.spanPreferences.isEmpty else { return }
-            self.calculateArrangement(spans: self.spanPreferences, starts: startPreferences)
-        }
-        .onPreferenceChange(PositionsPreferenceKey.self) { positionsPreference in
-            if self.positions.items.isEmpty {
-                self.positions = positionsPreference
-            } else {
-                DispatchQueue.main.async {
-                    self.positions = positionsPreference
                 }
             }
         }
+        
     }
     
     private func corrected(size: CGSize) -> CGSize {
@@ -108,7 +122,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
         return self.flow == .rows ? .vertical : .horizontal
     }
 
-    private func calculateArrangement(spans: [SpanPreference], starts: [StartPreference]) {
+    private func calculateArrangement(spans: [SpanPreference], starts: StartPreference) {
         let calculatedLayout = self.arrange(spanPreferences: spans,
                                             startPreferences: starts,
                                             fixedTracksCount: self.trackSizes.count,

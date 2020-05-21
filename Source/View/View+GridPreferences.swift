@@ -21,8 +21,7 @@ extension View {
     public func gridStart(column: Int? = nil, row: Int? = nil) -> some View {
         preference(
             key: StartPreferenceKey.self,
-            value: [StartPreference(start: GridStart(column: column,
-                                                     row: row))])
+            value: StartPreference(starts: [.init(item: nil, start: GridStart(column: column, row: row))]))
     }
     
     public func gridCellOverlay<Content: View>(

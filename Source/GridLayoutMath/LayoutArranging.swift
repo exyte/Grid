@@ -17,13 +17,13 @@ protocol LayoutArranging {
     ///   - fixedTracksCount: Total count of fixed tracks in grid view
     ///   - flow: Distribution order of grid items
     ///   - packing: Defines placement algorithm
-    func arrange(spanPreferences: [SpanPreference], startPreferences: [StartPreference], fixedTracksCount: Int, flow: GridFlow, packing: GridPacking) -> LayoutArrangement
+    func arrange(spanPreferences: [SpanPreference], startPreferences: StartPreference, fixedTracksCount: Int, flow: GridFlow, packing: GridPacking) -> LayoutArrangement
 }
 
 extension LayoutArranging {
     private typealias ArrangementInfo = (item: GridItem, span: GridSpan, start: GridStart)
     
-    func arrange(spanPreferences: [SpanPreference], startPreferences: [StartPreference],
+    func arrange(spanPreferences: [SpanPreference], startPreferences: StartPreference,
                  fixedTracksCount: Int, flow: GridFlow, packing: GridPacking) -> LayoutArrangement {
         guard fixedTracksCount > 0 else { return .zero }
             
@@ -31,23 +31,21 @@ extension LayoutArranging {
         var occupiedIndices: [GridIndex] = []
         var growingTracksCount = 0
 
-        var items: [(item: GridItem, span: GridSpan, start: GridStart)] =
+        var items: [ArrangementInfo] =
             spanPreferences.compactMap { spanPreference in
-                guard let gridItem = spanPreference.item,
-                    let gridStart = startPreferences.first(where: { $0.item == spanPreference.item })?.start
-                else {
+                guard let gridItem = spanPreference.item else {
                     return nil
                 }
                 var correctedSpan = spanPreference.span
                 correctedSpan[keyPath: flow.spanIndex(.fixed)] = min(fixedTracksCount, correctedSpan[keyPath: flow.spanIndex(.fixed)])
                 
-                var correctedStart = gridStart
+                var gridStart = startPreferences.starts.first(where: { $0.item == spanPreference.item })?.start ?? .default
                 if let fixedStart = gridStart[keyPath: flow.startIndex(.fixed)],
                     fixedStart > fixedTracksCount {
                     print("Warning: grid item start \(gridStart) exceeds fixed tracks count: \(fixedTracksCount)")
-                    correctedStart[keyPath: flow.startIndex(.fixed)] = nil
+                    gridStart[keyPath: flow.startIndex(.fixed)] = nil
                 }
-                return (gridItem, correctedSpan, correctedStart)
+                return (gridItem, correctedSpan, gridStart)
         }
         
         arrangedItems += self.arrangeFullyFrozenItems(&items,

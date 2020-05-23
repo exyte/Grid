@@ -17,29 +17,32 @@ protocol LayoutArranging {
     ///   - fixedTracksCount: Total count of fixed tracks in grid view
     ///   - flow: Distribution order of grid items
     ///   - packing: Defines placement algorithm
-    func arrange(spanPreferences: [SpanPreference], startPreferences: StartPreference, fixedTracksCount: Int, flow: GridFlow, packing: GridPacking) -> LayoutArrangement
+    func arrange(preferences: ArrangingPreference) -> LayoutArrangement
 }
 
 extension LayoutArranging {
     private typealias ArrangementInfo = (item: GridItem, span: GridSpan, start: GridStart)
     
-    func arrange(spanPreferences: [SpanPreference], startPreferences: StartPreference,
-                 fixedTracksCount: Int, flow: GridFlow, packing: GridPacking) -> LayoutArrangement {
+    func arrange(preferences: ArrangingPreference) -> LayoutArrangement {
+        let fixedTracksCount = preferences.tracks.count
         guard fixedTracksCount > 0 else { return .zero }
-            
+        let flow = preferences.flow
+        let packing = preferences.packing
+        let spanPreferences = preferences.spans
+        let startPreferences = preferences.starts
         var arrangedItems: [ArrangedItem] = []
         var occupiedIndices: [GridIndex] = []
         var growingTracksCount = 0
 
         var items: [ArrangementInfo] =
-            spanPreferences.compactMap { spanPreference in
-                guard let gridItem = spanPreference.item else {
+            spanPreferences.items.compactMap { spanPreference in
+                guard let gridItem = spanPreference.gridItem else {
                     return nil
                 }
                 var correctedSpan = spanPreference.span
                 correctedSpan[keyPath: flow.spanIndex(.fixed)] = min(fixedTracksCount, correctedSpan[keyPath: flow.spanIndex(.fixed)])
                 
-                var gridStart = startPreferences.starts.first(where: { $0.item == spanPreference.item })?.start ?? .default
+                var gridStart = startPreferences.items.first(where: { $0.gridItem == spanPreference.gridItem })?.start ?? .default
                 if let fixedStart = gridStart[keyPath: flow.startIndex(.fixed)],
                     fixedStart > fixedTracksCount {
                     print("Warning: grid item start \(gridStart) exceeds fixed tracks count: \(fixedTracksCount)")

@@ -9,20 +9,12 @@
 import SwiftUI
 
 struct StartPreference: Equatable {
-    struct Starts: Equatable {
-        var item: GridItem?
+    struct Element: Equatable {
+        var gridItem: GridItem?
         var start = GridStart.default
     }
-    
-    struct Environment: Equatable {
-        var tracks: [GridTrack]
-        var flow: GridFlow
-        var packing: GridPacking
-        var spans: [SpanPreference]
-    }
-    
-    var starts: [Starts]
-    var environment: Environment?
+
+    var items: [Element]
 }
 
 struct StartPreferenceKey: PreferenceKey {
@@ -30,8 +22,7 @@ struct StartPreferenceKey: PreferenceKey {
 
     static func reduce(value: inout StartPreference?, nextValue: () -> StartPreference?) {
         if let nextValue = nextValue() {
-            value = StartPreference(starts: (value?.starts ?? []) + nextValue.starts, environment: nextValue.environment)
+            value = StartPreference(items: (value?.items ?? []) + nextValue.items)
         }
-        
     }
 }

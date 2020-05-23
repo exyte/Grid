@@ -14,14 +14,19 @@ extension View {
     ) -> some View {
         preference(
             key: SpansPreferenceKey.self,
-            value: [SpanPreference(span: GridSpan(column: column,
-                                                  row: row))])
+            value: SpanPreference(items: [
+                .init(gridItem: nil,
+                      span: GridSpan(column: column, row: row))])
+        )
     }
     
     public func gridStart(column: Int? = nil, row: Int? = nil) -> some View {
         preference(
             key: StartPreferenceKey.self,
-            value: StartPreference(starts: [.init(item: nil, start: GridStart(column: column, row: row))]))
+            value: StartPreference(items: [
+                .init(gridItem: nil,
+                      start: GridStart(column: column, row: row))])
+        )
     }
     
     public func gridCellOverlay<Content: View>(

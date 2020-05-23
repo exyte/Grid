@@ -15,7 +15,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
     @State var starts: StartPreference?
     @State var positions: PositionsPreference = .default
     @State var lastArrangingPreferences: ArrangingPreference?
-    @State var isHidden: Bool = true
+    @State var isLoaded: Bool = false
     @Environment(\.gridContentMode) private var environmentContentMode
     @Environment(\.gridFlow) private var environmentFlow
     @Environment(\.gridPacking) private var environmentPacking
@@ -63,9 +63,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                                 }
                             }
                             .padding(spacing: self.spacing)
-                            .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
-                                PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: nil)
-                            }
+                            .background(self.positionsPreferencesSetter(item: item))
                             .frame(flow: self.flow,
                                    size: self.positions[item]?.bounds.size,
                                    contentMode: self.contentMode)
@@ -141,12 +139,10 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                                                    tracks: self.trackSizes,
                                                    contentMode: self.contentMode,
                                                    flow: self.flow)
-                self.isHidden = false
+                self.isLoaded = true
             }
-            
-
         }
-        .opacity(self.isHidden ? 0 : 1)
+        .opacity(self.isLoaded ? 1 : 0)
     }
     
     private func corrected(size: CGSize) -> CGSize {
@@ -174,6 +170,18 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
         .padding(spacing: self.spacing)
         .frame(width: self.positions[item]?.bounds.width,
                height: self.positions[item]?.bounds.height)
+    }
+    
+    private func positionsPreferencesSetter(item: GridItem) -> some View {
+        GeometryReader { geometry in
+            Color.clear
+                .preference(key: PositionsPreferenceKey.self,
+                            value: PositionsPreference(items: [
+                                PositionedItem(bounds: CGRect(origin: .zero, size: geometry.size),
+                                               gridItem: item)],
+                                                       size: nil)
+            )
+        }
     }
 }
 

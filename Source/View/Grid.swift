@@ -16,13 +16,29 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
     @State var positions: PositionsPreference = .default
     @State var lastArrangingPreferences: ArrangingPreference?
     @State var isHidden: Bool = true
-    @Environment(\.gridContentMode) private var contentMode
-    @Environment(\.gridFlow) private var flow
-    @Environment(\.gridPacking) private var packing
+    @Environment(\.gridContentMode) private var environmentContentMode
+    @Environment(\.gridFlow) private var environmentFlow
+    @Environment(\.gridPacking) private var environmentPacking
     
     let items: [GridItem]
     let spacing: GridSpacing
     let trackSizes: [GridTrack]
+    
+    var internalFlow: GridFlow?
+    var internalPacking: GridPacking?
+    var internalContentMode: GridContentMode?
+
+    private var flow: GridFlow {
+        self.internalFlow ?? self.environmentFlow ?? Constants.defaultFlow
+    }
+    
+    private var packing: GridPacking {
+        self.internalPacking ?? self.environmentPacking ?? Constants.defaultPacking
+    }
+    
+    private var contentMode: GridContentMode {
+        self.internalContentMode ?? self.environmentContentMode ?? Constants.defaultContentMode
+    }
 
     public var body: some View {
         return GeometryReader { mainGeometry in

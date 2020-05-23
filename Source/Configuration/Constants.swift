@@ -14,4 +14,7 @@ public struct Constants {
     public static let defaultRowSpan = 1
     public static let defaultSpacing: GridSpacing = 5.0
     public static let defaultFractionSize = 1.0 as CGFloat
+    public static let defaultContentMode: GridContentMode = .fill
+    public static let defaultFlow: GridFlow = .rows
+    public static let defaultPacking: GridPacking = .sparse
 }

@@ -44,7 +44,7 @@ extension LayoutArranging {
                 
                 var gridStart = startPreferences.items.first(where: { $0.gridItem == spanPreference.gridItem })?.start ?? .default
                 if let fixedStart = gridStart[keyPath: flow.startIndex(.fixed)],
-                    fixedStart > fixedTracksCount {
+                    fixedStart > fixedTracksCount - 1 {
                     print("Warning: grid item start \(gridStart) exceeds fixed tracks count: \(fixedTracksCount)")
                     gridStart[keyPath: flow.startIndex(.fixed)] = nil
                 }

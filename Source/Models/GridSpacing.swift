@@ -12,6 +12,11 @@ public struct GridSpacing {
     let horizontal: CGFloat
     let vertical: CGFloat
     static let zero = GridSpacing(horizontal: 0, vertical: 0)
+    
+    public init(horizontal: CGFloat, vertical: CGFloat) {
+        self.horizontal = horizontal
+        self.vertical = vertical
+    }
 }
 
 extension GridSpacing: ExpressibleByFloatLiteral {

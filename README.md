@@ -22,26 +22,26 @@ ___
 
 ## Features
 - **Track sizes:**
- -  Flexible *.fr(...)*
- -  Constant *.pt(...)*
- - Content fitting *.fit*
+  -  Flexible *.fr(...)*
+  -  Constant *.pt(...)*
+  - Content fitting *.fit*
 - **Spanning grid items:**
- - by rows
- - by columns
+  - by rows
+  - by columns
 - **Automatic items positioning**
 - **Explicit items positions specifying:**
- - start row
- - start column
- - both
+  - start row
+  - start column
+  - both
 - **Flow direction:**
- - by rows
- - by columns
+  - by rows
+  - by columns
 - **Packing mode:**
- - sparse
- - dense
+  - sparse
+  - dense
 - **Content mode:**
- - Fit to a container
- - Scrollable content
+  - Fit to a container
+  - Scrollable content
 - Vertical and horizontal spacing
 - ForEach support
 - Content updates can be animated
@@ -55,7 +55,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 ### 1. Initialization
 You can instantiate grid by different ways:
 1. Just specify tracks and your views inside ViewBuilder closure:
-````swift
+```swift
 Grid(tracks: 3) {
 		ColorView(.blue)
 		ColorView(.purple)
@@ -66,19 +66,19 @@ Grid(tracks: 3) {
 }
 ```
 2. Use Range:
-````swift
+```swift
 Grid(0..<6, tracks: 3) { _ in
 		ColorView(.random)
 }
 ```
 3. Use Identifiable enitites:
-````swift
+```swift
 Grid(colorModels, tracks: 3) {
 		ColorView($0)
 }
 ```
 4. Use explicitly defined ID:
-````swift
+```swift
 Grid(colorModels, id: \.self, tracks: 3) {
 		ColorView($0)
 }
@@ -109,7 +109,7 @@ Number of views in ViewBuilder closure is limited to 10. It's impossible to obta
 There are 3 types of track sizes that you could mix with each other:
 ##### Fixed-sized track: 
 `.pt(N)` where N - points count. 
-````swift
+```swift
 Grid(tracks: [.pt(50), .pt(200), .pt(100)]) {
     ColorView(.blue)
     ColorView(.purple)
@@ -121,7 +121,7 @@ Grid(tracks: [.pt(50), .pt(200), .pt(100)]) {
 ```
 ##### Content-based size: *.fit*
 Defines the track size as a maximum of the content sizes of every item in track
-````swift
+```swift
 Grid(0..<6, tracks: [.fit, .fit, .fit]) {
     ColorView(.random)
         .frame(maxWidth: 50 + 15 * CGFloat($0))
@@ -130,7 +130,7 @@ Grid(0..<6, tracks: [.fit, .fit, .fit]) {
 
 ##### Flexible sized track: `.fr(N)`
 Fr is a fractional unit and `.fr(1)` is for 1 part of the unassigned space in the grid. Flexible-sized tracks are computed at the very end after all non-flexible sized tracks (`.pt` and `.fit`). So the available space for them to distribute is the difference of the total size available and the sum of non-flexible track sizes.
-````swift
+```swift
 Grid(tracks: [.pt(100), .fr(1), .fr(2.5)]) {
     ColorView(.blue)
     ColorView(.purple)
@@ -142,11 +142,11 @@ Grid(tracks: [.pt(100), .fr(1), .fr(2.5)]) {
 ```
 
 Also you could specify just an Int literal as a track size. It's equal to repeating `.fr(1)` track sizes:
-````swift
+```swift
 Grid(tracks: 3) { ... }
 ```
 is equal to:
-````swift
+```swift
 Grid(tracks: [.fr(1), .fr(1), .fr(1)]) { ... }
 ```
 
@@ -155,7 +155,7 @@ When using non-flexible track sizes it's possible the extra space to be allocate
 
 ### 5. Spans
 Every grid item may span across the provided number of grid tracks. You can achieve it using `.gridSpan(column: row:)` modifier. The default span is 1.
-````swift
+```swift
 Grid(tracks: [.fr(1), .pt(150), .fr(2)]) {
     ColorView(.blue)
         .gridSpan(column: 2)
@@ -174,7 +174,7 @@ Grid(tracks: [.fr(1), .pt(150), .fr(2)]) {
 More complex example:
 
 
-````swift
+```swift
 Grid(tracks: [.fr(1), .fit, .fit], spacing: 10) {
     TextBox(text: self.placeholderText, color: .red)
     

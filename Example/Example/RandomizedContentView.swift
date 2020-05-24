@@ -77,7 +77,7 @@ struct RandomizedContentView: View {
     
     var mode: Mode = .fill
     
-    let firstGridTracks: [GridTrack] = [.fitContent, .fitContent, .fr(1)]
+    let firstGridTracks: [GridTrack] = [.fit, .fit, .fr(1)]
     let secondGridTracks: [GridTrack] = 6
     
     var body: some View {
@@ -90,7 +90,7 @@ struct RandomizedContentView: View {
                 }
                 .gridContentMode(.scroll)
             } else {
-                Grid(0..<6, tracks: secondGridTracks, spacing: 0) { _ in
+                Grid(0..<6, tracks: secondGridTracks, spacing: 4) { _ in
                     VCardView()
                         .gridSpan(column: self.randomSpan(2),
                                   row: self.randomSpan(2))

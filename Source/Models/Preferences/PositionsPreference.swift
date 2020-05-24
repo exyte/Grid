@@ -12,7 +12,17 @@ struct PositionsPreference: Equatable {
     let items: [PositionedItem]
     let size: CGSize?
     
-    static let `default` = PositionsPreference(items: [], size: nil)
+    struct Environment: Equatable {
+        var arrangement: LayoutArrangement
+        var boundingSize: CGSize
+        var tracks: [GridTrack]
+        var contentMode: GridContentMode
+        var flow: GridFlow
+    }
+
+    var environment: Environment?
+    
+    static let `default` = PositionsPreference(items: [], size: nil, environment: nil)
     
     subscript(gridItem: GridItem) -> PositionedItem? {
         items.first(where: { $0.gridItem == gridItem })
@@ -27,6 +37,6 @@ struct PositionsPreferenceKey: PreferenceKey {
     static var defaultValue = PositionsPreference.default
 
     static func reduce(value: inout PositionsPreference, nextValue: () -> PositionsPreference) {
-        value = PositionsPreference(items: value.items + nextValue().items, size: value.size)
+        value = PositionsPreference(items: value.items + nextValue().items, size: value.size, environment: nextValue().environment)
     }
 }

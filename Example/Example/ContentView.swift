@@ -39,7 +39,7 @@ struct TextBox: View {
 
 struct ContentView: View {
     var body: some View {
-        Grid(tracks: [.const(50), .fr(1), .fr(1.5), .fitContent], spacing: [5, 10]) {
+        Grid(tracks: [.pt(50), .fr(1), .fr(1.5), .fit], spacing: [5, 10]) {
             
             ForEach(0..<6) { _ in
                 Color.black

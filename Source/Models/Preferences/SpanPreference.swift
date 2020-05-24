@@ -8,17 +8,21 @@
 
 import SwiftUI
 
-struct SpanPreference: Equatable, GridItemContaining {
-    var item: GridItem?
-    var span = GridSpan.default
-
-    static let `default` = SpanPreference()
+struct SpanPreference: Equatable {
+    struct Element: Equatable {
+        var gridItem: GridItem?
+        var span = GridSpan.default
+    }
+    
+    var items: [Element]
 }
 
 struct SpansPreferenceKey: PreferenceKey {
-    static var defaultValue = [SpanPreference()]
+    static var defaultValue: SpanPreference? = nil
 
-    static func reduce(value: inout [SpanPreference], nextValue: () -> [SpanPreference]) {
-        value.append(contentsOf: nextValue())
+    static func reduce(value: inout SpanPreference?, nextValue: () -> SpanPreference?) {
+        if let nextValue = nextValue() {
+            value = SpanPreference(items: (value?.items ?? []) + nextValue.items)
+        }
     }
 }

@@ -10,27 +10,23 @@ import SwiftUI
 
 //Single ForEach init
 extension Grid {
-    public init(tracks: [GridTrack], spacing: GridSpacing = Constants.defaultSpacing, @ViewBuilder content: () -> ForEach<Range<Int>, Int, Content>) {
+    public init(tracks: [GridTrack], contentMode: GridContentMode = Constants.defaultContentMode, flow: GridFlow = Constants.defaultFlow, packing: GridPacking = Constants.defaultPacking, spacing: GridSpacing = Constants.defaultSpacing, @ViewBuilder content: () -> ForEach<Range<Int>, Int, Content>) {
         self.trackSizes = tracks
         self.spacing = spacing
+        self.internalContentMode = contentMode
+        self.internalFlow = flow
+        self.internalPacking = packing
         self.items =
             content().data.enumerated().map { GridItem(AnyView(content().content($0.element)), id: AnyHashable(($0.offset))) }
     }
     
-    public init<Data>(tracks: [GridTrack], spacing: GridSpacing = Constants.defaultSpacing, @ViewBuilder content: () -> ForEach<Data, Data.Element.ID, Content>) where Data: RandomAccessCollection, Data.Element: Identifiable {
+    public init<Data>(tracks: [GridTrack], contentMode: GridContentMode = Constants.defaultContentMode, flow: GridFlow = Constants.defaultFlow, packing: GridPacking = Constants.defaultPacking, spacing: GridSpacing = Constants.defaultSpacing, @ViewBuilder content: () -> ForEach<Data, Data.Element.ID, Content>) where Data: RandomAccessCollection, Data.Element: Identifiable {
         self.trackSizes = tracks
         self.spacing = spacing
+        self.internalContentMode = contentMode
+        self.internalFlow = flow
+        self.internalPacking = packing
         self.items =
-            content().data.enumerated().map { GridItem(AnyView(content().content($0.element)), id: AnyHashable(($0.offset))) }
+            content().data.enumerated().map { GridItem(AnyView(content().content($0.element)), id: AnyHashable($0.element.id)) }
     }
-    
-    // TODO: Fix this init
-//    public init<Data: RandomAccessCollection, ID>(_ data: Data, tracks: [TrackSize], spacing: CGFloat = Constants.defaultSpacing, @ViewBuilder content: () -> ForEach<Data, ID, Content>) {
-//        self.trackSizes = tracks
-//        self.tracksCount = self.trackSizes.count
-//        self.spacing = spacing
-//        self.items =
-//            content().data.enumerated().map { GridItem(AnyView(content().content($0.element)), id: AnyHashable(($0.offset))) }
-//    }
-
 }

@@ -24,17 +24,17 @@ extension View {
 }
 
 extension EnvironmentValues {
-    var gridContentMode: GridContentMode {
+    var gridContentMode: GridContentMode? {
         get { self[EnvironmentKeys.ContentMode.self] }
         set { self[EnvironmentKeys.ContentMode.self] = newValue }
     }
     
-    var gridFlow: GridFlow {
+    var gridFlow: GridFlow? {
         get { self[EnvironmentKeys.Flow.self] }
         set { self[EnvironmentKeys.Flow.self] = newValue }
     }
     
-    var gridPacking: GridPacking {
+    var gridPacking: GridPacking? {
         get { self[EnvironmentKeys.Packing.self] }
         set { self[EnvironmentKeys.Packing.self] = newValue }
     }
@@ -42,14 +42,14 @@ extension EnvironmentValues {
 
 struct EnvironmentKeys {
     struct ContentMode: EnvironmentKey {
-        static let defaultValue = GridContentMode.fill
+        static let defaultValue: GridContentMode? = nil
     }
 
     struct Flow: EnvironmentKey {
-        static let defaultValue = GridFlow.rows
+        static let defaultValue: GridFlow? = nil
     }
     
     struct Packing: EnvironmentKey {
-        static let defaultValue = GridPacking.sparse
+        static let defaultValue: GridPacking? = nil
     }
 }

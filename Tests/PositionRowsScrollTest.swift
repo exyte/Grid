@@ -46,7 +46,7 @@ class PositionRowsScrollTest: XCTestCase {
         let positions = self.positioner.reposition(position,
                                                    arrangement: arrangement,
                                                    boundingSize: CGSize(width: 375.0, height: 647.0),
-                                                   tracks: [.fr(1), .fitContent, .fitContent],
+                                                   tracks: [.fr(1), .fit, .fit],
                                                    contentMode: .scroll,
                                                    flow: .columns)
         
@@ -93,7 +93,7 @@ class PositionRowsScrollTest: XCTestCase {
         let positions = self.positioner.reposition(position,
                                                    arrangement: arrangement,
                                                    boundingSize: CGSize(width: 375.0, height: 647.0),
-                                                   tracks: [.fr(1), .fitContent, .fitContent],
+                                                   tracks: [.fr(1), .fit, .fit],
                                                    contentMode: .scroll,
                                                    flow: .columns)
         

@@ -11,15 +11,34 @@ import SwiftUI
 public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Content: View {
     
     @State var arrangement: LayoutArrangement?
+    @State var spans: SpanPreference?
+    @State var starts: StartPreference?
     @State var positions: PositionsPreference = .default
-    @State var spanPreferences: [SpanPreference] = []
-    @Environment(\.gridContentMode) private var contentMode
-    @Environment(\.gridFlow) private var flow
-    @Environment(\.gridPacking) private var packing
+    @State var lastArrangingPreferences: ArrangingPreference?
+    @State var isLoaded: Bool = false
+    @Environment(\.gridContentMode) private var environmentContentMode
+    @Environment(\.gridFlow) private var environmentFlow
+    @Environment(\.gridPacking) private var environmentPacking
     
     let items: [GridItem]
     let spacing: GridSpacing
     let trackSizes: [GridTrack]
+    
+    var internalFlow: GridFlow?
+    var internalPacking: GridPacking?
+    var internalContentMode: GridContentMode?
+
+    private var flow: GridFlow {
+        self.internalFlow ?? self.environmentFlow ?? Constants.defaultFlow
+    }
+    
+    private var packing: GridPacking {
+        self.internalPacking ?? self.environmentPacking ?? Constants.defaultPacking
+    }
+    
+    private var contentMode: GridContentMode {
+        self.internalContentMode ?? self.environmentContentMode ?? Constants.defaultContentMode
+    }
 
     public var body: some View {
         return GeometryReader { mainGeometry in
@@ -28,15 +47,23 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                     ForEach(self.items) { item in
                         item.view
                             .transformPreference(SpansPreferenceKey.self) { preference in
-                                preference.shrinkToLast(assigning: item)
+                                if var lastItem = preference?.items.last  {
+                                    lastItem.gridItem = item
+                                    preference?.items = [lastItem]
+                                } else {
+                                    preference = SpanPreference(items: [.init(gridItem: item)])
+                                }
                             }
                             .transformPreference(StartPreferenceKey.self) { preference in
-                                preference.shrinkToLast(assigning: item)
+                                if var lastItem = preference?.items.last {
+                                    lastItem.gridItem = item
+                                    preference?.items = [lastItem]
+                                } else {
+                                    preference = StartPreference(items: [.init(gridItem: item)])
+                                }
                             }
-                            .padding(item: self.arrangement?[item], spacing: self.spacing)
-                            .anchorPreference(key: PositionsPreferenceKey.self, value: .bounds) {
-                                PositionsPreference(items: [PositionedItem(bounds: mainGeometry[$0], gridItem: item)], size: nil)
-                            }
+                            .padding(spacing: self.spacing)
+                            .background(self.positionsPreferencesSetter(item: item))
                             .frame(flow: self.flow,
                                    size: self.positions[item]?.bounds.size,
                                    contentMode: self.contentMode)
@@ -58,42 +85,69 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                        minHeight: self.positions.size?.height,
                        maxHeight: .infinity,
                        alignment: .topLeading)
+            }
+            .transformPreference(ArrangingPreferenceKey.self) { preference in
+                guard let starts = self.starts, let spans = self.spans else {
+                    preference = nil
+                    return
                 }
-                .transformPreference(PositionsPreferenceKey.self) { positionPreference in
-                    guard let arrangement = self.arrangement else {
-                        positionPreference = PositionsPreference.default
-                        return
-                    }
-                    positionPreference = self.reposition(positionPreference,
-                                                         arrangement: arrangement,
-                                                         boundingSize: mainGeometry.size,
-                                                         tracks: self.trackSizes,
-                                                         contentMode: self.contentMode,
-                                                         flow: self.flow)
+                preference = ArrangingPreference(gridItems: self.items,
+                                                 starts: starts,
+                                                 spans: spans,
+                                                 tracks: self.trackSizes,
+                                                 flow: self.flow,
+                                                 packing: self.packing)
+            }
+            .transformPreference(PositionsPreferenceKey.self) { preference in
+                guard let arrangement = self.arrangement else { return }
+                preference.environment = .init(arrangement: arrangement,
+                                               boundingSize: self.corrected(size: mainGeometry.size),
+                                               tracks: self.trackSizes,
+                                               contentMode: self.contentMode,
+                                               flow: self.flow)
+            }
+
+            .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
+                self.spans = spanPreferences
+            }
+            .onPreferenceChange(StartPreferenceKey.self) { startPreferences in
+                self.starts = startPreferences
+            }
+            .onPreferenceChange(ArrangingPreferenceKey.self) { arrangingPreferences in
+                guard
+                    arrangingPreferences != nil,
+                    let starts = self.starts,
+                    let spans = self.spans
+                else {
+                    return
+                }
+                let preferences = ArrangingPreference(gridItems: self.items,
+                                                      starts: starts,
+                                                      spans: spans,
+                                                      tracks: self.trackSizes,
+                                                      flow: self.flow,
+                                                      packing: self.packing)
+                guard preferences != self.lastArrangingPreferences else { return }
+                self.lastArrangingPreferences = preferences
+                self.calculateArrangement(preferences: preferences)
+            }
+            .onPreferenceChange(PositionsPreferenceKey.self) { positionsPreference in
+                guard let arrangement = self.arrangement else { return }
+                self.positions = self.reposition(positionsPreference,
+                                                   arrangement: arrangement,
+                                                   boundingSize: self.corrected(size: mainGeometry.size),
+                                                   tracks: self.trackSizes,
+                                                   contentMode: self.contentMode,
+                                                   flow: self.flow)
+                self.isLoaded = true
             }
         }
-        .transformPreference(SpansPreferenceKey.self) { preference in
-            preference = preference.filter { $0.item != nil }
-        }
-        .transformPreference(StartPreferenceKey.self) { preference in
-            preference = preference.filter { $0.item != nil }
-        }
-        .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
-            self.spanPreferences = spanPreferences
-        }
-        .onPreferenceChange(StartPreferenceKey.self) { startPreferences in
-            guard !startPreferences.isEmpty, !self.spanPreferences.isEmpty else { return }
-            self.calculateArrangement(spans: self.spanPreferences, starts: startPreferences)
-        }
-        .onPreferenceChange(PositionsPreferenceKey.self) { positionsPreference in
-            if self.positions.items.isEmpty {
-                self.positions = positionsPreference
-            } else {
-                DispatchQueue.main.async {
-                    self.positions = positionsPreference
-                }
-            }
-        }
+        .opacity(self.isLoaded ? 1 : 0)
+    }
+    
+    private func corrected(size: CGSize) -> CGSize {
+        return CGSize(width: size.width - self.spacing.horizontal,
+                      height: size.height - self.spacing.vertical)
     }
     
     private var scrollAxis: Axis.Set {
@@ -103,12 +157,8 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
         return self.flow == .rows ? .vertical : .horizontal
     }
 
-    private func calculateArrangement(spans: [SpanPreference], starts: [StartPreference]) {
-        let calculatedLayout = self.arrange(spanPreferences: spans,
-                                            startPreferences: starts,
-                                            fixedTracksCount: self.trackSizes.count,
-                                            flow: self.flow,
-                                            packing: self.packing)
+    private func calculateArrangement(preferences: ArrangingPreference) {
+        let calculatedLayout = self.arrange(preferences: preferences)
         self.arrangement = calculatedLayout
         print(calculatedLayout)
     }
@@ -117,9 +167,21 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
         GeometryReader { geometry in
             preference.content(geometry.size)
         }
-        .padding(item: self.arrangement?[item], spacing: self.spacing)
+        .padding(spacing: self.spacing)
         .frame(width: self.positions[item]?.bounds.width,
                height: self.positions[item]?.bounds.height)
+    }
+    
+    private func positionsPreferencesSetter(item: GridItem) -> some View {
+        GeometryReader { geometry in
+            Color.clear
+                .preference(key: PositionsPreferenceKey.self,
+                            value: PositionsPreference(items: [
+                                PositionedItem(bounds: CGRect(origin: .zero, size: geometry.size),
+                                               gridItem: item)],
+                                                       size: nil)
+            )
+        }
     }
 }
 
@@ -140,24 +202,13 @@ extension View {
         return frame(width: width, height: height)
     }
     
-    fileprivate func padding(item: ArrangedItem?, spacing: GridSpacing) -> some View {
+    fileprivate func padding(spacing: GridSpacing) -> some View {
         var edgeInsets = EdgeInsets()
-        guard let arrangedItem = item else { return self.padding(edgeInsets) }
-        if arrangedItem.startIndex.row != 0 {
-            edgeInsets.top = spacing.vertical
-        }
-        if arrangedItem.startIndex.column != 0 {
-            edgeInsets.leading = spacing.horizontal
-        }
+        edgeInsets.top = spacing.vertical / 2
+        edgeInsets.bottom = spacing.vertical / 2
+        edgeInsets.leading = spacing.horizontal / 2
+        edgeInsets.trailing = spacing.horizontal / 2
         return self.padding(edgeInsets)
-    }
-}
-
-extension Array where Element: GridItemContaining {
-    fileprivate mutating func shrinkToLast(assigning item: GridItem) {
-        guard var lastPreference = self.last else { return }
-        lastPreference.item = item
-        self = [lastPreference]
     }
 }
 

@@ -15,8 +15,8 @@ import CoreGraphics
 /// const(N) sizes a track to be equal to the specified size N.
 public enum GridTrack {
     case fr(CGFloat)
-    case const(CGFloat)
-    case fitContent
+    case pt(CGFloat)
+    case fit
     
     // TODO: Add .min(Int)
     
@@ -24,9 +24,9 @@ public enum GridTrack {
         switch self {
         case .fr:
             return false
-        case .const:
+        case .pt:
             return false
-        case .fitContent:
+        case .fit:
             return true
         }
     }
@@ -35,9 +35,9 @@ public enum GridTrack {
         switch self {
         case .fr:
             return true
-        case .const:
+        case .pt:
             return false
-        case .fitContent:
+        case .fit:
             return false
         }
     }
@@ -49,3 +49,5 @@ extension Array: ExpressibleByIntegerLiteral where Element == GridTrack {
         self = .init(repeating: .fr(Constants.defaultFractionSize), count: value)
     }
 }
+
+extension GridTrack: Equatable { }

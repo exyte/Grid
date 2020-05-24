@@ -8,17 +8,21 @@
 
 import SwiftUI
 
-struct StartPreference: Equatable, GridItemContaining {
-    var item: GridItem?
-    var start = GridStart.default
+struct StartPreference: Equatable {
+    struct Element: Equatable {
+        var gridItem: GridItem?
+        var start = GridStart.default
+    }
 
-    static let `default` = StartPreference()
+    var items: [Element]
 }
 
 struct StartPreferenceKey: PreferenceKey {
-    static var defaultValue = [StartPreference()]
+    static var defaultValue: StartPreference? = nil
 
-    static func reduce(value: inout [StartPreference], nextValue: () -> [StartPreference]) {
-        value.append(contentsOf: nextValue())
+    static func reduce(value: inout StartPreference?, nextValue: () -> StartPreference?) {
+        if let nextValue = nextValue() {
+            value = StartPreference(items: (value?.items ?? []) + nextValue.items)
+        }
     }
 }

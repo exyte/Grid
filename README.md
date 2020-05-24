@@ -1,4 +1,4 @@
-<img src="https://github.com/exyte/Grid/blob/master/Assets/header.png">
+<img src="https://github.com/exyte/Grid/raw/media/Assets/header.png">
 
 <p><h1 align="left">Grid</h1></p>
 
@@ -22,9 +22,9 @@ ___
 
 ## Features
 - **Track sizes:**
-  -  Flexible *.fr(...)*
-  -  Constant *.pt(...)*
-  - Content fitting *.fit*
+  -  Flexible `.fr(...)`
+  -  Constant `.pt(...)`
+  - Content fitting `.fit`
 - **Spanning grid items:**
   - by rows
   - by columns
@@ -53,6 +53,9 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## How to use
 ### 1. Initialization
+
+<img width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/3-equal-fr-tracks.png"/>
+
 You can instantiate grid by different ways:
 1. Just specify tracks and your views inside ViewBuilder closure:
 ```swift
@@ -65,18 +68,21 @@ Grid(tracks: 3) {
 		ColorView(.orange)
 }
 ```
+
 2. Use Range:
 ```swift
 Grid(0..<6, tracks: 3) { _ in
 		ColorView(.random)
 }
 ```
+
 3. Use Identifiable enitites:
 ```swift
 Grid(colorModels, tracks: 3) {
 		ColorView($0)
 }
 ```
+
 4. Use explicitly defined ID:
 ```swift
 Grid(colorModels, id: \.self, tracks: 3) {
@@ -100,6 +106,9 @@ Grid(tracks: 4) {
     ColorView(.green)
 }
 ```
+
+<img width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/forEach-1.png"/>
+
 ##### GridGroup
 Number of views in ViewBuilder closure is limited to 10. It's impossible to obtain content views from regular SwiftUI `Group` view. To exceed that limit you could use `GridGroup`. Every view in GridGroup is placed as a separate grid item. Unlike the `Group` view any modifications of `GridView` are not applied to the descendant views. So it's just an enumerable container.
 
@@ -119,7 +128,9 @@ Grid(tracks: [.pt(50), .pt(200), .pt(100)]) {
     ColorView(.orange)
 }
 ```
-##### Content-based size: *.fit*
+<img width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/3-const-tracks.png"/>
+
+##### Content-based size: `.fit`
 Defines the track size as a maximum of the content sizes of every item in track
 ```swift
 Grid(0..<6, tracks: [.fit, .fit, .fit]) {
@@ -127,6 +138,7 @@ Grid(0..<6, tracks: [.fit, .fit, .fit]) {
         .frame(maxWidth: 50 + 15 * CGFloat($0))
 }
 ```
+<img width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/3-fit-tracks.png"/>
 
 ##### Flexible sized track: `.fr(N)`
 Fr is a fractional unit and `.fr(1)` is for 1 part of the unassigned space in the grid. Flexible-sized tracks are computed at the very end after all non-flexible sized tracks (`.pt` and `.fit`). So the available space for them to distribute is the difference of the total size available and the sum of non-flexible track sizes.
@@ -140,6 +152,7 @@ Grid(tracks: [.pt(100), .fr(1), .fr(2.5)]) {
     ColorView(.orange)
 }
 ```
+<img width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/3-fr-tracks.png"/>
 
 Also you could specify just an Int literal as a track size. It's equal to repeating `.fr(1)` track sizes:
 ```swift
@@ -170,6 +183,7 @@ Grid(tracks: [.fr(1), .pt(150), .fr(2)]) {
         .gridSpan(row: 2)
 }
 ```
+<img width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/span-1-example.png"/>
 
 More complex example:
 
@@ -220,6 +234,7 @@ struct TextBox: View {
     }
 }
 ```
+<img width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/span-2-example.png"/>
 
 ### 6. Starts
 For every grid item you can set explicit start position by specifying a column, a row or both.

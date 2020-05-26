@@ -15,6 +15,9 @@ protocol GridGroupContaining {
 }
 
 public struct GridGroup: View, GridGroupContaining {
+    
+    public static var empty = GridGroup(contentViews: [])
+    
     var contentViews: [AnyView]
     
     public var body: some View {

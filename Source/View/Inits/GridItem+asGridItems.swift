@@ -18,7 +18,7 @@ extension View {
         return containerItems
     }
     
-    private func extractContentViews() -> [AnyView] {
+    func extractContentViews() -> [AnyView] {
         var contentViews: [AnyView] = []
         var isContainer = true
         

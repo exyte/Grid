@@ -12,7 +12,7 @@ import SwiftUI
 
 extension Grid {
     public init<Data, ID>(_ data: Data, id: KeyPath<Data.Element, ID>, tracks: [GridTrack], contentMode: GridContentMode? = nil, flow: GridFlow? = nil, packing: GridPacking? = nil, spacing: GridSpacing = Constants.defaultSpacing, @ViewBuilder item: @escaping (Data.Element) -> Content) where Data: RandomAccessCollection, ID: Hashable {
-        self.items = data.map { GridItem(AnyView(item($0)), id: AnyHashable($0[keyPath: id])) }
+        self.items = data.map { GridItem(AnyView(item($0)), id: AnyHashable([AnyHashable($0[keyPath: id]), AnyHashable(id)])) }
         self.trackSizes = tracks
         self.spacing = spacing
         self.internalContentMode = contentMode

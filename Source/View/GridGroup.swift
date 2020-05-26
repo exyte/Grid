@@ -10,15 +10,11 @@
 
 import SwiftUI
 
-protocol GridGroupContaining {
-    var contentViews: [AnyView] { get }
-}
-
 public struct GridGroup: View, GridGroupContaining {
     
     public static var empty = GridGroup(contentViews: [])
     
-    var contentViews: [AnyView]
+    var contentViews: [IdentifyingAnyView]
     
     public var body: some View {
         EmptyView()
@@ -30,7 +26,7 @@ public struct GridGroup: View, GridGroupContaining {
 // To be available on preview canvas
 
 extension ModifiedContent: GridGroupContaining where Content: GridGroupContaining, Modifier == _IdentifiedModifier<__DesignTimeSelectionIdentifier> {
-    var contentViews: [AnyView] {
+    var contentViews: [IdentifyingAnyView] {
         return self.content.contentViews
     }
 }

@@ -77,6 +77,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                             }
                     }
                 }
+                .animation(.linear)
                 .frame(flow: self.flow,
                        size: mainGeometry.size,
                        contentMode: self.contentMode)

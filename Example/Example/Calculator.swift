@@ -89,8 +89,14 @@ struct CalcButton: View {
 }
 
 struct Calculator: View {
+    enum Mode {
+        case system
+        case second
+    }
+    
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
+    @State var mode: Mode = .system
 
     var isPortrait: Bool {
         let result = verticalSizeClass == .regular && horizontalSizeClass == .compact
@@ -101,8 +107,35 @@ struct Calculator: View {
         self.isPortrait ? [] : (0..<30).map { _ in .function }
     }
     
-    var mainArithmeticButtons: [MathOperation] {
-        [.divide, .multiply, .substract, .add, .equal]
+    var mainArithmeticButtons: GridGroup {
+        
+        switch self.mode {
+        case .system:
+            let operations: [MathOperation] = [.divide, .multiply, .substract, .add, .equal]
+            return GridGroup {
+                Color.red
+                Color.red
+                //CalcButton($0).gridStart(column: self.tracks.count - 1)
+            }
+        case .second:
+            return GridGroup {
+                CalcButton(.divide)
+                    .gridStart(column: self.tracks.count - 1)
+                CalcButton(.multiply)
+                    .gridStart(column: self.tracks.count - 1)
+                CalcButton(.percent)
+                    .gridStart(column: self.tracks.count - 1)
+                
+                CalcButton(.substract)
+                    .gridStart(column: self.tracks.count - 2)
+                CalcButton(.add)
+                    .gridStart(column: self.tracks.count - 2)
+                    .gridSpan(row: 2)
+                CalcButton(.equal)
+                    .gridStart(column: self.tracks.count - 2)
+                    .gridSpan(column: 2)
+            }
+        }
     }
     
     var tracks: [GridTrack] {
@@ -124,40 +157,77 @@ struct Calculator: View {
                       height: height)
     }
     
+    struct Ololo: Identifiable {
+        let id = UUID()
+    }
+
     var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .trailing, spacing: 0) {
-                Spacer()
+                Button(action: {
+                    withAnimation {
+                        self.mode = (self.mode == .system ? .second : .system)
+                    }
+                }) {
+                    Text("MODE")
+                }
+
                 Text("565 626")
                     .foregroundColor(.white)
                     .font(.custom("PingFang TC", size: 90))
                     .fontWeight(.light)
                     .minimumScaleFactor(0.01)
-                
-                Grid(tracks: self.tracks, spacing: 10) {
-                    GridGroup {
-                        CalcButton(.clear)
-                        CalcButton(.sign)
-                        CalcButton(.percent)
-                    }
-  
-                    ForEach(self.digitButtons, id: \.self) {
-                        CalcButton($0)
-                    }
 
-                    CalcButton(.digit(0)).gridSpan(column: 2)
-                    
-                    CalcButton(.point)
-                    
-                    ForEach(self.mainArithmeticButtons, id: \.self) {
-                        CalcButton($0).gridStart(column: self.tracks.count - 1)
+                Grid(tracks: self.tracks, spacing: 10) {
+                    Color.red
+                    Color.red
+                    if self.mode == .second {
+                        Capsule()
+                            .fill(Color.red)
+                        Capsule()
+                            .fill(Color.red)
+                    } else {
+                        Color.green
+                        Color.green
                     }
-                    
-                    ForEach(0..<self.landscapeButtons.count, id: \.self) {
-                        CalcButton(self.landscapeButtons[$0])
-                            .gridStart(row: $0 % 5)
-                    }
+//
+//                    GridGroup {
+//                        if self.mode == .system {
+//
+//                            CalcButton(.clear)
+//                            CalcButton(.sign)
+//                            CalcButton(.percent)
+//
+//                        } else {
+//                            CalcButton(.clear)
+//                                .gridStart(row: 3)
+//                        }
+//
+//                        ForEach(self.digitButtons, id: \.self) {
+//                            CalcButton($0)
+//                        }
+//                    }
+//
+//
+//
+//                    if self.mode == .system {
+//                        CalcButton(.digit(0))
+//                            .gridSpan(column: 2)
+//                    } else {
+//                        CalcButton(.digit(0))
+//                            .gridSpan(column: 1)
+//                    }
+//
+//                    CalcButton(.point)
+//
+//                    self.mainArithmeticButtons
+//
+//                    ForEach(0..<self.landscapeButtons.count, id: \.self) {
+//                        CalcButton(self.landscapeButtons[$0])
+//                            .gridStart(row: $0 % 5)
+//                    }
                 }
+                .animation(.default)
                 .gridContentMode(.fill)
                 .frame(width: self.proportionalSize(geometry: geometry).width,
                        height: self.proportionalSize(geometry: geometry).height)

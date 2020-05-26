@@ -81,25 +81,26 @@ struct RandomizedContentView: View {
     let secondGridTracks: [GridTrack] = 6
     
     var body: some View {
-        Group {
-            if self.mode == .scroll {
-                Grid(0..<20, tracks: firstGridTracks, spacing: 20) { _ in
-                    VCardView()
-                        .gridSpan(column: self.randomSpan(2),
-                                  row: self.randomSpan(2))
-                }
-                .gridContentMode(.scroll)
-            } else {
-                Grid(0..<6, tracks: secondGridTracks, spacing: 4) { _ in
-                    VCardView()
-                        .gridSpan(column: self.randomSpan(2),
-                                  row: self.randomSpan(2))
-                }
-                .gridContentMode(.fill)
-            }
-        }
-        .gridFlow(.rows)
-        .gridPacking(.sparse)
+        EmptyView()
+//        Group {
+//            if self.mode == .scroll {
+//                Grid(0..<20, tracks: firstGridTracks, spacing: 20) { _ in
+//                    VCardView()
+//                        .gridSpan(column: self.randomSpan(2),
+//                                  row: self.randomSpan(2))
+//                }
+//                .gridContentMode(.scroll)
+//            } else {
+//                Grid(0..<6, tracks: secondGridTracks, spacing: 4) { _ in
+//                    VCardView()
+//                        .gridSpan(column: self.randomSpan(2),
+//                                  row: self.randomSpan(2))
+//                }
+//                .gridContentMode(.fill)
+//            }
+//        }
+//        .gridFlow(.rows)
+//        .gridPacking(.sparse)
     }
     
     func randomSpan(_ max: Int) -> Int {

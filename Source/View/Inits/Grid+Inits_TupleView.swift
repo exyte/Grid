@@ -11,6 +11,30 @@
 import SwiftUI
 
 extension Grid {
+    public init(tracks: [GridTrack], contentMode: GridContentMode? = nil, flow: GridFlow? = nil, packing: GridPacking? = nil, spacing: GridSpacing = Constants.defaultSpacing, @AnyViewBuilder content: () -> GridGroup)  {
+        
+        self.trackSizes = tracks
+        self.spacing = spacing
+        self.internalContentMode = contentMode
+        self.internalFlow = flow
+        self.internalPacking = packing
+        
+        self.items =
+                content()
+                .contentViews
+                .enumerated()
+                .map { GridItem($0.element, id: AnyHashable($0.offset)) }
+        
+//        let content = content()
+//        var index = 0
+//        var items: [GridItem] = []
+//        items.append(contentsOf: content.value.0.asGridItems(index: &index))
+//        items.append(contentsOf: content.value.1.asGridItems(index: &index))
+//        self.items = items
+    }
+    
+    
+    /*
     public init<C0: View, C1: View>(tracks: [GridTrack], contentMode: GridContentMode? = nil, flow: GridFlow? = nil, packing: GridPacking? = nil, spacing: GridSpacing = Constants.defaultSpacing, @ViewBuilder content: () -> Content) where Content == TupleView<(C0, C1)> {
         self.trackSizes = tracks
         self.spacing = spacing
@@ -181,5 +205,5 @@ extension Grid {
         items.append(contentsOf: content.value.8.asGridItems(index: &index))
         items.append(contentsOf: content.value.9.asGridItems(index: &index))
         self.items = items
-    }
+    }*/
 }

@@ -21,6 +21,10 @@ extension View {
     public func gridPacking(_ packing: GridPacking) -> some View {
         return self.environment(\.gridPacking, packing)
     }
+    
+    public func gridAnimation(_ animation: Animation?) -> some View {
+        return self.environment(\.gridAnimation, animation)
+    }
 }
 
 extension EnvironmentValues {
@@ -38,9 +42,14 @@ extension EnvironmentValues {
         get { self[EnvironmentKeys.Packing.self] }
         set { self[EnvironmentKeys.Packing.self] = newValue }
     }
+    
+    var gridAnimation: Animation? {
+        get { self[EnvironmentKeys.GridAnimation.self] }
+        set { self[EnvironmentKeys.GridAnimation.self] = newValue }
+    }
 }
 
-struct EnvironmentKeys {
+private struct EnvironmentKeys {
     struct ContentMode: EnvironmentKey {
         static let defaultValue: GridContentMode? = nil
     }
@@ -51,5 +60,9 @@ struct EnvironmentKeys {
     
     struct Packing: EnvironmentKey {
         static let defaultValue: GridPacking? = nil
+    }
+    
+    struct GridAnimation: EnvironmentKey {
+        static let defaultValue: Animation? = nil
     }
 }

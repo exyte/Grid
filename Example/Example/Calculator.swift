@@ -33,6 +33,10 @@ struct Calculator: View {
         return result
     }
     
+    var digits: [MathOperation] {
+        (1..<10).map { .digit($0) } + [.digit(0)]
+    }
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -42,7 +46,7 @@ struct Calculator: View {
                 VStack(alignment: .trailing, spacing: 0) {
                     self.modesPicker
                     Spacer()
-                    Text("843 234")
+                    Text("565 626")
                         .foregroundColor(.white)
                         .font(.custom("PingFang TC", size: 90))
                         .fontWeight(.light)
@@ -52,17 +56,17 @@ struct Calculator: View {
                         self.mainArithmeticButtons
                         self.topButtons
                         self.clearButton
-                        
-                        GridGroup((1..<10).map { .digit($0) }, id: \.self) {
-                            CalcButton($0)
-                        }
-                        
-                        //Only homogeneous "if" clauses are supported
-                        if self.mode == .system {
-                            CalcButton(.digit(0))
-                                .gridSpan(column: 2)
-                        } else {
-                            CalcButton(.digit(0))
+
+                        GridGroup {
+                            GridGroup(self.digits, id: \.self) {
+                                //Only homogeneous "if" clauses are supported
+                                if self.mode == .system && $0 == .digit(0) {
+                                      CalcButton($0)
+                                          .gridSpan(column: 2)
+                                  } else {
+                                      CalcButton($0)
+                                  }
+                            }
                         }
                         
                         GridGroup([MathOperation.point], id: \.self) {
@@ -72,7 +76,7 @@ struct Calculator: View {
                         self.landscapeButtons
                     }
                     .gridContentMode(.fill)
-                    .gridAnimation(.easeInOut(duration: 0.3))
+                    .gridAnimation(.easeInOut)
                     .frame(width: self.proportionalSize(geometry: geometry).width,
                            height: self.proportionalSize(geometry: geometry).height)
                 }
@@ -105,6 +109,10 @@ struct Calculator: View {
             }
         case .second:
             return GridGroup {
+                GridGroup([MathOperation.clear], id: \.self) {
+                    CalcButton($0)
+                        .gridStart(column: self.tracks.count - 1)
+                }
                 CalcButton(.divide)
                     .gridStart(column: self.tracks.count - 1)
                 
@@ -121,9 +129,6 @@ struct Calculator: View {
                 CalcButton(.equal)
                     .gridStart(column: self.tracks.count - 3)
                     .gridSpan(column: 3)
-                
-                CalcButton(.clear)
-                    .gridStart(column: self.tracks.count - 1)
             }
         }
     }
@@ -144,7 +149,9 @@ struct Calculator: View {
         case .system:
             return GridGroup {
                 CalcButton(.percent)
+                    .animation(nil)
                 CalcButton(.sign)
+                    .animation(nil)
             }
         case .second:
             return GridGroup.empty
@@ -153,8 +160,8 @@ struct Calculator: View {
 
     var clearButton: GridGroup {
         if self.mode == .system {
-            return GridGroup {
-                CalcButton(.clear)
+            return GridGroup([MathOperation.clear], id: \.self) {
+                CalcButton($0)
             }
         } else {
             return GridGroup.empty

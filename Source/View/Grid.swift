@@ -9,7 +9,7 @@
 import SwiftUI
 
 public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Content: View {
-    
+
     @State var arrangement: LayoutArrangement?
     @State var spans: SpanPreference?
     @State var starts: StartPreference?
@@ -19,6 +19,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
     @Environment(\.gridContentMode) private var environmentContentMode
     @Environment(\.gridFlow) private var environmentFlow
     @Environment(\.gridPacking) private var environmentPacking
+    @Environment(\.gridAnimation) private var gridAnimation
     
     let items: [GridItem]
     let spacing: GridSpacing
@@ -67,8 +68,8 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                             .frame(flow: self.flow,
                                    size: self.positions[item]?.bounds.size,
                                    contentMode: self.contentMode)
-                            .alignmentGuide(.leading, computeValue: { _ in  -(self.positions[item]?.bounds.origin.x ?? 0) })
-                            .alignmentGuide(.top, computeValue: { _ in  -(self.positions[item]?.bounds.origin.y ?? 0) })
+                            .alignmentGuide(.leading, computeValue: { _ in self.leadingGuide(item: item) })
+                            .alignmentGuide(.top, computeValue: { _ in self.topGuide(item: item) })
                             .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
                                 self.cellPreferenceView(item: item, preference: preference)
                             }
@@ -77,7 +78,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                             }
                     }
                 }
-                .animation(.linear)
+                .animation(self.gridAnimation)
                 .frame(flow: self.flow,
                        size: mainGeometry.size,
                        contentMode: self.contentMode)
@@ -156,6 +157,14 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
             return []
         }
         return self.flow == .rows ? .vertical : .horizontal
+    }
+    
+    private func leadingGuide(item: GridItem) -> CGFloat {
+        return -(self.positions[item]?.bounds.origin.x ?? CGFloat(-self.spacing.horizontal) / 2.0)
+    }
+    
+    private func topGuide(item: GridItem) -> CGFloat {
+        -(self.positions[item]?.bounds.origin.y ?? CGFloat(-self.spacing.vertical) / 2.0)
     }
 
     private func calculateArrangement(preferences: ArrangingPreference) {

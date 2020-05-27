@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		360BA329247E87AF006C51FC /* CalcButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360BA328247E87AE006C51FC /* CalcButton.swift */; };
+		360BA32B247E87D6006C51FC /* MathOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360BA32A247E87D6006C51FC /* MathOperation.swift */; };
 		366B25052474F77000F1DD09 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B25042474F77000F1DD09 /* SceneDelegate.swift */; };
 		366B25072474F78E00F1DD09 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B25062474F78E00F1DD09 /* ContentView.swift */; };
 		366BDB592474FB9E0034794C /* RandomizedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366BDB572474FB770034794C /* RandomizedContentView.swift */; };
@@ -21,6 +23,8 @@
 /* Begin PBXFileReference section */
 		019A245A777705E4C76B5F54 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		2477FB68660CBB45AE904BD3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		360BA328247E87AE006C51FC /* CalcButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalcButton.swift; sourceTree = "<group>"; };
+		360BA32A247E87D6006C51FC /* MathOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathOperation.swift; sourceTree = "<group>"; };
 		366B25042474F77000F1DD09 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		366B25062474F78E00F1DD09 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		366B25082474F7FA00F1DD09 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -58,6 +62,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		360BA327247E8790006C51FC /* Calculator */ = {
+			isa = PBXGroup;
+			children = (
+				36B11E502475539700CDAE27 /* Calculator.swift */,
+				360BA328247E87AE006C51FC /* CalcButton.swift */,
+				360BA32A247E87D6006C51FC /* MathOperation.swift */,
+			);
+			name = Calculator;
+			sourceTree = "<group>";
+		};
 		36F6C2282476D8F4001818F2 /* Extesions */ = {
 			isa = PBXGroup;
 			children = (
@@ -88,12 +102,12 @@
 		607FACD21AFB9204008FA782 /* Example for Grid */ = {
 			isa = PBXGroup;
 			children = (
+				360BA327247E8790006C51FC /* Calculator */,
 				36F6C2282476D8F4001818F2 /* Extesions */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				366B25042474F77000F1DD09 /* SceneDelegate.swift */,
 				366BDB572474FB770034794C /* RandomizedContentView.swift */,
 				366B25062474F78E00F1DD09 /* ContentView.swift */,
-				36B11E502475539700CDAE27 /* Calculator.swift */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -265,6 +279,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				360BA32B247E87D6006C51FC /* MathOperation.swift in Sources */,
+				360BA329247E87AF006C51FC /* CalcButton.swift in Sources */,
 				366BDB592474FB9E0034794C /* RandomizedContentView.swift in Sources */,
 				366B25052474F77000F1DD09 /* SceneDelegate.swift in Sources */,
 				36F6C22A2476D919001818F2 /* Color+hex.swift in Sources */,

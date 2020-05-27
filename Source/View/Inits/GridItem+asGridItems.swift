@@ -9,17 +9,41 @@
 import SwiftUI
 
 extension View {
-    func asGridItems(index: inout Int) -> [GridItem] {
-        let containerItems =
+    func asGridItems<T: Hashable>(hash: T) -> [GridItem] {
+        let containerItems: [GridItem]  =
             self.extractContentViews()
                 .enumerated()
-                .map { GridItem($0.element, id: AnyHashable($0.offset + index)) }
-        index += containerItems.count
+                .map {
+                    let gridHash: AnyHashable
+                    if let viewHash = $0.element.hash {
+                        gridHash = viewHash
+                    } else {
+                        gridHash = AnyHashable(hash)
+                    }
+                    return GridItem($0.element.view, id: gridHash)
+                }
         return containerItems
     }
     
-    func extractContentViews() -> [AnyView] {
-        var contentViews: [AnyView] = []
+    func asGridItems(index: inout Int) -> [GridItem] {
+        let containerItems: [GridItem]  =
+            self.extractContentViews()
+                .map {
+                    let gridHash: AnyHashable
+                    if let viewHash = $0.hash {
+                        gridHash = viewHash
+                    } else {
+                        gridHash = AnyHashable(index)
+                        index += 1
+                    }
+                    return GridItem($0.view, id: gridHash)
+                    
+                }
+        return containerItems
+    }
+    
+    func extractContentViews() -> [IdentifyingAnyView] {
+        var contentViews: [IdentifyingAnyView] = []
         var isContainer = true
         
         if let container = self as? GridForEachRangeInt {
@@ -29,17 +53,17 @@ extension View {
         } else if let container = self as? GridForEachID {
             contentViews = container.contentViews
         } else if let container = self as? GridGroupContaining {
-            contentViews = container.contentViews
+            return container.contentViews
         } else {
             isContainer = false
         }
         
         if isContainer {
             contentViews = contentViews.flatMap {
-                $0.extractContentViews()
+                $0.view.extractContentViews()
             }
         } else {
-            contentViews = [AnyView(self)]
+            contentViews = [(nil, AnyView(self))]
         }
         return contentViews
     }

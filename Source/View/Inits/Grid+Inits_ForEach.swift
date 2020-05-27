@@ -17,9 +17,7 @@ extension Grid {
         self.internalFlow = flow
         self.internalPacking = packing
         self.items = content().data
-            .flatMap { content().content($0).extractContentViews() }
-            .enumerated()
-            .map { GridItem(AnyView($0.element), id: AnyHashable($0.offset)) }
+            .flatMap { content().content($0).asGridItems(hash: $0) }
     }
     
     public init<Data>(tracks: [GridTrack], contentMode: GridContentMode? = nil, flow: GridFlow? = nil, packing: GridPacking? = nil, spacing: GridSpacing = Constants.defaultSpacing, @ViewBuilder content: () -> ForEach<Data, Data.Element.ID, Content>) where Data: RandomAccessCollection, Data.Element: Identifiable {
@@ -29,9 +27,7 @@ extension Grid {
         self.internalFlow = flow
         self.internalPacking = packing
         self.items = content().data
-            .flatMap { content().content($0).extractContentViews() }
-            .enumerated()
-            .map { GridItem(AnyView($0.element), id: AnyHashable($0.offset)) }
+            .flatMap { content().content($0).asGridItems(hash: $0.id) }
     }
     
     public init<Data: RandomAccessCollection, ID>(tracks: [GridTrack], contentMode: GridContentMode? = nil, flow: GridFlow? = nil, packing: GridPacking? = nil, spacing: GridSpacing = Constants.defaultSpacing, @ViewBuilder content: () -> ForEach<Data, ID, Content>) {
@@ -41,8 +37,7 @@ extension Grid {
         self.internalFlow = flow
         self.internalPacking = packing
         self.items = content().data
-            .flatMap { content().content($0).extractContentViews() }
             .enumerated()
-            .map { GridItem(AnyView($0.element), id: AnyHashable($0.offset)) }
+            .flatMap { content().content($0.element).asGridItems(hash: [$0.offset]) }
     }
 }

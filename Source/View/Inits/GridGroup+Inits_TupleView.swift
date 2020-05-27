@@ -8,6 +8,11 @@
 import SwiftUI
 
 extension GridGroup {
+    
+    public init<C0: View>(@ViewBuilder content: () -> C0) {
+        self.contentViews = content().extractContentViews()
+    }
+    
     public init<C0: View, C1: View>(@ViewBuilder content: () -> TupleView<(C0, C1)>) {
         let content = content()
         var views: [IdentifyingAnyView] = []

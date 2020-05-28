@@ -14,15 +14,7 @@ struct FlowExample: View {
     
     var body: some View {
         VStack {
-            if self.flow == .rows {
-                Button(action: { self.flow = .columns }) {
-                    Text("Flow: ROWS")
-                }
-            } else {
-                Button(action: { self.flow = .rows }) {
-                    Text("Flow: COLUMNS")
-                }
-            }
+            self.flowPicker
             
             Grid(0..<15, tracks: 5, flow: self.flow, spacing: 5) {
                 ColorView($0.isMultiple(of: 2) ? .black : .orange)
@@ -32,8 +24,20 @@ struct FlowExample: View {
                             .foregroundColor(.white)
                 )
             }
-            .animation(.default)
+            .gridAnimation(.default)
         }
+    }
+    
+    private var flowPicker: some View {
+        Picker("Flow", selection: $flow) {
+            withAnimation {
+                ForEach([GridFlow.rows, GridFlow.columns], id: \.self) {
+                            Text($0 == .rows ? "ROWS" : "COLUMNS")
+                                .tag($0)
+                        }
+            }
+        }
+        .pickerStyle(SegmentedPickerStyle())
     }
 }
 

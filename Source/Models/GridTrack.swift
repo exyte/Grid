@@ -18,8 +18,6 @@ public enum GridTrack {
     case pt(CGFloat)
     case fit
     
-    // TODO: Add .min(Int)
-    
     var isIntrinsic: Bool {
         switch self {
         case .fr:

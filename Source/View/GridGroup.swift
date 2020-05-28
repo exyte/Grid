@@ -6,8 +6,6 @@
 //  Copyright © 2020 Exyte. All rights reserved.
 //
 
-// swiftlint:disable large_tuple
-
 import SwiftUI
 
 public struct GridGroup: View, GridGroupContaining {

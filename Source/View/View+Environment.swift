@@ -27,6 +27,7 @@ extension View {
     }
 }
 
+//swiftlint:disable implicit_getter
 extension EnvironmentValues {
     var gridContentMode: GridContentMode? {
         get { self[EnvironmentKeys.ContentMode.self] }

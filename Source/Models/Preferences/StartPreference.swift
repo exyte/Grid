@@ -18,7 +18,7 @@ struct StartPreference: Equatable {
 }
 
 struct StartPreferenceKey: PreferenceKey {
-    static var defaultValue: StartPreference? = nil
+    static var defaultValue: StartPreference?
 
     static func reduce(value: inout StartPreference?, nextValue: () -> StartPreference?) {
         if let nextValue = nextValue() {

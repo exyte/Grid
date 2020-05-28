@@ -8,7 +8,7 @@
 
 import CoreGraphics
 
-public struct GridSpacing {
+public struct GridSpacing: Hashable {
     let horizontal: CGFloat
     let vertical: CGFloat
     static let zero = GridSpacing(horizontal: 0, vertical: 0)

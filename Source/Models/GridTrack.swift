@@ -48,4 +48,4 @@ extension Array: ExpressibleByIntegerLiteral where Element == GridTrack {
     }
 }
 
-extension GridTrack: Equatable { }
+extension GridTrack: Equatable, Hashable { }

@@ -20,12 +20,30 @@ extension View {
         )
     }
     
+    public func gridSpan(_ span: GridSpan) -> some View {
+        preference(
+            key: SpansPreferenceKey.self,
+            value: SpanPreference(items: [
+                .init(gridItem: nil,
+                      span: span)])
+        )
+    }
+    
     public func gridStart(column: Int? = nil, row: Int? = nil) -> some View {
         preference(
             key: StartPreferenceKey.self,
             value: StartPreference(items: [
                 .init(gridItem: nil,
                       start: GridStart(column: column, row: row))])
+        )
+    }
+    
+    public func gridStart(_ start: GridStart) -> some View {
+        preference(
+            key: StartPreferenceKey.self,
+            value: StartPreference(items: [
+                .init(gridItem: nil,
+                      start: start)])
         )
     }
     

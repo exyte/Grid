@@ -11,7 +11,32 @@ import ExyteGrid
 
 struct ContentView: View {
     var body: some View {
-        EmptyView()
+        NavigationView {
+            List {
+                NavigationLink(destination: Calculator()) {
+                    Text("Calculator")
+                }
+                NavigationLink(destination: SpansExample()) {
+                    Text("Spans")
+                }
+                NavigationLink(destination: StartsExample()) {
+                    Text("Starts")
+                }
+                NavigationLink(destination: FlowExample()) {
+                    Text("Flow")
+                }
+                NavigationLink(destination: ContentModeExample()) {
+                    Text("Content mode")
+                }
+                NavigationLink(destination: PackingExample()) {
+                    Text("Packing")
+                }
+                NavigationLink(destination: SpacingExample()) {
+                    Text("Spacing")
+                }
+            }
+            .navigationBarTitle(Text("ExyteGrid"), displayMode: .inline)
+        }
     }
 }
 

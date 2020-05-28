@@ -28,7 +28,6 @@ struct ContentModeExample: View {
             }
             .gridContentMode(self.contentMode)
             .gridFlow(.rows)
-            .gridAnimation(.default)
         }
     }
 

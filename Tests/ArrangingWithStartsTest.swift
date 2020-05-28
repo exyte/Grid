@@ -18,39 +18,45 @@ class ArrangingWithStartsTest: XCTestCase {
     func gridItem(index: Int) -> GridItem {
         GridItem(AnyView(EmptyView()), id: AnyHashable(index))
     }
+    private lazy var gridItems: [GridItem] =
+        (0..<15).map { self.gridItem(index: $0) }
 
-private lazy var spanPreferences =
-    (0..<6).map { SpanPreference(item: self.gridItem(index: $0), span: [1, 1]) }
-        + [SpanPreference(item: gridItem(index: 6), span: [3, 1]),
-           SpanPreference(item: gridItem(index: 7), span: [2, 1]),
-           SpanPreference(item: gridItem(index: 8), span: [2, 2]),
-           SpanPreference(item: gridItem(index: 9), span: [1, 1]),
-           SpanPreference(item: gridItem(index: 10), span: [1, 10]),
-           SpanPreference(item: gridItem(index: 11), span: [2, 3]),
-           SpanPreference(item: gridItem(index: 12), span: [1, 3]),
-           SpanPreference(item: gridItem(index: 13), span: [1, 1]),
-           SpanPreference(item: gridItem(index: 14), span: [1, 1])
-    ]
-    
-    private lazy var startPreferences =
-        (0..<6).map { StartPreference(item: self.gridItem(index: $0), start: nil) }
-            + [StartPreference(item: gridItem(index: 6), start: nil),
-               StartPreference(item: gridItem(index: 7), start: nil),
-               StartPreference(item: gridItem(index: 8), start: [5, 1]),
-               StartPreference(item: gridItem(index: 9), start: [nil, 2]),
-               StartPreference(item: gridItem(index: 10), start: [3, 0]),
-               StartPreference(item: gridItem(index: 11), start: nil),
-               StartPreference(item: gridItem(index: 12), start: nil),
-               StartPreference(item: gridItem(index: 13), start: [2, nil]),
-               StartPreference(item: gridItem(index: 14), start: nil)
+    private lazy var spanPreferences = SpanPreference(items:
+        (0..<6).map { .init(gridItem: self.gridItem(index: $0), span: [1, 1]) }
+            + [.init(gridItem: gridItem(index: 6), span: [3, 1]),
+               .init(gridItem: gridItem(index: 7), span: [2, 1]),
+               .init(gridItem: gridItem(index: 8), span: [2, 2]),
+               .init(gridItem: gridItem(index: 9), span: [1, 1]),
+               .init(gridItem: gridItem(index: 10), span: [1, 10]),
+               .init(gridItem: gridItem(index: 11), span: [2, 3]),
+               .init(gridItem: gridItem(index: 12), span: [1, 3]),
+               .init(gridItem: gridItem(index: 13), span: [1, 1]),
+               .init(gridItem: gridItem(index: 14), span: [1, 1])
         ]
+    )
+    
+    private lazy var startPreferences = StartPreference(items:
+        (0..<6).map { .init(gridItem: self.gridItem(index: $0), start: nil) }
+            + [.init(gridItem: gridItem(index: 6), start: nil),
+               .init(gridItem: gridItem(index: 7), start: nil),
+               .init(gridItem: gridItem(index: 8), start: [5, 1]),
+               .init(gridItem: gridItem(index: 9), start: [nil, 2]),
+               .init(gridItem: gridItem(index: 10), start: [3, 0]),
+               .init(gridItem: gridItem(index: 11), start: nil),
+               .init(gridItem: gridItem(index: 12), start: nil),
+               .init(gridItem: gridItem(index: 13), start: [2, nil]),
+               .init(gridItem: gridItem(index: 14), start: nil)
+        ]
+    )
 
     func testArrangementDenseRows() throws {
-        let arrangement = arranger.arrange(spanPreferences: spanPreferences,
-                                           startPreferences: startPreferences,
-                                           fixedTracksCount: 4,
-                                           flow: .rows,
-                                           packing: .dense)
+        let arrangingPreferences = ArrangingPreference(gridItems: gridItems,
+                                                       starts: startPreferences,
+                                                       spans: spanPreferences,
+                                                       tracks: 4,
+                                                       flow: .rows,
+                                                       packing: .dense)
+        let arrangement = arranger.arrange(preferences: arrangingPreferences)
 
         XCTAssertEqual(arrangement, LayoutArrangement(columnsCount: 4, rowsCount: 10, items: [
             ArrangedItem(gridItem: gridItem(index: 10), startIndex: [3, 0], endIndex: [3, 9]),

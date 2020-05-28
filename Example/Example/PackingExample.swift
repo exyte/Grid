@@ -46,7 +46,7 @@ struct PackingExample: View {
     }
 }
 
-struct SpacingExample_Previews: PreviewProvider {
+struct PackingExample_Previews: PreviewProvider {
     static var previews: some View {
         PackingExample()
     }

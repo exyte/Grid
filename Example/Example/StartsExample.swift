@@ -11,6 +11,7 @@ import ExyteGrid
 
 struct StartsExample: View {
     var body: some View {
+        
         Grid(tracks: [.pt(50), .fr(1), .fr(1.5), .fit]) {
             ForEach(0..<6) { _ in
                 ColorView(.black)
@@ -45,5 +46,11 @@ struct StartsExample: View {
             ColorView(.gray)
                 .gridStart(column: 2)
         }
+    }
+}
+
+struct StartsExample_Previews: PreviewProvider {
+    static var previews: some View {
+        StartsExample()
     }
 }

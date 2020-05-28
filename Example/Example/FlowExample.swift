@@ -36,3 +36,9 @@ struct FlowExample: View {
         }
     }
 }
+
+struct FlowExample_Previews: PreviewProvider {
+    static var previews: some View {
+        FlowExample()
+    }
+}

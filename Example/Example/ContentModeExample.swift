@@ -55,3 +55,9 @@ struct ContentModeExample: View {
         .pickerStyle(SegmentedPickerStyle())
     }
 }
+
+struct ContentModeExample_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentModeExample()
+    }
+}

@@ -6,6 +6,8 @@
 
 ___
 
+<img align="right" width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/calc-animation-mock-iPhone-SE.gif"/>
+
 <p> We are a development agency building
   <a href="https://clutch.co/profile/exyte#review-731233?utm_medium=referral&utm_source=github.com&utm_campaign=phenomenal_to_clutch">phenomenal</a> apps.</p>
 
@@ -21,15 +23,16 @@ ___
 [![Platform](https://img.shields.io/cocoapods/p/ExyteGrid.svg?style=flat)](https://cocoapods.org/pods/ExyteGrid)
 
 ## Features
+
 - **Track sizes:**
   -  Flexible `.fr(...)`
   -  Constant `.pt(...)`
   - Content fitting `.fit`
-- **Spanning grid items:**
+- **Spanning grid views:**
   - by rows
   - by columns
-- **Automatic items positioning**
-- **Explicit items positions specifying:**
+- **Automatic view positioning**
+- **Explicit view position specifying:**
   - start row
   - start column
   - both
@@ -42,57 +45,65 @@ ___
 - **Content mode:**
   - Fit to a container
   - Scrollable content
-- Vertical and horizontal spacing
-- ForEach support
-- Content updates can be animated
+- **Vertical and horizontal spacing**
+- **ForEach support**
+- **Content updates can be animated**
 
  
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
+------------
+
 ## How to use
 ### 1. Initialization
 
-<img width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/3-equal-fr-tracks.png"/>
+<img align="right" width="30%" height="30%" src="https://github.com/exyte/Grid/raw/media/Assets/3-equal-fr-tracks.png"/>
 
-You can instantiate grid by different ways:
+You can instantiate grid in different ways:
 1. Just specify tracks and your views inside ViewBuilder closure:
 ```swift
 Grid(tracks: 3) {
-		ColorView(.blue)
-		ColorView(.purple)
-		ColorView(.red)
-		ColorView(.cyan)
-		ColorView(.green)
-		ColorView(.orange)
+    ColorView(.blue)
+    ColorView(.purple)
+    ColorView(.red)
+    ColorView(.cyan)
+    ColorView(.green)
+    ColorView(.orange)
 }
 ```
 
 2. Use Range:
 ```swift
 Grid(0..<6, tracks: 3) { _ in
-		ColorView(.random)
+    ColorView(.random)
 }
 ```
 
 3. Use Identifiable enitites:
 ```swift
 Grid(colorModels, tracks: 3) {
-		ColorView($0)
+    ColorView($0)
 }
 ```
 
 4. Use explicitly defined ID:
 ```swift
 Grid(colorModels, id: \.self, tracks: 3) {
-		ColorView($0)
+    ColorView($0)
 }
 ```
 
+------------
+
 ### 2. Containers
-##### ForEach
-Inside ViewBuilder you also can use regular ForEach statement:
+#### ForEach
+Inside ViewBuilder you also can use regular ForEach statement. 
+*There is no way to get KeyPath id value from the initialized ForEach view. Its inner content will be distinguished by views order while doing animations. It's better to use `ForEach` with `Identifiable` models or `GridGroup` created either with explicit ID value or `Identifiable` models to keep track of the grid views and their `View` representations in animations.*
+
+<img align="right" width="30%" height="30%" src="https://github.com/exyte/Grid/raw/media/Assets/forEach-1.png">
+
 ```swift
 Grid(tracks: 4) {
     ColorView(.red)
@@ -107,17 +118,70 @@ Grid(tracks: 4) {
 }
 ```
 
-<img width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/forEach-1.png"/>
+#### GridGroup
+Number of views in ViewBuilder closure is limited to 10. It's impossible to obtain content views from regular SwiftUI `Group` view. To exceed that limit you could use `GridGroup`. Every view in GridGroup is placed as a separate grid item. Unlike the `Group` view any outer method modifications of `GridView` are not applied to the descendant views. So it's just an enumerable container. Also `GridGroup` could be created by `Range<Int>`, `Identifiable` models, and by ID specified explicitly.
 
-##### GridGroup
-Number of views in ViewBuilder closure is limited to 10. It's impossible to obtain content views from regular SwiftUI `Group` view. To exceed that limit you could use `GridGroup`. Every view in GridGroup is placed as a separate grid item. Unlike the `Group` view any modifications of `GridView` are not applied to the descendant views. So it's just an enumerable container.
+You can use `GridGroup.empty` to define a content absence.
 
-*All nested containers are processed recursively.*
+Examples:
+
+```swift
+var arithmeticButtons: GridGroup {
+    GridGroup {
+        CalcButton(.divide)
+        CalcButton(.multiply)
+        CalcButton(.substract)
+        CalcButton(.equal)
+    }
+}
+```
+
+```swift
+var arithmeticButtons: GridGroup {
+    let operations: [MathOperation] =
+        [.divide, .multiply, .substract, .add, .equal]
+	
+    return GridGroup(operations, id: \.self) {
+        CalcButton($0)
+    }
+}
+```
+
+```swift
+var arithmeticButtons: GridGroup {
+    let operations: [MathOperation] =
+        [.divide, .multiply, .substract, .add, .equal]
+	
+    return GridGroup {
+        ForEach(operations, id: \.self) {
+            CalcButton($0)
+        }
+    }
+}
+
+```
+
+```swift
+var arithmeticButtons: GridGroup {
+    let operations: [MathOperation] =
+        [.divide, .multiply, .substract, .add, .equal]
+    return GridGroup(operations, id: \.self) { 
+         CalcButton($0)
+    }
+}
+```
+
+------------
 
 ### 3. Track sizes
+
 There are 3 types of track sizes that you could mix with each other:
-##### Fixed-sized track: 
+
+<img align="right" width="30%" height="30%" src="https://github.com/exyte/Grid/raw/media/Assets/3-const-tracks.png"/>
+
+#### Fixed-sized track: 
 `.pt(N)` where N - points count. 
+
 ```swift
 Grid(tracks: [.pt(50), .pt(200), .pt(100)]) {
     ColorView(.blue)
@@ -128,20 +192,29 @@ Grid(tracks: [.pt(50), .pt(200), .pt(100)]) {
     ColorView(.orange)
 }
 ```
-<img width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/3-const-tracks.png"/>
 
-##### Content-based size: `.fit`
-Defines the track size as a maximum of the content sizes of every item in track
+<img  align="right" width="30%" height="30%" src="https://github.com/exyte/Grid/raw/media/Assets/3-fit-tracks.png"/>
+
+#### Content-based size: `.fit`
+
+Defines the track size as a maximum of the content sizes of every view in track
+
 ```swift
 Grid(0..<6, tracks: [.fit, .fit, .fit]) {
     ColorView(.random)
         .frame(maxWidth: 50 + 15 * CGFloat($0))
 }
 ```
-<img width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/3-fit-tracks.png"/>
 
-##### Flexible sized track: `.fr(N)`
-Fr is a fractional unit and `.fr(1)` is for 1 part of the unassigned space in the grid. Flexible-sized tracks are computed at the very end after all non-flexible sized tracks (`.pt` and `.fit`). So the available space for them to distribute is the difference of the total size available and the sum of non-flexible track sizes.
+Pay attention to limiting a size of views that fills the entire space provided by parent, Text() views which tend to draw as a single line.
+
+#### Flexible sized track: `.fr(N)`
+
+<img align="right" width="30%" height="30%" src="https://github.com/exyte/Grid/raw/media/Assets/3-fr-tracks.png"/>
+
+Fr is a fractional unit and `.fr(1)` is for 1 part of the unassigned space in the grid. Flexible-sized tracks are computed at the very end after all non-flexible sized tracks (`.pt` and `.fit`).
+So the available space to distribute for them is the difference of the total size available and the sum of non-flexible track sizes.
+
 ```swift
 Grid(tracks: [.pt(100), .fr(1), .fr(2.5)]) {
     ColorView(.blue)
@@ -152,9 +225,8 @@ Grid(tracks: [.pt(100), .fr(1), .fr(2.5)]) {
     ColorView(.orange)
 }
 ```
-<img width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/3-fr-tracks.png"/>
 
-Also you could specify just an Int literal as a track size. It's equal to repeating `.fr(1)` track sizes:
+Also you could specify just an `Int` literal as a track size. It's equal to repeating `.fr(1)` track sizes:
 ```swift
 Grid(tracks: 3) { ... }
 ```
@@ -163,11 +235,22 @@ is equal to:
 Grid(tracks: [.fr(1), .fr(1), .fr(1)]) { ... }
 ```
 
+------------
+
 ### 4. Grid cell background and overlay.
-When using non-flexible track sizes it's possible the extra space to be allocated than a grid item is able to take up. To fill that space you could use `.gridCellBackground(...)` and `gridCellOverlay(...)` modifiers.
+When using non-flexible track sizes it's possible that the extra space to be allocated will be greater than a grid item is able to take up. To fill that space you could use `.gridCellBackground(...)` and `gridCellOverlay(...)` modifiers.
+See [Content mode](#8-content-mode) and [Spacing](#10-spacing) examples.
+
+------------
 
 ### 5. Spans
+
+<img align="right" width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/span-1-example.png"/>
+
 Every grid item may span across the provided number of grid tracks. You can achieve it using `.gridSpan(column: row:)` modifier. The default span is 1.
+
+*View with span >= 2 that spans across the tracks with flexible size doesn't take part in the sizes distribution for these tracks. This view will fit to the spanned tracks. So it's possible to place a view with unlimited size that spans tracks with content-based sizes (`.fit`)*
+
 ```swift
 Grid(tracks: [.fr(1), .pt(150), .fr(2)]) {
     ColorView(.blue)
@@ -183,101 +266,311 @@ Grid(tracks: [.fr(1), .pt(150), .fr(2)]) {
         .gridSpan(row: 2)
 }
 ```
-<img width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/span-1-example.png"/>
 
-More complex example:
+<img align="right" width="35%" height="35%" src="https://github.com/exyte/Grid/raw/media/Assets/span-2-example.png"/>
 
+Spanning across tracks with different size types:
 
 ```swift
-Grid(tracks: [.fr(1), .fit, .fit], spacing: 10) {
-    TextBox(text: self.placeholderText, color: .red)
-    
-    TextBox(text: String(self.placeholderText.prefix(30)), color: .orange)
-        .frame(maxWidth: 70)
-    
-    TextBox(text: String(self.placeholderText.prefix(120)), color: .green)
-        .frame(maxWidth: 100)
-        .gridSpan(column: 1, row: 2)
-    
-    TextBox(text: String(self.placeholderText.prefix(160)), color: .magenta)
-        .gridSpan(column: 2, row: 1)
-    
-    TextBox(text: String(self.placeholderText.prefix(190)), color: .cyan)
-        .gridSpan(column: 3, row: 1)
-}
-
-struct TextBox: View {
-    let text: String
-    let color: UIColor
-    
-    var body: some View {
-        Text(self.text)
-            .foregroundColor(.black)
-            .fontWeight(.medium)
-            .padding(5)
-            .gridCellBackground { _ in
-                self.background
-            }
-    }
-    
-    var borderColor: Color {
-        return Color(self.color.darker())
-    }
-    
-    var background: some View {
-        RoundedRectangle(cornerRadius: 10)
-            .fill(ColorView(self.color))
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .strokeBorder(self.borderColor, lineWidth: 5)
-        )
+var body: some View {
+    Grid(tracks: [.fr(1), .fit, .fit], spacing: 10) {
+        VCardView(text: placeholderText(),
+                  color: .red)
+        
+        VCardView(text: placeholderText(length: 30),
+                  color: .orange)
+            .frame(maxWidth: 70)
+        
+        VCardView(text: placeholderText(length: 120),
+                  color: .green)
+            .frame(maxWidth: 100)
+            .gridSpan(column: 1, row: 2)
+        
+        VCardView(text: placeholderText(length: 160),
+                  color: .magenta)
+            .gridSpan(column: 2, row: 1)
+        
+        VCardView(text: placeholderText(length: 190),
+                  color: .cyan)
+            .gridSpan(column: 3, row: 1)
     }
 }
 ```
-<img width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/span-2-example.png"/>
+
+------------
 
 ### 6. Starts
-For every grid item you can set explicit start position by specifying a column, a row or both.
-Firstly, the grid items with both column and row start positions are placed. 
-Secondly, the auto-placing algorhitm tries to place items with either column or row start position specified. If there are any conflicts - such items are placed automatically and you see warning in the console.
-And at the very end grid items with no explicit start position are placed.
-Item's start position is defined using `.gridStart(column: row:)`  modifier
+For every view you are able to set explicit start position by specifying a column, a row or both.
+Firstly, views with both column and row start positions are placed. 
+Secondly, the auto-placing algorithm tries to place views with either column or row start position specified. If there are any conflicts - such views are placed automatically and you see warning in the console.
+And at the very end views with no explicit start position are placed.
 
+Start position is defined using `.gridStart(column: row:)` modifier
+
+<img align="right" width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/starts-spans-complex.png"/>
+
+```swift
+Grid(tracks: [.pt(50), .fr(1), .fr(1.5), .fit]) {
+    ForEach(0..<6) { _ in
+        ColorView(.black)
+    }
+    
+    ColorView(.brown)
+        .gridSpan(column: 3)
+    
+    ColorView(.blue)
+        .gridSpan(column: 2)
+    
+    ColorView(.orange)
+        .gridSpan(row: 3)
+    
+    ColorView(.red)
+        .gridStart(row: 1)
+        .gridSpan(column: 2, row: 2)
+    
+    ColorView(.yellow)
+        .gridStart(row: 2)
+    
+    ColorView(.purple)
+        .frame(maxWidth: 50)
+        .gridStart(column: 3, row: 0)
+        .gridSpan(row: 9)
+    
+    ColorView(.green)
+        .gridSpan(column: 2, row: 3)
+    
+    ColorView(.cyan)
+    
+    ColorView(.gray)
+        .gridStart(column: 2)
+}
+```
+------------
 
 ### 7. Flow
-Grid has 2 types of tracks. The first one is where you specify [track sizes](#track-sizes) - the fixed one. Fixed means that a count of tracks is known. The second one and orthogonal to the fixed - is growing tracks type - where your content grows. Grid flow defines the direction of items placement:
- -  **Columns**
- Default. The number of columns is fixed and [defined as track sizes](#track-sizes). Grid items are placed moving firstly between columns and switching to the next row after the last column. Rows count is growing.
- 
- -  **Rows**
-The number of rows is fixed and [defined as track sizes](#track-sizes). Grid items are placed moving firstly between rows  and switching to the next columns after the last row. Columns count is growing.
+Grid has 2 types of tracks. The first one is where you specify [track sizes](#track-sizes) - the fixed one. Fixed means that a count of tracks is known. The second one and orthogonal to the fixed is growing tracks type: where your content grows. Grid flow defines the direction where items grow:
 
-*Grid flow could be specified in a grid constuctor as well as using  `.gridFlow(...)` modifier. The first option has more priority.*
+ -  **Rows**
+Default. The number of columns is fixed and [defined as track sizes](#track-sizes). Grid items are placed moving between columns and switching to the next row after the last column. Rows count is growing.
+
+ -  **Columns**
+The number of rows is fixed and [defined as track sizes](#track-sizes). Grid items are placed moving between rows and switching to the next column after the last row. Columns count is growing.
+
+*Grid flow could be specified in a grid constructor as well as using `.gridFlow(...)` grid modifier. The first option has more priority.*
+
+<img align="right" width="31%" height="31%" src="https://github.com/exyte/Grid/raw/media/Assets/flow-animation.gif"/>
+
+```swift
+struct ContentView: View {
+    @State var flow: GridFlow = .rows
+    
+    var body: some View {
+        VStack {
+            if self.flow == .rows {
+                Button(action: { self.flow = .columns }) {
+                    Text("Flow: ROWS")
+                }
+            } else {
+                Button(action: { self.flow = .rows }) {
+                    Text("Flow: COLUMNS")
+                }
+            }
+            
+            Grid(0..<15, tracks: 5, flow: self.flow, spacing: 5) {
+                ColorView($0.isMultiple(of: 2) ? .black : .orange)
+                    .overlay(
+                        Text(String($0))
+                            .font(.system(size: 35))
+                            .foregroundColor(.white)
+                )
+            }
+            .animation(.default)
+        }
+    }
+}
+```
+------------
 
 ### 8. Content mode
 There are 2 kinds of content modes:
 
-##### Fill
-In this mode grid view tries to fill the entire space provided by the parent view by its content. So it's better to have at least one flexible-sized track and grid items within this track that are able to fill the provided space. Grid tracks that orthogonal to the grid flow direction (growing) are implicitly assumed to have `.fr(1)` size.
+#### Scroll
+In this mode the inner grid content is able to scroll to the [growing direction](#flow). Grid tracks that orthogonal to the grid flow direction (growing) are implicitly assumed to have `.fit` size. This means that their sizes have to be defined in the respective dimension.
 
-##### Scroll
-In this mode the inner grid content is able to scroll to the [growing direction](#flow). Grid tracks that orthogonal to the grid flow direction (growing) are implicitly assumed to have `.fit` size.
+*Grid content mode could be specified in a grid constructor as well as using  `.gridContentMode(...)` grid modifier. The first option has more priority.*
+ 
+###### Rows-flow scroll:
 
-*Grid content mode could be specified in a grid constuctor as well as using  `.gridContentMode(...)` modifier. The first option has more priority.*
+<img align="right" width="35%" height="35%" src="https://github.com/exyte/Grid/raw/media/Assets/scroll-vertical.gif"/>
+
+ ```swift
+struct VCardView: View {
+    let text: String
+    let color: UIColor
+    
+    var body: some View {
+        VStack {
+            Image("dog")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .cornerRadius(5)
+                .frame(minWidth: 100, minHeight: 50)
+            
+            Text(self.text)
+                .layoutPriority(.greatestFiniteMagnitude)
+        }
+        .padding(5)
+        .gridCellBackground { _ in
+            ColorView(self.color)
+        }
+        .gridCellOverlay { _ in
+            RoundedRectangle(cornerRadius: 5)
+                .strokeBorder(Color(self.color.darker()),
+                              lineWidth: 3)
+        }
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        Grid(tracks: 3) {
+            ForEach(0..<40) { _ in
+                VCardView(text: randomText(), color: .random)
+                    .gridSpan(column: self.randomSpan)
+            }
+        }
+        .gridContentMode(.scroll)
+        .gridPacking(.dense)
+        .gridFlow(.rows)
+    }
+    
+    var randomSpan: Int {
+        Int(arc4random_uniform(3)) + 1
+    }
+}
+ ```
+
+###### Columns-flow scroll:
+
+<img align="right" width="35%" height="35%" src="https://github.com/exyte/Grid/raw/media/Assets/scroll-horizontal.gif"/>
+
+ ```swift
+struct HCardView: View {
+    let text: String
+    let color: UIColor
+
+    var body: some View {
+        HStack {
+            Image("dog")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .cornerRadius(5)
+            
+            Text(self.text)
+                .frame(maxWidth: 200)
+        }
+        .padding(5)
+        .gridCellBackground { _ in
+            ColorView(self.color)
+        }
+        .gridCellOverlay { _ in
+            RoundedRectangle(cornerRadius: 5)
+                .strokeBorder(Color(self.color.darker()),
+                              lineWidth: 3)
+        }
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        Grid(tracks: 3) {
+            ForEach(0..<8) { _ in
+                HCardView(text: randomText(), color: .random)
+                    .gridSpan(row: self.randomSpan)
+            }
+        }
+        .gridContentMode(.scroll)
+        .gridFlow(.columns)
+        .gridPacking(.dense)
+    }
+    
+    var randomSpan: Int {
+        Int(arc4random_uniform(3)) + 1
+    }
+}
+ ```
+ 
+  
+ <img align="right" width="31%" height="31%" src="https://github.com/exyte/Grid/raw/media/Assets/contentMode-animation.gif"/>
+
+ #### Fill
+In this mode grid view tries to fill the entire space provided by the parent view by its content. Grid tracks that orthogonal to the grid flow direction (growing) are implicitly assumed to have `.fr(1)` size.
+
+```swift
+@State var contentMode: GridContentMode = .scroll
+
+var body: some View {
+    VStack {
+        self.modesPicker
+        
+        Grid(models, id: \.self, tracks: 3) {
+            VCardView(text: $0.text, color: $0.color)
+                .gridSpan($0.span)
+        }
+        .gridContentMode(self.contentMode)
+        .gridFlow(.rows)
+        .gridAnimation(.default)
+    }
+}
+```
+
+------------
 
 ### 9. Packing
-Auto-placing algorithm could stick to the one of two strategies:
-##### Sparse 
+Auto-placing algorithm could stick to one of two strategies:
+
+#### Sparse 
 Default. The placement algorithm only ever moves “forward” in the grid when placing items, never backtracking to fill holes. This ensures that all of the auto-placed items appear “in order”, even if this leaves holes that could have been filled by later items.
 
-##### Dense 
+#### Dense 
 Attempts to fill in holes earlier in the grid if smaller items come up later. This may cause items to appear out-of-order, when doing so would fill in holes left by larger items.
 
-*Grid packing could be specified in a grid constuctor as well as using  `.gridPacking(...)` modifier. The first option has more priority.*
+*Grid packing could be specified in a grid constructor as well as using  `.gridPacking(...)` grid modifier. The first option has more priority.*
+
+Example:
+
+<img align="right" width="35%" height="35%" src="https://github.com/exyte/Grid/raw/media/Assets/packing-animation.gif"/>
+
+```swift
+@State var gridPacking = GridPacking.sparse
+
+var body: some View {
+    VStack {
+        self.packingPicker
+
+        Grid(tracks: 4) {
+            ColorView(.red)
+            
+            ColorView(.black)
+                .gridSpan(column: 4)
+            
+            ColorView(.purple)
+  
+            ColorView(.orange)
+            ColorView(.green)
+        }
+        .gridPacking(self.gridPacking)
+        .gridAnimation(.default)
+    }
+}
+```
+
+------------
 
 ### 10. Spacing
-There are several ways to define horizontal and vertical spacing between tracks:
-- Using Int literal which means equal spacing in all directions:
+There are several ways to define the horizontal and vertical spacings between tracks:
+
+- Using `Int` literal which means equal spacing in all directions:
 ```swift
 Grid(tracks: 4, spacing: 5) { ... } 
 ```
@@ -289,6 +582,57 @@ Grid(tracks: 4, spacing: GridSpacing(horizontal: 10, vertical: 5)) { ... }
 ```swift
 Grid(tracks: 4, spacing: [10, 5]) { ... } 
 ```
+
+Example:
+
+<img align="right" width="35%" height="35%" src="https://github.com/exyte/Grid/raw/media/Assets/spacing-animation.gif"/>
+
+```swift
+@State var vSpacing: CGFloat = 0
+@State var hSpacing: CGFloat = 0
+
+var body: some View {
+    VStack {
+        self.sliders
+        
+        Grid(tracks: 3, spacing: [hSpacing, vSpacing]) {
+            ForEach(0..<21) {
+                //Inner image used to measure size
+                self.image
+                    .aspectRatio(contentMode: .fit)
+                    .opacity(0)
+                    .gridSpan(column: max(1, $0 % 4))
+                    .gridCellOverlay {
+                        //This one is to display
+                        self.image
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: $0?.width, 
+			           height: $0?.height)
+                            .cornerRadius(5)
+                            .clipped()
+                            .shadow(color: self.shadowColor, 
+			            radius: 10, x: 0, y: 0)
+                }
+            }
+        }
+        .background(self.backgroundColor)
+        .gridContentMode(.scroll)
+        .gridPacking(.dense)
+    }
+}
+```
+
+------------
+
+### 11. Animations
+You can define a specific animation that will be applied to the inner `ZStack` using `.gridAnimation()` grid modifier.  
+By default, every view in the grid is associated with subsequent index as it's ID. Hence SwiftUI relies on the grid view position in the initial and final state to perform animation transition.
+You can associate a specific ID to a grid view using `ForEach` or `GridGroup` initialized by `Identifiable` models or by explicit KeyPath as ID to force an animation to perform in the right way.
+
+*There is no way to get KeyPath id value from the initialized ForEach view. Its inner content will be distinguished by views order while doing animations. It's better to use `ForEach` with `Identifiable` models or `GridGroup` created either with explicit ID value or `Identifiable` models to keep track of the grid views and their `View` representations in animations.* 
+
+------------
+
 ## Installation
 
 Grid is available through [CocoaPods](https://cocoapods.org). To install

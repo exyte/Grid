@@ -99,8 +99,8 @@ Grid(colorModels, id: \.self, tracks: 3) {
 
 ### 2. Containers
 #### ForEach
-Inside ViewBuilder you also can use regular ForEach statement. 
-*There is no way to get KeyPath id value from the initialized ForEach view. Its inner content will be distinguished by views order while doing animations. It's better to use `ForEach` with `Identifiable` models or `GridGroup` created either with explicit ID value or `Identifiable` models to keep track of the grid views and their `View` representations in animations.*
+Inside ViewBuilder you also can use regular `ForEach` statement. 
+*There is no way to get KeyPath id value from the initialized ForEach view. Its inner content will be distinguished by views order while doing animations. It's better to use `ForEach` with `Identifiable` models or [GridGroup](#gridgroup) created either with explicit ID value or `Identifiable` models to keep track of the grid views and their `View` representations in animations.*
 
 <img align="right" width="30%" height="30%" src="https://github.com/exyte/Grid/raw/media/Assets/forEach-1.png">
 
@@ -212,7 +212,7 @@ Pay attention to limiting a size of views that fills the entire space provided b
 
 <img align="right" width="30%" height="30%" src="https://github.com/exyte/Grid/raw/media/Assets/3-fr-tracks.png"/>
 
-Fr is a fractional unit and `.fr(1)` is for 1 part of the unassigned space in the grid. Flexible-sized tracks are computed at the very end after all non-flexible sized tracks (`.pt` and `.fit`).
+Fr is a fractional unit and `.fr(1)` is for 1 part of the unassigned space in the grid. Flexible-sized tracks are computed at the very end after all non-flexible sized tracks ([.pt](#fixed-sized-track) and [.fit](#content-based-size-fit)).
 So the available space to distribute for them is the difference of the total size available and the sum of non-flexible track sizes.
 
 ```swift
@@ -247,9 +247,9 @@ See [Content mode](#8-content-mode) and [Spacing](#10-spacing) examples.
 
 <img align="right" width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/span-1-example.png"/>
 
-Every grid item may span across the provided number of grid tracks. You can achieve it using `.gridSpan(column: row:)` modifier. The default span is 1.
+Every grid view may span across the provided number of grid tracks. You can achieve it using `.gridSpan(column: row:)` modifier. The default span is 1.
 
-*View with span >= 2 that spans across the tracks with flexible size doesn't take part in the sizes distribution for these tracks. This view will fit to the spanned tracks. So it's possible to place a view with unlimited size that spans tracks with content-based sizes (`.fit`)*
+*View with span >= 2 that spans across the tracks with flexible size doesn't take part in the sizes distribution for these tracks. This view will fit to the spanned tracks. So it's possible to place a view with unlimited size that spans tracks with content-based sizes ([.fit](#content-based-size-fit))*
 
 ```swift
 Grid(tracks: [.fr(1), .pt(150), .fr(2)]) {
@@ -348,13 +348,13 @@ Grid(tracks: [.pt(50), .fr(1), .fr(1.5), .fit]) {
 ------------
 
 ### 7. Flow
-Grid has 2 types of tracks. The first one is where you specify [track sizes](#track-sizes) - the fixed one. Fixed means that a count of tracks is known. The second one and orthogonal to the fixed is growing tracks type: where your content grows. Grid flow defines the direction where items grow:
+Grid has 2 types of tracks. The first one is where you specify [track sizes](#3-track-sizes) - the fixed one. Fixed means that a count of tracks is known. The second one and orthogonal to the fixed is growing tracks type: where your content grows. Grid flow defines the direction where items grow:
 
  -  **Rows**
-Default. The number of columns is fixed and [defined as track sizes](#track-sizes). Grid items are placed moving between columns and switching to the next row after the last column. Rows count is growing.
+Default. The number of columns is fixed and [defined as track sizes](#3-track-sizes). Grid items are placed moving between columns and switching to the next row after the last column. Rows count is growing.
 
  -  **Columns**
-The number of rows is fixed and [defined as track sizes](#track-sizes). Grid items are placed moving between rows and switching to the next column after the last row. Columns count is growing.
+The number of rows is fixed and [defined as track sizes](#3-track-sizes). Grid items are placed moving between rows and switching to the next column after the last row. Columns count is growing.
 
 *Grid flow could be specified in a grid constructor as well as using `.gridFlow(...)` grid modifier. The first option has more priority.*
 
@@ -395,7 +395,7 @@ struct ContentView: View {
 There are 2 kinds of content modes:
 
 #### Scroll
-In this mode the inner grid content is able to scroll to the [growing direction](#flow). Grid tracks that orthogonal to the grid flow direction (growing) are implicitly assumed to have `.fit` size. This means that their sizes have to be defined in the respective dimension.
+In this mode the inner grid content is able to scroll to the [growing direction](#7-flow). Grid tracks that orthogonal to the grid flow direction (growing) are implicitly assumed to have [.fit](#content-based-size-fit) size. This means that their sizes have to be defined in the respective dimension.
 
 *Grid content mode could be specified in a grid constructor as well as using  `.gridContentMode(...)` grid modifier. The first option has more priority.*
  
@@ -504,7 +504,7 @@ struct ContentView: View {
  <img align="right" width="31%" height="31%" src="https://github.com/exyte/Grid/raw/media/Assets/contentMode-animation.gif"/>
 
  #### Fill
-In this mode grid view tries to fill the entire space provided by the parent view by its content. Grid tracks that orthogonal to the grid flow direction (growing) are implicitly assumed to have `.fr(1)` size.
+Default. In this mode grid view tries to fill the entire space provided by the parent view by its content. Grid tracks that orthogonal to the grid flow direction (growing) are implicitly assumed to have [.fr(1)](#flexible-sized-track-frn) size.
 
 ```swift
 @State var contentMode: GridContentMode = .scroll
@@ -627,9 +627,9 @@ var body: some View {
 ### 11. Animations
 You can define a specific animation that will be applied to the inner `ZStack` using `.gridAnimation()` grid modifier.  
 By default, every view in the grid is associated with subsequent index as it's ID. Hence SwiftUI relies on the grid view position in the initial and final state to perform animation transition.
-You can associate a specific ID to a grid view using `ForEach` or `GridGroup` initialized by `Identifiable` models or by explicit KeyPath as ID to force an animation to perform in the right way.
+You can associate a specific ID to a grid view using [ForEach](#foreach) or [GridGroup](#gridgroup) initialized by `Identifiable` models or by explicit KeyPath as ID to force an animation to perform in the right way.
 
-*There is no way to get KeyPath id value from the initialized ForEach view. Its inner content will be distinguished by views order while doing animations. It's better to use `ForEach` with `Identifiable` models or `GridGroup` created either with explicit ID value or `Identifiable` models to keep track of the grid views and their `View` representations in animations.* 
+*There is no way to get KeyPath id value from the initialized ForEach view. Its inner content will be distinguished by views order while doing animations. It's better to use [ForEach](#foreach) with `Identifiable` models or [GridGroup](#gridgroup) created either with explicit ID value or `Identifiable` models to keep track of the grid views and their `View` representations in animations.* 
 
 ------------
 
@@ -644,7 +644,7 @@ pod 'ExyteGrid'
 
 ## Requirements
 
-* iOS 13+
+* iOS 13.3+
 * Xcode 11+ 
 
 

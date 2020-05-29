@@ -174,7 +174,7 @@ extension LayoutArranging {
             case .sparse:
                 currentIndex = lastIndex
             case .dense:
-                currentIndex = .zero // TODO: Improve dense algorithm
+                currentIndex = .zero
             }
             
             while occupiedIndices.contains(currentIndex, span: spanPreference.span) {

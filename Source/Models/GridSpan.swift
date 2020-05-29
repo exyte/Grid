@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GridSpan: Equatable {
+public struct GridSpan: Equatable, Hashable {
     var column: Int = Constants.defaultColumnSpan
     var row: Int = Constants.defaultRowSpan
     
@@ -16,7 +16,7 @@ struct GridSpan: Equatable {
 }
 
 extension GridSpan: ExpressibleByArrayLiteral {
-    init(arrayLiteral elements: Int...) {
+    public init(arrayLiteral elements: Int...) {
         assert(elements.count == 2)
         self = GridSpan(column: elements[0], row: elements[1])
     }

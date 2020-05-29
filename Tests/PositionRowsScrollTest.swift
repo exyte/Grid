@@ -51,11 +51,11 @@ class PositionRowsScrollTest: XCTestCase {
                                                    flow: .columns)
         
         let referencePositionedItems = [
-            PositionedItem(bounds: CGRect(x: 1.0, y: 0.0, width: 252.0, height: 522.0), gridItem: gridItems[0]),
+            PositionedItem(bounds: CGRect(x: 0.0, y: 0.0, width: 253.0, height: 522.0), gridItem: gridItems[0]),
             PositionedItem(bounds: CGRect(x: 0.0, y: 522.0, width: 252.0, height: 41.0), gridItem: gridItems[1]),
             PositionedItem(bounds: CGRect(x: 349.0, y: 0.0, width: 405.0, height: 563.0), gridItem: gridItems[2]),
-            PositionedItem(bounds: CGRect(x: 269.0, y: 563.0, width: 635.0, height: 85.0), gridItem: gridItems[3]),
-            PositionedItem(bounds: CGRect(x: 657.0, y: 0.0, width: 300.0, height: 522.0), gridItem: gridItems[4])
+            PositionedItem(bounds: CGRect(x: 269.0, y: 562.0, width: 635.0, height: 85.0), gridItem: gridItems[3]),
+            PositionedItem(bounds: CGRect(x: 656.0, y: 0.0, width: 301.0, height: 522.0), gridItem: gridItems[4])
         ]
         
         let referencePosition = PositionsPreference(items: referencePositionedItems, size: CGSize(width: 957.0, height: 647.0))
@@ -98,10 +98,10 @@ class PositionRowsScrollTest: XCTestCase {
                                                    flow: .columns)
         
         let referencePositionedItems = [
-            PositionedItem(bounds: CGRect(x: 1.0, y: 0.0, width: 252.0, height: 522.0), gridItem: gridItems[0]),
+            PositionedItem(bounds: CGRect(x: 0.0, y: 0.0, width: 253.0, height: 522.0), gridItem: gridItems[0]),
             PositionedItem(bounds: CGRect(x: 0.0, y: 522.0, width: 252.0, height: 41.0), gridItem: gridItems[1]),
-            PositionedItem(bounds: CGRect(x: 352.0, y: 0.0, width: 410.0, height: 563.0), gridItem: gridItems[2]),
-            PositionedItem(bounds: CGRect(x: 268.0, y: 563.0, width: 643.0, height: 85.0), gridItem: gridItems[3]),
+            PositionedItem(bounds: CGRect(x: 351.0, y: 0.0, width: 411.0, height: 563.0), gridItem: gridItems[2]),
+            PositionedItem(bounds: CGRect(x: 268.0, y: 562.0, width: 643.0, height: 85.0), gridItem: gridItems[3]),
             PositionedItem(bounds: CGRect(x: 661.0, y: 0.0, width: 299.0, height: 522.0), gridItem: gridItems[4])
         ]
         

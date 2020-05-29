@@ -17,38 +17,41 @@ class ArrangingTest: XCTestCase {
     
     private let gridItems = (0..<7).map { GridItem(AnyView(EmptyView()), id: AnyHashable($0)) }
     
-    private lazy var spanPreferences = [
-        SpanPreference(item: gridItems[0], span: [3, 1]),
-        SpanPreference(item: gridItems[1], span: [2, 2]),
-        SpanPreference(item: gridItems[2], span: [1, 1]),
-        SpanPreference(item: gridItems[3], span: [1, 1]),
-        SpanPreference(item: gridItems[4], span: [1, 2]),
-        SpanPreference(item: gridItems[5], span: [2, 3]),
-        SpanPreference(item: gridItems[6], span: [1, 3])
-    ]
+    private lazy var spanPreference = SpanPreference(items: [
+        .init(gridItem: gridItems[0], span: [3, 1]),
+        .init(gridItem: gridItems[1], span: [2, 2]),
+        .init(gridItem: gridItems[2], span: [1, 1]),
+        .init(gridItem: gridItems[3], span: [1, 1]),
+        .init(gridItem: gridItems[4], span: [1, 2]),
+        .init(gridItem: gridItems[5], span: [2, 3]),
+        .init(gridItem: gridItems[6], span: [1, 3])
+    ])
     
-    private lazy var startPreferences = gridItems.map { StartPreference(item: $0, start: .default) }
+    private lazy var startPreferences = StartPreference(items:
+        gridItems.map { .init(gridItem: $0, start: .default) })
     
     private let fixedPerfomanceTracksCount = 4
     
-    private lazy var perfomancePreferences: [SpanPreference] = {
+    private lazy var perfomancePreferences: SpanPreference = {
         srand48(0)
         let randomSpan = {
             return max(1, Int(drand48() * 100) % self.fixedPerfomanceTracksCount)
         }
         
         let gridItems = (0..<100).map { GridItem(AnyView(EmptyView()), id: AnyHashable($0)) }
-        return gridItems.map {
-            SpanPreference(item: $0, span: [randomSpan(), randomSpan()])
-        }
+        return SpanPreference(items: gridItems.map {
+            .init(gridItem: $0, span: [randomSpan(), randomSpan()])
+        })
     }()
 
     func testArrangementSparseRows() throws {
-        let arrangement = arranger.arrange(spanPreferences: spanPreferences,
-                                           startPreferences: startPreferences,
-                                           fixedTracksCount: 4,
-                                           flow: .rows,
-                                           packing: .sparse)
+        let arrangingPreferences = ArrangingPreference(gridItems: gridItems,
+                                                       starts: startPreferences,
+                                                       spans: spanPreference,
+                                                       tracks: 4,
+                                                       flow: .rows,
+                                                       packing: .sparse)
+        let arrangement = arranger.arrange(preferences: arrangingPreferences)
  
         XCTAssertEqual(arrangement, LayoutArrangement(columnsCount: 4, rowsCount: 6, items: [
             ArrangedItem(gridItem: gridItems[0], startIndex: GridIndex.zero, endIndex: [2, 0]),
@@ -62,12 +65,14 @@ class ArrangingTest: XCTestCase {
     }
     
     func testArrangementDenseRows() throws {
-        let arrangement = arranger.arrange(spanPreferences: spanPreferences,
-                                           startPreferences: startPreferences,
-                                           fixedTracksCount: 4,
-                                           flow: .rows,
-                                           packing: .dense)
-
+        let arrangingPreferences = ArrangingPreference(gridItems: gridItems,
+                                                       starts: startPreferences,
+                                                       spans: spanPreference,
+                                                       tracks: 4,
+                                                       flow: .rows,
+                                                       packing: .dense)
+        let arrangement = arranger.arrange(preferences: arrangingPreferences)
+        
         XCTAssertEqual(arrangement, LayoutArrangement(columnsCount: 4, rowsCount: 6, items: [
             ArrangedItem(gridItem: gridItems[0], startIndex: GridIndex.zero, endIndex: [2, 0]),
             ArrangedItem(gridItem: gridItems[1], startIndex: [0, 1], endIndex: [1, 2]),
@@ -82,22 +87,26 @@ class ArrangingTest: XCTestCase {
     func testArrangementSparsePerformance() throws {
         let preferences = self.perfomancePreferences
         self.measure {
-            _ = arranger.arrange(spanPreferences: preferences,
-                                 startPreferences: [],
-                                 fixedTracksCount: self.fixedPerfomanceTracksCount,
-                                 flow: .rows,
-                                 packing: .sparse)
+            let arrangingPreferences = ArrangingPreference(gridItems: gridItems,
+                                                           starts: .init(items: []),
+                                                           spans: preferences,
+                                                           tracks: 4,
+                                                           flow: .rows,
+                                                           packing: .sparse)
+            _ = arranger.arrange(preferences: arrangingPreferences)
         }
     }
     
     func testArrangementDensePerformance() throws {
         let preferences = self.perfomancePreferences
         self.measure {
-            _ = arranger.arrange(spanPreferences: preferences,
-                                 startPreferences: [],
-                                 fixedTracksCount: self.fixedPerfomanceTracksCount,
-                                 flow: .rows,
-                                 packing: .dense)
+            let arrangingPreferences = ArrangingPreference(gridItems: gridItems,
+                                                           starts: .init(items: []),
+                                                           spans: preferences,
+                                                           tracks: 4,
+                                                           flow: .rows,
+                                                           packing: .dense)
+            _ = arranger.arrange(preferences: arrangingPreferences)
         }
     }
 

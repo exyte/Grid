@@ -18,8 +18,6 @@ public enum GridTrack {
     case pt(CGFloat)
     case fit
     
-    // TODO: Add .min(Int)
-    
     var isIntrinsic: Bool {
         switch self {
         case .fr:
@@ -50,4 +48,4 @@ extension Array: ExpressibleByIntegerLiteral where Element == GridTrack {
     }
 }
 
-extension GridTrack: Equatable { }
+extension GridTrack: Equatable, Hashable { }

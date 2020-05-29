@@ -48,7 +48,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                     ForEach(self.items) { item in
                         item.view
                             .transformPreference(SpansPreferenceKey.self) { preference in
-                                if var lastItem = preference?.items.last  {
+                                if var lastItem = preference?.items.last {
                                     lastItem.gridItem = item
                                     preference?.items = [lastItem]
                                 } else {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GridStart: Equatable {
+public struct GridStart: Equatable, Hashable {
     var column: Int?
     var row: Int?
     
@@ -16,7 +16,7 @@ struct GridStart: Equatable {
 }
 
 extension GridStart: ExpressibleByArrayLiteral {
-    init(arrayLiteral elements: Int?...) {
+    public init(arrayLiteral elements: Int?...) {
         assert(elements.count == 2)
         self = GridStart(column: elements[0], row: elements[1])
     }

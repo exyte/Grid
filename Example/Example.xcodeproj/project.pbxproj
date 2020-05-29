@@ -7,9 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		360BA329247E87AF006C51FC /* CalcButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360BA328247E87AE006C51FC /* CalcButton.swift */; };
+		360BA32B247E87D6006C51FC /* MathOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360BA32A247E87D6006C51FC /* MathOperation.swift */; };
+		36161EBB247EC73C0076173B /* PackingExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36161EBA247EC73C0076173B /* PackingExample.swift */; };
+		36161EBD247ECDAD0076173B /* SpacingExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36161EBC247ECDAC0076173B /* SpacingExample.swift */; };
 		366B25052474F77000F1DD09 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B25042474F77000F1DD09 /* SceneDelegate.swift */; };
 		366B25072474F78E00F1DD09 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B25062474F78E00F1DD09 /* ContentView.swift */; };
-		366BDB592474FB9E0034794C /* RandomizedContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366BDB572474FB770034794C /* RandomizedContentView.swift */; };
+		36A6C9FB247FBB8E005F5E7E /* ColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9FA247FBB8E005F5E7E /* ColorView.swift */; };
+		36A6C9FD247FBBDC005F5E7E /* Color+brightness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9FC247FBBDC005F5E7E /* Color+brightness.swift */; };
+		36A6C9FF247FBC25005F5E7E /* FlowExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9FE247FBC25005F5E7E /* FlowExample.swift */; };
+		36A6CA01247FBC67005F5E7E /* ContentModeExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA00247FBC66005F5E7E /* ContentModeExample.swift */; };
+		36A6CA03247FBC7C005F5E7E /* CardViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA02247FBC7C005F5E7E /* CardViews.swift */; };
+		36A6CA05247FBD05005F5E7E /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA04247FBD05005F5E7E /* Helpers.swift */; };
+		36A6CA07247FD813005F5E7E /* SpansExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA06247FD813005F5E7E /* SpansExample.swift */; };
+		36A6CA0924801EA6005F5E7E /* StartsExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA0824801EA6005F5E7E /* StartsExample.swift */; };
 		36B11E512475539700CDAE27 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B11E502475539700CDAE27 /* Calculator.swift */; };
 		36F6C22A2476D919001818F2 /* Color+hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F6C2292476D919001818F2 /* Color+hex.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
@@ -21,10 +32,21 @@
 /* Begin PBXFileReference section */
 		019A245A777705E4C76B5F54 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		2477FB68660CBB45AE904BD3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		360BA328247E87AE006C51FC /* CalcButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalcButton.swift; sourceTree = "<group>"; };
+		360BA32A247E87D6006C51FC /* MathOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathOperation.swift; sourceTree = "<group>"; };
+		36161EBA247EC73C0076173B /* PackingExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingExample.swift; sourceTree = "<group>"; };
+		36161EBC247ECDAC0076173B /* SpacingExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacingExample.swift; sourceTree = "<group>"; };
 		366B25042474F77000F1DD09 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		366B25062474F78E00F1DD09 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		366B25082474F7FA00F1DD09 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		366BDB572474FB770034794C /* RandomizedContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomizedContentView.swift; sourceTree = "<group>"; };
+		36A6C9FA247FBB8E005F5E7E /* ColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorView.swift; sourceTree = "<group>"; };
+		36A6C9FC247FBBDC005F5E7E /* Color+brightness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+brightness.swift"; sourceTree = "<group>"; };
+		36A6C9FE247FBC25005F5E7E /* FlowExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowExample.swift; sourceTree = "<group>"; };
+		36A6CA00247FBC66005F5E7E /* ContentModeExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentModeExample.swift; sourceTree = "<group>"; };
+		36A6CA02247FBC7C005F5E7E /* CardViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViews.swift; sourceTree = "<group>"; };
+		36A6CA04247FBD05005F5E7E /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		36A6CA06247FD813005F5E7E /* SpansExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpansExample.swift; sourceTree = "<group>"; };
+		36A6CA0824801EA6005F5E7E /* StartsExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartsExample.swift; sourceTree = "<group>"; };
 		36B11E502475539700CDAE27 /* Calculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
 		36F6C2292476D919001818F2 /* Color+hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+hex.swift"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* Grid_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grid_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,10 +80,45 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		360BA327247E8790006C51FC /* Calculator */ = {
+			isa = PBXGroup;
+			children = (
+				36B11E502475539700CDAE27 /* Calculator.swift */,
+				360BA328247E87AE006C51FC /* CalcButton.swift */,
+				360BA32A247E87D6006C51FC /* MathOperation.swift */,
+			);
+			name = Calculator;
+			sourceTree = "<group>";
+		};
+		36A6C9F9247FBB80005F5E7E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				36A6C9FA247FBB8E005F5E7E /* ColorView.swift */,
+				36A6CA02247FBC7C005F5E7E /* CardViews.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		36A6CA0A248022BD005F5E7E /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				360BA327247E8790006C51FC /* Calculator */,
+				36161EBA247EC73C0076173B /* PackingExample.swift */,
+				36161EBC247ECDAC0076173B /* SpacingExample.swift */,
+				36A6C9FE247FBC25005F5E7E /* FlowExample.swift */,
+				36A6CA00247FBC66005F5E7E /* ContentModeExample.swift */,
+				36A6CA06247FD813005F5E7E /* SpansExample.swift */,
+				36A6CA0824801EA6005F5E7E /* StartsExample.swift */,
+			);
+			name = Examples;
+			sourceTree = "<group>";
+		};
 		36F6C2282476D8F4001818F2 /* Extesions */ = {
 			isa = PBXGroup;
 			children = (
 				36F6C2292476D919001818F2 /* Color+hex.swift */,
+				36A6C9FC247FBBDC005F5E7E /* Color+brightness.swift */,
+				36A6CA04247FBD05005F5E7E /* Helpers.swift */,
 			);
 			name = Extesions;
 			sourceTree = "<group>";
@@ -88,12 +145,12 @@
 		607FACD21AFB9204008FA782 /* Example for Grid */ = {
 			isa = PBXGroup;
 			children = (
+				36A6CA0A248022BD005F5E7E /* Examples */,
 				36F6C2282476D8F4001818F2 /* Extesions */,
+				36A6C9F9247FBB80005F5E7E /* Views */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				366B25042474F77000F1DD09 /* SceneDelegate.swift */,
-				366BDB572474FB770034794C /* RandomizedContentView.swift */,
 				366B25062474F78E00F1DD09 /* ContentView.swift */,
-				36B11E502475539700CDAE27 /* Calculator.swift */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -264,11 +321,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36A6C9FD247FBBDC005F5E7E /* Color+brightness.swift in Sources */,
+				36A6CA03247FBC7C005F5E7E /* CardViews.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
-				366BDB592474FB9E0034794C /* RandomizedContentView.swift in Sources */,
+				36A6C9FF247FBC25005F5E7E /* FlowExample.swift in Sources */,
+				360BA32B247E87D6006C51FC /* MathOperation.swift in Sources */,
+				36A6C9FB247FBB8E005F5E7E /* ColorView.swift in Sources */,
+				360BA329247E87AF006C51FC /* CalcButton.swift in Sources */,
+				36A6CA0924801EA6005F5E7E /* StartsExample.swift in Sources */,
+				36161EBB247EC73C0076173B /* PackingExample.swift in Sources */,
+				36161EBD247ECDAD0076173B /* SpacingExample.swift in Sources */,
+				36A6CA01247FBC67005F5E7E /* ContentModeExample.swift in Sources */,
+				36A6CA05247FBD05005F5E7E /* Helpers.swift in Sources */,
 				366B25052474F77000F1DD09 /* SceneDelegate.swift in Sources */,
 				36F6C22A2476D919001818F2 /* Color+hex.swift in Sources */,
 				36B11E512475539700CDAE27 /* Calculator.swift in Sources */,
+				36A6CA07247FD813005F5E7E /* SpansExample.swift in Sources */,
 				366B25072474F78E00F1DD09 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

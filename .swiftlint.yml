@@ -42,4 +42,8 @@ large_tuple:
 function_parameter_count:
   - 6 # warning
   - 8 # error
+cyclomatic_complexity:
+    warning: 13
+function_body_length:
+    warning: 60
 reporter: "xcode" # reporter type (xcode, json, csv, checkstyle)

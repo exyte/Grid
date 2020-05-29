@@ -135,12 +135,15 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
             }
             .onPreferenceChange(PositionsPreferenceKey.self) { positionsPreference in
                 guard let arrangement = self.arrangement else { return }
-                self.positions = self.reposition(positionsPreference,
-                                                   arrangement: arrangement,
-                                                   boundingSize: self.corrected(size: mainGeometry.size),
-                                                   tracks: self.trackSizes,
-                                                   contentMode: self.contentMode,
-                                                   flow: self.flow)
+                let positions =
+                    PositionsPreference(items: positionsPreference.items,
+                                        size: positionsPreference.size,
+                                        environment: .init(arrangement: arrangement,
+                                                           boundingSize: self.corrected(size: mainGeometry.size),
+                                                           tracks: self.trackSizes,
+                                                           contentMode: self.contentMode,
+                                                           flow: self.flow))
+                self.positions = self.reposition(positions)
                 self.isLoaded = true
             }
         }

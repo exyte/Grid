@@ -6,7 +6,7 @@
 
 ___
 
-<img align="right" width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/calc-animation-mock-iPhone-SE.gif"/>
+<img align="right" width="50%" height="50%" src="https://github.com/exyte/Grid/raw/media/Assets/calc-animation-mock-iPhone-XS-Max.gif"/>
 
 <p> We are a development agency building
   <a href="https://clutch.co/profile/exyte#review-731233?utm_medium=referral&utm_source=github.com&utm_campaign=phenomenal_to_clutch">phenomenal</a> apps.</p>

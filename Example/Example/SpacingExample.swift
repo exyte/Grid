@@ -17,28 +17,28 @@ struct SpacingExample: View {
     var body: some View {
         VStack {
             self.sliders
-            
-            Grid(tracks: 3, spacing: [hSpacing, vSpacing]) {
-                ForEach(0..<21) {
-                    //Inner image used to measure size
-                    self.image
-                        .aspectRatio(contentMode: .fit)
-                        .opacity(0)
-                        .gridSpan(column: max(1, $0 % 4))
-                        .gridCellOverlay {
-                            //This one is to display
-                            self.image
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: $0?.width, height: $0?.height)
-                                .cornerRadius(5)
-                                .clipped()
-                                .shadow(color: self.shadowColor, radius: 10, x: 0, y: 0)
-                    }
-                }
-            }
-            .background(self.backgroundColor)
-            .gridContentMode(.scroll)
-            .gridPacking(.dense)
+//            
+//            Grid(tracks: 3, spacing: [hSpacing, vSpacing]) {
+//                ForEach(0..<21) {
+//                    //Inner image used to measure size
+//                    self.image
+//                        .aspectRatio(contentMode: .fit)
+//                        .opacity(0)
+//                        .gridSpan(column: max(1, $0 % 4))
+//                        .gridCellOverlay {
+//                            //This one is to display
+//                            self.image
+//                                .aspectRatio(contentMode: .fill)
+//                                .frame(width: $0?.width, height: $0?.height)
+//                                .cornerRadius(5)
+//                                .clipped()
+//                                .shadow(color: self.shadowColor, radius: 10, x: 0, y: 0)
+//                    }
+//                }
+//            }
+//            .background(self.backgroundColor)
+//            .gridContentMode(.scroll)
+//            .gridPacking(.dense)
         }
     }
     

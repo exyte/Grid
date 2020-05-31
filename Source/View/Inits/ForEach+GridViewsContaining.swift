@@ -9,20 +9,34 @@
 import SwiftUI
 
 extension ForEach: GridForEachRangeInt where Data == Range<Int>, ID == Int, Content: View {
-    var contentViews: [IdentifyingAnyView] {
-        self.data.map { (AnyHashable($0), AnyView(self.content($0))) }
+    var contentViews: [IdentifiedView] {
+        self.data.flatMap {
+            self.content($0).extractContentViews()
+        }
     }
 }
 
 extension ForEach: GridForEachIdentifiable where ID == Data.Element.ID, Content: View, Data.Element: Identifiable {
-    var contentViews: [IdentifyingAnyView] {
-        self.data.map { (AnyHashable($0.id), AnyView(self.content($0))) }
+    var contentViews: [IdentifiedView] {
+        self.data.enumerated().flatMap { (dataIndex: Int, dataElement: Data.Element) -> [IdentifiedView] in
+            let view = self.content(dataElement)
+            return view.extractContentViews().enumerated().map {
+                var indentifiedView = $0.element
+                if indentifiedView.hash == nil {
+                    let hash = AnyHashable([AnyHashable(dataElement.id), AnyHashable(dataIndex + $0.offset)])
+                    indentifiedView.hash = hash
+                }
+                return indentifiedView
+            }
+        }
     }
 }
 
 extension ForEach: GridForEachID where Content: View {
-    var contentViews: [IdentifyingAnyView] {
-        self.data.map { (nil, AnyView(self.content($0))) }
+    var contentViews: [IdentifiedView] {
+        self.data.flatMap {
+            self.content($0).extractContentViews()
+        }
     }
 }
 
@@ -31,19 +45,19 @@ extension ForEach: GridForEachID where Content: View {
 // To be available on preview canvas
 
 extension ModifiedContent: GridForEachRangeInt where Content: GridForEachRangeInt, Modifier == _IdentifiedModifier<__DesignTimeSelectionIdentifier> {
-    var contentViews: [IdentifyingAnyView] {
+    var contentViews: [IdentifiedView] {
         return self.content.contentViews
     }
 }
 
 extension ModifiedContent: GridForEachIdentifiable where Content: GridForEachIdentifiable, Modifier == _IdentifiedModifier<__DesignTimeSelectionIdentifier> {
-    var contentViews: [IdentifyingAnyView] {
+    var contentViews: [IdentifiedView] {
         return self.content.contentViews
     }
 }
 
 extension ModifiedContent: GridForEachID where Content: GridForEachID, Modifier == _IdentifiedModifier<__DesignTimeSelectionIdentifier> {
-    var contentViews: [IdentifyingAnyView] {
+    var contentViews: [IdentifiedView] {
         return self.content.contentViews
     }
 }

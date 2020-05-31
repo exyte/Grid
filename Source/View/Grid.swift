@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Content: View {
+public struct Grid: View, LayoutArranging, LayoutPositioning {
 
     @State var arrangement: LayoutArrangement?
     @State var spans: SpanPreference?
@@ -229,17 +229,17 @@ struct GridView_Previews: PreviewProvider {
     static var previews: some View {
         
         VStack {
-            Grid(0..<15, tracks: 5, spacing: 5) { item in
-                if item % 2 == 0 {
-                    Color(.red)
-                        .overlay(Text("\(item)").foregroundColor(.white))
-                        .gridSpan(column: 2, row: 1)
-                } else {
-                    Color(.blue)
-                        .overlay(Text("\(item)").foregroundColor(.white))
-                }
-            }
-            
+//            Grid(0..<15, tracks: 5, spacing: 5) { item in
+//                if item % 2 == 0 {
+//                    Color(.red)
+//                        .overlay(Text("\(item)").foregroundColor(.white))
+//                        .gridSpan(column: 2, row: 1)
+//                } else {
+//                    Color(.blue)
+//                        .overlay(Text("\(item)").foregroundColor(.white))
+//                }
+//            }
+//            
             Divider()
             
             Grid(tracks: 4, spacing: 5) {

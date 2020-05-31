@@ -12,7 +12,7 @@ public struct GridGroup: View, GridGroupContaining {
     
     public static var empty = GridGroup(contentViews: [])
     
-    var contentViews: [IdentifyingAnyView]
+    var contentViews: [IdentifiedView]
     
     public var body: some View {
         EmptyView()
@@ -24,7 +24,7 @@ public struct GridGroup: View, GridGroupContaining {
 // To be available on preview canvas
 
 extension ModifiedContent: GridGroupContaining where Content: GridGroupContaining, Modifier == _IdentifiedModifier<__DesignTimeSelectionIdentifier> {
-    var contentViews: [IdentifyingAnyView] {
+    var contentViews: [IdentifiedView] {
         return self.content.contentViews
     }
 }

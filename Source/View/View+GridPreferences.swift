@@ -16,7 +16,7 @@ extension View {
             key: SpansPreferenceKey.self,
             value: SpanPreference(items: [
                 .init(gridItem: nil,
-                      span: GridSpan(column: column, row: row))])
+                      span: GridSpan(column: max(column, 1), row: max(row, 1)))])
         )
     }
     
@@ -25,7 +25,7 @@ extension View {
             key: SpansPreferenceKey.self,
             value: SpanPreference(items: [
                 .init(gridItem: nil,
-                      span: span)])
+                      span: GridSpan(column: max(span.column, 1), row: max(span.row, 1)))])
         )
     }
     
@@ -34,7 +34,8 @@ extension View {
             key: StartPreferenceKey.self,
             value: StartPreference(items: [
                 .init(gridItem: nil,
-                      start: GridStart(column: column, row: row))])
+                      start: GridStart(column: column.nilIfBelowZero,
+                                       row: row.nilIfBelowZero))])
         )
     }
     
@@ -43,7 +44,8 @@ extension View {
             key: StartPreferenceKey.self,
             value: StartPreference(items: [
                 .init(gridItem: nil,
-                      start: start)])
+                      start: GridStart(column: start.column.nilIfBelowZero,
+                                       row: start.row.nilIfBelowZero))])
         )
     }
     
@@ -66,5 +68,18 @@ extension View {
             value: GridBackgroundPreference { rect in
                 AnyView(content(rect))
         })
+    }
+}
+
+extension Optional where Wrapped == Int {
+    var nilIfBelowZero: Wrapped? {
+        let correctedValue: Int?
+        switch self {
+        case .none:
+            correctedValue = nil
+        case .some(let value):
+            correctedValue = value >= 0 ? value : nil
+        }
+        return correctedValue
     }
 }

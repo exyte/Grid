@@ -18,7 +18,7 @@ struct VCardView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .cornerRadius(5)
-                .frame(minWidth: 50, minHeight: 50)
+                .frame(minHeight: 25)
             
             Text(self.text)
                 .layoutPriority(.greatestFiniteMagnitude)
@@ -45,7 +45,7 @@ struct HCardView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .cornerRadius(5)
-                .frame(minWidth: 100, minHeight: 50)
+                .frame(minHeight: 25)
             
             Text(self.text)
                 .layoutPriority(.greatestFiniteMagnitude)

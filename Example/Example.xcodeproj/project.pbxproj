@@ -26,7 +26,7 @@
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		BD2CA0843C6E5F786F3F536D /* Pods_Grid_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F0EFC4311E7C81D431B3321 /* Pods_Grid_Example.framework */; };
+		AF0E1DE64E0957D29014F173 /* libPods-Grid_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E9ACAABC3CC52D1C66057EF /* libPods-Grid_Example.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,12 +49,12 @@
 		36A6CA0824801EA6005F5E7E /* StartsExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartsExample.swift; sourceTree = "<group>"; };
 		36B11E502475539700CDAE27 /* Calculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
 		36F6C2292476D919001818F2 /* Color+hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+hex.swift"; sourceTree = "<group>"; };
+		4E9ACAABC3CC52D1C66057EF /* libPods-Grid_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Grid_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* Grid_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grid_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		743618E75BFB071D0A54A0AB /* Grid.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Grid.podspec; path = ../Grid.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		7F0EFC4311E7C81D431B3321 /* Pods_Grid_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Grid_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		83203867AE43F6E11B626DD4 /* Pods-Grid_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grid_Example.release.xcconfig"; path = "Target Support Files/Pods-Grid_Example/Pods-Grid_Example.release.xcconfig"; sourceTree = "<group>"; };
 		BB1CE10F02D5C04050EFB4D9 /* Pods-Grid_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grid_Example.debug.xcconfig"; path = "Target Support Files/Pods-Grid_Example/Pods-Grid_Example.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -64,7 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD2CA0843C6E5F786F3F536D /* Pods_Grid_Example.framework in Frameworks */,
+				AF0E1DE64E0957D29014F173 /* libPods-Grid_Example.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,7 +180,7 @@
 		F516B29D1F87D7603CA5E1C1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7F0EFC4311E7C81D431B3321 /* Pods_Grid_Example.framework */,
+				4E9ACAABC3CC52D1C66057EF /* libPods-Grid_Example.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -197,7 +197,6 @@
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				90F47BACAB11376900422199 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -273,24 +272,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-		90F47BACAB11376900422199 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Grid_Example/Pods-Grid_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ExyteGrid/ExyteGrid.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ExyteGrid.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Grid_Example/Pods-Grid_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		A8612C1F2519BCB7F7607D68 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

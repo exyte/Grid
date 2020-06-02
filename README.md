@@ -1,12 +1,11 @@
 <img src="https://github.com/exyte/Grid/raw/media/Assets/header.png">
+<img align="right" width="480" height="360" src="https://github.com/exyte/Grid/raw/media/Assets/calc-animation-mock-iPhone-XS-Max.gif"/>
 
 <p><h1 align="left">Grid</h1></p>
 
 <p><h4>A Grid view inspired by CSS Grid and written with SwiftUI</h4></p>
 
 ___
-
-<img align="right" width="50%" height="50%" src="https://github.com/exyte/Grid/raw/media/Assets/calc-animation-mock-iPhone-XS-Max.gif"/>
 
 <p> We are a development agency building
   <a href="https://clutch.co/profile/exyte#review-731233?utm_medium=referral&utm_source=github.com&utm_campaign=phenomenal_to_clutch">phenomenal</a> apps.</p>

@@ -9,14 +9,6 @@
 import CoreGraphics
 
 protocol LayoutPositioning {
-    /// Recalculates positions based on layout arrangement and bounding size
-    /// - Parameters:
-    ///   - position: Items to reposition
-    ///   - arrangement: Previously calculated arrangement
-    ///   - boundingSize: Bounding size
-    ///   - tracks: Sizes of tracks
-    ///   - contentMode: Where the content will be scrolled or filled inside a grid
-    ///   - flow: Distribution order of grid items
     func reposition(_ positions: PositionsPreference) -> PositionsPreference
 }
 
@@ -28,7 +20,7 @@ private struct PositionedTrack {
 extension LayoutPositioning {
     func reposition(_ positions: PositionsPreference) -> PositionsPreference {
         guard let environment = positions.environment else {
-            fatalError("Environment have to be defined")
+            fatalError("Environment has to be defined")
         }
         let flow = environment.flow
         let arrangement = environment.arrangement

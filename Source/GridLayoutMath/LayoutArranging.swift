@@ -10,13 +10,6 @@ import Foundation
 import CoreGraphics
 
 protocol LayoutArranging {
-    /// Arranges grid items into layout arrangement that specifies relations between abstract position in grid view and specific item
-    /// - Parameters:
-    ///   - spanPreferences: Grid items associated with rows and columns spans
-    ///   - startPreferences: Grid items associated with start positions
-    ///   - fixedTracksCount: Total count of fixed tracks in grid view
-    ///   - flow: Distribution order of grid items
-    ///   - packing: Defines placement algorithm
     func arrange(preferences: ArrangingPreference) -> LayoutArrangement
 }
 

@@ -173,7 +173,6 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
     private func calculateArrangement(preferences: ArrangingPreference) {
         let calculatedLayout = self.arrange(preferences: preferences)
         self.arrangement = calculatedLayout
-        print(calculatedLayout)
     }
     
     private func cellPreferenceView<T: GridCellPreference>(item: GridItem, preference: T) -> some View {

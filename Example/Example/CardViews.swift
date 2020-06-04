@@ -22,6 +22,7 @@ struct VCardView: View {
             
             Text(self.text)
                 .layoutPriority(.greatestFiniteMagnitude)
+                .minimumScaleFactor(0.5)
         }
         .padding(5)
         .gridCellBackground { _ in
@@ -49,6 +50,7 @@ struct HCardView: View {
             
             Text(self.text)
                 .layoutPriority(.greatestFiniteMagnitude)
+                .minimumScaleFactor(0.5)
                 .frame(maxWidth: 200)
         }
         .padding(5)

@@ -44,11 +44,11 @@ ___
   - by rows
   - by columns
 - [**Content mode:**](#8-content-mode)
-  - fit to a container
-  - scrollable content
+  - [fill a container](#fill)
+  - [scrollable content](#scroll)
 - [**Packing mode:**](#9-packing)
-  - sparse
-  - dense
+  - [sparse](#sparse)
+  - [dense](#dense)
 - [**Vertical and horizontal spacing**](#10-spacing)
 - [**Content updates can be animated**](#11-animations)
 

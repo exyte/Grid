@@ -17,6 +17,7 @@ ___
 </br></br>
 
 [![Twitter](https://img.shields.io/badge/Twitter-@exyteHQ-blue.svg?style=flat)](http://twitter.com/exyteHQ)
+[![CI Status](https://travis-ci.org/exyte/ExyteGrid.svg?style=flat)](https://travis-ci.org/exyte/ExyteGrid)
 [![Version](https://img.shields.io/cocoapods/v/ExyteGrid.svg?style=flat)](https://cocoapods.org/pods/ExyteGrid)
 [![License](https://img.shields.io/cocoapods/l/ExyteGrid.svg?style=flat)](https://cocoapods.org/pods/ExyteGrid)
 [![Platform](https://img.shields.io/cocoapods/p/ExyteGrid.svg?style=flat)](https://cocoapods.org/pods/ExyteGrid)

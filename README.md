@@ -18,36 +18,38 @@ ___
 
 [![Twitter](https://img.shields.io/badge/Twitter-@exyteHQ-blue.svg?style=flat)](http://twitter.com/exyteHQ)
 [![Build Status](https://travis-ci.com/exyte/Grid.svg?branch=master)](https://travis-ci.com/exyte/Grid)
-[![Version](https://img.shields.io/cocoapods/v/ExyteGrid.svg?style=flat)](https://cocoapods.org/pods/ExyteGrid)
-[![License](https://img.shields.io/cocoapods/l/ExyteGrid.svg?style=flat)](https://cocoapods.org/pods/ExyteGrid)
-[![Platform](https://img.shields.io/cocoapods/p/ExyteGrid.svg?style=flat)](https://cocoapods.org/pods/ExyteGrid)
+[![Version](https://img.shields.io/cocoapods/v/ExyteGrid)](https://cocoapods.org/pods/ExyteGrid)
+[![License](https://img.shields.io/cocoapods/l/ExyteGrid)](https://cocoapods.org/pods/ExyteGrid)
+[![Platform](https://img.shields.io/cocoapods/p/ExyteGrid)](https://cocoapods.org/pods/ExyteGrid)
 
 ## Features
 
-- **Track sizes:**
-  -  Flexible `.fr(...)`
-  -  Constant `.pt(...)`
-  - Content fitting `.fit`
-- **Spanning grid views:**
+- [**Track sizes:**](#3-track-sizes)
+  -  [Flexible `.fr(...)`](#flexible-sized-track-frn)
+  -  [Fixed `.pt(...)`](#fixed-sized-track)
+  - [Content-based `.fit`](#content-based-size-fit)
+- [**Spanning grid views:**](#5-spans)
   - by rows
   - by columns
-- **Automatic view positioning**
-- **Explicit view position specifying:**
+- [**View position specifying:**](#6-starts)
+  - automatically (implicitly)
   - start row
   - start column
-  - both
-- **Flow direction:**
+  - both row and column
+- [**Flow direction:**](#7-flow)
   - by rows
   - by columns
-- **Packing mode:**
+- [**Content mode:**](#8-content-mode)
+  - fit to a container
+  - scrollable content
+- [**Packing mode:**](#9-packing)
   - sparse
   - dense
-- **Content mode:**
-  - Fit to a container
-  - Scrollable content
-- **Vertical and horizontal spacing**
-- **ForEach support**
-- **Content updates can be animated**
+- [**Vertical and horizontal spacing**](#10-spacing)
+- [**View containers**](#2-containers)
+  - [ForEach](#foreach)
+  - [GridGroup](#gridgroup)
+- [**Content updates can be animated**](#11-animations)
 
  
 ## Example
@@ -61,7 +63,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 <img align="right" width="30%" height="30%" src="https://github.com/exyte/Grid/raw/media/Assets/3-equal-fr-tracks.png"/>
 
-You can instantiate grid in different ways:
+You can instantiate Grid in different ways:
 1. Just specify tracks and your views inside ViewBuilder closure:
 ```swift
 Grid(tracks: 3) {
@@ -119,7 +121,7 @@ Grid(tracks: 4) {
 ```
 
 #### GridGroup
-Number of views in ViewBuilder closure is limited to 10. It's impossible to obtain content views from regular SwiftUI `Group` view. To exceed that limit you could use `GridGroup`. Every view in GridGroup is placed as a separate grid item. Unlike the `Group` view any outer method modifications of `GridView` are not applied to the descendant views. So it's just an enumerable container. Also `GridGroup` could be created by `Range<Int>`, `Identifiable` models, and by ID specified explicitly.
+Number of views in `ViewBuilder` closure is limited to 10. It's impossible to obtain content views from regular SwiftUI `Group` view. To exceed that limit you could use `GridGroup`. Every view in `GridGroup` is placed as a separate grid item. Unlike the `Group` view any outer method modifications of `GridView` are not applied to the descendant views. So it's just an enumerable container. Also `GridGroup` could be created by `Range<Int>`, `Identifiable` models, and by ID specified explicitly.
 
 You can use `GridGroup.empty` to define a content absence.
 
@@ -206,7 +208,7 @@ Grid(0..<6, tracks: [.fit, .fit, .fit]) {
 }
 ```
 
-Pay attention to limiting a size of views that fills the entire space provided by parent, Text() views which tend to draw as a single line.
+Pay attention to limiting a size of views that fills the entire space provided by parent and `Text()` views which tend to draw as a single line.
 
 #### Flexible sized track: `.fr(N)`
 
@@ -226,7 +228,7 @@ Grid(tracks: [.pt(100), .fr(1), .fr(2.5)]) {
 }
 ```
 
-Also you could specify just an `Int` literal as a track size. It's equal to repeating `.fr(1)` track sizes:
+Also, you could specify just an `Int` literal as a track size. It's equal to repeating `.fr(1)` track sizes:
 ```swift
 Grid(tracks: 3) { ... }
 ```
@@ -239,6 +241,7 @@ Grid(tracks: [.fr(1), .fr(1), .fr(1)]) { ... }
 
 ### 4. Grid cell background and overlay.
 When using non-flexible track sizes it's possible that the extra space to be allocated will be greater than a grid item is able to take up. To fill that space you could use `.gridCellBackground(...)` and `gridCellOverlay(...)` modifiers.
+
 See [Content mode](#8-content-mode) and [Spacing](#10-spacing) examples.
 
 ------------
@@ -301,11 +304,12 @@ var body: some View {
 
 ### 6. Starts
 For every view you are able to set explicit start position by specifying a column, a row or both.
+View will be positioned automatically if there is no start position specified.
 Firstly, views with both column and row start positions are placed. 
-Secondly, the auto-placing algorithm tries to place views with either column or row start position specified. If there are any conflicts - such views are placed automatically and you see warning in the console.
+Secondly, the auto-placing algorithm tries to place views with either column or row start position. If there are any conflicts - such views are placed automatically and you see warning in the console.
 And at the very end views with no explicit start position are placed.
 
-Start position is defined using `.gridStart(column: row:)` modifier
+Start position is defined using `.gridStart(column: row:)` modifier.
 
 <img align="right" width="40%" height="40%" src="https://github.com/exyte/Grid/raw/media/Assets/starts-spans-complex.png"/>
 
@@ -351,7 +355,7 @@ Grid(tracks: [.pt(50), .fr(1), .fr(1.5), .fit]) {
 Grid has 2 types of tracks. The first one is where you specify [track sizes](#3-track-sizes) - the fixed one. Fixed means that a count of tracks is known. The second one and orthogonal to the fixed is growing tracks type: where your content grows. Grid flow defines the direction where items grow:
 
  -  **Rows**
-Default. The number of columns is fixed and [defined as track sizes](#3-track-sizes). Grid items are placed moving between columns and switching to the next row after the last column. Rows count is growing.
+*Default.* The number of columns is fixed and [defined as track sizes](#3-track-sizes). Grid items are placed moving between columns and switching to the next row after the last column. Rows count is growing.
 
  -  **Columns**
 The number of rows is fixed and [defined as track sizes](#3-track-sizes). Grid items are placed moving between rows and switching to the next column after the last row. Columns count is growing.
@@ -504,7 +508,7 @@ struct ContentView: View {
  <img align="right" width="31%" height="31%" src="https://github.com/exyte/Grid/raw/media/Assets/contentMode-animation.gif"/>
 
  #### Fill
-Default. In this mode grid view tries to fill the entire space provided by the parent view by its content. Grid tracks that orthogonal to the grid flow direction (growing) are implicitly assumed to have [.fr(1)](#flexible-sized-track-frn) size.
+*Default.* In this mode, grid view tries to fill the entire space provided by the parent view with its content. Grid tracks that orthogonal to the grid flow direction (growing) are implicitly assumed to have [.fr(1)](#flexible-sized-track-frn) size.
 
 ```swift
 @State var contentMode: GridContentMode = .scroll
@@ -530,7 +534,7 @@ var body: some View {
 Auto-placing algorithm could stick to one of two strategies:
 
 #### Sparse 
-Default. The placement algorithm only ever moves “forward” in the grid when placing items, never backtracking to fill holes. This ensures that all of the auto-placed items appear “in order”, even if this leaves holes that could have been filled by later items.
+*Default.* The placement algorithm only ever moves “forward” in the grid when placing items, never backtracking to fill holes. This ensures that all of the auto-placed items appear “in order”, even if this leaves holes that could have been filled by later items.
 
 #### Dense 
 Attempts to fill in holes earlier in the grid if smaller items come up later. This may cause items to appear out-of-order, when doing so would fill in holes left by larger items.
@@ -654,9 +658,9 @@ pod 'ExyteGrid'
 - [ ] add regions or settings for GridGroup to specify position
 - [ ] dual dimension track sizes (grid-template-rows, grid-template-columns).
 - [ ] grid-auto-rows, grid-auto-columns
-- [ ] grid min/ideal sizes
 - [ ] improve dense placement algorithm
-- [ ] support if clauses
+- [ ] support if clauses using function builder (waiting for swift 5.3)
+- [ ] ? grid min/ideal sizes
 - [ ] ? landscape/portrait layout
 - [ ] ? calculate layout in background thread
 - [x] add GridGroup

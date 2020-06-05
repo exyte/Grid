@@ -10,13 +10,6 @@ import Foundation
 import CoreGraphics
 
 protocol LayoutArranging {
-    /// Arranges grid items into layout arrangement that specifies relations between abstract position in grid view and specific item
-    /// - Parameters:
-    ///   - spanPreferences: Grid items associated with rows and columns spans
-    ///   - startPreferences: Grid items associated with start positions
-    ///   - fixedTracksCount: Total count of fixed tracks in grid view
-    ///   - flow: Distribution order of grid items
-    ///   - packing: Defines placement algorithm
     func arrange(preferences: ArrangingPreference) -> LayoutArrangement
 }
 
@@ -44,7 +37,7 @@ extension LayoutArranging {
                 
                 var gridStart = startPreferences.items.first(where: { $0.gridItem == spanPreference.gridItem })?.start ?? .default
                 if let fixedStart = gridStart[keyPath: flow.startIndex(.fixed)],
-                    fixedStart > fixedTracksCount {
+                    fixedStart > fixedTracksCount - 1 {
                     print("Warning: grid item start \(gridStart) exceeds fixed tracks count: \(fixedTracksCount)")
                     gridStart[keyPath: flow.startIndex(.fixed)] = nil
                 }
@@ -174,7 +167,7 @@ extension LayoutArranging {
             case .sparse:
                 currentIndex = lastIndex
             case .dense:
-                currentIndex = .zero // TODO: Improve dense algorithm
+                currentIndex = .zero
             }
             
             while occupiedIndices.contains(currentIndex, span: spanPreference.span) {

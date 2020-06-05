@@ -18,7 +18,7 @@ struct ArrangingPreference: Equatable {
 }
 
 struct ArrangingPreferenceKey: PreferenceKey {
-    static var defaultValue: ArrangingPreference? = nil
+    static var defaultValue: ArrangingPreference?
 
     static func reduce(value: inout ArrangingPreference?, nextValue: () -> ArrangingPreference?) {
         

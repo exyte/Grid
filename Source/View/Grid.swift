@@ -9,7 +9,7 @@
 import SwiftUI
 
 public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Content: View {
-    
+
     @State var arrangement: LayoutArrangement?
     @State var spans: SpanPreference?
     @State var starts: StartPreference?
@@ -19,6 +19,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
     @Environment(\.gridContentMode) private var environmentContentMode
     @Environment(\.gridFlow) private var environmentFlow
     @Environment(\.gridPacking) private var environmentPacking
+    @Environment(\.gridAnimation) private var gridAnimation
     
     let items: [GridItem]
     let spacing: GridSpacing
@@ -47,7 +48,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                     ForEach(self.items) { item in
                         item.view
                             .transformPreference(SpansPreferenceKey.self) { preference in
-                                if var lastItem = preference?.items.last  {
+                                if var lastItem = preference?.items.last {
                                     lastItem.gridItem = item
                                     preference?.items = [lastItem]
                                 } else {
@@ -67,8 +68,8 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                             .frame(flow: self.flow,
                                    size: self.positions[item]?.bounds.size,
                                    contentMode: self.contentMode)
-                            .alignmentGuide(.leading, computeValue: { _ in  -(self.positions[item]?.bounds.origin.x ?? 0) })
-                            .alignmentGuide(.top, computeValue: { _ in  -(self.positions[item]?.bounds.origin.y ?? 0) })
+                            .alignmentGuide(.leading, computeValue: { _ in self.leadingGuide(item: item) })
+                            .alignmentGuide(.top, computeValue: { _ in self.topGuide(item: item) })
                             .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
                                 self.cellPreferenceView(item: item, preference: preference)
                             }
@@ -77,6 +78,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                             }
                     }
                 }
+                .animation(self.gridAnimation)
                 .frame(flow: self.flow,
                        size: mainGeometry.size,
                        contentMode: self.contentMode)
@@ -133,12 +135,15 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
             }
             .onPreferenceChange(PositionsPreferenceKey.self) { positionsPreference in
                 guard let arrangement = self.arrangement else { return }
-                self.positions = self.reposition(positionsPreference,
-                                                   arrangement: arrangement,
-                                                   boundingSize: self.corrected(size: mainGeometry.size),
-                                                   tracks: self.trackSizes,
-                                                   contentMode: self.contentMode,
-                                                   flow: self.flow)
+                let positions =
+                    PositionsPreference(items: positionsPreference.items,
+                                        size: positionsPreference.size,
+                                        environment: .init(arrangement: arrangement,
+                                                           boundingSize: self.corrected(size: mainGeometry.size),
+                                                           tracks: self.trackSizes,
+                                                           contentMode: self.contentMode,
+                                                           flow: self.flow))
+                self.positions = self.reposition(positions)
                 self.isLoaded = true
             }
         }
@@ -156,11 +161,18 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
         }
         return self.flow == .rows ? .vertical : .horizontal
     }
+    
+    private func leadingGuide(item: GridItem) -> CGFloat {
+        return -(self.positions[item]?.bounds.origin.x ?? CGFloat(-self.spacing.horizontal) / 2.0)
+    }
+    
+    private func topGuide(item: GridItem) -> CGFloat {
+        -(self.positions[item]?.bounds.origin.y ?? CGFloat(-self.spacing.vertical) / 2.0)
+    }
 
     private func calculateArrangement(preferences: ArrangingPreference) {
         let calculatedLayout = self.arrange(preferences: preferences)
         self.arrangement = calculatedLayout
-        print(calculatedLayout)
     }
     
     private func cellPreferenceView<T: GridCellPreference>(item: GridItem, preference: T) -> some View {
@@ -209,56 +221,5 @@ extension View {
         edgeInsets.leading = spacing.horizontal / 2
         edgeInsets.trailing = spacing.horizontal / 2
         return self.padding(edgeInsets)
-    }
-}
-
-struct GridView_Previews: PreviewProvider {
-    static var previews: some View {
-        
-        VStack {
-            Grid(0..<15, tracks: 5, spacing: 5) { item in
-                if item % 2 == 0 {
-                    Color(.red)
-                        .overlay(Text("\(item)").foregroundColor(.white))
-                        .gridSpan(column: 2, row: 1)
-                } else {
-                    Color(.blue)
-                        .overlay(Text("\(item)").foregroundColor(.white))
-                }
-            }
-            
-            Divider()
-            
-            Grid(tracks: 4, spacing: 5) {
-                
-                ForEach(0..<10) { _ in
-                    Color.black
-                }
-                Color(.brown)
-                    .gridSpan(column: 3, row: 1)
-                
-                Color(.blue)
-                    .gridSpan(column: 2, row: 2)
-                
-                Color(.red)
-                    .gridSpan(column: 1, row: 1)
-                
-                Color(.yellow)
-                    .gridSpan(column: 1, row: 1)
-
-                Color(.purple)
-                    .gridSpan(column: 1, row: 2)
-
-                Color(.green)
-                    .gridSpan(column: 2, row: 3)
-
-                Color(.orange)
-                    .gridSpan(column: 1, row: 3)
-                
-                Color(.gray)
-            }
-        }
-        .gridFlow(.rows)
-        .gridPacking(.dense)
     }
 }

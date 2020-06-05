@@ -15,6 +15,4 @@ public enum GridContentMode {
     
     /// Fills the entire space of the parent container
     case fill
-    
-    // TODO: Add fit
 }

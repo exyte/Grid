@@ -22,7 +22,7 @@ ___
 [![License](https://img.shields.io/cocoapods/l/ExyteGrid)](https://cocoapods.org/pods/ExyteGrid)
 [![Platform](https://img.shields.io/cocoapods/p/ExyteGrid)](https://cocoapods.org/pods/ExyteGrid)
 
-## Features
+## Contents
 - [**Initialization**](#1-initialization)
 - [**View containers**](#2-containers)
   - [ForEach](#foreach)

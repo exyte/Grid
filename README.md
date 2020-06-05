@@ -1,5 +1,5 @@
 <img src="https://github.com/exyte/Grid/raw/media/Assets/header.png">
-<img align="right" width="480" height="360" src="https://github.com/exyte/Grid/raw/media/Assets/calc-animation-mock-iPhone-XS-Max.gif"/>
+<img align="right" width="480" src="https://github.com/exyte/Grid/raw/media/Assets/calc-animation-mock-iPhone-XS-Max.gif"/>
 
 <p><h1 align="left">Grid</h1></p>
 

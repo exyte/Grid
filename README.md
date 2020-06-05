@@ -22,7 +22,7 @@ ___
 [![License](https://img.shields.io/cocoapods/l/ExyteGrid)](https://cocoapods.org/pods/ExyteGrid)
 [![Platform](https://img.shields.io/cocoapods/p/ExyteGrid)](https://cocoapods.org/pods/ExyteGrid)
 
-## Features
+## Contents
 - [**Initialization**](#1-initialization)
 - [**View containers**](#2-containers)
   - [ForEach](#foreach)
@@ -41,8 +41,8 @@ ___
   - start column
   - both row and column
 - [**Flow direction:**](#7-flow)
-  - by rows
-  - by columns
+  - [by rows](#rows)
+  - [by columns](#columns)
 - [**Content mode:**](#8-content-mode)
   - [fill a container](#fill)
   - [scrollable content](#scroll)
@@ -355,10 +355,10 @@ Grid(tracks: [.pt(50), .fr(1), .fr(1.5), .fit]) {
 ### 7. Flow
 Grid has 2 types of tracks. The first one is where you specify [track sizes](#3-track-sizes) - the fixed one. Fixed means that a count of tracks is known. The second one and orthogonal to the fixed is growing tracks type: where your content grows. Grid flow defines the direction where items grow:
 
-###### **Rows**
+#### **Rows**
 *Default.* The number of columns is fixed and [defined as track sizes](#3-track-sizes). Grid items are placed moving between columns and switching to the next row after the last column. Rows count is growing.
 
-###### **Columns**
+#### **Columns**
 The number of rows is fixed and [defined as track sizes](#3-track-sizes). Grid items are placed moving between rows and switching to the next column after the last row. Columns count is growing.
 
 *Grid flow could be specified in a grid constructor as well as using `.gridFlow(...)` grid modifier. The first option has more priority.*

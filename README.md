@@ -23,11 +23,15 @@ ___
 [![Platform](https://img.shields.io/cocoapods/p/ExyteGrid)](https://cocoapods.org/pods/ExyteGrid)
 
 ## Features
-
+- [**Initialization**](#1-initialization)
+- [**View containers**](#2-containers)
+  - [ForEach](#foreach)
+  - [GridGroup](#gridgroup)
 - [**Track sizes:**](#3-track-sizes)
   - [Flexible `.fr(...)`](#flexible-sized-track-frn)
   - [Fixed `.pt(...)`](#fixed-sized-track)
   - [Content-based `.fit`](#content-based-size-fit)
+- [**Grid cell background and overlay**](#4-grid-cell-background-and-overlay)
 - [**Spanning grid views:**](#5-spans)
   - by rows
   - by columns
@@ -46,9 +50,6 @@ ___
   - [sparse](#sparse)
   - [dense](#dense)
 - [**Vertical and horizontal spacing**](#10-spacing)
-- [**View containers**](#2-containers)
-  - [ForEach](#foreach)
-  - [GridGroup](#gridgroup)
 - [**Content updates can be animated**](#11-animations)
 
  
@@ -239,7 +240,7 @@ Grid(tracks: [.fr(1), .fr(1), .fr(1)]) { ... }
 
 ------------
 
-### 4. Grid cell background and overlay.
+### 4. Grid cell background and overlay
 When using non-flexible track sizes it's possible that the extra space to be allocated will be greater than a grid item is able to take up. To fill that space you could use `.gridCellBackground(...)` and `gridCellOverlay(...)` modifiers.
 
 See [Content mode](#8-content-mode) and [Spacing](#10-spacing) examples.
@@ -354,10 +355,10 @@ Grid(tracks: [.pt(50), .fr(1), .fr(1.5), .fit]) {
 ### 7. Flow
 Grid has 2 types of tracks. The first one is where you specify [track sizes](#3-track-sizes) - the fixed one. Fixed means that a count of tracks is known. The second one and orthogonal to the fixed is growing tracks type: where your content grows. Grid flow defines the direction where items grow:
 
- -  **Rows**
+###### **Rows**
 *Default.* The number of columns is fixed and [defined as track sizes](#3-track-sizes). Grid items are placed moving between columns and switching to the next row after the last column. Rows count is growing.
 
- -  **Columns**
+###### **Columns**
 The number of rows is fixed and [defined as track sizes](#3-track-sizes). Grid items are placed moving between rows and switching to the next column after the last row. Columns count is growing.
 
 *Grid flow could be specified in a grid constructor as well as using `.gridFlow(...)` grid modifier. The first option has more priority.*

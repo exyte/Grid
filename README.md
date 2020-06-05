@@ -25,8 +25,8 @@ ___
 ## Features
 
 - [**Track sizes:**](#3-track-sizes)
-  -  [Flexible `.fr(...)`](#flexible-sized-track-frn)
-  -  [Fixed `.pt(...)`](#fixed-sized-track)
+  - [Flexible `.fr(...)`](#flexible-sized-track-frn)
+  - [Fixed `.pt(...)`](#fixed-sized-track)
   - [Content-based `.fit`](#content-based-size-fit)
 - [**Spanning grid views:**](#5-spans)
   - by rows
@@ -40,11 +40,11 @@ ___
   - by rows
   - by columns
 - [**Content mode:**](#8-content-mode)
-  - fit to a container
-  - scrollable content
+  - [fill a container](#fill)
+  - [scrollable content](#scroll)
 - [**Packing mode:**](#9-packing)
-  - sparse
-  - dense
+  - [sparse](#sparse)
+  - [dense](#dense)
 - [**Vertical and horizontal spacing**](#10-spacing)
 - [**View containers**](#2-containers)
   - [ForEach](#foreach)

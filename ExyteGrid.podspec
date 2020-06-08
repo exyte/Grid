@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.social_media_url = 'http://exyte.com'
 
   s.ios.deployment_target = '13.0'
-  s.source_files = 'Source/**/*.swift'
+  s.source_files = 'Sources/**/*.swift'
   s.swift_version = "5.2"
   
 end

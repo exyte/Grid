@@ -32,12 +32,23 @@ Check out [full documentation](#documentation) below.
 
 ## Installation
 
+#### CocoaPods
+
 Grid is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
 pod 'ExyteGrid'
 ```
+
+#### Swift Package Manager
+
+Grid is available through [Swift Package Manager](https://swift.org/package-manager).
+
+Add it to an existing Xcode project as a package dependency:
+
+1. From the **File** menu, select **Swift Packages › Add Package Dependency…**
+2. Enter "https://github.com/exyte/Grid" into the package repository URL text field
 
 ## Requirements
 

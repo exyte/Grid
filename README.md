@@ -22,7 +22,38 @@ ___
 [![License](https://img.shields.io/cocoapods/l/ExyteGrid)](https://cocoapods.org/pods/ExyteGrid)
 [![Platform](https://img.shields.io/cocoapods/p/ExyteGrid)](https://cocoapods.org/pods/ExyteGrid)
 
-## Contents
+## Overview
+
+Grid is a powerful and easy way to layout your views in SwiftUI:
+
+<img src="https://i.imgur.com/pl3k7iE.gif">
+
+Check out [full documentation](#documentation) below.
+
+## Installation
+
+Grid is available through [CocoaPods](https://cocoapods.org). To install
+it, simply add the following line to your Podfile:
+
+```ruby
+pod 'ExyteGrid'
+```
+
+## Requirements
+
+* iOS 13.3+
+* Xcode 11+
+
+## Building from sources
+
+```shell
+git clone git@github.com:exyte/Grid.git
+cd Grid/Example/
+pod install
+open Example.xcworkspace/
+```
+
+## Documentation
 - [**Initialization**](#1-initialization)
 - [**View containers**](#2-containers)
   - [ForEach](#foreach)
@@ -52,14 +83,6 @@ ___
 - [**Vertical and horizontal spacing**](#10-spacing)
 - [**Content updates can be animated**](#11-animations)
 
- 
-## Example
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-------------
-
-## How to use
 ### 1. Initialization
 
 <img align="right" width="30%" height="30%" src="https://github.com/exyte/Grid/raw/media/Assets/3-equal-fr-tracks.png"/>
@@ -637,21 +660,6 @@ You can associate a specific ID to a grid view using [ForEach](#foreach) or [Gri
 *There is no way to get KeyPath id value from the initialized ForEach view. Its inner content will be distinguished by views order while doing animations. It's better to use [ForEach](#foreach) with `Identifiable` models or [GridGroup](#gridgroup) created either with explicit ID value or `Identifiable` models to keep track of the grid views and their `View` representations in animations.* 
 
 ------------
-
-## Installation
-
-Grid is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```ruby
-pod 'ExyteGrid'
-```
-
-## Requirements
-
-* iOS 13.3+
-* Xcode 11+ 
-
 
 ## Roadmap:
 

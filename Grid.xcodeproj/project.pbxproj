@@ -131,7 +131,7 @@
 		361723432475218200866539 = {
 			isa = PBXGroup;
 			children = (
-				3617234F2475218200866539 /* Source */,
+				3617234F2475218200866539 /* Sources */,
 				361723A82475229400866539 /* Tests */,
 				3617234E2475218200866539 /* Products */,
 			);
@@ -146,7 +146,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3617234F2475218200866539 /* Source */ = {
+		3617234F2475218200866539 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				361723692475221000866539 /* Configuration */,
@@ -157,7 +157,7 @@
 				361723502475218200866539 /* Grid.h */,
 				361723512475218200866539 /* Info.plist */,
 			);
-			path = Source;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		361723582475220F00866539 /* GridLayoutMath */ = {
@@ -580,7 +580,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Source/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -604,7 +604,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Source/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

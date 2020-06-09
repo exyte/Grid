@@ -3,7 +3,7 @@
 
 <p><h1 align="left">Grid</h1></p>
 
-<p><h4>A Grid view inspired by CSS Grid and written with SwiftUI</h4></p>
+<p><h4>Grid view inspired by CSS Grid and written with SwiftUI</h4></p>
 
 ___
 

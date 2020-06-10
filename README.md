@@ -92,7 +92,8 @@ open Example.xcworkspace/
   - [sparse](#sparse)
   - [dense](#dense)
 - [**Vertical and horizontal spacing**](#10-spacing)
-- [**Content updates can be animated**](#11-animations)
+- [**Cell clip shape**](#11-cell-clip-shape)
+- [**Content updates can be animated**](#12-animations)
 
 ### 1. Initialization
 
@@ -663,7 +664,41 @@ var body: some View {
 
 ------------
 
-### 11. Animations
+### 11. Cell clip shape
+
+<img align="right" width="30%" height="30%" src="https://github.com/exyte/Grid/raw/media/Assets/clip-shape.png"/>
+
+You're able to specify a shape that'll be used for clipping the exceeded content of a cell view. 
+
+Here is the example from [spacing part](#10-spacing) but using another approach. Image size is limited by `maxHeight` and exceeded image parts are clipped using `gridCellClip` modifier.
+*[Grid cell background and overlay](#4-grid-cell-background-and-overlay) are not clipped*
+
+Example:
+
+```swift
+var clipShape = RoundedRectangle(cornerRadius: 6)
+
+var body: some View {
+    Grid(tracks: 3, spacing: [hSpacing, vSpacing]) {
+        ForEach(0..<21) {
+            self.image
+                .aspectRatio(contentMode: .fill)
+                .frame(maxHeight: 150) // Used to limit image growing
+                .gridSpan(column: max(1, $0 % 4))
+                .gridCellBackground { _ in
+                    self.clipShape
+                        .shadow(color: self.shadowColor, radius: 10, x: 0, y: 0)
+            }
+        }
+    }
+    .gridContentMode(.scroll)
+    .gridPacking(.dense)
+    .gridCellClip(shape: self.clipShape)
+}
+```
+------------
+
+### 12. Animations
 You can define a specific animation that will be applied to the inner `ZStack` using `.gridAnimation()` grid modifier.  
 By default, every view in the grid is associated with subsequent index as it's ID. Hence SwiftUI relies on the grid view position in the initial and final state to perform animation transition.
 You can associate a specific ID to a grid view using [ForEach](#foreach) or [GridGroup](#gridgroup) initialized by `Identifiable` models or by explicit KeyPath as ID to force an animation to perform in the right way.

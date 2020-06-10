@@ -20,6 +20,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
     @Environment(\.gridFlow) private var environmentFlow
     @Environment(\.gridPacking) private var environmentPacking
     @Environment(\.gridAnimation) private var gridAnimation
+    @Environment(\.gridCellClipShape) private var cellClipShape
     
     let items: [GridItem]
     let spacing: GridSpacing
@@ -68,6 +69,9 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                             .frame(flow: self.flow,
                                    size: self.positions[item]?.bounds.size,
                                    contentMode: self.contentMode)
+                            .padding(spacing: self.spacing, isInversed: true)
+                            .clipShape(self.cellClipShape)
+                            .clipped()
                             .alignmentGuide(.leading, computeValue: { _ in self.leadingGuide(item: item) })
                             .alignmentGuide(.top, computeValue: { _ in self.topGuide(item: item) })
                             .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
@@ -214,12 +218,13 @@ extension View {
         return frame(width: width, height: height)
     }
     
-    fileprivate func padding(spacing: GridSpacing) -> some View {
+    fileprivate func padding(spacing: GridSpacing, isInversed: Bool = false) -> some View {
         var edgeInsets = EdgeInsets()
-        edgeInsets.top = spacing.vertical / 2
-        edgeInsets.bottom = spacing.vertical / 2
-        edgeInsets.leading = spacing.horizontal / 2
-        edgeInsets.trailing = spacing.horizontal / 2
+        let sign: CGFloat = isInversed ? -1 : 1
+        edgeInsets.top = spacing.vertical / 2 * sign
+        edgeInsets.bottom = spacing.vertical / 2 * sign
+        edgeInsets.leading = spacing.horizontal / 2 * sign
+        edgeInsets.trailing = spacing.horizontal / 2 * sign
         return self.padding(edgeInsets)
     }
 }

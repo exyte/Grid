@@ -25,6 +25,10 @@ extension View {
     public func gridAnimation(_ animation: Animation?) -> some View {
         return self.environment(\.gridAnimation, animation)
     }
+    
+    public func gridCellClip<T: Shape>(shape: T) -> some View {
+        return self.environment(\.gridCellClipShape, AnyGridShape(shape))
+    }
 }
 
 //swiftlint:disable implicit_getter
@@ -48,6 +52,11 @@ extension EnvironmentValues {
         get { self[EnvironmentKeys.GridAnimation.self] }
         set { self[EnvironmentKeys.GridAnimation.self] = newValue }
     }
+    
+    var gridCellClipShape: AnyGridShape {
+        get { self[EnvironmentKeys.GridCellClipShape.self] }
+        set { self[EnvironmentKeys.GridCellClipShape.self] = newValue }
+    }
 }
 
 private struct EnvironmentKeys {
@@ -65,5 +74,9 @@ private struct EnvironmentKeys {
     
     struct GridAnimation: EnvironmentKey {
         static let defaultValue: Animation? = nil
+    }
+    
+    struct GridCellClipShape: EnvironmentKey {
+        static let defaultValue: AnyGridShape = AnyGridShape(Rectangle())
     }
 }

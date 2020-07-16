@@ -12,11 +12,6 @@ protocol LayoutPositioning {
     func reposition(_ task: PositioningTask) -> PositionedLayout
 }
 
-private struct PositionedTrack {
-    let track: GridTrack
-    var baseSize: CGFloat
-}
-
 struct PositioningTask: Equatable {
     let items: [PositionedItem]
     var arrangement: LayoutArrangement
@@ -24,11 +19,7 @@ struct PositioningTask: Equatable {
     var tracks: [GridTrack]
     var contentMode: GridContentMode
     var flow: GridFlow
-    
-    subscript(gridItem: GridItem) -> PositionedItem? {
-        items.first(where: { $0.gridItem == gridItem })
-    }
-    
+
     subscript(arrangedItem: ArrangedItem) -> PositionedItem? {
         items.first(where: { $0.gridItem == arrangedItem.gridItem })
     }
@@ -37,6 +28,8 @@ struct PositioningTask: Equatable {
 struct PositionedLayout: Equatable {
     let items: [PositionedItem]
     let totalSize: CGSize?
+    
+    static let empty = PositionedLayout(items: [], totalSize: nil)
 
     subscript(gridItem: GridItem) -> PositionedItem? {
         items.first(where: { $0.gridItem == gridItem })
@@ -45,6 +38,11 @@ struct PositionedLayout: Equatable {
     subscript(arrangedItem: ArrangedItem) -> PositionedItem? {
         items.first(where: { $0.gridItem == arrangedItem.gridItem })
     }
+}
+
+private struct PositionedTrack {
+    let track: GridTrack
+    var baseSize: CGFloat
 }
 
 extension LayoutPositioning {

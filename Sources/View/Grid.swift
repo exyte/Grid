@@ -9,7 +9,7 @@
 import SwiftUI
 
 public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Content: View {
-    @State var positions = PositionedLayout(items: [], totalSize: nil)
+    @State var positions: PositionedLayout = .empty
     @State var isLoaded: Bool = false
     @Environment(\.gridContentMode) private var environmentContentMode
     @Environment(\.gridFlow) private var environmentFlow
@@ -45,15 +45,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                             .padding(spacing: self.spacing)
                             .background(self.positionsPreferencesSetter(item: item))
                             .transformPreference(GridPreferenceKey.self) { preference in
-                                let positionedItem = preference.itemsInfo.compactMap(\.positionedItem).first
-                                let bounds = preference.itemsInfo.compactMap(\.bounds).first
-                                let span = preference.itemsInfo.compactMap(\.span).first ?? .default
-                                let start = preference.itemsInfo.compactMap(\.start).first ?? .default
-                                let itemInfo = GridPreference.ItemInfo(positionedItem: positionedItem,
-                                                                       bounds: bounds,
-                                                                       span: span,
-                                                                       start: start)
-                                preference.itemsInfo = [itemInfo]
+                                preference.itemsInfo = preference.itemsInfo.mergedToSingleValue
                             }
                             .frame(flow: self.flow,
                                    size: self.positions[item]?.bounds.size,
@@ -79,35 +71,28 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                        alignment: .topLeading)
             }
             .onPreferenceChange(GridPreferenceKey.self) { preference in
-                let infos: [ArrangementInfo] = preference.itemsInfo.compactMap {
-                    guard
-                        let gridItem = $0.positionedItem?.gridItem,
-                        let start = $0.start,
-                        let span = $0.span
-                    else {
-                        return nil
-                    }
-                    return ArrangementInfo(gridItem: gridItem,
-                                           start: start,
-                                           span: span)
-                }
-                let task = ArrangingTask(itemsInfo: infos,
-                                         tracks: self.trackSizes,
-                                         flow: self.flow,
-                                         packing: self.packing)
-                let calculatedLayout = self.arrange(task: task)
-                let positionTask = PositioningTask(items: preference.itemsInfo.compactMap(\.positionedItem),
-                                                   arrangement: calculatedLayout,
-                                                   boundingSize: self.corrected(size: mainGeometry.size),
-                                                   tracks: self.trackSizes,
-                                                   contentMode: self.contentMode,
-                                                   flow: self.flow)
-                let positions = self.reposition(positionTask)
-                self.positions = positions
-                self.isLoaded = true
+                self.calculateLayout(preference: preference,
+                                     boundingSize: mainGeometry.size)
             }
         }
         .opacity(self.isLoaded ? 1 : 0)
+    }
+    
+    private func calculateLayout(preference: GridPreference, boundingSize: CGSize) {
+        let task = ArrangingTask(itemsInfo: preference.itemsInfo.asArrangementInfo,
+                                 tracks: self.trackSizes,
+                                 flow: self.flow,
+                                 packing: self.packing)
+        let calculatedLayout = self.arrange(task: task)
+        let positionTask = PositioningTask(items: preference.itemsInfo.compactMap(\.positionedItem),
+                                           arrangement: calculatedLayout,
+                                           boundingSize: self.corrected(size: boundingSize),
+                                           tracks: self.trackSizes,
+                                           contentMode: self.contentMode,
+                                           flow: self.flow)
+        let positions = self.reposition(positionTask)
+        self.positions = positions
+        self.isLoaded = true
     }
     
     private func corrected(size: CGSize) -> CGSize {

@@ -43,7 +43,8 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                     ForEach(self.items) { item in
                         item.view
                             .padding(spacing: self.spacing)
-                            .background(self.positionsPreferencesSetter(item: item))
+                            .background(self.positionsPreferencesSetter(item: item,
+                                                                        boundingSize: mainGeometry.size))
                             .transformPreference(GridPreferenceKey.self) { preference in
                                 preference.itemsInfo = preference.itemsInfo.mergedToSingleValue
                             }
@@ -124,7 +125,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                height: self.positions[item]?.bounds.height)
     }
     
-    private func positionsPreferencesSetter(item: GridItem) -> some View {
+    private func positionsPreferencesSetter(item: GridItem, boundingSize: CGSize) -> some View {
         GeometryReader { geometry in
             Color.clear
                 .transformPreference(GridPreferenceKey.self, { preference in
@@ -134,7 +135,8 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                     let environment = GridPreference.Environment(tracks: self.trackSizes,
                                                                  contentMode: self.contentMode,
                                                                  flow: self.flow,
-                                                                 packing: self.packing)
+                                                                 packing: self.packing,
+                                                                 boundingSize: boundingSize)
                     preference = GridPreference(itemsInfo: [info], environment: environment)
                 })
         }

@@ -22,6 +22,7 @@ struct GridPreference: Equatable {
         var contentMode: GridContentMode
         var flow: GridFlow
         var packing: GridPacking
+        var boundingSize: CGSize
     }
 
     var itemsInfo: [ItemInfo] = []

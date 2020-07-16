@@ -9,7 +9,7 @@
 import CoreGraphics
 
 protocol LayoutPositioning {
-    func reposition(_ positions: PositionsPreference) -> PositionsPreference
+    func reposition(_ task: PositioningTask) -> PositionedLayout
 }
 
 private struct PositionedTrack {
@@ -17,20 +17,47 @@ private struct PositionedTrack {
     var baseSize: CGFloat
 }
 
+struct PositioningTask: Equatable {
+    let items: [PositionedItem]
+    var arrangement: LayoutArrangement
+    var boundingSize: CGSize
+    var tracks: [GridTrack]
+    var contentMode: GridContentMode
+    var flow: GridFlow
+    
+    subscript(gridItem: GridItem) -> PositionedItem? {
+        items.first(where: { $0.gridItem == gridItem })
+    }
+    
+    subscript(arrangedItem: ArrangedItem) -> PositionedItem? {
+        items.first(where: { $0.gridItem == arrangedItem.gridItem })
+    }
+}
+
+struct PositionedLayout: Equatable {
+    let items: [PositionedItem]
+    let totalSize: CGSize?
+
+    subscript(gridItem: GridItem) -> PositionedItem? {
+        items.first(where: { $0.gridItem == gridItem })
+    }
+    
+    subscript(arrangedItem: ArrangedItem) -> PositionedItem? {
+        items.first(where: { $0.gridItem == arrangedItem.gridItem })
+    }
+}
+
 extension LayoutPositioning {
-    func reposition(_ positions: PositionsPreference) -> PositionsPreference {
-        guard let environment = positions.environment else {
-            fatalError("Environment has to be defined")
-        }
-        let flow = environment.flow
-        let arrangement = environment.arrangement
-        let boundingSize = environment.boundingSize
-        let tracks = environment.tracks
+    func reposition(_ task: PositioningTask) -> PositionedLayout {
+        let flow = task.flow
+        let arrangement = task.arrangement
+        let boundingSize = task.boundingSize
+        let tracks = task.tracks
 
         /// 1. Calculate growing track sizes as max of all the items within a track
         let growingTracks: [GridTrack]
         let growingBoundingSize: CGFloat
-        if environment.contentMode == .scroll {
+        if task.contentMode == .scroll {
             growingTracks = [GridTrack](repeating: .fit, count: arrangement[keyPath: flow.arrangementCount(.growing)])
             growingBoundingSize = .infinity
         } else {
@@ -38,24 +65,23 @@ extension LayoutPositioning {
             growingBoundingSize = boundingSize[keyPath: flow.size(.growing)]
         }
         
-        let growingTracksSizes: [CGFloat] = self.calculateTrackSizes(position: positions,
+        let growingTracksSizes: [CGFloat] = self.calculateTrackSizes(task: task,
                                                                      boundingSize: growingBoundingSize,
                                                                      tracks: growingTracks,
                                                                      dimension: .growing)
         
         /// 2. Calculate fixed track sizes
-        let fixedTracksSizes = self.calculateTrackSizes(position: positions,
+        let fixedTracksSizes = self.calculateTrackSizes(task: task,
                                                         boundingSize: boundingSize[keyPath: flow.size(.fixed)],
                                                         tracks: tracks,
                                                         dimension: .fixed)
-        return positionedItems(positions: positions, growingTracksSizes: growingTracksSizes, fixedTracksSizes: fixedTracksSizes)
+        return positionedItems(task: task, growingTracksSizes: growingTracksSizes, fixedTracksSizes: fixedTracksSizes)
     }
     
-    private func calculateTrackSizes(position: PositionsPreference, boundingSize: CGFloat,
+    private func calculateTrackSizes(task: PositioningTask, boundingSize: CGFloat,
                                      tracks: [GridTrack], dimension: GridFlowDimension) -> [CGFloat] {
-        guard let environment = position.environment else { return [] }
-        let flow = environment.flow
-        let arrangement = environment.arrangement
+        let flow = task.flow
+        let arrangement = task.arrangement
         
         /// 1. Initialize sizes
         var growingTracksSizes: [PositionedTrack] =
@@ -73,7 +99,7 @@ extension LayoutPositioning {
         /// 2. Resolve Intrinsic Track Sizes
         /// 2.1. Size tracks to fit non-spanning items
         self.sizeToFitNonSpanning(growingTracksSizes: &growingTracksSizes, arrangement: arrangement,
-                                  flow: flow, dimension: dimension, position: position)
+                                  flow: flow, dimension: dimension, task: task)
         
         /// 2.2. Increase sizes to accommodate spanning items
         let arrangedSpannedItems = arrangement.items
@@ -95,7 +121,7 @@ extension LayoutPositioning {
                 if (tracks[start...end].contains { $0.isFlexible }) { continue }
                 
                 let trackSizes = growingTracksSizes[start...end].map(\.baseSize).reduce(0, +)
-                let itemSize = position[arrangedItem]?.bounds.size[keyPath: flow.size(dimension)]
+                let itemSize = task[arrangedItem]?.bounds.size[keyPath: flow.size(dimension)]
                 let spaceToDistribute = max(0, (itemSize ?? 0) - trackSizes)
                 (start...end).forEach {
                     let plannedIncrease = plannedIncreases[$0] ?? 0
@@ -137,21 +163,20 @@ extension LayoutPositioning {
         return growingTracksSizes.map(\.baseSize)
     }
     
-    private func positionedItems(positions: PositionsPreference, growingTracksSizes: [CGFloat], fixedTracksSizes: [CGFloat]) -> PositionsPreference {
+    private func positionedItems(task: PositioningTask, growingTracksSizes: [CGFloat], fixedTracksSizes: [CGFloat]) -> PositionedLayout {
         /// 4. Position items using calculated track sizes
-        guard let environment = positions.environment else { return PositionsPreference.default }
-        let flow = environment.flow
-        let arrangement = environment.arrangement
-        let boundingSize = environment.boundingSize
+        let flow = task.flow
+        let arrangement = task.arrangement
+        let boundingSize = task.boundingSize
         
         var newPositions: [PositionedItem] = []
         
-        for positionedItem in positions.items {
+        for positionedItem in task.items {
             guard let arrangedItem = arrangement[positionedItem.gridItem] else { continue }
             let itemGrowingSize: CGFloat
             let growingPosition: CGFloat
             
-            switch environment.contentMode {
+            switch task.contentMode {
             case .fill:
                 let growingSize = boundingSize[keyPath: flow.size(.growing)] / CGFloat(arrangement[keyPath: flow.arrangementCount(.growing)])
                 itemGrowingSize = growingSize * CGFloat(arrangedItem[keyPath: flow.arrangedItemCount(.growing)])
@@ -184,17 +209,17 @@ extension LayoutPositioning {
         
         totalSize[keyPath: flow.size(.fixed)] = totalFixedSize.rounded()
         totalSize[keyPath: flow.size(.growing)] = totalGrowingSize.rounded()
-        return PositionsPreference(items: newPositions, size: totalSize)
+        return PositionedLayout(items: newPositions, totalSize: totalSize)
     }
     
     private func sizeToFitNonSpanning(growingTracksSizes: inout [PositionedTrack], arrangement: LayoutArrangement,
-                                      flow: GridFlow, dimension: GridFlowDimension, position: PositionsPreference) {
+                                      flow: GridFlow, dimension: GridFlowDimension, task: PositioningTask) {
         /// 2.1. Size tracks to fit non-spanning items
         for (trackIndex, _) in growingTracksSizes.enumerated().filter({ $0.element.track.isIntrinsic }) {
             let arrangedNoSpanItems = arrangement.items.filter {
                 ($0.startIndex[keyPath: flow.index(dimension)] == trackIndex) && ($0.span[keyPath: flow.spanIndex(dimension)] == 1)
             }
-            let positionedNoSpanItems = arrangedNoSpanItems.compactMap { position[$0] }
+            let positionedNoSpanItems = arrangedNoSpanItems.compactMap { task[$0] }
             let maxSize = positionedNoSpanItems
                 .map(\.bounds.size)
                 .map { $0[keyPath: flow.size(dimension)] }

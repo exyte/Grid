@@ -41,13 +41,15 @@ class PositionRowsScrollTest: XCTestCase {
             ArrangedItem(gridItem: gridItems[4], startIndex: [2, 0], endIndex: [4, 0])
         ]
         let arrangement = LayoutArrangement(columnsCount: 5, rowsCount: 3, items: arrangedItems)
-        let position = PositionsPreference(items: positionedItems, size: nil,
-                                           environment: .init(arrangement: arrangement,
-                                                              boundingSize: CGSize(width: 375.0, height: 647.0),
-                                                              tracks: [.fr(1), .fit, .fit],
-                                                              contentMode: .scroll,
-                                                              flow: .columns))
-        let resultPositions = self.positioner.reposition(position)
+        
+        let task = PositioningTask(items: positionedItems,
+                                   arrangement: arrangement,
+                                   boundingSize: CGSize(width: 375.0, height: 647.0),
+                                   tracks: [.fr(1), .fit, .fit],
+                                   contentMode: .scroll,
+                                   flow: .columns)
+
+        let resultPositions = self.positioner.reposition(task)
         
         let referencePositionedItems = [
             PositionedItem(bounds: CGRect(x: 0.0, y: 0.0, width: 253.0, height: 522.0), gridItem: gridItems[0]),
@@ -57,7 +59,7 @@ class PositionRowsScrollTest: XCTestCase {
             PositionedItem(bounds: CGRect(x: 656.0, y: 0.0, width: 301.0, height: 522.0), gridItem: gridItems[4])
         ]
         
-        let referencePosition = PositionsPreference(items: referencePositionedItems, size: CGSize(width: 957.0, height: 647.0))
+        let referencePosition = PositionedLayout(items: referencePositionedItems, totalSize: CGSize(width: 957.0, height: 647.0))
         
         XCTAssertEqual(resultPositions, referencePosition)
     }
@@ -87,14 +89,15 @@ class PositionRowsScrollTest: XCTestCase {
             ArrangedItem(gridItem: gridItems[4], startIndex: [2, 0], endIndex: [4, 0])
         ]
         let arrangement = LayoutArrangement(columnsCount: 5, rowsCount: 3, items: arrangedItems)
-        let position = PositionsPreference(items: positionedItems,
-                                           size: nil,
-                                           environment: .init(arrangement: arrangement,
-                                                              boundingSize: CGSize(width: 375.0, height: 647.0),
-                                                              tracks: [.fr(1), .fit, .fit],
-                                                              contentMode: .scroll,
-                                                              flow: .columns))
-        let resultPositions = self.positioner.reposition(position)
+        
+        let task = PositioningTask(items: positionedItems,
+                                   arrangement: arrangement,
+                                   boundingSize: CGSize(width: 375.0, height: 647.0),
+                                   tracks: [.fr(1), .fit, .fit],
+                                   contentMode: .scroll,
+                                   flow: .columns)
+        
+        let resultPositions = self.positioner.reposition(task)
         
         let referencePositionedItems = [
             PositionedItem(bounds: CGRect(x: 0.0, y: 0.0, width: 253.0, height: 522.0), gridItem: gridItems[0]),
@@ -104,9 +107,8 @@ class PositionRowsScrollTest: XCTestCase {
             PositionedItem(bounds: CGRect(x: 661.0, y: 0.0, width: 299.0, height: 522.0), gridItem: gridItems[4])
         ]
         
-        let referencePosition = PositionsPreference(items: referencePositionedItems, size: CGSize(width: 961.0, height: 647.0))
+        let referencePosition = PositionedLayout(items: referencePositionedItems, totalSize: CGSize(width: 961.0, height: 647.0))
         
         XCTAssertEqual(resultPositions, referencePosition)
     }
-    
 }

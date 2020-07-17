@@ -10,7 +10,6 @@ import SwiftUI
 struct GridPreference: Equatable {
     struct ItemInfo: Equatable {
         var positionedItem: PositionedItem?
-        var bounds: CGRect?
         var span: GridSpan?
         var start: GridStart?
         
@@ -43,11 +42,9 @@ struct GridPreferenceKey: PreferenceKey {
 extension Array where Element == GridPreference.ItemInfo {
     var mergedToSingleValue: Self {
         let positionedItem = self.compactMap(\.positionedItem).first
-        let bounds = self.compactMap(\.bounds).first
         let span = self.compactMap(\.span).first ?? .default
         let start = self.compactMap(\.start).first ?? .default
         let itemInfo = GridPreference.ItemInfo(positionedItem: positionedItem,
-                                               bounds: bounds,
                                                span: span,
                                                start: start)
         return [itemInfo]

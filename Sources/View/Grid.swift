@@ -65,11 +65,6 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                 .frame(flow: self.flow,
                        size: mainGeometry.size,
                        contentMode: self.contentMode)
-                .frame(minWidth: self.positions.totalSize?.width,
-                       maxWidth: .infinity,
-                       minHeight: self.positions.totalSize?.height,
-                       maxHeight: .infinity,
-                       alignment: .topLeading)
             }
             .onPreferenceChange(GridPreferenceKey.self) { preference in
                 self.calculateLayout(preference: preference,

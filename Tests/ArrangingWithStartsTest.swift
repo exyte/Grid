@@ -11,52 +11,53 @@ import SwiftUI
 @testable import Grid
 
 class ArrangingWithStartsTest: XCTestCase {
-    
+
     private struct MockArranger: LayoutArranging {}
     private let arranger = MockArranger()
-    
+
     func gridItem(index: Int) -> GridItem {
         GridItem(AnyView(EmptyView()), id: AnyHashable(index))
     }
     private lazy var gridItems: [GridItem] =
         (0..<15).map { self.gridItem(index: $0) }
-
-    private lazy var spanPreferences = SpanPreference(items:
-        (0..<6).map { .init(gridItem: self.gridItem(index: $0), span: [1, 1]) }
-            + [.init(gridItem: gridItem(index: 6), span: [3, 1]),
-               .init(gridItem: gridItem(index: 7), span: [2, 1]),
-               .init(gridItem: gridItem(index: 8), span: [2, 2]),
-               .init(gridItem: gridItem(index: 9), span: [1, 1]),
-               .init(gridItem: gridItem(index: 10), span: [1, 10]),
-               .init(gridItem: gridItem(index: 11), span: [2, 3]),
-               .init(gridItem: gridItem(index: 12), span: [1, 3]),
-               .init(gridItem: gridItem(index: 13), span: [1, 1]),
-               .init(gridItem: gridItem(index: 14), span: [1, 1])
-        ]
-    )
     
-    private lazy var startPreferences = StartPreference(items:
-        (0..<6).map { .init(gridItem: self.gridItem(index: $0), start: nil) }
-            + [.init(gridItem: gridItem(index: 6), start: nil),
-               .init(gridItem: gridItem(index: 7), start: nil),
-               .init(gridItem: gridItem(index: 8), start: [5, 1]),
-               .init(gridItem: gridItem(index: 9), start: [nil, 2]),
-               .init(gridItem: gridItem(index: 10), start: [3, 0]),
-               .init(gridItem: gridItem(index: 11), start: nil),
-               .init(gridItem: gridItem(index: 12), start: nil),
-               .init(gridItem: gridItem(index: 13), start: [2, nil]),
-               .init(gridItem: gridItem(index: 14), start: nil)
-        ]
-    )
+    private lazy var spans =
+        [GridSpan](repeating: .default, count: 6)
+            + [
+                [3, 1],
+                [2, 1],
+                [2, 2],
+                [1, 1],
+                [1, 10],
+                [2, 3],
+                [1, 3],
+                [1, 1],
+                [1, 1]
+            ]
 
+    private lazy var starts: [GridStart] =
+        [GridStart](repeating: .default, count: 6)
+            + [
+                nil,
+                nil,
+                [5, 1],
+                [nil, 2],
+                [3, 0],
+                nil,
+                nil,
+                [2, nil],
+                nil
+            ]
+    
     func testArrangementDenseRows() throws {
-        let arrangingPreferences = ArrangingPreference(gridItems: gridItems,
-                                                       starts: startPreferences,
-                                                       spans: spanPreferences,
-                                                       tracks: 4,
-                                                       flow: .rows,
-                                                       packing: .dense)
-        let arrangement = arranger.arrange(preferences: arrangingPreferences)
+        let arrangementsInfo =
+            gridItems.enumerated().map { ArrangementInfo(gridItem: $1, start: starts[$0], span: spans[$0]) }
+        let task = ArrangingTask(itemsInfo: arrangementsInfo,
+                                 tracks: 4,
+                                 flow: .rows,
+                                 packing: .dense)
+
+        let arrangement = arranger.arrange(task: task)
 
         XCTAssertEqual(arrangement, LayoutArrangement(columnsCount: 4, rowsCount: 10, items: [
             ArrangedItem(gridItem: gridItem(index: 10), startIndex: [3, 0], endIndex: [3, 9]),
@@ -76,5 +77,4 @@ class ArrangingWithStartsTest: XCTestCase {
             ArrangedItem(gridItem: gridItem(index: 14), startIndex: [2, 8], endIndex: [2, 8])
         ]))
     }
-    
 }

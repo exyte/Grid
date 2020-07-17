@@ -9,12 +9,7 @@
 import SwiftUI
 
 public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Content: View {
-
-    @State var arrangement: LayoutArrangement?
-    @State var spans: SpanPreference?
-    @State var starts: StartPreference?
-    @State var positions: PositionsPreference = .default
-    @State var lastArrangingPreferences: ArrangingPreference?
+    @State var positions: PositionedLayout = .empty
     @State var isLoaded: Bool = false
     @Environment(\.gridContentMode) private var environmentContentMode
     @Environment(\.gridFlow) private var environmentFlow
@@ -47,24 +42,12 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                 ZStack(alignment: .topLeading) {
                     ForEach(self.items) { item in
                         item.view
-                            .transformPreference(SpansPreferenceKey.self) { preference in
-                                if var lastItem = preference?.items.last {
-                                    lastItem.gridItem = item
-                                    preference?.items = [lastItem]
-                                } else {
-                                    preference = SpanPreference(items: [.init(gridItem: item)])
-                                }
-                            }
-                            .transformPreference(StartPreferenceKey.self) { preference in
-                                if var lastItem = preference?.items.last {
-                                    lastItem.gridItem = item
-                                    preference?.items = [lastItem]
-                                } else {
-                                    preference = StartPreference(items: [.init(gridItem: item)])
-                                }
-                            }
                             .padding(spacing: self.spacing)
-                            .background(self.positionsPreferencesSetter(item: item))
+                            .background(self.positionsPreferencesSetter(item: item,
+                                                                        boundingSize: mainGeometry.size))
+                            .transformPreference(GridPreferenceKey.self) { preference in
+                                preference.itemsInfo = preference.itemsInfo.mergedToSingleValue
+                            }
                             .frame(flow: self.flow,
                                    size: self.positions[item]?.bounds.size,
                                    contentMode: self.contentMode)
@@ -82,72 +65,30 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                 .frame(flow: self.flow,
                        size: mainGeometry.size,
                        contentMode: self.contentMode)
-                .frame(minWidth: self.positions.size?.width,
-                       maxWidth: .infinity,
-                       minHeight: self.positions.size?.height,
-                       maxHeight: .infinity,
-                       alignment: .topLeading)
             }
-            .transformPreference(ArrangingPreferenceKey.self) { preference in
-                guard let starts = self.starts, let spans = self.spans else {
-                    preference = nil
-                    return
-                }
-                preference = ArrangingPreference(gridItems: self.items,
-                                                 starts: starts,
-                                                 spans: spans,
-                                                 tracks: self.trackSizes,
-                                                 flow: self.flow,
-                                                 packing: self.packing)
-            }
-            .transformPreference(PositionsPreferenceKey.self) { preference in
-                guard let arrangement = self.arrangement else { return }
-                preference.environment = .init(arrangement: arrangement,
-                                               boundingSize: self.corrected(size: mainGeometry.size),
-                                               tracks: self.trackSizes,
-                                               contentMode: self.contentMode,
-                                               flow: self.flow)
-            }
-
-            .onPreferenceChange(SpansPreferenceKey.self) { spanPreferences in
-                self.spans = spanPreferences
-            }
-            .onPreferenceChange(StartPreferenceKey.self) { startPreferences in
-                self.starts = startPreferences
-            }
-            .onPreferenceChange(ArrangingPreferenceKey.self) { arrangingPreferences in
-                guard
-                    arrangingPreferences != nil,
-                    let starts = self.starts,
-                    let spans = self.spans
-                else {
-                    return
-                }
-                let preferences = ArrangingPreference(gridItems: self.items,
-                                                      starts: starts,
-                                                      spans: spans,
-                                                      tracks: self.trackSizes,
-                                                      flow: self.flow,
-                                                      packing: self.packing)
-                guard preferences != self.lastArrangingPreferences else { return }
-                self.lastArrangingPreferences = preferences
-                self.calculateArrangement(preferences: preferences)
-            }
-            .onPreferenceChange(PositionsPreferenceKey.self) { positionsPreference in
-                guard let arrangement = self.arrangement else { return }
-                let positions =
-                    PositionsPreference(items: positionsPreference.items,
-                                        size: positionsPreference.size,
-                                        environment: .init(arrangement: arrangement,
-                                                           boundingSize: self.corrected(size: mainGeometry.size),
-                                                           tracks: self.trackSizes,
-                                                           contentMode: self.contentMode,
-                                                           flow: self.flow))
-                self.positions = self.reposition(positions)
-                self.isLoaded = true
+            .onPreferenceChange(GridPreferenceKey.self) { preference in
+                self.calculateLayout(preference: preference,
+                                     boundingSize: mainGeometry.size)
             }
         }
         .opacity(self.isLoaded ? 1 : 0)
+    }
+    
+    private func calculateLayout(preference: GridPreference, boundingSize: CGSize) {
+        let task = ArrangingTask(itemsInfo: preference.itemsInfo.asArrangementInfo,
+                                 tracks: self.trackSizes,
+                                 flow: self.flow,
+                                 packing: self.packing)
+        let calculatedLayout = self.arrange(task: task)
+        let positionTask = PositioningTask(items: preference.itemsInfo.compactMap(\.positionedItem),
+                                           arrangement: calculatedLayout,
+                                           boundingSize: self.corrected(size: boundingSize),
+                                           tracks: self.trackSizes,
+                                           contentMode: self.contentMode,
+                                           flow: self.flow)
+        let positions = self.reposition(positionTask)
+        self.positions = positions
+        self.isLoaded = true
     }
     
     private func corrected(size: CGSize) -> CGSize {
@@ -170,11 +111,6 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
         -(self.positions[item]?.bounds.origin.y ?? CGFloat(-self.spacing.vertical) / 2.0)
     }
 
-    private func calculateArrangement(preferences: ArrangingPreference) {
-        let calculatedLayout = self.arrange(preferences: preferences)
-        self.arrangement = calculatedLayout
-    }
-    
     private func cellPreferenceView<T: GridCellPreference>(item: GridItem, preference: T) -> some View {
         GeometryReader { geometry in
             preference.content(geometry.size)
@@ -184,15 +120,20 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                height: self.positions[item]?.bounds.height)
     }
     
-    private func positionsPreferencesSetter(item: GridItem) -> some View {
+    private func positionsPreferencesSetter(item: GridItem, boundingSize: CGSize) -> some View {
         GeometryReader { geometry in
             Color.clear
-                .preference(key: PositionsPreferenceKey.self,
-                            value: PositionsPreference(items: [
-                                PositionedItem(bounds: CGRect(origin: .zero, size: geometry.size),
-                                               gridItem: item)],
-                                                       size: nil)
-            )
+                .transformPreference(GridPreferenceKey.self, { preference in
+                    let positionedItem = PositionedItem(bounds: CGRect(origin: .zero, size: geometry.size),
+                                                        gridItem: item)
+                    let info = GridPreference.ItemInfo(positionedItem: positionedItem)
+                    let environment = GridPreference.Environment(tracks: self.trackSizes,
+                                                                 contentMode: self.contentMode,
+                                                                 flow: self.flow,
+                                                                 packing: self.packing,
+                                                                 boundingSize: boundingSize)
+                    preference = GridPreference(itemsInfo: [info], environment: environment)
+                })
         }
     }
 }

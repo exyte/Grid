@@ -41,14 +41,15 @@ class PositionColumnScrollTest: XCTestCase {
             ArrangedItem(gridItem: gridItems[4], startIndex: [0, 2], endIndex: [2, 2])
         ]
         let arrangement = LayoutArrangement(columnsCount: 3, rowsCount: 3, items: arrangedItems)
-        let position = PositionsPreference(items: positionedItems,
-                                           size: nil,
-                                           environment: .init(arrangement: arrangement,
-                                                              boundingSize: CGSize(width: 375.0, height: 647.0),
-                                                              tracks: [.fr(1), .fit, .fit],
-                                                              contentMode: .scroll,
-                                                              flow: .rows))
-        let resultPositions = self.positioner.reposition(position)
+
+        let task = PositioningTask(items: positionedItems,
+                                   arrangement: arrangement,
+                                   boundingSize: CGSize(width: 375.0, height: 647.0),
+                                   tracks: [.fr(1), .fit, .fit],
+                                   contentMode: .scroll,
+                                   flow: .rows)
+        
+        let resultPositions = self.positioner.reposition(task)
         
         let referencePositionedItems = [
             PositionedItem(bounds: CGRect(x: 0.0, y: 23.0, width: 205.0, height: 209.0), gridItem: gridItems[0]),
@@ -57,10 +58,9 @@ class PositionColumnScrollTest: XCTestCase {
             PositionedItem(bounds: CGRect(x: 0.0, y: 231.0, width: 275.0, height: 153.0), gridItem: gridItems[3]),
             PositionedItem(bounds: CGRect(x: 0.0, y: 361.0, width: 375.0, height: 129.0), gridItem: gridItems[4])
         ]
-        
-        let referencePosition = PositionsPreference(items: referencePositionedItems, size: CGSize(width: 375, height: 490))
-        
-        XCTAssertEqual(resultPositions, referencePosition)
+        let referencePositions = PositionedLayout(items: referencePositionedItems, totalSize: CGSize(width: 375, height: 490))
+
+        XCTAssertEqual(resultPositions, referencePositions)
     }
     
     func testScrollModeColumnsFlowStage2() throws {
@@ -88,14 +88,15 @@ class PositionColumnScrollTest: XCTestCase {
             ArrangedItem(gridItem: gridItems[4], startIndex: [0, 2], endIndex: [2, 2])
         ]
         let arrangement = LayoutArrangement(columnsCount: 3, rowsCount: 3, items: arrangedItems)
-        let position = PositionsPreference(items: positionedItems,
-                                           size: nil,
-                                           environment: .init(arrangement: arrangement,
-                                                              boundingSize: CGSize(width: 375.0, height: 647.0),
-                                                              tracks: [.fr(1), .fit, .fit],
-                                                              contentMode: .scroll,
-                                                              flow: .rows))
-        let resultPositions = self.positioner.reposition(position)
+        
+        let task = PositioningTask(items: positionedItems,
+                                   arrangement: arrangement,
+                                   boundingSize: CGSize(width: 375.0, height: 647.0),
+                                   tracks: [.fr(1), .fit, .fit],
+                                   contentMode: .scroll,
+                                   flow: .rows)
+
+        let resultPositions = self.positioner.reposition(task)
         
         let referencePositionedItems = [
             PositionedItem(bounds: CGRect(x: 0.0, y: 0.0, width: 205.0, height: 317.0), gridItem: gridItems[0]),
@@ -105,7 +106,7 @@ class PositionColumnScrollTest: XCTestCase {
             PositionedItem(bounds: CGRect(x: 0.0, y: 467.0, width: 375.0, height: 129.0), gridItem: gridItems[4])
         ]
         
-        let referencePosition = PositionsPreference(items: referencePositionedItems, size: CGSize(width: 375, height: 596))
+        let referencePosition = PositionedLayout(items: referencePositionedItems, totalSize: CGSize(width: 375, height: 596))
         
         XCTAssertEqual(resultPositions, referencePosition)
     }
@@ -135,14 +136,15 @@ class PositionColumnScrollTest: XCTestCase {
             ArrangedItem(gridItem: gridItems[4], startIndex: [0, 2], endIndex: [2, 2])
         ]
         let arrangement = LayoutArrangement(columnsCount: 3, rowsCount: 3, items: arrangedItems)
-        let position = PositionsPreference(items: positionedItems,
-                                           size: nil,
-                                           environment: .init(arrangement: arrangement,
-                                                              boundingSize: CGSize(width: 375.0, height: 647.0),
-                                                              tracks: [.fr(1), .fit, .fit],
-                                                              contentMode: .scroll,
-                                                              flow: .rows))
-        let resultPpositions = self.positioner.reposition(position)
+        
+        let task = PositioningTask(items: positionedItems,
+                                   arrangement: arrangement,
+                                   boundingSize: CGSize(width: 375.0, height: 647.0),
+                                   tracks: [.fr(1), .fit, .fit],
+                                   contentMode: .scroll,
+                                   flow: .rows)
+
+        let resultPpositions = self.positioner.reposition(task)
         
         let referencePositionedItems = [
             PositionedItem(bounds: CGRect(x: 0.0, y: 0.0, width: 205.0, height: 317.0), gridItem: gridItems[0]),
@@ -152,7 +154,7 @@ class PositionColumnScrollTest: XCTestCase {
             PositionedItem(bounds: CGRect(x: 0.0, y: 467.0, width: 375.0, height: 129.0), gridItem: gridItems[4])
         ]
         
-        let referencePosition = PositionsPreference(items: referencePositionedItems, size: CGSize(width: 375, height: 596))
+        let referencePosition = PositionedLayout(items: referencePositionedItems, totalSize: CGSize(width: 375, height: 596))
         
         XCTAssertEqual(resultPpositions, referencePosition)
     }

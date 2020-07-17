@@ -12,41 +12,35 @@ extension View {
     public func gridSpan(column: Int = Constants.defaultColumnSpan,
                          row: Int = Constants.defaultRowSpan
     ) -> some View {
-        preference(
-            key: SpansPreferenceKey.self,
-            value: SpanPreference(items: [
-                .init(gridItem: nil,
-                      span: GridSpan(column: max(column, 1), row: max(row, 1)))])
-        )
+        transformPreference(GridPreferenceKey.self, { preferences in
+            var info = preferences.itemsInfo.first ?? .empty
+            info.span = GridSpan(column: max(column, 1), row: max(row, 1))
+            preferences.itemsInfo = [info]
+        })
     }
     
     public func gridSpan(_ span: GridSpan) -> some View {
-        preference(
-            key: SpansPreferenceKey.self,
-            value: SpanPreference(items: [
-                .init(gridItem: nil,
-                      span: GridSpan(column: max(span.column, 1), row: max(span.row, 1)))])
-        )
+        transformPreference(GridPreferenceKey.self, { preferences in
+            var info = preferences.itemsInfo.first ?? .empty
+            info.span = GridSpan(column: max(span.column, 1), row: max(span.row, 1))
+            preferences.itemsInfo = [info]
+        })
     }
     
     public func gridStart(column: Int? = nil, row: Int? = nil) -> some View {
-        preference(
-            key: StartPreferenceKey.self,
-            value: StartPreference(items: [
-                .init(gridItem: nil,
-                      start: GridStart(column: column.nilIfBelowZero,
-                                       row: row.nilIfBelowZero))])
-        )
+        transformPreference(GridPreferenceKey.self, { preferences in
+            var info = preferences.itemsInfo.first ?? .empty
+            info.start = GridStart(column: column.nilIfBelowZero, row: row.nilIfBelowZero)
+            preferences.itemsInfo = [info]
+        })
     }
     
     public func gridStart(_ start: GridStart) -> some View {
-        preference(
-            key: StartPreferenceKey.self,
-            value: StartPreference(items: [
-                .init(gridItem: nil,
-                      start: GridStart(column: start.column.nilIfBelowZero,
-                                       row: start.row.nilIfBelowZero))])
-        )
+        transformPreference(GridPreferenceKey.self, { preferences in
+            var info = preferences.itemsInfo.first ?? .empty
+            info.start = GridStart(column: start.column.nilIfBelowZero, row: start.row.nilIfBelowZero)
+            preferences.itemsInfo = [info]
+        })
     }
     
     public func gridCellOverlay<Content: View>(

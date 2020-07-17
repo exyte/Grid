@@ -93,6 +93,8 @@ open Example.xcworkspace/
   - [dense](#dense)
 - [**Vertical and horizontal spacing**](#10-spacing)
 - [**Content updates can be animated**](#11-animations)
+- [**Release notes**](#release-notes)
+- [**Roadmap**](#roadmap)
 
 ### 1. Initialization
 

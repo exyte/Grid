@@ -672,6 +672,24 @@ You can associate a specific ID to a grid view using [ForEach](#foreach) or [Gri
 
 ------------
 
+## Release notes:
+	
+##### [v0.0.3](https://github.com/exyte/Grid/releases/tag/0.0.3):
+- fixes any issues when Grid is conditionally presented
+- fixes wrong grid position with scrollable content after a device rotation
+- fixes "Bound preference ** tried to update multiple times per frame" warnings in iOS 14 and reduces them in iOS 13.
+- simplifies the process of collecting grid preferences under the hood
+
+<details>
+  <summary>Previous releases</summary>
+	
+##### [v0.0.2](https://github.com/exyte/Grid/releases/tag/0.0.2)
+- added support for Swift Package Manager
+	
+</details>
+
+------------
+
 ## Roadmap:
 
 - [ ] add GridIdentified-like item to track the same View in animations 

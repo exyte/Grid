@@ -93,6 +93,8 @@ open Example.xcworkspace/
   - [dense](#dense)
 - [**Vertical and horizontal spacing**](#10-spacing)
 - [**Content updates can be animated**](#11-animations)
+- [**Release notes**](#release-notes)
+- [**Roadmap**](#roadmap)
 
 ### 1. Initialization
 
@@ -669,6 +671,24 @@ By default, every view in the grid is associated with subsequent index as it's I
 You can associate a specific ID to a grid view using [ForEach](#foreach) or [GridGroup](#gridgroup) initialized by `Identifiable` models or by explicit KeyPath as ID to force an animation to perform in the right way.
 
 *There is no way to get KeyPath id value from the initialized ForEach view. Its inner content will be distinguished by views order while doing animations. It's better to use [ForEach](#foreach) with `Identifiable` models or [GridGroup](#gridgroup) created either with explicit ID value or `Identifiable` models to keep track of the grid views and their `View` representations in animations.* 
+
+------------
+
+## Release notes:
+	
+##### [v0.0.3](https://github.com/exyte/Grid/releases/tag/0.0.3):
+- fixes any issues when Grid is conditionally presented
+- fixes wrong grid position with scrollable content after a device rotation
+- fixes "Bound preference ** tried to update multiple times per frame" warnings in iOS 14 and reduces them in iOS 13.
+- simplifies the process of collecting grid preferences under the hood
+
+<details>
+  <summary>Previous releases</summary>
+	
+##### [v0.0.2](https://github.com/exyte/Grid/releases/tag/0.0.2)
+- added support for Swift Package Manager
+	
+</details>
 
 ------------
 

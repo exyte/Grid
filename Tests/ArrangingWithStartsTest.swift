@@ -49,7 +49,6 @@ class ArrangingWithStartsTest: XCTestCase {
                 nil
             ]
     
-
     func testArrangementDenseRows() throws {
         let arrangementsInfo =
             gridItems.enumerated().map { ArrangementInfo(gridItem: $1, start: starts[$0], span: spans[$0]) }

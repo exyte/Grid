@@ -55,7 +55,7 @@ extension LayoutPositioning {
         /// 1. Calculate growing track sizes as max of all the items within a track
         let growingTracks: [GridTrack]
         let growingBoundingSize: CGFloat
-        if task.contentMode == .scroll {
+        if [.scroll, .intrinsic].contains(task.contentMode) {
             growingTracks = [GridTrack](repeating: .fit, count: arrangement[keyPath: flow.arrangementCount(.growing)])
             growingBoundingSize = .infinity
         } else {
@@ -179,7 +179,7 @@ extension LayoutPositioning {
                 let growingSize = boundingSize[keyPath: flow.size(.growing)] / CGFloat(arrangement[keyPath: flow.arrangementCount(.growing)])
                 itemGrowingSize = growingSize * CGFloat(arrangedItem[keyPath: flow.arrangedItemCount(.growing)])
                 growingPosition = growingSize * CGFloat(arrangedItem.startIndex[keyPath: flow.index(.growing)])
-            case .scroll:
+            case .scroll, .intrinsic:
                 itemGrowingSize = (arrangedItem.startIndex[keyPath: flow.index(.growing)]...arrangedItem.endIndex[keyPath: flow.index(.growing)]).reduce(0, { result, index in
                     return result + growingTracksSizes[index]
                 })

@@ -72,6 +72,9 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
             }
         }
         .opacity(self.isLoaded ? 1 : 0)
+        .containerFrame(flow: self.flow,
+                        contentSize: self.positions.totalSize,
+                        contentMode: self.contentMode)
     }
     
     private func calculateLayout(preference: GridPreference, boundingSize: CGSize) {
@@ -148,9 +151,26 @@ extension View {
         case .fill:
             width = size?.width
             height = size?.height
-        case .scroll:
+        case .scroll, .intrinsic:
             width = (flow == .rows ? size?.width : nil)
             height = (flow == .columns ? size?.height : nil)
+        }
+        return frame(width: width, height: height)
+    }
+    
+    fileprivate func containerFrame(flow: GridFlow,
+                                    contentSize: CGSize?,
+                                    contentMode: GridContentMode) -> some View {
+        let width: CGFloat?
+        let height: CGFloat?
+        
+        switch contentMode {
+        case .fill, .scroll:
+            width = nil
+            height = nil
+        case .intrinsic:
+            width = (flow == .columns ? contentSize?.width : nil)
+            height = (flow == .rows ? contentSize?.height : nil)
         }
         return frame(width: width, height: height)
     }

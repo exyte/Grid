@@ -22,13 +22,27 @@ struct ContentModeExample: View {
         VStack {
             self.modesPicker
             
-            Grid(models, id: \.self, tracks: 3) {
-                VCardView(text: $0.text, color: $0.color)
-                    .gridSpan($0.span)
+            if self.contentMode == .intrinsic {
+                ScrollView(.vertical) {
+                    VStack {
+                        self.headerView
+                        self.gridView
+                        self.footerView
+                    }
+                }
+            } else {
+                self.gridView
             }
-            .gridContentMode(self.contentMode)
-            .gridFlow(.rows)
         }
+    }
+    
+    private var gridView: some View {
+        Grid(models, id: \.self, tracks: 3) {
+            VCardView(text: $0.text, color: $0.color)
+                .gridSpan($0.span)
+        }
+        .gridContentMode(self.contentMode)
+        .gridFlow(.rows)
     }
 
     private let models: [Model] = [
@@ -46,12 +60,30 @@ struct ContentModeExample: View {
     
     private var modesPicker: some View {
         Picker("Mode", selection: $contentMode) {
-            ForEach([GridContentMode.scroll, GridContentMode.fill], id: \.self) {
-                Text($0 == .scroll ? "Scroll" : "Fill")
-                    .tag($0)
+            ForEach([GridContentMode.scroll, GridContentMode.fill, GridContentMode.intrinsic], id: \.self) {
+                Text($0.description).tag($0)
             }
         }
         .pickerStyle(SegmentedPickerStyle())
+    }
+    
+    private var headerView: some View {
+        self.rectangleView(text: "Header", color: .green)
+            .frame(height: 100)
+    }
+    
+    private var footerView: some View {
+        self.rectangleView(text: "Footer", color: .blue)
+            .frame(height: 50)
+    }
+    
+    private func rectangleView(text: String, color: UIColor) -> some View {
+        ColorView(color.withAlphaComponent(0.6))
+            .overlay(
+                Text(text)
+                    .font(.system(.headline))
+            )
+            .padding([.leading, .trailing], 5)
     }
 }
 

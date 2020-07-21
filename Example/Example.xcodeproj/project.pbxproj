@@ -21,6 +21,7 @@
 		36A6CA05247FBD05005F5E7E /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA04247FBD05005F5E7E /* Helpers.swift */; };
 		36A6CA07247FD813005F5E7E /* SpansExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA06247FD813005F5E7E /* SpansExample.swift */; };
 		36A6CA0924801EA6005F5E7E /* StartsExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA0824801EA6005F5E7E /* StartsExample.swift */; };
+		36AE204B24C6D98F00EC8AAC /* GridContentMode+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36AE204A24C6D98E00EC8AAC /* GridContentMode+CustomStringConvertible.swift */; };
 		36B11E512475539700CDAE27 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B11E502475539700CDAE27 /* Calculator.swift */; };
 		36F6C22A2476D919001818F2 /* Color+hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F6C2292476D919001818F2 /* Color+hex.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
@@ -47,6 +48,7 @@
 		36A6CA04247FBD05005F5E7E /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		36A6CA06247FD813005F5E7E /* SpansExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpansExample.swift; sourceTree = "<group>"; };
 		36A6CA0824801EA6005F5E7E /* StartsExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartsExample.swift; sourceTree = "<group>"; };
+		36AE204A24C6D98E00EC8AAC /* GridContentMode+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GridContentMode+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		36B11E502475539700CDAE27 /* Calculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
 		36F6C2292476D919001818F2 /* Color+hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+hex.swift"; sourceTree = "<group>"; };
 		4E9ACAABC3CC52D1C66057EF /* libPods-Grid_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Grid_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,6 +121,7 @@
 				36F6C2292476D919001818F2 /* Color+hex.swift */,
 				36A6C9FC247FBBDC005F5E7E /* Color+brightness.swift */,
 				36A6CA04247FBD05005F5E7E /* Helpers.swift */,
+				36AE204A24C6D98E00EC8AAC /* GridContentMode+CustomStringConvertible.swift */,
 			);
 			name = Extesions;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36AE204B24C6D98F00EC8AAC /* GridContentMode+CustomStringConvertible.swift in Sources */,
 				36A6C9FD247FBBDC005F5E7E /* Color+brightness.swift in Sources */,
 				36A6CA03247FBC7C005F5E7E /* CardViews.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,

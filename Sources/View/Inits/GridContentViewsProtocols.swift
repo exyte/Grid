@@ -8,20 +8,23 @@
 
 import SwiftUI
 
-typealias IdentifyingAnyView = (hash: AnyHashable?, view: AnyView)
+struct IdentifiedView {
+    var hash: AnyHashable?
+    let view: AnyView
+}
 
 protocol GridForEachRangeInt {
-    var contentViews: [IdentifyingAnyView] { get }
+    var contentViews: [IdentifiedView] { get }
 }
 
 protocol GridForEachIdentifiable {
-    var contentViews: [IdentifyingAnyView] { get }
+    var contentViews: [IdentifiedView] { get }
 }
 
 protocol GridForEachID {
-    var contentViews: [IdentifyingAnyView] { get }
+    var contentViews: [IdentifiedView] { get }
 }
 
 protocol GridGroupContaining {
-    var contentViews: [IdentifyingAnyView] { get }
+    var contentViews: [IdentifiedView] { get }
 }

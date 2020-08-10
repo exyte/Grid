@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Content: View {
+public struct Grid: View, LayoutArranging, LayoutPositioning {
     @State var positions: PositionedLayout = .empty
     @State var isLoaded: Bool = false
     @Environment(\.gridContentMode) private var environmentContentMode

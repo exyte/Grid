@@ -8,26 +8,27 @@
 
 import SwiftUI
 
-extension View {
-    func asGridItems<T: Hashable>(hash: T) -> [GridItem] {
-        let containerItems: [GridItem]  =
-            self.extractContentViews()
+extension Array where Element == IdentifiedView {
+    func  asGridItems<T: Hashable>(index: inout Int, baseHash: T) -> [GridItem] {
+        let containerItems: [GridItem] =
+            self
                 .enumerated()
                 .map {
                     let gridHash: AnyHashable
                     if let viewHash = $0.element.hash {
                         gridHash = viewHash
                     } else {
-                        gridHash = AnyHashable(hash)
+                        gridHash = AnyHashable([baseHash, AnyHashable(index)])
+                        index += 1
                     }
                     return GridItem($0.element.view, id: gridHash)
-                }
+        }
         return containerItems
     }
-    
+
     func asGridItems(index: inout Int) -> [GridItem] {
         let containerItems: [GridItem]  =
-            self.extractContentViews()
+            self
                 .map {
                     let gridHash: AnyHashable
                     if let viewHash = $0.hash {
@@ -37,15 +38,17 @@ extension View {
                         index += 1
                     }
                     return GridItem($0.view, id: gridHash)
-                    
+
                 }
         return containerItems
     }
-    
-    func extractContentViews() -> [IdentifyingAnyView] {
-        var contentViews: [IdentifyingAnyView] = []
+}
+
+extension View {
+    func extractContentViews() -> [IdentifiedView] {
+        var contentViews: [IdentifiedView] = []
         var isContainer = true
-        
+
         if let container = self as? GridForEachRangeInt {
             contentViews = container.contentViews
         } else if let container = self as? GridForEachIdentifiable {
@@ -57,13 +60,13 @@ extension View {
         } else {
             isContainer = false
         }
-        
+
         if isContainer {
             contentViews = contentViews.flatMap {
                 $0.view.extractContentViews()
             }
         } else {
-            contentViews = [(nil, AnyView(self))]
+            contentViews = [IdentifiedView(hash: nil, view: AnyView(self))]
         }
         return contentViews
     }

@@ -9,15 +9,40 @@
 import SwiftUI
 
 extension GridGroup {
-    public init<Data, ID, Content: View>(_ data: Data, id: KeyPath<Data.Element, ID>, @ViewBuilder item: @escaping (Data.Element) -> Content) where Data: RandomAccessCollection, ID: Hashable {
-        self.contentViews = data.map { (AnyHashable([AnyHashable($0[keyPath: id]), AnyHashable(id)]), AnyView(item($0))) }
+    public init<Data, ID>(_ data: Data, id: KeyPath<Data.Element, ID>, @AnyViewBuilder item: @escaping (Data.Element) -> ConstructionItem) where Data: RandomAccessCollection, ID: Hashable {
+        self.contentViews = data.enumerated().flatMap { (dataIndex: Int, dataElement: Data.Element) -> [IdentifiedView] in
+            let constructionItem = item(dataElement)
+            let views: [IdentifiedView] = constructionItem.contentViews.enumerated().map {
+                var identifiedView = $0.element
+                if identifiedView.hash == nil {
+                    identifiedView.hash =
+                        AnyHashable([AnyHashable(dataElement[keyPath: id]),
+                                     AnyHashable(id),
+                                     AnyHashable(dataIndex + $0.offset)])
+                }
+                return identifiedView
+            }
+            return views
+        }
     }
-    
-    public init<Content: View>(_ data: Range<Int>, @ViewBuilder item: @escaping (Int) -> Content) {
-        self.contentViews = data.map { (nil, AnyView(item($0))) }
+
+    public init(_ data: Range<Int>, @AnyViewBuilder item: @escaping (Int) -> ConstructionItem) {
+        self.contentViews = data.flatMap { item($0).contentViews }
     }
-    
-    public init<Data, Content: View>(_ data: Data, @ViewBuilder item: @escaping (Data.Element) -> Content) where Data: RandomAccessCollection, Data.Element: Identifiable {
-        self.contentViews = data.map { (AnyHashable($0.id), AnyView(item($0))) }
+
+    public init<Data>(_ data: Data, @AnyViewBuilder item: @escaping (Data.Element) -> ConstructionItem) where Data: RandomAccessCollection, Data.Element: Identifiable {
+        self.contentViews = data.enumerated().flatMap { (dataIndex: Int, dataElement: Data.Element) -> [IdentifiedView] in
+            let constructionItem = item(dataElement)
+            let views: [IdentifiedView] = constructionItem.contentViews.enumerated().map {
+                var identifiedView = $0.element
+                if identifiedView.hash == nil {
+                    identifiedView.hash =
+                        AnyHashable([AnyHashable(dataElement.id),
+                                     AnyHashable(dataIndex + $0.offset)])
+                }
+                return identifiedView
+            }
+            return views
+        }
     }
 }

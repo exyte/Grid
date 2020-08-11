@@ -57,6 +57,8 @@ extension View {
             contentViews = container.contentViews
         } else if let container = self as? GridGroupContaining {
             return container.contentViews
+        } else if let container = self as? ConstructionItem {
+            return container.contentViews
         } else {
             isContainer = false
         }

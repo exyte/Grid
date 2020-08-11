@@ -22,9 +22,12 @@ extension ForEach: GridForEachIdentifiable where ID == Data.Element.ID, Content:
             let view = self.content(dataElement)
             return view.extractContentViews().enumerated().map {
                 var indentifiedView = $0.element
-                if indentifiedView.hash == nil {
-                    let hash = AnyHashable([AnyHashable(dataElement.id), AnyHashable(dataIndex + $0.offset)])
-                    indentifiedView.hash = hash
+                if let identifiedHash = indentifiedView.hash {
+                    indentifiedView.hash = AnyHashable([identifiedHash,
+                                                        AnyHashable(dataElement.id)])
+                } else {
+                    indentifiedView.hash = AnyHashable([AnyHashable(dataElement.id),
+                                                        AnyHashable($0.offset)])
                 }
                 return indentifiedView
             }

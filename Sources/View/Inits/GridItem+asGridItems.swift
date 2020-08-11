@@ -9,7 +9,7 @@
 import SwiftUI
 
 extension Array where Element == IdentifiedView {
-    func  asGridItems<T: Hashable>(index: inout Int, baseHash: T) -> [GridItem] {
+    func asGridItems<T: Hashable>(index: inout Int, baseHash: T) -> [GridItem] {
         let containerItems: [GridItem] =
             self
                 .enumerated()
@@ -46,30 +46,17 @@ extension Array where Element == IdentifiedView {
 
 extension View {
     func extractContentViews() -> [IdentifiedView] {
-        var contentViews: [IdentifiedView] = []
-        var isContainer = true
-
         if let container = self as? GridForEachRangeInt {
-            contentViews = container.contentViews
+            return container.contentViews
         } else if let container = self as? GridForEachIdentifiable {
-            contentViews = container.contentViews
+            return container.contentViews
         } else if let container = self as? GridForEachID {
-            contentViews = container.contentViews
+            return container.contentViews
         } else if let container = self as? GridGroupContaining {
             return container.contentViews
         } else if let container = self as? ConstructionItem {
             return container.contentViews
-        } else {
-            isContainer = false
         }
-
-        if isContainer {
-            contentViews = contentViews.flatMap {
-                $0.view.extractContentViews()
-            }
-        } else {
-            contentViews = [IdentifiedView(hash: nil, view: AnyView(self))]
-        }
-        return contentViews
+        return [IdentifiedView(hash: nil, view: AnyView(self))]
     }
 }

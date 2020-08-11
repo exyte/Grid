@@ -14,11 +14,16 @@ extension GridGroup {
             let constructionItem = item(dataElement)
             let views: [IdentifiedView] = constructionItem.contentViews.enumerated().map {
                 var identifiedView = $0.element
-                if identifiedView.hash == nil {
+                if let identifiedHash = identifiedView.hash {
+                    identifiedView.hash =
+                        AnyHashable([identifiedHash,
+                                     AnyHashable(dataElement[keyPath: id]),
+                                     AnyHashable(id)])
+                } else {
                     identifiedView.hash =
                         AnyHashable([AnyHashable(dataElement[keyPath: id]),
                                      AnyHashable(id),
-                                     AnyHashable(dataIndex + $0.offset)])
+                                     AnyHashable($0.offset)])
                 }
                 return identifiedView
             }
@@ -35,10 +40,14 @@ extension GridGroup {
             let constructionItem = item(dataElement)
             let views: [IdentifiedView] = constructionItem.contentViews.enumerated().map {
                 var identifiedView = $0.element
-                if identifiedView.hash == nil {
+                if let identifiedHash = identifiedView.hash {
+                    identifiedView.hash =
+                        AnyHashable([identifiedHash,
+                                    dataElement.id])
+                } else {
                     identifiedView.hash =
                         AnyHashable([AnyHashable(dataElement.id),
-                                     AnyHashable(dataIndex + $0.offset)])
+                                     AnyHashable($0.offset)])
                 }
                 return identifiedView
             }

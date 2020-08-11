@@ -14,9 +14,7 @@ public struct GridGroup: View, GridGroupContaining {
     
     var contentViews: [IdentifiedView]
     
-    public var body: some View {
-        EmptyView()
-    }
+    public var body = EmptyView()
 }
 
 #if DEBUG

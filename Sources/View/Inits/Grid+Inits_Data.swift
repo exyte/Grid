@@ -16,7 +16,6 @@ extension Grid {
         self.items = data.flatMap {
             item($0).contentViews.asGridItems(index: &index,
                             baseHash: AnyHashable([AnyHashable($0[keyPath: id]), AnyHashable(id)]))
-
         }
         self.trackSizes = tracks
         self.spacing = spacing
@@ -42,7 +41,6 @@ extension Grid {
         self.items = data.flatMap {
             item($0).contentViews.asGridItems(index: &index,
                             baseHash: AnyHashable($0.id))
-
         }
         self.trackSizes = tracks
         self.spacing = spacing

@@ -11,7 +11,6 @@
 import SwiftUI
 
 extension Grid {
-
     public init(tracks: [GridTrack] = 1, contentMode: GridContentMode? = nil, flow: GridFlow? = nil, packing: GridPacking? = nil, spacing: GridSpacing = Constants.defaultSpacing, @AnyViewBuilder content: () -> ConstructionItem) {
         self.trackSizes = tracks
         self.spacing = spacing

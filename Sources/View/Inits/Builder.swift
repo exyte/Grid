@@ -4,12 +4,14 @@
 //
 //  Created by Denis Obukhov on 10.08.2020.
 //
+
 //swiftlint:disable function_parameter_count identifier_name
+
 import SwiftUI
 
 public struct ConstructionItem: View {
     static var empty = ConstructionItem(contentViews: [])
-    public var body: Color = .black
+    public var body = EmptyView()
     var contentViews: [IdentifiedView]
 }
 

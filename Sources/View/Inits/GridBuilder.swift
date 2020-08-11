@@ -16,7 +16,7 @@ public struct ConstructionItem: View {
 }
 
 @_functionBuilder
-public struct AnyViewBuilder {
+public struct GridBuilder {
     public static func buildBlock() -> ConstructionItem {
         return ConstructionItem(contentViews: [])
     }

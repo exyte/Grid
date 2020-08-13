@@ -28,6 +28,7 @@ struct CalcButton: View {
                         .padding(10)
                 )
         }
+        .gridID(operation)
     }
     
     var fillColor: Color {

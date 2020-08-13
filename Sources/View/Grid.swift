@@ -15,8 +15,20 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
     @Environment(\.gridFlow) private var environmentFlow
     @Environment(\.gridPacking) private var environmentPacking
     @Environment(\.gridAnimation) private var gridAnimation
+    @State var overriddenIDs: [[GridItem]: Set<IDPair>] = [:]
     
     let items: [GridItem]
+    var overridenItems: [GridItem] {
+        let newItems = items.map { item -> GridItem in
+            let newIDPair = overriddenIDs[self.items]?.first {
+                $0.originID == item.id
+            }
+            return GridItem(item.view,
+                            idPair: newIDPair ?? item.idPair)
+        }
+        return newItems
+    }
+
     let spacing: GridSpacing
     let trackSizes: [GridTrack]
     
@@ -40,13 +52,17 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
         return GeometryReader { mainGeometry in
             ScrollView(self.scrollAxis) {
                 ZStack(alignment: .topLeading) {
-                    ForEach(self.items) { item in
+                    ForEach(self.overridenItems) { item in
                         item.view
                             .padding(spacing: self.spacing)
                             .background(self.positionsPreferencesSetter(item: item,
                                                                         boundingSize: mainGeometry.size))
                             .transformPreference(GridPreferenceKey.self) { preference in
-                                preference.itemsInfo = preference.itemsInfo.mergedToSingleValue
+                                var mergedInfo = preference.itemsInfo.mergedToSingleValue
+                                var newIDPair = mergedInfo.idPair ?? IDPair()
+                                newIDPair.originID = item.idPair.originID
+                                mergedInfo.idPair = newIDPair
+                                preference.itemsInfo = [mergedInfo]
                             }
                             .frame(flow: self.flow,
                                    size: self.positions[item]?.bounds.size,
@@ -87,8 +103,17 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                                            contentMode: self.contentMode,
                                            flow: self.flow)
         let positions = self.reposition(positionTask)
-        self.positions = positions
+        if self.positions != positions {
+            self.positions = positions
+        }
         self.isLoaded = true
+
+        let existingItemsStruct = self.overriddenIDs[self.items]
+        if existingItemsStruct != preference.overriddenIDs {
+            self.overriddenIDs[self.items] = preference.overriddenIDs
+        }
+
+
     }
     
     private func corrected(size: CGSize) -> CGSize {

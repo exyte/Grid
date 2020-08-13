@@ -89,7 +89,7 @@ extension LayoutArranging {
         
         // Arrange fully static items
         staticItems.forEach { staticItem in
-            let itemIndex = items.firstIndex(where: { $0.gridItem == staticItem.item })!
+            let itemIndex = items.firstIndex(where: { $0.gridItem.idPair.originID == staticItem.item.idPair.originID })!
             guard
                 !occupiedIndices.contains(staticItem.start, span: staticItem.span) else {
                     print("Warning: grid item position is occupied: \(staticItem.start), \(staticItem.span)")
@@ -128,7 +128,7 @@ extension LayoutArranging {
             }
             
             semiStaticFixedItems.forEach { semiStaticItem in
-                let itemIndex = items.firstIndex(where: { $0.gridItem == semiStaticItem.item })!
+                let itemIndex = items.firstIndex(where: { $0.gridItem.idPair.originID == semiStaticItem.item.idPair.originID })!
                 let frozenIndex = semiStaticItem.start[keyPath: flow.startIndex(dimension)]!
                 
                 var currentIndex: GridIndex = .zero

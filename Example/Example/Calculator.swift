@@ -109,10 +109,10 @@ struct Calculator: View {
             }
         case .second:
             return GridGroup {
-                GridGroup([MathOperation.clear], id: \.self) {
-                    CalcButton($0)
-                        .gridStart(column: self.tracks.count - 1)
-                }
+                CalcButton(.clear)
+                    .gridStart(column: self.tracks.count - 1)
+                    .gridID(MathOperation.clear)
+                
                 CalcButton(.divide)
                     .gridStart(column: self.tracks.count - 1)
                 
@@ -160,8 +160,9 @@ struct Calculator: View {
 
     var clearButton: GridGroup {
         if self.mode == .system {
-            return GridGroup([MathOperation.clear], id: \.self) {
-                CalcButton($0)
+            return GridGroup {
+                CalcButton(.clear)
+                    .gridID(MathOperation.clear)
             }
         } else {
             return GridGroup.empty

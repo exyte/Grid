@@ -63,6 +63,15 @@ extension View {
                 AnyView(content(rect))
         })
     }
+
+    public func gridID<T: Hashable>(_ id: T) -> some View {
+        transformPreference(GridPreferenceKey.self, { preferences in
+            var info = preferences.itemsInfo.first ?? .empty
+            let idPair = IDPair(originID: nil, newID:  AnyHashable(id))
+            info.idPair = idPair
+            preferences.itemsInfo = [info]
+        })
+    }
 }
 
 extension Optional where Wrapped == Int {

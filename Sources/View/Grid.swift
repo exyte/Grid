@@ -71,7 +71,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                                      boundingSize: mainGeometry.size)
             }
         }
-        .opacity(self.isLoaded ? 1 : 0)
+        .id(self.isLoaded)
     }
     
     private func calculateLayout(preference: GridPreference, boundingSize: CGSize) {

@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-// MARK: GridContentMode
 extension View {
     public func gridContentMode(_ contentMode: GridContentMode) -> some View {
         return self.environment(\.gridContentMode, contentMode)
@@ -24,6 +23,10 @@ extension View {
     
     public func gridAnimation(_ animation: Animation?) -> some View {
         return self.environment(\.gridAnimation, animation)
+    }
+
+    public func gridCache(_ cache: GridCacheMode?) -> some View {
+        return self.environment(\.gridCache, cache)
     }
 }
 
@@ -47,6 +50,11 @@ extension EnvironmentValues {
         get { self[EnvironmentKeys.GridAnimation.self] }
         set { self[EnvironmentKeys.GridAnimation.self] = newValue }
     }
+
+    var gridCache: GridCacheMode? {
+        get { self[EnvironmentKeys.GridCache.self] }
+        set { self[EnvironmentKeys.GridCache.self] = newValue }
+    }
 }
 
 private struct EnvironmentKeys {
@@ -64,5 +72,9 @@ private struct EnvironmentKeys {
     
     struct GridAnimation: EnvironmentKey {
         static let defaultValue: Animation? = nil
+    }
+
+    struct GridCache: EnvironmentKey {
+        static let defaultValue: GridCacheMode? = nil
     }
 }

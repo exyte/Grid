@@ -12,7 +12,7 @@ protocol LayoutPositioning {
     func reposition(_ task: PositioningTask) -> PositionedLayout
 }
 
-struct PositioningTask: Equatable {
+struct PositioningTask: Equatable, Hashable {
     let items: [PositionedItem]
     var arrangement: LayoutArrangement
     var boundingSize: CGSize

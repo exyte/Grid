@@ -26,3 +26,9 @@ extension GridItem: Equatable {
         return lhs.id == rhs.id
     }
 }
+
+extension GridItem: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}

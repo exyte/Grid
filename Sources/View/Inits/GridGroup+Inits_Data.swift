@@ -54,4 +54,12 @@ extension GridGroup {
             return views
         }
     }
+
+    public init<Data: Identifiable>(_ data: Data, @GridBuilder item: @escaping (Data) -> ConstructionItem) {
+        self.init([data], item: item)
+    }
+
+    public init<Data: Hashable>(_ data: Data, @GridBuilder item: @escaping (Data) -> ConstructionItem) {
+        self.init([data], id: \.self, item: item)
+    }
 }

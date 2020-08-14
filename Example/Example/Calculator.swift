@@ -61,7 +61,7 @@ struct Calculator: View {
                             CalcButton(.sign)
                                 .animation(nil)
 
-                            GridGroup([MathOperation.clear], id: \.self) {
+                            GridGroup(MathOperation.clear) {
                                 CalcButton($0)
                             }
                         }
@@ -100,7 +100,7 @@ struct Calculator: View {
         let functions: [MathOperation] = self.isPortrait ? [] : (0..<funcCount).map { .function($0) }
         return GridGroup(functions, id: \.self) {
             CalcButton($0)
-                .gridStart(column: (functions.firstIndex(of: $0)!)  % 6)
+                .gridStart(column: (functions.firstIndex(of: $0)!) % 6)
                 .animation(nil)
         }
     }
@@ -116,7 +116,7 @@ struct Calculator: View {
                     .gridStart(column: self.tracks.count - 1)
             }
         case .second:
-            GridGroup([MathOperation.clear], id: \.self) {
+            GridGroup(MathOperation.clear) {
                 CalcButton($0)
                     .gridStart(column: self.tracks.count - 1)
             }

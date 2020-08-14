@@ -10,7 +10,7 @@ import Foundation
 import CoreGraphics
 
 /// Specfies the final position of a grid item in a grid view on the screen
-struct PositionedItem: Equatable {
+struct PositionedItem: Equatable, Hashable {
     let bounds: CGRect
     let gridItem: GridItem
 }

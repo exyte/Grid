@@ -9,7 +9,7 @@
 import Foundation
 
 /// Specfies the abstract position of a grid item in a grid view
-struct ArrangedItem: Equatable {
+struct ArrangedItem: Equatable, Hashable {
     let gridItem: GridItem
     let startIndex: GridIndex
     let endIndex: GridIndex

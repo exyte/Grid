@@ -20,4 +20,12 @@ extension GridGroup {
     public init<Data, Content: View>(_ data: Data, @ViewBuilder item: @escaping (Data.Element) -> Content) where Data: RandomAccessCollection, Data.Element: Identifiable {
         self.contentViews = data.map { (AnyHashable($0.id), AnyView(item($0))) }
     }
+
+    public init<Data: Identifiable, Content: View>(_ data: Data, @ViewBuilder item: @escaping (Data) -> Content) {
+        self.init([data], item: item)
+    }
+
+    public init<Data: Hashable, Content: View>(_ data: Data, @ViewBuilder item: @escaping (Data) -> Content) {
+        self.init([data], id: \.self, item: item)
+    }
 }

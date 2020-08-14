@@ -11,18 +11,21 @@ import SwiftUI
 public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Content: View {
     @State var positions: PositionedLayout = .empty
     @State var isLoaded: Bool = false
+    @State var internalLayoutCache = Cache<ArrangingTask, LayoutArrangement>()
+    @State var internalPositionsCache = Cache<PositioningTask, PositionedLayout>()
     @Environment(\.gridContentMode) private var environmentContentMode
     @Environment(\.gridFlow) private var environmentFlow
     @Environment(\.gridPacking) private var environmentPacking
     @Environment(\.gridAnimation) private var gridAnimation
+    @Environment(\.gridCache) private var environmentCacheMode
     
     let items: [GridItem]
     let spacing: GridSpacing
     let trackSizes: [GridTrack]
-    
     var internalFlow: GridFlow?
     var internalPacking: GridPacking?
     var internalContentMode: GridContentMode?
+    var internalCacheMode: GridCacheMode?
 
     private var flow: GridFlow {
         self.internalFlow ?? self.environmentFlow ?? Constants.defaultFlow
@@ -34,6 +37,28 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
     
     private var contentMode: GridContentMode {
         self.internalContentMode ?? self.environmentContentMode ?? Constants.defaultContentMode
+    }
+
+    private var cacheMode: GridCacheMode {
+        self.internalCacheMode ?? self.environmentCacheMode ?? Constants.defaultCacheMode
+    }
+
+    private var layoutCache: Cache<ArrangingTask, LayoutArrangement>? {
+        switch self.cacheMode {
+        case .inMemoryCache:
+            return self.internalLayoutCache
+        case .noCache:
+            return nil
+        }
+    }
+
+    private var positionsCache: Cache<PositioningTask, PositionedLayout>? {
+        switch self.cacheMode {
+        case .inMemoryCache:
+            return self.internalPositionsCache
+        case .noCache:
+            return nil
+        }
     }
 
     public var body: some View {
@@ -71,7 +96,7 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                                      boundingSize: mainGeometry.size)
             }
         }
-        .opacity(self.isLoaded ? 1 : 0)
+        .id(self.isLoaded)
     }
     
     private func calculateLayout(preference: GridPreference, boundingSize: CGSize) {
@@ -79,14 +104,30 @@ public struct Grid<Content>: View, LayoutArranging, LayoutPositioning where Cont
                                  tracks: self.trackSizes,
                                  flow: self.flow,
                                  packing: self.packing)
-        let calculatedLayout = self.arrange(task: task)
+
+        let calculatedLayout: LayoutArrangement
+        if let cachedLayout = self.layoutCache?.object(forKey: task) {
+            calculatedLayout = cachedLayout
+        } else {
+            calculatedLayout = self.arrange(task: task)
+            self.layoutCache?.setObject(calculatedLayout,
+                                        forKey: task)
+        }
+
         let positionTask = PositioningTask(items: preference.itemsInfo.compactMap(\.positionedItem),
                                            arrangement: calculatedLayout,
                                            boundingSize: self.corrected(size: boundingSize),
                                            tracks: self.trackSizes,
                                            contentMode: self.contentMode,
                                            flow: self.flow)
-        let positions = self.reposition(positionTask)
+        let positions: PositionedLayout
+        if let cachedPositions = self.positionsCache?.object(forKey: positionTask) {
+            positions = cachedPositions
+        } else {
+            positions = self.reposition(positionTask)
+            self.positionsCache?.setObject(positions,
+                                           forKey: positionTask)
+        }
         self.positions = positions
         self.isLoaded = true
     }

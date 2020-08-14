@@ -57,19 +57,17 @@ struct Calculator: View {
                         self.topButtons
                         self.clearButton
 
-                        GridGroup {
-                            GridGroup(self.digits, id: \.self) {
-                                //Only homogeneous "if" clauses are supported
-                                if self.mode == .system && $0 == .digit(0) {
-                                      CalcButton($0)
-                                          .gridSpan(column: 2)
-                                  } else {
-                                      CalcButton($0)
-                                  }
+                        GridGroup(self.digits, id: \.self) {
+                            //Only homogeneous "if" clauses are supported
+                            if self.mode == .system && $0 == .digit(0) {
+                                CalcButton($0)
+                                    .gridSpan(column: 2)
+                            } else {
+                                CalcButton($0)
                             }
                         }
                         
-                        GridGroup([MathOperation.point], id: \.self) {
+                        GridGroup(MathOperation.point) {
                             CalcButton($0)
                         }
                         
@@ -109,7 +107,7 @@ struct Calculator: View {
             }
         case .second:
             return GridGroup {
-                GridGroup([MathOperation.clear], id: \.self) {
+                GridGroup(MathOperation.clear) {
                     CalcButton($0)
                         .gridStart(column: self.tracks.count - 1)
                 }
@@ -160,7 +158,7 @@ struct Calculator: View {
 
     var clearButton: GridGroup {
         if self.mode == .system {
-            return GridGroup([MathOperation.clear], id: \.self) {
+            return GridGroup(MathOperation.clear) {
                 CalcButton($0)
             }
         } else {

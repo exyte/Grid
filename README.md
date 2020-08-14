@@ -93,6 +93,8 @@ open Example.xcworkspace/
   - [dense](#dense)
 - [**Vertical and horizontal spacing**](#10-spacing)
 - [**Content updates can be animated**](#11-animations)
+- [**Caching**](#12-caching)
+- [**BETA: Conditional statements / @GridBuilder**](#13-beta-conditional-statements--gridbuilder)
 - [**Release notes**](#release-notes)
 - [**Roadmap**](#roadmap)
 
@@ -158,7 +160,11 @@ Grid(tracks: 4) {
 ```
 
 #### GridGroup
-Number of views in `ViewBuilder` closure is limited to 10. It's impossible to obtain content views from regular SwiftUI `Group` view. To exceed that limit you could use `GridGroup`. Every view in `GridGroup` is placed as a separate grid item. Unlike the `Group` view any outer method modifications of `GridView` are not applied to the descendant views. So it's just an enumerable container. Also `GridGroup` could be created by `Range<Int>`, `Identifiable` models, and by ID specified explicitly.
+Number of views in `ViewBuilder` closure is limited to 10. It's impossible to obtain content views from regular SwiftUI `Group` view. To exceed that limit you could use `GridGroup`. Every view in `GridGroup` is placed as a separate grid item. Unlike the `Group` view any outer method modifications of `GridView` are not applied to the descendant views. So it's just an enumerable container. Also `GridGroup` could be created by `Range<Int>`, `Identifiable` models, by ID specified explicitly.
+
+You can bind a view’s identity to the given single `Hashable` or `Identifiable` value also using `GridGroup`. This will produce transition animation to a new view with the same identity.
+
+*There is no way to use View's `.id()` modifier as inner `ForEach` view clears that value*
 
 You can use `GridGroup.empty` to define a content absence.
 
@@ -206,6 +212,25 @@ var arithmeticButtons: GridGroup {
         [.divide, .multiply, .substract, .add, .equal]
     return GridGroup(operations, id: \.self) { 
          CalcButton($0)
+    }
+}
+```
+
+```swift
+var arithmeticButtons: GridGroup {
+    let operations: [MathOperation] =
+        [.divide, .multiply, .substract, .add, .equal]
+    return GridGroup(operations, id: \.self) { 
+         CalcButton($0)
+    }
+}
+```
+
+```swift
+Grid {
+...
+    GridGroup(MathOperation.clear) {
+        CalcButton($0)
     }
 }
 ```
@@ -674,12 +699,62 @@ You can associate a specific ID to a grid view using [ForEach](#foreach) or [Gri
 
 ------------
 
+### 12. Caching
+It's possible to cache grid layouts through the lifecycle of Grid.
+
+*Grid caching could be specified in a grid constructor as well as using  `.gridCaching(...)` grid modifier. The first option has more priority.*
+
+#### In memory cache 
+*Default.* Cache is implemented with the leverage of NSCache. It will clear all the cached layouts on the memory warning notification.
+
+#### No cache
+No cache is used. Layout calculations will be executed at every step of Grid lifecycle.
+
+------------
+
+### 13. BETA: Conditional statements / @GridBuilder
+
+Available on [v1.0.0-beta](https://github.com/exyte/Grid/releases/tag/1.0.0-beta) and requires iOS >= 14.0:
+
+Starting with Swift 5.3 we can use custom function builders without [any issues](https://github.com/apple/swift/pull/29626). 
+That gives us:
+
+- Full support of `if/if else`, `if let/if let else`, `switch` statements within the `Grid` and `GridGroup` bodies.
+	
+- A better way to propagate view ID from nested `GridGroup` and `ForEach`
+	
+- An ability to return heterogeneous views from functions and vars using `@GridBuilder` attribute and `some View` retrun type:
+	
+```swift
+@GridBuilder
+func headerSegment(flag: Bool) -> some View {
+    if flag {
+        return GridGroup { ... }
+    else {
+        return ColorView(.black)
+    }
+}
+```
+
+------------
+
 ## Release notes:
+
+### Beta (iOS >= 14.0):
+##### [v1.0.0-beta](https://github.com/exyte/Grid/releases/tag/1.0.0-beta):
+*Based on v0.1.0.*
+- adds full support of conditional statements
+- adds `@GridBuilder` function builder
+
+### Stable:
+##### [v0.1.0](https://github.com/exyte/Grid/releases/tag/0.1.0):
+- adds layout caching
+- adds `GridGroup` init using a single `Identifiable` or `Hashable` value
 	
 ##### [v0.0.3](https://github.com/exyte/Grid/releases/tag/0.0.3):
 - fixes any issues when Grid is conditionally presented
 - fixes wrong grid position with scrollable content after a device rotation
-- fixes "Bound preference ** tried to update multiple times per frame" warnings in iOS 14 and reduces them in iOS 13.
+- fixes "Bound preference ** tried to update multiple times per frame" warnings in iOS 14 and reduces them in iOS 13
 - simplifies the process of collecting grid preferences under the hood
 
 <details>
@@ -694,15 +769,15 @@ You can associate a specific ID to a grid view using [ForEach](#foreach) or [Gri
 
 ## Roadmap:
 
-- [ ] add GridIdentified-like item to track the same View in animations 
+- [ ] add GridIdentified-like item to track the same Views in animations 
 - [ ] add regions or settings for GridGroup to specify position
 - [ ] dual dimension track sizes (grid-template-rows, grid-template-columns).
 - [ ] grid-auto-rows, grid-auto-columns
 - [ ] improve dense placement algorithm
-- [ ] support if clauses using function builder (waiting for swift 5.3)
 - [ ] ? grid min/ideal sizes
 - [ ] ? landscape/portrait layout
 - [ ] ? calculate layout in background thread
+- [x] support if clauses using function builder (see beta)
 - [x] add GridGroup
 - [x] grid item explicit row and/or column position
 - [x] different spacing for rows and columns

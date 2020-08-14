@@ -13,13 +13,13 @@ protocol LayoutArranging {
     func arrange(task: ArrangingTask) -> LayoutArrangement
 }
 
-struct ArrangementInfo: Equatable {
+struct ArrangementInfo: Equatable, Hashable {
     var gridItem: GridItem
     var start: GridStart
     var span: GridSpan
 }
 
-struct ArrangingTask: Equatable {
+struct ArrangingTask: Equatable, Hashable {
     var itemsInfo: [ArrangementInfo]
     var tracks: [GridTrack]
     var flow: GridFlow

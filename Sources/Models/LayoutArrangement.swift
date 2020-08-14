@@ -9,7 +9,7 @@
 import CoreGraphics
 
 /// Encapsulates the arranged items and total columns and rows count of a grid view
-struct LayoutArrangement: Equatable {
+struct LayoutArrangement: Equatable, Hashable {
     var columnsCount: Int
     var rowsCount: Int
     let items: [ArrangedItem]

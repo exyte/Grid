@@ -17,4 +17,5 @@ public struct Constants {
     public static let defaultContentMode: GridContentMode = .fill
     public static let defaultFlow: GridFlow = .rows
     public static let defaultPacking: GridPacking = .sparse
+    public static let defaultCacheMode: GridCacheMode = .inMemoryCache
 }

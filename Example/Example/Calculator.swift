@@ -67,7 +67,7 @@ struct Calculator: View {
                             }
                         }
                         
-                        GridGroup([MathOperation.point], id: \.self) {
+                        GridGroup(MathOperation.point) {
                             CalcButton($0)
                         }
                         

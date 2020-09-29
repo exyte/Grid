@@ -52,8 +52,8 @@ Add it to an existing Xcode project as a package dependency:
 
 ## Requirements
 
-* iOS 13.3+
-* Xcode 11+
+* iOS 14.0+ (the latest iOS 13 support is in [v0.1.0](https://github.com/exyte/Grid/releases/tag/0.1.0))
+* Xcode 12+
 
 ## Building from sources
 
@@ -94,7 +94,7 @@ open Example.xcworkspace/
 - [**Vertical and horizontal spacing**](#10-spacing)
 - [**Content updates can be animated**](#11-animations)
 - [**Caching**](#12-caching)
-- [**BETA: Conditional statements / @GridBuilder**](#13-beta-conditional-statements--gridbuilder)
+- [**Conditional statements / @GridBuilder**](#13-beta-conditional-statements--gridbuilder)
 - [**Release notes**](#release-notes)
 - [**Roadmap**](#roadmap)
 
@@ -712,9 +712,7 @@ No cache is used. Layout calculations will be executed at every step of Grid lif
 
 ------------
 
-### 13. BETA: Conditional statements / @GridBuilder
-
-Available on [v1.0.0-beta](https://github.com/exyte/Grid/releases/tag/1.0.0-beta) and requires iOS >= 14.0:
+### 13. Conditional statements / @GridBuilder
 
 Starting with Swift 5.3 we can use custom function builders without [any issues](https://github.com/apple/swift/pull/29626). 
 That gives us:
@@ -740,13 +738,13 @@ func headerSegment(flag: Bool) -> some View {
 
 ## Release notes:
 
-### Beta (iOS >= 14.0):
-##### [v1.0.0-beta](https://github.com/exyte/Grid/releases/tag/1.0.0-beta):
-*Based on v0.1.0.*
+##### [v1.0.1](https://github.com/exyte/Grid/releases/tag/1.0.1):
 - adds full support of conditional statements
 - adds `@GridBuilder` function builder
 
-### Stable:
+<details>
+  <summary>Previous releases</summary>
+
 ##### [v0.1.0](https://github.com/exyte/Grid/releases/tag/0.1.0):
 - adds layout caching
 - adds `GridGroup` init using a single `Identifiable` or `Hashable` value
@@ -756,9 +754,6 @@ func headerSegment(flag: Bool) -> some View {
 - fixes wrong grid position with scrollable content after a device rotation
 - fixes "Bound preference ** tried to update multiple times per frame" warnings in iOS 14 and reduces them in iOS 13
 - simplifies the process of collecting grid preferences under the hood
-
-<details>
-  <summary>Previous releases</summary>
 	
 ##### [v0.0.2](https://github.com/exyte/Grid/releases/tag/0.0.2)
 - added support for Swift Package Manager
@@ -769,7 +764,6 @@ func headerSegment(flag: Bool) -> some View {
 
 ## Roadmap:
 
-- [ ] add GridIdentified-like item to track the same Views in animations 
 - [ ] add regions or settings for GridGroup to specify position
 - [ ] dual dimension track sizes (grid-template-rows, grid-template-columns).
 - [ ] grid-auto-rows, grid-auto-columns
@@ -777,7 +771,8 @@ func headerSegment(flag: Bool) -> some View {
 - [ ] ? grid min/ideal sizes
 - [ ] ? landscape/portrait layout
 - [ ] ? calculate layout in background thread
-- [x] support if clauses using function builder (see beta)
+- [x] add GridIdentified-like item to track the same Views in animations 
+- [x] support if clauses using function builder
 - [x] add GridGroup
 - [x] grid item explicit row and/or column position
 - [x] different spacing for rows and columns

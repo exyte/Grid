@@ -18,7 +18,7 @@ extension ForEach: GridForEachRangeInt where Data == Range<Int>, ID == Int, Cont
 
 extension ForEach: GridForEachIdentifiable where ID == Data.Element.ID, Content: View, Data.Element: Identifiable {
     var contentViews: [IdentifiedView] {
-        self.data.enumerated().flatMap { (dataIndex: Int, dataElement: Data.Element) -> [IdentifiedView] in
+        self.data.enumerated().flatMap { (_, dataElement: Data.Element) -> [IdentifiedView] in
             let view = self.content(dataElement)
             return view.extractContentViews().enumerated().map {
                 var indentifiedView = $0.element

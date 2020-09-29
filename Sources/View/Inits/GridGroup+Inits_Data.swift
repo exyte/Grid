@@ -10,7 +10,7 @@ import SwiftUI
 
 extension GridGroup {
     public init<Data, ID>(_ data: Data, id: KeyPath<Data.Element, ID>, @GridBuilder item: @escaping (Data.Element) -> ConstructionItem) where Data: RandomAccessCollection, ID: Hashable {
-        self.contentViews = data.enumerated().flatMap { (dataIndex: Int, dataElement: Data.Element) -> [IdentifiedView] in
+        self.contentViews = data.enumerated().flatMap { (_, dataElement: Data.Element) -> [IdentifiedView] in
             let constructionItem = item(dataElement)
             let views: [IdentifiedView] = constructionItem.contentViews.enumerated().map {
                 var identifiedView = $0.element
@@ -36,7 +36,7 @@ extension GridGroup {
     }
 
     public init<Data>(_ data: Data, @GridBuilder item: @escaping (Data.Element) -> ConstructionItem) where Data: RandomAccessCollection, Data.Element: Identifiable {
-        self.contentViews = data.enumerated().flatMap { (dataIndex: Int, dataElement: Data.Element) -> [IdentifiedView] in
+        self.contentViews = data.enumerated().flatMap { (_, dataElement: Data.Element) -> [IdentifiedView] in
             let constructionItem = item(dataElement)
             let views: [IdentifiedView] = constructionItem.contentViews.enumerated().map {
                 var identifiedView = $0.element

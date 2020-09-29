@@ -5,7 +5,7 @@
 //  Created by Denis Obukhov on 10.08.2020.
 //
 
-//swiftlint:disable function_parameter_count identifier_name
+//swiftlint:disable function_parameter_count identifier_name line_length
 
 import SwiftUI
 

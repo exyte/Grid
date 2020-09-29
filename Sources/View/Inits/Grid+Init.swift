@@ -21,6 +21,6 @@ extension Grid {
         
         let content = content()
         var index = 0
-        self.items = content.contentViews.asGridItems(index: &index)
+        self.items = content.contentViews.asGridElements(index: &index)
     }
 }

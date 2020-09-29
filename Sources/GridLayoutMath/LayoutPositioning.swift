@@ -21,7 +21,7 @@ struct PositioningTask: Equatable, Hashable {
     var flow: GridFlow
 
     subscript(arrangedItem: ArrangedItem) -> PositionedItem? {
-        items.first(where: { $0.gridItem == arrangedItem.gridItem })
+        items.first(where: { $0.gridElement == arrangedItem.gridElement })
     }
 }
 
@@ -31,12 +31,12 @@ struct PositionedLayout: Equatable {
     
     static let empty = PositionedLayout(items: [], totalSize: nil)
 
-    subscript(gridItem: GridItem) -> PositionedItem? {
-        items.first(where: { $0.gridItem == gridItem })
+    subscript(gridElement: GridElement) -> PositionedItem? {
+        items.first(where: { $0.gridElement == gridElement })
     }
     
     subscript(arrangedItem: ArrangedItem) -> PositionedItem? {
-        items.first(where: { $0.gridItem == arrangedItem.gridItem })
+        items.first(where: { $0.gridElement == arrangedItem.gridElement })
     }
 }
 
@@ -170,7 +170,7 @@ extension LayoutPositioning {
         var newPositions: [PositionedItem] = []
         
         for positionedItem in task.items {
-            guard let arrangedItem = arrangement[positionedItem.gridItem] else { continue }
+            guard let arrangedItem = arrangement[positionedItem.gridElement] else { continue }
             let itemGrowingSize: CGFloat
             let growingPosition: CGFloat
             
@@ -198,7 +198,7 @@ extension LayoutPositioning {
             newBounds.origin[keyPath: flow.cgPointIndex(.growing)] = growingPosition
             newBounds.origin[keyPath: flow.cgPointIndex(.fixed)] = fixedTrackStart
             newBounds = newBounds.integral
-            newPositions.append(PositionedItem(bounds: newBounds, gridItem: positionedItem.gridItem))
+            newPositions.append(PositionedItem(bounds: newBounds, gridElement: positionedItem.gridElement))
         }
         
         let totalGrowingSize = growingTracksSizes.reduce(0, +)

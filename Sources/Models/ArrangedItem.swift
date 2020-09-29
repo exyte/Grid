@@ -10,7 +10,7 @@ import Foundation
 
 /// Specfies the abstract position of a grid item in a grid view
 struct ArrangedItem: Equatable, Hashable {
-    let gridItem: GridItem
+    let gridElement: GridElement
     let startIndex: GridIndex
     let endIndex: GridIndex
     
@@ -29,9 +29,9 @@ struct ArrangedItem: Equatable, Hashable {
 }
 
 extension ArrangedItem {
-    init(item: GridItem, startIndex: GridIndex, span: GridSpan) {
+    init(item: GridElement, startIndex: GridIndex, span: GridSpan) {
         let endRow: Int = startIndex.row + span.row - 1
         let endColumn: Int = startIndex.column + span.column - 1
-        self = ArrangedItem(gridItem: item, startIndex: startIndex, endIndex: GridIndex(column: endColumn, row: endRow))
+        self = ArrangedItem(gridElement: item, startIndex: startIndex, endIndex: GridIndex(column: endColumn, row: endRow))
     }
 }

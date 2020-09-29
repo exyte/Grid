@@ -14,7 +14,7 @@ extension Grid {
     public init<Data, ID>(_ data: Data, id: KeyPath<Data.Element, ID>, tracks: [GridTrack] = 1, contentMode: GridContentMode? = nil, flow: GridFlow? = nil, packing: GridPacking? = nil, spacing: GridSpacing = Constants.defaultSpacing, cache: GridCacheMode? = nil, @GridBuilder item: @escaping (Data.Element) -> ConstructionItem) where Data: RandomAccessCollection, ID: Hashable {
         var index = 0
         self.items = data.flatMap {
-            item($0).contentViews.asGridItems(index: &index,
+            item($0).contentViews.asGridElements(index: &index,
                             baseHash: AnyHashable([AnyHashable($0[keyPath: id]), AnyHashable(id)]))
         }
         self.trackSizes = tracks
@@ -28,7 +28,7 @@ extension Grid {
     public init(_ data: Range<Int>, tracks: [GridTrack] = 1, contentMode: GridContentMode? = nil, flow: GridFlow? = nil, packing: GridPacking? = nil, spacing: GridSpacing = Constants.defaultSpacing, cache: GridCacheMode? = nil, @GridBuilder item: @escaping (Int) -> ConstructionItem) {
         var index = 0
         self.items = data.flatMap {
-            item($0).contentViews.asGridItems(index: &index)
+            item($0).contentViews.asGridElements(index: &index)
         }
         self.trackSizes = tracks
         self.spacing = spacing
@@ -41,7 +41,7 @@ extension Grid {
     public init<Data>(_ data: Data, tracks: [GridTrack] = 1, contentMode: GridContentMode? = nil, flow: GridFlow? = nil, packing: GridPacking? = nil, spacing: GridSpacing = Constants.defaultSpacing, cache: GridCacheMode? = nil, @GridBuilder item: @escaping (Data.Element) -> ConstructionItem) where Data: RandomAccessCollection, Data.Element: Identifiable {
         var index = 0
         self.items = data.flatMap {
-            item($0).contentViews.asGridItems(index: &index,
+            item($0).contentViews.asGridElements(index: &index,
                             baseHash: AnyHashable($0.id))
         }
         self.trackSizes = tracks

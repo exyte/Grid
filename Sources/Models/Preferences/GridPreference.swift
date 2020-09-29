@@ -53,13 +53,13 @@ extension Array where Element == GridPreference.ItemInfo {
     var asArrangementInfo: [ArrangementInfo] {
         return self.compactMap {
             guard
-                let gridItem = $0.positionedItem?.gridItem,
+                let gridElement = $0.positionedItem?.gridElement,
                 let start = $0.start,
                 let span = $0.span
             else {
                 return nil
             }
-            return ArrangementInfo(gridItem: gridItem,
+            return ArrangementInfo(gridElement: gridElement,
                                    start: start,
                                    span: span)
         }

@@ -25,7 +25,7 @@
 		361723982475221000866539 /* GridPacking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361723772475221000866539 /* GridPacking.swift */; };
 		361723992475221000866539 /* GridIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361723782475221000866539 /* GridIndex.swift */; };
 		3617239A2475221000866539 /* GridTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361723792475221000866539 /* GridTrack.swift */; };
-		3617239B2475221000866539 /* GridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3617237A2475221000866539 /* GridItem.swift */; };
+		3617239B2475221000866539 /* GridElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3617237A2475221000866539 /* GridElement.swift */; };
 		3617239C2475221000866539 /* GridSpan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3617237B2475221000866539 /* GridSpan.swift */; };
 		3617239D2475221000866539 /* GridFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3617237C2475221000866539 /* GridFlow.swift */; };
 		3617239E2475221000866539 /* ArrangedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3617237D2475221000866539 /* ArrangedItem.swift */; };
@@ -41,15 +41,14 @@
 		3633AB9224E678410033A172 /* CGSize+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3633AB9024E678410033A172 /* CGSize+Hashable.swift */; };
 		3633AB9324E678410033A172 /* CGRect+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3633AB9124E678410033A172 /* CGRect+Hashable.swift */; };
 		364FFB2D24C1C1680054D275 /* GridPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364FFB2C24C1C1680054D275 /* GridPreference.swift */; };
-		368A837324E1549A005CA508 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368A837224E1549A005CA508 /* Builder.swift */; };
-		36A6C9EF247FA4D8005F5E7E /* GridGroup+Inits_TupleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9E7247FA4D7005F5E7E /* GridGroup+Inits_TupleView.swift */; };
-		36A6C9F0247FA4D8005F5E7E /* GridContentViewsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9E8247FA4D7005F5E7E /* GridContentViewsProtocols.swift */; };
-		36A6C9F1247FA4D8005F5E7E /* Grid+Inits_TupleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9E9247FA4D7005F5E7E /* Grid+Inits_TupleView.swift */; };
-		36A6C9F2247FA4D8005F5E7E /* ForEach+GridViewsContaining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9EA247FA4D7005F5E7E /* ForEach+GridViewsContaining.swift */; };
-		36A6C9F3247FA4D8005F5E7E /* Grid+Inits_ForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9EB247FA4D7005F5E7E /* Grid+Inits_ForEach.swift */; };
-		36A6C9F4247FA4D8005F5E7E /* GridItem+asGridItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9EC247FA4D7005F5E7E /* GridItem+asGridItems.swift */; };
-		36A6C9F5247FA4D8005F5E7E /* GridGroup+Inits_Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9ED247FA4D7005F5E7E /* GridGroup+Inits_Data.swift */; };
-		36A6C9F6247FA4D8005F5E7E /* Grid+Inits_Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9EE247FA4D8005F5E7E /* Grid+Inits_Data.swift */; };
+		365DFA362523543C0019BB80 /* GridBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DFA2E2523543C0019BB80 /* GridBuilder.swift */; };
+		365DFA372523543C0019BB80 /* GridGroup+Inits_Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DFA2F2523543C0019BB80 /* GridGroup+Inits_Data.swift */; };
+		365DFA382523543C0019BB80 /* GridGroup+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DFA302523543C0019BB80 /* GridGroup+Init.swift */; };
+		365DFA392523543C0019BB80 /* Grid+Inits_Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DFA312523543C0019BB80 /* Grid+Inits_Data.swift */; };
+		365DFA3A2523543C0019BB80 /* ForEach+GridViewsContaining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DFA322523543C0019BB80 /* ForEach+GridViewsContaining.swift */; };
+		365DFA3B2523543C0019BB80 /* GridElement+asGridElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DFA332523543C0019BB80 /* GridElement+asGridElements.swift */; };
+		365DFA3C2523543C0019BB80 /* GridContentViewsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DFA342523543C0019BB80 /* GridContentViewsProtocols.swift */; };
+		365DFA3D2523543C0019BB80 /* Grid+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DFA352523543C0019BB80 /* Grid+Init.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,7 +82,7 @@
 		361723772475221000866539 /* GridPacking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridPacking.swift; sourceTree = "<group>"; };
 		361723782475221000866539 /* GridIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridIndex.swift; sourceTree = "<group>"; };
 		361723792475221000866539 /* GridTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridTrack.swift; sourceTree = "<group>"; };
-		3617237A2475221000866539 /* GridItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridItem.swift; sourceTree = "<group>"; };
+		3617237A2475221000866539 /* GridElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridElement.swift; sourceTree = "<group>"; };
 		3617237B2475221000866539 /* GridSpan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridSpan.swift; sourceTree = "<group>"; };
 		3617237C2475221000866539 /* GridFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridFlow.swift; sourceTree = "<group>"; };
 		3617237D2475221000866539 /* ArrangedItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrangedItem.swift; sourceTree = "<group>"; };
@@ -100,15 +99,14 @@
 		3633AB9024E678410033A172 /* CGSize+Hashable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGSize+Hashable.swift"; sourceTree = "<group>"; };
 		3633AB9124E678410033A172 /* CGRect+Hashable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+Hashable.swift"; sourceTree = "<group>"; };
 		364FFB2C24C1C1680054D275 /* GridPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridPreference.swift; sourceTree = "<group>"; };
-		368A837224E1549A005CA508 /* Builder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
-		36A6C9E7247FA4D7005F5E7E /* GridGroup+Inits_TupleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GridGroup+Inits_TupleView.swift"; sourceTree = "<group>"; };
-		36A6C9E8247FA4D7005F5E7E /* GridContentViewsProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridContentViewsProtocols.swift; sourceTree = "<group>"; };
-		36A6C9E9247FA4D7005F5E7E /* Grid+Inits_TupleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Grid+Inits_TupleView.swift"; sourceTree = "<group>"; };
-		36A6C9EA247FA4D7005F5E7E /* ForEach+GridViewsContaining.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ForEach+GridViewsContaining.swift"; sourceTree = "<group>"; };
-		36A6C9EB247FA4D7005F5E7E /* Grid+Inits_ForEach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Grid+Inits_ForEach.swift"; sourceTree = "<group>"; };
-		36A6C9EC247FA4D7005F5E7E /* GridItem+asGridItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GridItem+asGridItems.swift"; sourceTree = "<group>"; };
-		36A6C9ED247FA4D7005F5E7E /* GridGroup+Inits_Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GridGroup+Inits_Data.swift"; sourceTree = "<group>"; };
-		36A6C9EE247FA4D8005F5E7E /* Grid+Inits_Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Grid+Inits_Data.swift"; sourceTree = "<group>"; };
+		365DFA2E2523543C0019BB80 /* GridBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridBuilder.swift; sourceTree = "<group>"; };
+		365DFA2F2523543C0019BB80 /* GridGroup+Inits_Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GridGroup+Inits_Data.swift"; sourceTree = "<group>"; };
+		365DFA302523543C0019BB80 /* GridGroup+Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GridGroup+Init.swift"; sourceTree = "<group>"; };
+		365DFA312523543C0019BB80 /* Grid+Inits_Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Grid+Inits_Data.swift"; sourceTree = "<group>"; };
+		365DFA322523543C0019BB80 /* ForEach+GridViewsContaining.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ForEach+GridViewsContaining.swift"; sourceTree = "<group>"; };
+		365DFA332523543C0019BB80 /* GridElement+asGridElements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GridElement+asGridElements.swift"; sourceTree = "<group>"; };
+		365DFA342523543C0019BB80 /* GridContentViewsProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridContentViewsProtocols.swift; sourceTree = "<group>"; };
+		365DFA352523543C0019BB80 /* Grid+Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Grid+Init.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,15 +185,14 @@
 		3617235E2475220F00866539 /* Inits */ = {
 			isa = PBXGroup;
 			children = (
-				368A837224E1549A005CA508 /* Builder.swift */,
-				36A6C9EA247FA4D7005F5E7E /* ForEach+GridViewsContaining.swift */,
-				36A6C9EE247FA4D8005F5E7E /* Grid+Inits_Data.swift */,
-				36A6C9EB247FA4D7005F5E7E /* Grid+Inits_ForEach.swift */,
-				36A6C9E9247FA4D7005F5E7E /* Grid+Inits_TupleView.swift */,
-				36A6C9E8247FA4D7005F5E7E /* GridContentViewsProtocols.swift */,
-				36A6C9ED247FA4D7005F5E7E /* GridGroup+Inits_Data.swift */,
-				36A6C9E7247FA4D7005F5E7E /* GridGroup+Inits_TupleView.swift */,
-				36A6C9EC247FA4D7005F5E7E /* GridItem+asGridItems.swift */,
+				365DFA322523543C0019BB80 /* ForEach+GridViewsContaining.swift */,
+				365DFA352523543C0019BB80 /* Grid+Init.swift */,
+				365DFA312523543C0019BB80 /* Grid+Inits_Data.swift */,
+				365DFA2E2523543C0019BB80 /* GridBuilder.swift */,
+				365DFA342523543C0019BB80 /* GridContentViewsProtocols.swift */,
+				365DFA302523543C0019BB80 /* GridGroup+Init.swift */,
+				365DFA2F2523543C0019BB80 /* GridGroup+Inits_Data.swift */,
+				365DFA332523543C0019BB80 /* GridElement+asGridElements.swift */,
 			);
 			path = Inits;
 			sourceTree = "<group>";
@@ -228,7 +225,7 @@
 				361723772475221000866539 /* GridPacking.swift */,
 				361723782475221000866539 /* GridIndex.swift */,
 				361723792475221000866539 /* GridTrack.swift */,
-				3617237A2475221000866539 /* GridItem.swift */,
+				3617237A2475221000866539 /* GridElement.swift */,
 				3617237B2475221000866539 /* GridSpan.swift */,
 				3617237C2475221000866539 /* GridFlow.swift */,
 				3617237D2475221000866539 /* ArrangedItem.swift */,
@@ -402,40 +399,39 @@
 			buildActionMask = 2147483647;
 			files = (
 				3617239E2475221000866539 /* ArrangedItem.swift in Sources */,
-				36A6C9F3247FA4D8005F5E7E /* Grid+Inits_ForEach.swift in Sources */,
+				365DFA392523543C0019BB80 /* Grid+Inits_Data.swift in Sources */,
 				3617239F2475221000866539 /* LayoutArrangement.swift in Sources */,
 				3633AB9224E678410033A172 /* CGSize+Hashable.swift in Sources */,
 				361723982475221000866539 /* GridPacking.swift in Sources */,
 				3633AB8E24E678290033A172 /* Cache.swift in Sources */,
-				36A6C9F6247FA4D8005F5E7E /* Grid+Inits_Data.swift in Sources */,
 				361723A02475221000866539 /* PositionedItem.swift in Sources */,
-				36A6C9F1247FA4D8005F5E7E /* Grid+Inits_TupleView.swift in Sources */,
 				361723802475221000866539 /* LayoutArranging.swift in Sources */,
+				365DFA372523543C0019BB80 /* GridGroup+Inits_Data.swift in Sources */,
 				3617238B2475221000866539 /* View+Environment.swift in Sources */,
 				361723962475221000866539 /* GridStart.swift in Sources */,
 				361723992475221000866539 /* GridIndex.swift in Sources */,
 				361723972475221000866539 /* GridSpacing.swift in Sources */,
-				3617239B2475221000866539 /* GridItem.swift in Sources */,
-				36A6C9F5247FA4D8005F5E7E /* GridGroup+Inits_Data.swift in Sources */,
-				368A837324E1549A005CA508 /* Builder.swift in Sources */,
+				3617239B2475221000866539 /* GridElement.swift in Sources */,
 				3617238A2475221000866539 /* Grid.swift in Sources */,
 				361723902475221000866539 /* GridBackgroundPreference.swift in Sources */,
+				365DFA382523543C0019BB80 /* GridGroup+Init.swift in Sources */,
+				365DFA3C2523543C0019BB80 /* GridContentViewsProtocols.swift in Sources */,
 				361723922475221000866539 /* GridCellPreference.swift in Sources */,
-				36A6C9F0247FA4D8005F5E7E /* GridContentViewsProtocols.swift in Sources */,
+				365DFA3D2523543C0019BB80 /* Grid+Init.swift in Sources */,
 				361723932475221000866539 /* GridOverlayPreference.swift in Sources */,
-				36A6C9F2247FA4D8005F5E7E /* ForEach+GridViewsContaining.swift in Sources */,
 				364FFB2D24C1C1680054D275 /* GridPreference.swift in Sources */,
 				3633AB9324E678410033A172 /* CGRect+Hashable.swift in Sources */,
 				361723812475221000866539 /* LayoutPositioning.swift in Sources */,
 				3633AB8F24E678290033A172 /* GridCacheMode.swift in Sources */,
 				361723822475221000866539 /* GridGroup.swift in Sources */,
 				3617239D2475221000866539 /* GridFlow.swift in Sources */,
+				365DFA3A2523543C0019BB80 /* ForEach+GridViewsContaining.swift in Sources */,
 				361723832475221000866539 /* View+GridPreferences.swift in Sources */,
-				36A6C9EF247FA4D8005F5E7E /* GridGroup+Inits_TupleView.swift in Sources */,
-				36A6C9F4247FA4D8005F5E7E /* GridItem+asGridItems.swift in Sources */,
 				361723952475221000866539 /* GridContentMode.swift in Sources */,
 				3617238D2475221000866539 /* Constants.swift in Sources */,
+				365DFA362523543C0019BB80 /* GridBuilder.swift in Sources */,
 				3617239A2475221000866539 /* GridTrack.swift in Sources */,
+				365DFA3B2523543C0019BB80 /* GridElement+asGridElements.swift in Sources */,
 				3617239C2475221000866539 /* GridSpan.swift in Sources */,
 				3617238C2475221000866539 /* LayoutArrangement+description.swift in Sources */,
 			);
@@ -514,7 +510,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -571,7 +567,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

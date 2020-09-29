@@ -1,5 +1,5 @@
 //
-//  GridItem.swift
+//  GridElement.swift
 //  ExyteGrid
 //
 //  Created by Denis Obukhov on 16.04.2020.
@@ -9,7 +9,7 @@
 import SwiftUI
 
 /// Fundamental identifiable element in a grid view
-public struct GridItem: Identifiable {
+public struct GridElement: Identifiable {
     public let id: AnyHashable
     public let view: AnyView
     let debugID = UUID()
@@ -20,14 +20,14 @@ public struct GridItem: Identifiable {
     }
 }
 
-extension GridItem: Equatable {
-    public static func == (lhs: GridItem,
-                           rhs: GridItem) -> Bool {
+extension GridElement: Equatable {
+    public static func == (lhs: GridElement,
+                           rhs: GridElement) -> Bool {
         return lhs.id == rhs.id
     }
 }
 
-extension GridItem: Hashable {
+extension GridElement: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }

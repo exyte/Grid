@@ -19,7 +19,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
     @Environment(\.gridAnimation) private var gridAnimation
     @Environment(\.gridCache) private var environmentCacheMode
     
-    let items: [GridItem]
+    let items: [GridElement]
     let spacing: GridSpacing
     let trackSizes: [GridTrack]
     var internalFlow: GridFlow?
@@ -144,15 +144,15 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
         return self.flow == .rows ? .vertical : .horizontal
     }
     
-    private func leadingGuide(item: GridItem) -> CGFloat {
+    private func leadingGuide(item: GridElement) -> CGFloat {
         return -(self.positions[item]?.bounds.origin.x ?? CGFloat(-self.spacing.horizontal) / 2.0)
     }
     
-    private func topGuide(item: GridItem) -> CGFloat {
+    private func topGuide(item: GridElement) -> CGFloat {
         -(self.positions[item]?.bounds.origin.y ?? CGFloat(-self.spacing.vertical) / 2.0)
     }
 
-    private func cellPreferenceView<T: GridCellPreference>(item: GridItem, preference: T) -> some View {
+    private func cellPreferenceView<T: GridCellPreference>(item: GridElement, preference: T) -> some View {
         GeometryReader { geometry in
             preference.content(geometry.size)
         }
@@ -161,12 +161,12 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
                height: self.positions[item]?.bounds.height)
     }
     
-    private func positionsPreferencesSetter(item: GridItem, boundingSize: CGSize) -> some View {
+    private func positionsPreferencesSetter(item: GridElement, boundingSize: CGSize) -> some View {
         GeometryReader { geometry in
             Color.clear
                 .transformPreference(GridPreferenceKey.self, { preference in
                     let positionedItem = PositionedItem(bounds: CGRect(origin: .zero, size: geometry.size),
-                                                        gridItem: item)
+                                                        gridElement: item)
                     let info = GridPreference.ItemInfo(positionedItem: positionedItem)
                     let environment = GridPreference.Environment(tracks: self.trackSizes,
                                                                  contentMode: self.contentMode,

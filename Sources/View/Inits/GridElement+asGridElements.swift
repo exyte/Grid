@@ -1,5 +1,5 @@
 //
-//  GridItem+asGridItems.swift
+//  GridElement+asGridElements.swift
 //  ExyteGrid
 //
 //  Created by Denis Obukhov on 07.05.2020.
@@ -9,8 +9,8 @@
 import SwiftUI
 
 extension Array where Element == IdentifiedView {
-    func asGridItems<T: Hashable>(index: inout Int, baseHash: T) -> [GridItem] {
-        let containerItems: [GridItem] =
+    func asGridElements<T: Hashable>(index: inout Int, baseHash: T) -> [GridElement] {
+        let containerItems: [GridElement] =
             self
                 .enumerated()
                 .map {
@@ -21,13 +21,13 @@ extension Array where Element == IdentifiedView {
                         gridHash = AnyHashable([baseHash, AnyHashable(index)])
                         index += 1
                     }
-                    return GridItem($0.element.view, id: gridHash)
+                    return GridElement($0.element.view, id: gridHash)
         }
         return containerItems
     }
 
-    func asGridItems(index: inout Int) -> [GridItem] {
-        let containerItems: [GridItem]  =
+    func asGridElements(index: inout Int) -> [GridElement] {
+        let containerItems: [GridElement]  =
             self
                 .map {
                     let gridHash: AnyHashable
@@ -37,7 +37,7 @@ extension Array where Element == IdentifiedView {
                         gridHash = AnyHashable(index)
                         index += 1
                     }
-                    return GridItem($0.view, id: gridHash)
+                    return GridElement($0.view, id: gridHash)
 
                 }
         return containerItems

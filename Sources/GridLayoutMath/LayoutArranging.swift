@@ -14,7 +14,7 @@ protocol LayoutArranging {
 }
 
 struct ArrangementInfo: Equatable, Hashable {
-    var gridItem: GridItem
+    var gridElement: GridElement
     var start: GridStart
     var span: GridSpan
 }
@@ -48,7 +48,7 @@ extension LayoutArranging {
                     print("Warning: grid item start \(correctedStart) exceeds fixed tracks count: \(fixedTracksCount)")
                     correctedStart[keyPath: flow.startIndex(.fixed)] = nil
                 }
-                return .init(gridItem: itemInfo.gridItem, start: correctedStart, span: correctedSpan)
+                return .init(gridElement: itemInfo.gridElement, start: correctedStart, span: correctedSpan)
         }
         
         arrangedItems += self.arrangeFullyFrozenItems(&items,
@@ -76,7 +76,7 @@ extension LayoutArranging {
     private func arrangeFullyFrozenItems(_ items: inout [ArrangementInfo], flow: GridFlow, occupiedIndices: inout [GridIndex],
                                          growingTracksCount: inout Int) -> [ArrangedItem] {
         var result: [ArrangedItem] = []
-        let staticItems: [(item: GridItem, span: GridSpan, start: GridIndex)] =
+        let staticItems: [(item: GridElement, span: GridSpan, start: GridIndex)] =
             items.compactMap {
                 guard
                     let columnStart = $0.start.column,
@@ -84,19 +84,19 @@ extension LayoutArranging {
                     else {
                         return nil
                 }
-                return ($0.gridItem, $0.span, GridIndex(column: columnStart, row: rowStart))
+                return ($0.gridElement, $0.span, GridIndex(column: columnStart, row: rowStart))
         }
         
         // Arrange fully static items
         staticItems.forEach { staticItem in
-            let itemIndex = items.firstIndex(where: { $0.gridItem == staticItem.item })!
+            let itemIndex = items.firstIndex(where: { $0.gridElement == staticItem.item })!
             guard
                 !occupiedIndices.contains(staticItem.start, span: staticItem.span) else {
                     print("Warning: grid item position is occupied: \(staticItem.start), \(staticItem.span)")
                     
                     //Place that item automatically
                     let prevItem = items[itemIndex]
-                items[itemIndex...itemIndex] = [.init(gridItem: prevItem.gridItem, start: GridStart.default, span: prevItem.span)]
+                items[itemIndex...itemIndex] = [.init(gridElement: prevItem.gridElement, start: GridStart.default, span: prevItem.span)]
                     return
             }
             occupiedIndices.appendPointsFrom(index: staticItem.start, span: staticItem.span)
@@ -115,7 +115,7 @@ extension LayoutArranging {
         var result: [ArrangedItem] = []
         // Arrange static items with frozen start in fixed flow dimension
         for dimension in GridFlowDimension.allCases {
-            let semiStaticFixedItems: [(item: GridItem, span: GridSpan, start: GridStart)] = items.compactMap {
+            let semiStaticFixedItems: [(item: GridElement, span: GridSpan, start: GridStart)] = items.compactMap {
                 guard let frozenIndex = $0.start[keyPath: flow.startIndex(dimension)] else {
                     return nil
                 }
@@ -124,11 +124,11 @@ extension LayoutArranging {
                     correctedSpan[keyPath: flow.spanIndex(.fixed)] =
                         min(fixedTracksCount - frozenIndex, correctedSpan[keyPath: flow.spanIndex(.fixed)])
                 }
-                return ($0.gridItem, correctedSpan, $0.start)
+                return ($0.gridElement, correctedSpan, $0.start)
             }
             
             semiStaticFixedItems.forEach { semiStaticItem in
-                let itemIndex = items.firstIndex(where: { $0.gridItem == semiStaticItem.item })!
+                let itemIndex = items.firstIndex(where: { $0.gridElement == semiStaticItem.item })!
                 let frozenIndex = semiStaticItem.start[keyPath: flow.startIndex(dimension)]!
                 
                 var currentIndex: GridIndex = .zero
@@ -144,7 +144,7 @@ extension LayoutArranging {
                             //Place that item automatically
                             
                             let prevItem = items[itemIndex]
-                        items[itemIndex...itemIndex] = [.init(gridItem: prevItem.gridItem, start: GridStart.default, span: prevItem.span)]
+                        items[itemIndex...itemIndex] = [.init(gridElement: prevItem.gridElement, start: GridStart.default, span: prevItem.span)]
                             return
                     }
                     currentIndex = nextIndex
@@ -184,7 +184,7 @@ extension LayoutArranging {
             }
             
             occupiedIndices.appendPointsFrom(index: currentIndex, span: spanPreference.span)
-            let arrangedItem = ArrangedItem(item: spanPreference.gridItem,
+            let arrangedItem = ArrangedItem(item: spanPreference.gridElement,
                                             startIndex: currentIndex,
                                             span: spanPreference.span)
             

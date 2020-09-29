@@ -16,7 +16,7 @@ struct LayoutArrangement: Equatable, Hashable {
     
     static var zero = LayoutArrangement(columnsCount: 0, rowsCount: 0, items: [])
     
-    subscript(gridItem: GridItem) -> ArrangedItem? {
-        items.first(where: { $0.gridItem == gridItem })
+    subscript(gridElement: GridElement) -> ArrangedItem? {
+        items.first(where: { $0.gridElement == gridElement })
     }
 }

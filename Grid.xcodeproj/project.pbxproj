@@ -41,6 +41,7 @@
 		3633AB9224E678410033A172 /* CGSize+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3633AB9024E678410033A172 /* CGSize+Hashable.swift */; };
 		3633AB9324E678410033A172 /* CGRect+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3633AB9124E678410033A172 /* CGRect+Hashable.swift */; };
 		364FFB2D24C1C1680054D275 /* GridPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364FFB2C24C1C1680054D275 /* GridPreference.swift */; };
+		368A837324E1549A005CA508 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368A837224E1549A005CA508 /* Builder.swift */; };
 		36A6C9EF247FA4D8005F5E7E /* GridGroup+Inits_TupleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9E7247FA4D7005F5E7E /* GridGroup+Inits_TupleView.swift */; };
 		36A6C9F0247FA4D8005F5E7E /* GridContentViewsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9E8247FA4D7005F5E7E /* GridContentViewsProtocols.swift */; };
 		36A6C9F1247FA4D8005F5E7E /* Grid+Inits_TupleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9E9247FA4D7005F5E7E /* Grid+Inits_TupleView.swift */; };
@@ -99,6 +100,7 @@
 		3633AB9024E678410033A172 /* CGSize+Hashable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGSize+Hashable.swift"; sourceTree = "<group>"; };
 		3633AB9124E678410033A172 /* CGRect+Hashable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+Hashable.swift"; sourceTree = "<group>"; };
 		364FFB2C24C1C1680054D275 /* GridPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridPreference.swift; sourceTree = "<group>"; };
+		368A837224E1549A005CA508 /* Builder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
 		36A6C9E7247FA4D7005F5E7E /* GridGroup+Inits_TupleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GridGroup+Inits_TupleView.swift"; sourceTree = "<group>"; };
 		36A6C9E8247FA4D7005F5E7E /* GridContentViewsProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridContentViewsProtocols.swift; sourceTree = "<group>"; };
 		36A6C9E9247FA4D7005F5E7E /* Grid+Inits_TupleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Grid+Inits_TupleView.swift"; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 		3617235E2475220F00866539 /* Inits */ = {
 			isa = PBXGroup;
 			children = (
+				368A837224E1549A005CA508 /* Builder.swift */,
 				36A6C9EA247FA4D7005F5E7E /* ForEach+GridViewsContaining.swift */,
 				36A6C9EE247FA4D8005F5E7E /* Grid+Inits_Data.swift */,
 				36A6C9EB247FA4D7005F5E7E /* Grid+Inits_ForEach.swift */,
@@ -414,6 +417,7 @@
 				361723972475221000866539 /* GridSpacing.swift in Sources */,
 				3617239B2475221000866539 /* GridItem.swift in Sources */,
 				36A6C9F5247FA4D8005F5E7E /* GridGroup+Inits_Data.swift in Sources */,
+				368A837324E1549A005CA508 /* Builder.swift in Sources */,
 				3617238A2475221000866539 /* Grid.swift in Sources */,
 				361723902475221000866539 /* GridBackgroundPreference.swift in Sources */,
 				361723922475221000866539 /* GridCellPreference.swift in Sources */,
@@ -590,6 +594,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -614,6 +619,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

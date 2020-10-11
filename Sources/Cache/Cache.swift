@@ -6,6 +6,8 @@
 //  Copyright © 2020 Exyte. All rights reserved.
 //
 
+#if os(iOS) || os(watchOS) || os(tvOS)
+
 import UIKit.UIApplication
 
 private class ObjectWrapper {
@@ -95,3 +97,5 @@ class Cache<KeyType: Hashable, ObjectType> {
         set { cache.evictsObjectsWithDiscardedContent = newValue }
     }
 }
+
+#endif

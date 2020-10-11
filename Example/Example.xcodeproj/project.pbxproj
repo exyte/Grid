@@ -11,6 +11,9 @@
 		360BA32B247E87D6006C51FC /* MathOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360BA32A247E87D6006C51FC /* MathOperation.swift */; };
 		36161EBB247EC73C0076173B /* PackingExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36161EBA247EC73C0076173B /* PackingExample.swift */; };
 		36161EBD247ECDAD0076173B /* SpacingExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36161EBC247ECDAC0076173B /* SpacingExample.swift */; };
+		365B8C42253307DF008E6D63 /* Pods_Mac_Grid_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCD816759FB16E3F8DECEAB6 /* Pods_Mac_Grid_Example.framework */; };
+		365B8C43253307DF008E6D63 /* Pods_Mac_Grid_Example.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FCD816759FB16E3F8DECEAB6 /* Pods_Mac_Grid_Example.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		365B8C5525330B74008E6D63 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365B8C5425330B74008E6D63 /* ContentView.swift */; };
 		366B25052474F77000F1DD09 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B25042474F77000F1DD09 /* SceneDelegate.swift */; };
 		366B25072474F78E00F1DD09 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366B25062474F78E00F1DD09 /* ContentView.swift */; };
 		36A6C9FB247FBB8E005F5E7E /* ColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9FA247FBB8E005F5E7E /* ColorView.swift */; };
@@ -21,13 +24,42 @@
 		36A6CA05247FBD05005F5E7E /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA04247FBD05005F5E7E /* Helpers.swift */; };
 		36A6CA07247FD813005F5E7E /* SpansExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA06247FD813005F5E7E /* SpansExample.swift */; };
 		36A6CA0924801EA6005F5E7E /* StartsExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA0824801EA6005F5E7E /* StartsExample.swift */; };
+		36AA6FDF25304C110072AEBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36AA6FDE25304C110072AEBA /* AppDelegate.swift */; };
+		36AA6FE325304C110072AEBA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36AA6FE225304C110072AEBA /* Assets.xcassets */; };
+		36AA6FE625304C110072AEBA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36AA6FE525304C110072AEBA /* Preview Assets.xcassets */; };
+		36AA6FE925304C110072AEBA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36AA6FE725304C110072AEBA /* Main.storyboard */; };
+		36AA6FF325304CE60072AEBA /* Color+hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F6C2292476D919001818F2 /* Color+hex.swift */; };
+		36AA6FF525304CE60072AEBA /* Color+brightness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9FC247FBBDC005F5E7E /* Color+brightness.swift */; };
+		36AA6FF625304CE60072AEBA /* ColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9FA247FBB8E005F5E7E /* ColorView.swift */; };
+		36AA6FF825304CE60072AEBA /* CardViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA02247FBC7C005F5E7E /* CardViews.swift */; };
+		36AA6FF925304CE60072AEBA /* SpacingExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36161EBC247ECDAC0076173B /* SpacingExample.swift */; };
+		36AA6FFA25304CE60072AEBA /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA04247FBD05005F5E7E /* Helpers.swift */; };
+		36AA6FFB25304CE60072AEBA /* ContentModeExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA00247FBC66005F5E7E /* ContentModeExample.swift */; };
+		36AA6FFD25304CE60072AEBA /* SpansExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA06247FD813005F5E7E /* SpansExample.swift */; };
+		36AA6FFE25304CE60072AEBA /* StartsExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6CA0824801EA6005F5E7E /* StartsExample.swift */; };
+		36AA6FFF25304CE60072AEBA /* PackingExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36161EBA247EC73C0076173B /* PackingExample.swift */; };
+		36AA700025304CE60072AEBA /* FlowExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36A6C9FE247FBC25005F5E7E /* FlowExample.swift */; };
 		36B11E512475539700CDAE27 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B11E502475539700CDAE27 /* Calculator.swift */; };
 		36F6C22A2476D919001818F2 /* Color+hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F6C2292476D919001818F2 /* Color+hex.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		AF0E1DE64E0957D29014F173 /* libPods-Grid_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E9ACAABC3CC52D1C66057EF /* libPods-Grid_Example.a */; };
+		F14568C65B91B6CED3802B5E /* Pods_Grid_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88835129B29B13B2B6C51DE0 /* Pods_Grid_Example.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		365B8C44253307DF008E6D63 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				365B8C43253307DF008E6D63 /* Pods_Mac_Grid_Example.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		019A245A777705E4C76B5F54 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -36,6 +68,7 @@
 		360BA32A247E87D6006C51FC /* MathOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathOperation.swift; sourceTree = "<group>"; };
 		36161EBA247EC73C0076173B /* PackingExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackingExample.swift; sourceTree = "<group>"; };
 		36161EBC247ECDAC0076173B /* SpacingExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacingExample.swift; sourceTree = "<group>"; };
+		365B8C5425330B74008E6D63 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		366B25042474F77000F1DD09 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		366B25062474F78E00F1DD09 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		366B25082474F7FA00F1DD09 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -47,24 +80,42 @@
 		36A6CA04247FBD05005F5E7E /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		36A6CA06247FD813005F5E7E /* SpansExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpansExample.swift; sourceTree = "<group>"; };
 		36A6CA0824801EA6005F5E7E /* StartsExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartsExample.swift; sourceTree = "<group>"; };
+		36AA6FDC25304C110072AEBA /* Mac_Grid_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mac_Grid_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		36AA6FDE25304C110072AEBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		36AA6FE225304C110072AEBA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		36AA6FE525304C110072AEBA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		36AA6FE825304C110072AEBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		36AA6FEA25304C110072AEBA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		36AA6FEB25304C120072AEBA /* Mac_Grid_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Mac_Grid_Example.entitlements; sourceTree = "<group>"; };
 		36B11E502475539700CDAE27 /* Calculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
 		36F6C2292476D919001818F2 /* Color+hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+hex.swift"; sourceTree = "<group>"; };
-		4E9ACAABC3CC52D1C66057EF /* libPods-Grid_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Grid_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* Grid_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grid_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		743618E75BFB071D0A54A0AB /* Grid.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Grid.podspec; path = ../Grid.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		829C1F92CEE0D9E1C42C0575 /* Pods-Mac_Grid_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac_Grid_Example.debug.xcconfig"; path = "Target Support Files/Pods-Mac_Grid_Example/Pods-Mac_Grid_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		83203867AE43F6E11B626DD4 /* Pods-Grid_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grid_Example.release.xcconfig"; path = "Target Support Files/Pods-Grid_Example/Pods-Grid_Example.release.xcconfig"; sourceTree = "<group>"; };
+		88835129B29B13B2B6C51DE0 /* Pods_Grid_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Grid_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB1CE10F02D5C04050EFB4D9 /* Pods-Grid_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Grid_Example.debug.xcconfig"; path = "Target Support Files/Pods-Grid_Example/Pods-Grid_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		C2C09E176CED121B7EC521E5 /* Pods-Mac_Grid_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mac_Grid_Example.release.xcconfig"; path = "Target Support Files/Pods-Mac_Grid_Example/Pods-Mac_Grid_Example.release.xcconfig"; sourceTree = "<group>"; };
+		FCD816759FB16E3F8DECEAB6 /* Pods_Mac_Grid_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mac_Grid_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		36AA6FD925304C110072AEBA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				365B8C42253307DF008E6D63 /* Pods_Mac_Grid_Example.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCD1AFB9204008FA782 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF0E1DE64E0957D29014F173 /* libPods-Grid_Example.a in Frameworks */,
+				F14568C65B91B6CED3802B5E /* Pods_Grid_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +127,8 @@
 			children = (
 				BB1CE10F02D5C04050EFB4D9 /* Pods-Grid_Example.debug.xcconfig */,
 				83203867AE43F6E11B626DD4 /* Pods-Grid_Example.release.xcconfig */,
+				829C1F92CEE0D9E1C42C0575 /* Pods-Mac_Grid_Example.debug.xcconfig */,
+				C2C09E176CED121B7EC521E5 /* Pods-Mac_Grid_Example.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -113,6 +166,28 @@
 			name = Examples;
 			sourceTree = "<group>";
 		};
+		36AA6FDD25304C110072AEBA /* Mac Example */ = {
+			isa = PBXGroup;
+			children = (
+				365B8C5425330B74008E6D63 /* ContentView.swift */,
+				36AA6FDE25304C110072AEBA /* AppDelegate.swift */,
+				36AA6FE225304C110072AEBA /* Assets.xcassets */,
+				36AA6FE725304C110072AEBA /* Main.storyboard */,
+				36AA6FEA25304C110072AEBA /* Info.plist */,
+				36AA6FEB25304C120072AEBA /* Mac_Grid_Example.entitlements */,
+				36AA6FE425304C110072AEBA /* Preview Content */,
+			);
+			path = "Mac Example";
+			sourceTree = "<group>";
+		};
+		36AA6FE425304C110072AEBA /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				36AA6FE525304C110072AEBA /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		36F6C2282476D8F4001818F2 /* Extesions */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,7 +202,8 @@
 			isa = PBXGroup;
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
-				607FACD21AFB9204008FA782 /* Example for Grid */,
+				607FACD21AFB9204008FA782 /* iOS Example */,
+				36AA6FDD25304C110072AEBA /* Mac Example */,
 				607FACD11AFB9204008FA782 /* Products */,
 				191E4E911CBE64D7ECF0BCE6 /* Pods */,
 				F516B29D1F87D7603CA5E1C1 /* Frameworks */,
@@ -138,11 +214,12 @@
 			isa = PBXGroup;
 			children = (
 				607FACD01AFB9204008FA782 /* Grid_Example.app */,
+				36AA6FDC25304C110072AEBA /* Mac_Grid_Example.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		607FACD21AFB9204008FA782 /* Example for Grid */ = {
+		607FACD21AFB9204008FA782 /* iOS Example */ = {
 			isa = PBXGroup;
 			children = (
 				36A6CA0A248022BD005F5E7E /* Examples */,
@@ -155,7 +232,7 @@
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
-			name = "Example for Grid";
+			name = "iOS Example";
 			path = Example;
 			sourceTree = "<group>";
 		};
@@ -180,7 +257,8 @@
 		F516B29D1F87D7603CA5E1C1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4E9ACAABC3CC52D1C66057EF /* libPods-Grid_Example.a */,
+				88835129B29B13B2B6C51DE0 /* Pods_Grid_Example.framework */,
+				FCD816759FB16E3F8DECEAB6 /* Pods_Mac_Grid_Example.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -188,6 +266,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		36AA6FDB25304C110072AEBA /* Mac_Grid_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 36AA6FEC25304C120072AEBA /* Build configuration list for PBXNativeTarget "Mac_Grid_Example" */;
+			buildPhases = (
+				53B396259CDBB9ED11465731 /* [CP] Check Pods Manifest.lock */,
+				36AA6FD825304C110072AEBA /* Sources */,
+				36AA6FD925304C110072AEBA /* Frameworks */,
+				36AA6FDA25304C110072AEBA /* Resources */,
+				987D0BBE925F60789B4DDF88 /* [CP] Embed Pods Frameworks */,
+				365B8C44253307DF008E6D63 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Mac_Grid_Example;
+			productName = Mac_Grid_Example;
+			productReference = 36AA6FDC25304C110072AEBA /* Mac_Grid_Example.app */;
+			productType = "com.apple.product-type.application";
+		};
 		607FACCF1AFB9204008FA782 /* Grid_Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Grid_Example" */;
@@ -197,6 +295,7 @@
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
+				21386C1963540A021370AA4D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -213,10 +312,15 @@
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1140;
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = Exyte;
 				TargetAttributes = {
+					36AA6FDB25304C110072AEBA = {
+						CreatedOnToolsVersion = 12.0;
+						DevelopmentTeam = TP875UJ4PG;
+						ProvisioningStyle = Automatic;
+					};
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = TP875UJ4PG;
@@ -238,11 +342,22 @@
 			projectRoot = "";
 			targets = (
 				607FACCF1AFB9204008FA782 /* Grid_Example */,
+				36AA6FDB25304C110072AEBA /* Mac_Grid_Example */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		36AA6FDA25304C110072AEBA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36AA6FE925304C110072AEBA /* Main.storyboard in Resources */,
+				36AA6FE625304C110072AEBA /* Preview Assets.xcassets in Resources */,
+				36AA6FE325304C110072AEBA /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCE1AFB9204008FA782 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -255,6 +370,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		21386C1963540A021370AA4D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Grid_Example/Pods-Grid_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ExyteGrid-iOS/ExyteGrid.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ExyteGrid.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Grid_Example/Pods-Grid_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		36B55FD124752944003F792F /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -272,6 +405,46 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		53B396259CDBB9ED11465731 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Mac_Grid_Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		987D0BBE925F60789B4DDF88 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Mac_Grid_Example/Pods-Mac_Grid_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ExyteGrid-macOS/ExyteGrid.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ExyteGrid.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Mac_Grid_Example/Pods-Mac_Grid_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		A8612C1F2519BCB7F7607D68 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -298,6 +471,26 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		36AA6FD825304C110072AEBA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36AA700025304CE60072AEBA /* FlowExample.swift in Sources */,
+				36AA6FF625304CE60072AEBA /* ColorView.swift in Sources */,
+				36AA6FF825304CE60072AEBA /* CardViews.swift in Sources */,
+				36AA6FFA25304CE60072AEBA /* Helpers.swift in Sources */,
+				36AA6FF325304CE60072AEBA /* Color+hex.swift in Sources */,
+				36AA6FFB25304CE60072AEBA /* ContentModeExample.swift in Sources */,
+				365B8C5525330B74008E6D63 /* ContentView.swift in Sources */,
+				36AA6FF925304CE60072AEBA /* SpacingExample.swift in Sources */,
+				36AA6FFF25304CE60072AEBA /* PackingExample.swift in Sources */,
+				36AA6FFE25304CE60072AEBA /* StartsExample.swift in Sources */,
+				36AA6FFD25304CE60072AEBA /* SpansExample.swift in Sources */,
+				36AA6FDF25304C110072AEBA /* AppDelegate.swift in Sources */,
+				36AA6FF525304CE60072AEBA /* Color+brightness.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCC1AFB9204008FA782 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -325,6 +518,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		36AA6FE725304C110072AEBA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				36AA6FE825304C110072AEBA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		607FACDE1AFB9204008FA782 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -336,6 +537,75 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		36AA6FED25304C120072AEBA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 829C1F92CEE0D9E1C42C0575 /* Pods-Mac_Grid_Example.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Mac Example/Mac_Grid_Example.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_ASSET_PATHS = "\"Mac Example/Preview Content\"";
+				DEVELOPMENT_TEAM = TP875UJ4PG;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "Mac Example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.exyte.Mac-Grid-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		36AA6FEE25304C120072AEBA /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C2C09E176CED121B7EC521E5 /* Pods-Mac_Grid_Example.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "Mac Example/Mac_Grid_Example.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "\"Mac Example/Preview Content\"";
+				DEVELOPMENT_TEAM = TP875UJ4PG;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "Mac Example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.exyte.Mac-Grid-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		607FACED1AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -358,6 +628,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -413,6 +684,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -478,6 +750,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		36AA6FEC25304C120072AEBA /* Build configuration list for PBXNativeTarget "Mac_Grid_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				36AA6FED25304C120072AEBA /* Debug */,
+				36AA6FEE25304C120072AEBA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

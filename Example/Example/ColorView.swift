@@ -10,9 +10,9 @@ import SwiftUI
 
 struct ColorView: View {
     
-    let color: UIColor
+    let color: GridColor
     
-    init(_ color: UIColor) {
+    init(_ color: GridColor) {
         self.color = color
     }
     

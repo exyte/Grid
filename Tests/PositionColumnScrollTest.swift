@@ -8,7 +8,12 @@
 
 import XCTest
 import SwiftUI
+
+#if os(iOS) || os(watchOS) || os(tvOS)
 @testable import Grid
+#else
+@testable import GridMac
+#endif
 
 class PositionColumnScrollTest: XCTestCase {
 

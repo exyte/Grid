@@ -13,7 +13,7 @@ struct ContentModeExample: View {
     private struct Model: Hashable {
         let text: String
         let span: GridSpan
-        let color = UIColor.random.lighter(by: 50)
+        let color = GridColor.random.lighter(by: 50)
     }
     
     @State var contentMode: GridContentMode = .scroll

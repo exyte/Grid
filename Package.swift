@@ -5,7 +5,8 @@ import PackageDescription
 let package = Package(
     name: "ExyteGrid",
     platforms: [
-        .iOS(.v14)
+        .iOS(.v14),
+        .macOS(.v10_15)
     ],
     products: [
         .library(name: "ExyteGrid", targets: ["ExyteGrid"])

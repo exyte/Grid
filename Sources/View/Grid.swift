@@ -11,8 +11,10 @@ import SwiftUI
 public struct Grid: View, LayoutArranging, LayoutPositioning {
     @State var positions: PositionedLayout = .empty
     @State var isLoaded: Bool = false
+    #if os(iOS) || os(watchOS) || os(tvOS)
     @State var internalLayoutCache = Cache<ArrangingTask, LayoutArrangement>()
     @State var internalPositionsCache = Cache<PositioningTask, PositionedLayout>()
+    #endif
     @Environment(\.gridContentMode) private var environmentContentMode
     @Environment(\.gridFlow) private var environmentFlow
     @Environment(\.gridPacking) private var environmentPacking
@@ -43,6 +45,8 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
         self.internalCacheMode ?? self.environmentCacheMode ?? Constants.defaultCacheMode
     }
 
+    #if os(iOS) || os(watchOS) || os(tvOS)
+
     private var layoutCache: Cache<ArrangingTask, LayoutArrangement>? {
         switch self.cacheMode {
         case .inMemoryCache:
@@ -60,6 +64,8 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
             return nil
         }
     }
+
+    #endif
 
     public var body: some View {
         return GeometryReader { mainGeometry in
@@ -106,13 +112,19 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
                                  packing: self.packing)
 
         let calculatedLayout: LayoutArrangement
+
+        #if os(iOS) || os(watchOS) || os(tvOS)
         if let cachedLayout = self.layoutCache?.object(forKey: task) {
             calculatedLayout = cachedLayout
         } else {
             calculatedLayout = self.arrange(task: task)
             self.layoutCache?.setObject(calculatedLayout,
                                         forKey: task)
+
         }
+        #else
+        calculatedLayout = self.arrange(task: task)
+        #endif
 
         let positionTask = PositioningTask(items: preference.itemsInfo.compactMap(\.positionedItem),
                                            arrangement: calculatedLayout,
@@ -121,6 +133,8 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
                                            contentMode: self.contentMode,
                                            flow: self.flow)
         let positions: PositionedLayout
+
+        #if os(iOS) || os(watchOS) || os(tvOS)
         if let cachedPositions = self.positionsCache?.object(forKey: positionTask) {
             positions = cachedPositions
         } else {
@@ -128,6 +142,10 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
             self.positionsCache?.setObject(positions,
                                            forKey: positionTask)
         }
+        #else
+        positions = self.reposition(positionTask)
+        #endif
+
         self.positions = positions
         self.isLoaded = true
     }

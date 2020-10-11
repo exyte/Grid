@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ExyteGrid'
-  s.version          = '1.0.1'
+  s.version          = '1.1.0'
   s.summary          = 'The most powerful Grid container missed in SwiftUI'
 
   s.homepage         = 'https://github.com/exyte/Grid.git'
@@ -18,6 +18,7 @@ Pod::Spec.new do |s|
   s.social_media_url = 'http://exyte.com'
 
   s.ios.deployment_target = '14.0'
+  s.osx.deployment_target = "10.15"
   s.source_files = 'Sources/**/*.swift'
   s.swift_version = "5.3"
   

@@ -10,8 +10,8 @@ import SwiftUI
 
 struct VCardView: View {
     let text: String
-    let color: UIColor
-    
+    let color: GridColor
+
     var body: some View {
         VStack {
             Image("dog")
@@ -38,7 +38,7 @@ struct VCardView: View {
 
 struct HCardView: View {
     let text: String
-    let color: UIColor
+    let color: GridColor
     
     var body: some View {
         HStack {

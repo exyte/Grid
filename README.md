@@ -53,6 +53,7 @@ Add it to an existing Xcode project as a package dependency:
 ## Requirements
 
 * iOS 14.0+ (the latest iOS 13 support is in [v0.1.0](https://github.com/exyte/Grid/releases/tag/0.1.0))
+* MacOS 10.15+
 * Xcode 12+
 
 ## Building from sources

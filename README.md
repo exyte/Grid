@@ -703,6 +703,8 @@ You can associate a specific ID to a grid view using [ForEach](#foreach) or [Gri
 ### 12. Caching
 It's possible to cache grid layouts through the lifecycle of Grid.
 
+*Supported for iOS only*
+
 *Grid caching could be specified in a grid constructor as well as using  `.gridCaching(...)` grid modifier. The first option has more priority.*
 
 #### In memory cache 

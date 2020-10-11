@@ -739,12 +739,15 @@ func headerSegment(flag: Bool) -> some View {
 
 ## Release notes:
 
-##### [v1.0.1](https://github.com/exyte/Grid/releases/tag/1.0.1):
-- adds full support of conditional statements
-- adds `@GridBuilder` function builder
+##### [v1.1.0](https://github.com/exyte/Grid/releases/tag/1.1.0):
+- adds MacOS support
 
 <details>
   <summary>Previous releases</summary>
+	
+##### [v1.0.1](https://github.com/exyte/Grid/releases/tag/1.0.1):
+- adds full support of conditional statements
+- adds `@GridBuilder` function builder
 
 ##### [v0.1.0](https://github.com/exyte/Grid/releases/tag/0.1.0):
 - adds layout caching

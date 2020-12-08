@@ -69,33 +69,34 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
 
     public var body: some View {
         return GeometryReader { mainGeometry in
-            ScrollView(self.scrollAxis) {
-                ZStack(alignment: .topLeading) {
-                    ForEach(self.items) { item in
-                        item.view
-                            .padding(spacing: self.spacing)
-                            .background(self.positionsPreferencesSetter(item: item,
-                                                                        boundingSize: mainGeometry.size))
-                            .transformPreference(GridPreferenceKey.self) { preference in
-                                preference.itemsInfo = preference.itemsInfo.mergedToSingleValue
-                            }
-                            .frame(flow: self.flow,
-                                   size: self.positions[item]?.bounds.size,
-                                   contentMode: self.contentMode)
-                            .alignmentGuide(.leading, computeValue: { _ in self.leadingGuide(item: item) })
-                            .alignmentGuide(.top, computeValue: { _ in self.topGuide(item: item) })
-                            .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
-                                self.cellPreferenceView(item: item, preference: preference)
-                            }
-                            .overlayPreferenceValue(GridOverlayPreferenceKey.self) { preference in
-                                self.cellPreferenceView(item: item, preference: preference)
-                            }
-                    }
+            ZStack(alignment: .topLeading) {
+                ForEach(self.items) { item in
+                    item.view
+                        .padding(spacing: self.spacing)
+                        .background(self.positionsPreferencesSetter(item: item,
+                                                                    boundingSize: mainGeometry.size))
+                        .transformPreference(GridPreferenceKey.self) { preference in
+                            preference.itemsInfo = preference.itemsInfo.mergedToSingleValue
+                        }
+                        .frame(flow: self.flow,
+                               size: self.positions[item]?.bounds.size,
+                               contentMode: self.contentMode)
+                        .alignmentGuide(.leading, computeValue: { _ in self.leadingGuide(item: item) })
+                        .alignmentGuide(.top, computeValue: { _ in self.topGuide(item: item) })
+                        .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
+                            self.cellPreferenceView(item: item, preference: preference)
+                        }
+                        .overlayPreferenceValue(GridOverlayPreferenceKey.self) { preference in
+                            self.cellPreferenceView(item: item, preference: preference)
+                        }
                 }
-                .animation(self.gridAnimation)
-                .frame(flow: self.flow,
-                       size: mainGeometry.size,
-                       contentMode: self.contentMode)
+            }
+            .animation(self.gridAnimation)
+            .frame(flow: self.flow,
+                   size: mainGeometry.size,
+                   contentMode: self.contentMode)
+            .if(contentMode == .scroll) { content in
+                ScrollView(self.scrollAxis) { content }
             }
             .onPreferenceChange(GridPreferenceKey.self) { preference in
                 self.calculateLayout(preference: preference,

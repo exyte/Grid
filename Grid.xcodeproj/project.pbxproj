@@ -90,6 +90,8 @@
 		369E503625331A18007CEADA /* ArrangingTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361723B52475230A00866539 /* ArrangingTest.swift */; };
 		369E503725331A18007CEADA /* PositionColumnScrollTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361723B42475230A00866539 /* PositionColumnScrollTest.swift */; };
 		36E46504253319C90084C6EF /* GridMac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 363AD4732530455F00C27F2F /* GridMac.framework */; };
+		36E9CF48257F3EC500AE5E65 /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E9CF47257F3EC500AE5E65 /* View+If.swift */; };
+		36E9CF49257F3EC500AE5E65 /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E9CF47257F3EC500AE5E65 /* View+If.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +162,7 @@
 		365DFA352523543C0019BB80 /* Grid+Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Grid+Init.swift"; sourceTree = "<group>"; };
 		36E464FF253319C90084C6EF /* GridMacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GridMacTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		36E46503253319C90084C6EF /* MacTestsInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = MacTestsInfo.plist; sourceTree = "<group>"; };
+		36E9CF47257F3EC500AE5E65 /* View+If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+If.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,6 +277,7 @@
 				3633AB9124E678410033A172 /* CGRect+Hashable.swift */,
 				3633AB9024E678410033A172 /* CGSize+Hashable.swift */,
 				361723682475221000866539 /* LayoutArrangement+description.swift */,
+				36E9CF47257F3EC500AE5E65 /* View+If.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -553,6 +557,7 @@
 				3633AB8E24E678290033A172 /* Cache.swift in Sources */,
 				361723A02475221000866539 /* PositionedItem.swift in Sources */,
 				361723802475221000866539 /* LayoutArranging.swift in Sources */,
+				36E9CF48257F3EC500AE5E65 /* View+If.swift in Sources */,
 				365DFA372523543C0019BB80 /* GridGroup+Inits_Data.swift in Sources */,
 				3617238B2475221000866539 /* View+Environment.swift in Sources */,
 				361723962475221000866539 /* GridStart.swift in Sources */,
@@ -632,6 +637,7 @@
 				363AD497253045A200C27F2F /* GridGroup.swift in Sources */,
 				363AD4AC253045A200C27F2F /* CGRect+Hashable.swift in Sources */,
 				363AD4A1253045A200C27F2F /* GridContentViewsProtocols.swift in Sources */,
+				36E9CF49257F3EC500AE5E65 /* View+If.swift in Sources */,
 				363AD4A4253045A200C27F2F /* LayoutArrangement.swift in Sources */,
 				363AD49B253045A200C27F2F /* GridTrack.swift in Sources */,
 			);

@@ -741,6 +741,9 @@ func headerSegment(flag: Bool) -> some View {
 
 ## Release notes:
 
+##### [v1.1.1.beta](https://github.com/exyte/Grid/releases/tag/1.1.1.beta):
+- adds WidgetKit support by conditionally rendering ScrollView
+
 ##### [v1.1.0](https://github.com/exyte/Grid/releases/tag/1.1.0):
 - adds MacOS support
 

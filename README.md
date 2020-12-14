@@ -741,6 +741,9 @@ func headerSegment(flag: Bool) -> some View {
 
 ## Release notes:
 
+##### [v1.2.1.beta](https://github.com/exyte/Grid/releases/tag/1.2.1.beta):
+- adds `gridItemsAlignment` modifier
+
 ##### [v1.1.1.beta](https://github.com/exyte/Grid/releases/tag/1.1.1.beta):
 - adds WidgetKit support by conditionally rendering ScrollView
 

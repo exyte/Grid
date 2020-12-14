@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ExyteGrid'
-  s.version          = '1.1.1.beta'
+  s.version          = '1.2.1.beta'
   s.summary          = 'The most powerful Grid container missed in SwiftUI'
 
   s.homepage         = 'https://github.com/exyte/Grid.git'

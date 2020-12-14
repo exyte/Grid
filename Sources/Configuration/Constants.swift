@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreGraphics
+import SwiftUI
 
 public struct Constants {
     public static let defaultColumnSpan = 1
@@ -18,4 +19,5 @@ public struct Constants {
     public static let defaultFlow: GridFlow = .rows
     public static let defaultPacking: GridPacking = .sparse
     public static let defaultCacheMode: GridCacheMode = .inMemoryCache
+    public static let defaultItemsAlignment: Alignment = .center
 }

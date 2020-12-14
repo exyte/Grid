@@ -20,6 +20,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
     @Environment(\.gridPacking) private var environmentPacking
     @Environment(\.gridAnimation) private var gridAnimation
     @Environment(\.gridCache) private var environmentCacheMode
+    @Environment(\.gridItemsAlignemnt) private var environmentItemsAlignment
     
     let items: [GridElement]
     let spacing: GridSpacing
@@ -28,6 +29,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
     var internalPacking: GridPacking?
     var internalContentMode: GridContentMode?
     var internalCacheMode: GridCacheMode?
+    var internalItemsAlignment: Alignment?
 
     private var flow: GridFlow {
         self.internalFlow ?? self.environmentFlow ?? Constants.defaultFlow
@@ -43,6 +45,10 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
 
     private var cacheMode: GridCacheMode {
         self.internalCacheMode ?? self.environmentCacheMode ?? Constants.defaultCacheMode
+    }
+
+    private var itemsAlignment: Alignment {
+        self.internalItemsAlignment ?? self.environmentItemsAlignment ?? Constants.defaultItemsAlignment
     }
 
     #if os(iOS) || os(watchOS) || os(tvOS)
@@ -80,7 +86,8 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
                         }
                         .frame(flow: self.flow,
                                size: self.positions[item]?.bounds.size,
-                               contentMode: self.contentMode)
+                               contentMode: self.contentMode,
+                               alignment: itemsAlignment)
                         .alignmentGuide(.leading, computeValue: { _ in self.leadingGuide(item: item) })
                         .alignmentGuide(.top, computeValue: { _ in self.topGuide(item: item) })
                         .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
@@ -94,7 +101,8 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
             .animation(self.gridAnimation)
             .frame(flow: self.flow,
                    size: mainGeometry.size,
-                   contentMode: self.contentMode)
+                   contentMode: self.contentMode,
+                   alignment: .center)
             .if(contentMode == .scroll) { content in
                 ScrollView(self.scrollAxis) { content }
             }
@@ -199,8 +207,12 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
 }
 
 extension View {
-    fileprivate func frame(flow: GridFlow, size: CGSize?,
-                           contentMode: GridContentMode) -> some View {
+    fileprivate func frame(
+        flow: GridFlow,
+        size: CGSize?,
+        contentMode: GridContentMode,
+        alignment: Alignment
+    ) -> some View {
         let width: CGFloat?
         let height: CGFloat?
         
@@ -212,7 +224,7 @@ extension View {
             width = (flow == .rows ? size?.width : nil)
             height = (flow == .columns ? size?.height : nil)
         }
-        return frame(width: width, height: height)
+      return frame(width: width, height: height, alignment: alignment)
     }
     
     fileprivate func padding(spacing: GridSpacing) -> some View {

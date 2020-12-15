@@ -779,6 +779,8 @@ func headerSegment(flag: Bool) -> some View {
 
 ## Roadmap:
 
+- [ ] add WidgetKit example
+- [ ] add alignment per tracks
 - [ ] add regions or settings for GridGroup to specify position
 - [ ] dual dimension track sizes (grid-template-rows, grid-template-columns).
 - [ ] grid-auto-rows, grid-auto-columns

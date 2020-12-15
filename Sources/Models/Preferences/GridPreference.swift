@@ -12,6 +12,7 @@ struct GridPreference: Equatable {
         var positionedItem: PositionedItem?
         var span: GridSpan?
         var start: GridStart?
+        var alignment: GridAlignment?
         
         static let empty = ItemInfo()
     }
@@ -44,9 +45,11 @@ extension Array where Element == GridPreference.ItemInfo {
         let positionedItem = self.compactMap(\.positionedItem).first
         let span = self.compactMap(\.span).first ?? .default
         let start = self.compactMap(\.start).first ?? .default
+        let alignment = self.compactMap(\.alignment).first
         let itemInfo = GridPreference.ItemInfo(positionedItem: positionedItem,
                                                span: span,
-                                               start: start)
+                                               start: start,
+                                               alignment: alignment)
         return [itemInfo]
     }
     

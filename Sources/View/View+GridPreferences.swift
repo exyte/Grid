@@ -42,6 +42,14 @@ extension View {
             preferences.itemsInfo = [info]
         })
     }
+
+    public func gridAlignment(_ alignment: GridAlignment) -> some View {
+        transformPreference(GridPreferenceKey.self, { preferences in
+            var info = preferences.itemsInfo.first ?? .empty
+            info.alignment = alignment
+            preferences.itemsInfo = [info]
+        })
+    }
     
     public func gridCellOverlay<Content: View>(
         @ViewBuilder content: @escaping (CGSize?) -> Content

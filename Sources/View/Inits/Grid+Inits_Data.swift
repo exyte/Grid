@@ -11,7 +11,7 @@
 import SwiftUI
 
 extension Grid {
-    public init<Data, ID>(_ data: Data, id: KeyPath<Data.Element, ID>, tracks: [GridTrack] = 1, contentMode: GridContentMode? = nil, flow: GridFlow? = nil, packing: GridPacking? = nil, spacing: GridSpacing = Constants.defaultSpacing, itemsAlignment: Alignment? = nil, cache: GridCacheMode? = nil, @GridBuilder item: @escaping (Data.Element) -> ConstructionItem) where Data: RandomAccessCollection, ID: Hashable {
+    public init<Data, ID>(_ data: Data, id: KeyPath<Data.Element, ID>, tracks: [GridTrack] = 1, contentMode: GridContentMode? = nil, flow: GridFlow? = nil, packing: GridPacking? = nil, spacing: GridSpacing = Constants.defaultSpacing, itemsAlignment: GridAlignment? = nil, cache: GridCacheMode? = nil, @GridBuilder item: @escaping (Data.Element) -> ConstructionItem) where Data: RandomAccessCollection, ID: Hashable {
         var index = 0
         self.items = data.flatMap {
             item($0).contentViews.asGridElements(index: &index,
@@ -26,7 +26,7 @@ extension Grid {
         self.internalItemsAlignment = itemsAlignment
     }
 
-    public init(_ data: Range<Int>, tracks: [GridTrack] = 1, contentMode: GridContentMode? = nil, flow: GridFlow? = nil, packing: GridPacking? = nil, spacing: GridSpacing = Constants.defaultSpacing, itemsAlignment: Alignment? = nil, cache: GridCacheMode? = nil, @GridBuilder item: @escaping (Int) -> ConstructionItem) {
+    public init(_ data: Range<Int>, tracks: [GridTrack] = 1, contentMode: GridContentMode? = nil, flow: GridFlow? = nil, packing: GridPacking? = nil, spacing: GridSpacing = Constants.defaultSpacing, itemsAlignment: GridAlignment? = nil, cache: GridCacheMode? = nil, @GridBuilder item: @escaping (Int) -> ConstructionItem) {
         var index = 0
         self.items = data.flatMap {
             item($0).contentViews.asGridElements(index: &index)
@@ -40,7 +40,7 @@ extension Grid {
         self.internalItemsAlignment = itemsAlignment
     }
     
-    public init<Data>(_ data: Data, tracks: [GridTrack] = 1, contentMode: GridContentMode? = nil, flow: GridFlow? = nil, packing: GridPacking? = nil, spacing: GridSpacing = Constants.defaultSpacing, itemsAlignment: Alignment? = nil, cache: GridCacheMode? = nil, @GridBuilder item: @escaping (Data.Element) -> ConstructionItem) where Data: RandomAccessCollection, Data.Element: Identifiable {
+    public init<Data>(_ data: Data, tracks: [GridTrack] = 1, contentMode: GridContentMode? = nil, flow: GridFlow? = nil, packing: GridPacking? = nil, spacing: GridSpacing = Constants.defaultSpacing, itemsAlignment: GridAlignment? = nil, cache: GridCacheMode? = nil, @GridBuilder item: @escaping (Data.Element) -> ConstructionItem) where Data: RandomAccessCollection, Data.Element: Identifiable {
         var index = 0
         self.items = data.flatMap {
             item($0).contentViews.asGridElements(index: &index,

@@ -76,6 +76,8 @@
 		363AD4B2253045A200C27F2F /* GridCacheMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3633AB8D24E678290033A172 /* GridCacheMode.swift */; };
 		363AD4B3253045A200C27F2F /* GridGroup+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DFA302523543C0019BB80 /* GridGroup+Init.swift */; };
 		363AD4B4253045A200C27F2F /* GridContentMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361723742475221000866539 /* GridContentMode.swift */; };
+		36435B1C25887A590011E2AC /* GridAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36435B1B25887A590011E2AC /* GridAlignment.swift */; };
+		36435B1D25887A590011E2AC /* GridAlignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36435B1B25887A590011E2AC /* GridAlignment.swift */; };
 		364FFB2D24C1C1680054D275 /* GridPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364FFB2C24C1C1680054D275 /* GridPreference.swift */; };
 		365DFA362523543C0019BB80 /* GridBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DFA2E2523543C0019BB80 /* GridBuilder.swift */; };
 		365DFA372523543C0019BB80 /* GridGroup+Inits_Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 365DFA2F2523543C0019BB80 /* GridGroup+Inits_Data.swift */; };
@@ -151,6 +153,7 @@
 		363AD4732530455F00C27F2F /* GridMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GridMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		363AD4752530455F00C27F2F /* GridMac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridMac.h; sourceTree = "<group>"; };
 		363AD4762530455F00C27F2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		36435B1B25887A590011E2AC /* GridAlignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridAlignment.swift; sourceTree = "<group>"; };
 		364FFB2C24C1C1680054D275 /* GridPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridPreference.swift; sourceTree = "<group>"; };
 		365DFA2E2523543C0019BB80 /* GridBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridBuilder.swift; sourceTree = "<group>"; };
 		365DFA2F2523543C0019BB80 /* GridGroup+Inits_Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GridGroup+Inits_Data.swift"; sourceTree = "<group>"; };
@@ -306,6 +309,7 @@
 				3617237D2475221000866539 /* ArrangedItem.swift */,
 				3617237E2475221000866539 /* LayoutArrangement.swift */,
 				3617237F2475221000866539 /* PositionedItem.swift */,
+				36435B1B25887A590011E2AC /* GridAlignment.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -581,6 +585,7 @@
 				361723832475221000866539 /* View+GridPreferences.swift in Sources */,
 				361723952475221000866539 /* GridContentMode.swift in Sources */,
 				3617238D2475221000866539 /* Constants.swift in Sources */,
+				36435B1C25887A590011E2AC /* GridAlignment.swift in Sources */,
 				365DFA362523543C0019BB80 /* GridBuilder.swift in Sources */,
 				3617239A2475221000866539 /* GridTrack.swift in Sources */,
 				365DFA3B2523543C0019BB80 /* GridElement+asGridElements.swift in Sources */,
@@ -630,6 +635,7 @@
 				363AD494253045A200C27F2F /* GridElement.swift in Sources */,
 				363AD498253045A200C27F2F /* LayoutArrangement+description.swift in Sources */,
 				363AD49A253045A200C27F2F /* GridSpacing.swift in Sources */,
+				36435B1D25887A590011E2AC /* GridAlignment.swift in Sources */,
 				363AD49F253045A200C27F2F /* GridFlow.swift in Sources */,
 				363AD4A5253045A200C27F2F /* GridStart.swift in Sources */,
 				363AD4A2253045A200C27F2F /* GridGroup+Inits_Data.swift in Sources */,

@@ -19,5 +19,5 @@ public struct Constants {
     public static let defaultFlow: GridFlow = .rows
     public static let defaultPacking: GridPacking = .sparse
     public static let defaultCacheMode: GridCacheMode = .inMemoryCache
-    public static let defaultItemsAlignment: Alignment = .center
+    public static let defaultItemsAlignment: GridAlignment = .center
 }

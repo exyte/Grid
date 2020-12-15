@@ -9,11 +9,12 @@
 import SwiftUI
 
 public struct Grid: View, LayoutArranging, LayoutPositioning {
-    @State var positions: PositionedLayout = .empty
-    @State var isLoaded: Bool = false
+    @State private var positions: PositionedLayout = .empty
+    @State private var isLoaded: Bool = false
+    @State private var alignments: [GridElement: GridAlignment] = [:]
     #if os(iOS) || os(watchOS) || os(tvOS)
-    @State var internalLayoutCache = Cache<ArrangingTask, LayoutArrangement>()
-    @State var internalPositionsCache = Cache<PositioningTask, PositionedLayout>()
+    @State private var internalLayoutCache = Cache<ArrangingTask, LayoutArrangement>()
+    @State private var internalPositionsCache = Cache<PositioningTask, PositionedLayout>()
     #endif
     @Environment(\.gridContentMode) private var environmentContentMode
     @Environment(\.gridFlow) private var environmentFlow
@@ -29,7 +30,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
     var internalPacking: GridPacking?
     var internalContentMode: GridContentMode?
     var internalCacheMode: GridCacheMode?
-    var internalItemsAlignment: Alignment?
+    var internalItemsAlignment: GridAlignment?
 
     private var flow: GridFlow {
         self.internalFlow ?? self.environmentFlow ?? Constants.defaultFlow
@@ -47,7 +48,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
         self.internalCacheMode ?? self.environmentCacheMode ?? Constants.defaultCacheMode
     }
 
-    private var itemsAlignment: Alignment {
+    private var itemsAlignment: GridAlignment {
         self.internalItemsAlignment ?? self.environmentItemsAlignment ?? Constants.defaultItemsAlignment
     }
 
@@ -87,7 +88,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
                         .frame(flow: self.flow,
                                size: self.positions[item]?.bounds.size,
                                contentMode: self.contentMode,
-                               alignment: itemsAlignment)
+                               alignment: self.alignments[item] ?? itemsAlignment)
                         .alignmentGuide(.leading, computeValue: { _ in self.leadingGuide(item: item) })
                         .alignmentGuide(.top, computeValue: { _ in self.topGuide(item: item) })
                         .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
@@ -109,6 +110,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
             .onPreferenceChange(GridPreferenceKey.self) { preference in
                 self.calculateLayout(preference: preference,
                                      boundingSize: mainGeometry.size)
+                self.saveAlignmentsFrom(preference: preference)
             }
         }
         .id(self.isLoaded)
@@ -158,7 +160,16 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
         self.positions = positions
         self.isLoaded = true
     }
-    
+
+    private func saveAlignmentsFrom(preference: GridPreference) {
+        var alignments: [GridElement: GridAlignment] = [:]
+        preference.itemsInfo.forEach {
+            guard let gridElement = $0.positionedItem?.gridElement else { return }
+            alignments[gridElement] = $0.alignment
+        }
+        self.alignments = alignments
+    }
+
     private func corrected(size: CGSize) -> CGSize {
         return CGSize(width: size.width - self.spacing.horizontal,
                       height: size.height - self.spacing.vertical)

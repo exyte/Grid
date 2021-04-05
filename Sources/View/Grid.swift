@@ -22,6 +22,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
   @Environment(\.gridAnimation) private var gridAnimation
   @Environment(\.gridCache) private var environmentCacheMode
   @Environment(\.gridCommonItemsAlignment) private var environmentCommonItemsAlignment
+  @Environment(\.gridContentAlignment) private var environmentContentAlignment
   
   let items: [GridElement]
   let spacing: GridSpacing
@@ -30,7 +31,8 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
   var internalPacking: GridPacking?
   var internalContentMode: GridContentMode?
   var internalCacheMode: GridCacheMode?
-  var internalItemsAlignment: GridAlignment?
+  var internalCommonItemsAlignment: GridAlignment?
+  var internalContentAlignment: GridAlignment?
   
   private var flow: GridFlow {
     self.internalFlow ?? self.environmentFlow ?? Constants.defaultFlow
@@ -49,7 +51,11 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
   }
   
   private var commonItemsAlignment: GridAlignment {
-    self.internalItemsAlignment ?? self.environmentCommonItemsAlignment ?? Constants.defaultCommonItemsAlignment
+    self.internalCommonItemsAlignment ?? self.environmentCommonItemsAlignment ?? Constants.defaultCommonItemsAlignment
+  }
+
+  private var contentAlignment: GridAlignment {
+    self.internalContentAlignment ?? self.environmentContentAlignment ?? Constants.defaultContentAlignment
   }
   
   #if os(iOS) || os(watchOS) || os(tvOS)
@@ -103,7 +109,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
       .frame(flow: self.flow,
              size: mainGeometry.size,
              contentMode: self.contentMode,
-             alignment: .center)
+             alignment: self.contentAlignment)
       .if(contentMode == .scroll) { content in
         ScrollView(self.scrollAxis) { content }
       }

@@ -20,4 +20,5 @@ public struct Constants {
   public static let defaultPacking: GridPacking = .sparse
   public static let defaultCacheMode: GridCacheMode = .inMemoryCache
   public static let defaultCommonItemsAlignment: GridAlignment = .center
+  public static let defaultContentAlignment: GridAlignment = .center
 }

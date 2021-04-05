@@ -9,6 +9,6 @@
 import Foundation
 
 public enum GridCacheMode {
-    case inMemoryCache
-    case noCache
+  case inMemoryCache
+  case noCache
 }

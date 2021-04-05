@@ -10,13 +10,13 @@ import CoreGraphics
 
 /// Encapsulates the arranged items and total columns and rows count of a grid view
 struct LayoutArrangement: Equatable, Hashable {
-    var columnsCount: Int
-    var rowsCount: Int
-    let items: [ArrangedItem]
-    
-    static var zero = LayoutArrangement(columnsCount: 0, rowsCount: 0, items: [])
-    
-    subscript(gridElement: GridElement) -> ArrangedItem? {
-        items.first(where: { $0.gridElement == gridElement })
-    }
+  var columnsCount: Int
+  var rowsCount: Int
+  let items: [ArrangedItem]
+  
+  static var zero = LayoutArrangement(columnsCount: 0, rowsCount: 0, items: [])
+  
+  subscript(gridElement: GridElement) -> ArrangedItem? {
+    items.first(where: { $0.gridElement == gridElement })
+  }
 }

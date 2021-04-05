@@ -11,6 +11,6 @@ import CoreGraphics
 
 /// Specfies the final position of a grid item in a grid view on the screen
 struct PositionedItem: Equatable, Hashable {
-    let bounds: CGRect
-    let gridElement: GridElement
+  let bounds: CGRect
+  let gridElement: GridElement
 }

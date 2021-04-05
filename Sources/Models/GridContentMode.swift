@@ -10,9 +10,9 @@ import SwiftUI
 
 /// Grid behaviour inside its parent
 public enum GridContentMode {
-    /// Scrolls inside parent container
-    case scroll
-    
-    /// Fills the entire space of the parent container
-    case fill
+  /// Scrolls inside parent container
+  case scroll
+  
+  /// Fills the entire space of the parent container
+  case fill
 }

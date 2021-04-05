@@ -9,15 +9,15 @@
 import SwiftUI
 
 struct GridBackgroundPreference: GridCellPreference {
-    var content: (_ rect: CGSize) -> AnyView
+  var content: (_ rect: CGSize) -> AnyView
 }
 
 struct GridBackgroundPreferenceKey: PreferenceKey {
-    typealias Value = GridBackgroundPreference
-    
-    static var defaultValue = GridBackgroundPreference(content: { _ in AnyView(EmptyView())})
-
-    static func reduce(value: inout GridBackgroundPreference, nextValue: () -> GridBackgroundPreference) {
-        value = nextValue()
-    }
+  typealias Value = GridBackgroundPreference
+  
+  static var defaultValue = GridBackgroundPreference(content: { _ in AnyView(EmptyView())})
+  
+  static func reduce(value: inout GridBackgroundPreference, nextValue: () -> GridBackgroundPreference) {
+    value = nextValue()
+  }
 }

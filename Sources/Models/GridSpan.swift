@@ -9,15 +9,15 @@
 import Foundation
 
 public struct GridSpan: Equatable, Hashable {
-    var column: Int = Constants.defaultColumnSpan
-    var row: Int = Constants.defaultRowSpan
-    
-    static let `default` = GridSpan()
+  var column: Int = Constants.defaultColumnSpan
+  var row: Int = Constants.defaultRowSpan
+  
+  static let `default` = GridSpan()
 }
 
 extension GridSpan: ExpressibleByArrayLiteral {
-    public init(arrayLiteral elements: Int...) {
-        assert(elements.count == 2)
-        self = GridSpan(column: elements[0], row: elements[1])
-    }
+  public init(arrayLiteral elements: Int...) {
+    assert(elements.count == 2)
+    self = GridSpan(column: elements[0], row: elements[1])
+  }
 }

@@ -10,25 +10,25 @@ import SwiftUI
 
 /// Fundamental identifiable element in a grid view
 public struct GridElement: Identifiable {
-    public let id: AnyHashable
-    public let view: AnyView
-    let debugID = UUID()
-    
-    public init<T: View>(_ view: T, id: AnyHashable) {
-        self.view = AnyView(view)
-        self.id = id
-    }
+  public let id: AnyHashable
+  public let view: AnyView
+  let debugID = UUID()
+  
+  public init<T: View>(_ view: T, id: AnyHashable) {
+    self.view = AnyView(view)
+    self.id = id
+  }
 }
 
 extension GridElement: Equatable {
-    public static func == (lhs: GridElement,
-                           rhs: GridElement) -> Bool {
-        return lhs.id == rhs.id
-    }
+  public static func == (lhs: GridElement,
+                         rhs: GridElement) -> Bool {
+    return lhs.id == rhs.id
+  }
 }
 
 extension GridElement: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(id)
+  }
 }

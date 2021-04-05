@@ -29,8 +29,8 @@ extension View {
         return self.environment(\.gridCache, cache)
     }
 
-    public func gridItemsAlignment(_ alignment: GridAlignment?) -> some View {
-        return self.environment(\.gridItemsAlignemnt, alignment)
+    public func gridCommonItemsAlignment(_ alignment: GridAlignment?) -> some View {
+        return self.environment(\.gridCommonItemsAlignment, alignment)
     }
 }
 
@@ -60,9 +60,9 @@ extension EnvironmentValues {
         set { self[EnvironmentKeys.GridCache.self] = newValue }
     }
 
-    var gridItemsAlignemnt: GridAlignment? {
-        get { self[EnvironmentKeys.GridItemsAlignment.self] }
-        set { self[EnvironmentKeys.GridItemsAlignment.self] = newValue }
+    var gridCommonItemsAlignment: GridAlignment? {
+        get { self[EnvironmentKeys.GridCommonItemsAlignment.self] }
+        set { self[EnvironmentKeys.GridCommonItemsAlignment.self] = newValue }
     }
 }
 
@@ -87,7 +87,7 @@ private struct EnvironmentKeys {
         static let defaultValue: GridCacheMode? = nil
     }
 
-    struct GridItemsAlignment: EnvironmentKey {
+    struct GridCommonItemsAlignment: EnvironmentKey {
         static let defaultValue: GridAlignment? = .center
     }
 }

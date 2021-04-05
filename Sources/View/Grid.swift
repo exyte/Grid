@@ -21,7 +21,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
     @Environment(\.gridPacking) private var environmentPacking
     @Environment(\.gridAnimation) private var gridAnimation
     @Environment(\.gridCache) private var environmentCacheMode
-    @Environment(\.gridItemsAlignemnt) private var environmentItemsAlignment
+    @Environment(\.gridCommonItemsAlignment) private var environmentCommonItemsAlignment
     
     let items: [GridElement]
     let spacing: GridSpacing
@@ -48,8 +48,8 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
         self.internalCacheMode ?? self.environmentCacheMode ?? Constants.defaultCacheMode
     }
 
-    private var itemsAlignment: GridAlignment {
-        self.internalItemsAlignment ?? self.environmentItemsAlignment ?? Constants.defaultItemsAlignment
+    private var commonItemsAlignment: GridAlignment {
+        self.internalItemsAlignment ?? self.environmentCommonItemsAlignment ?? Constants.defaultCommonItemsAlignment
     }
 
     #if os(iOS) || os(watchOS) || os(tvOS)
@@ -88,7 +88,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
                         .frame(flow: self.flow,
                                size: self.positions[item]?.bounds.size,
                                contentMode: self.contentMode,
-                               alignment: self.alignments[item] ?? itemsAlignment)
+                               alignment: self.alignments[item] ?? commonItemsAlignment)
                         .alignmentGuide(.leading, computeValue: { _ in self.leadingGuide(item: item) })
                         .alignmentGuide(.top, computeValue: { _ in self.topGuide(item: item) })
                         .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in

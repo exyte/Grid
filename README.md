@@ -571,7 +571,7 @@ struct ContentView: View {
   
  <img align="right" width="31%" height="31%" src="https://github.com/exyte/Grid/raw/media/Assets/contentMode-animation.gif"/>
 
- #### Fill
+#### Fill
 *Default.* In this mode, grid view tries to fill the entire space provided by the parent view with its content. Grid tracks that orthogonal to the grid flow direction (growing) are implicitly assumed to have [.fr(1)](#flexible-sized-track-frn) size.
 
 ```swift
@@ -694,14 +694,15 @@ var body: some View {
 
 ### 11. Alignment
 
-#### gridItemAlignment
+#### `.gridItemAlignment`
 Use this to specify the alignment for a specific single grid item. It has higher priority than `gridCommonItemsAlignment`
 
-#### gridCommonItemsAlignment
+
+#### `.gridCommonItemsAlignment`
 Applies to every item as `gridItemAlignment`, but doesn't override its individual `gridItemAlignment` value. 
 
-#### gridContentAlignment
 
+#### `.gridContentAlignment`
 Applies to the whole grid content. Takes effect when content size is less than the space available for the grid.
 
 Example:
@@ -795,6 +796,14 @@ func headerSegment(flag: Bool) -> some View {
 
 ## Release notes:
 
+##### [v1.4.0](https://github.com/exyte/Grid/releases/tag/1.4.0):
+- adds `gridItemAlignment` modifier to align per item
+- adds `gridCommonItemsAlignment` modifier to align all items
+- adds `gridContentAlignment` modifier to align the whole grid content
+
+<details>
+  <summary>Previous releases</summary>
+	
 ##### [v1.3.1.beta](https://github.com/exyte/Grid/releases/tag/1.3.1.beta):
 - adds `gridAlignment` modifier to align per item
 
@@ -806,9 +815,6 @@ func headerSegment(flag: Bool) -> some View {
 
 ##### [v1.1.0](https://github.com/exyte/Grid/releases/tag/1.1.0):
 - adds MacOS support
-
-<details>
-  <summary>Previous releases</summary>
 	
 ##### [v1.0.1](https://github.com/exyte/Grid/releases/tag/1.0.1):
 - adds full support of conditional statements

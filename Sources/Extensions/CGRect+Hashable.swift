@@ -9,10 +9,10 @@
 import CoreGraphics
 
 extension CGRect: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(minX)
-        hasher.combine(minY)
-        hasher.combine(maxX)
-        hasher.combine(maxY)
-    }
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(minX)
+    hasher.combine(minY)
+    hasher.combine(maxX)
+    hasher.combine(maxY)
+  }
 }

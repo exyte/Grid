@@ -9,5 +9,5 @@
 import SwiftUI
 
 protocol GridCellPreference {
-    var content: (_ rect: CGSize) -> AnyView { get }
+  var content: (_ rect: CGSize) -> AnyView { get }
 }

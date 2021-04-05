@@ -9,6 +9,6 @@
 import Foundation
 
 public enum GridPacking {
-    case sparse
-    case dense
+  case sparse
+  case dense
 }

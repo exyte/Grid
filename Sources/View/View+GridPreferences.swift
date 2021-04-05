@@ -43,7 +43,7 @@ extension View {
     })
   }
   
-  public func gridAlignment(_ alignment: GridAlignment) -> some View {
+  public func gridItemAlignment(_ alignment: GridAlignment) -> some View {
     transformPreference(GridPreferenceKey.self, { preferences in
       var info = preferences.itemsInfo.first ?? .empty
       info.alignment = alignment

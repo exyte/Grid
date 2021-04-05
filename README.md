@@ -93,9 +93,10 @@ open Example.xcworkspace/
   - [sparse](#sparse)
   - [dense](#dense)
 - [**Vertical and horizontal spacing**](#10-spacing)
-- [**Content updates can be animated**](#11-animations)
-- [**Caching**](#12-caching)
-- [**Conditional statements / @GridBuilder**](#13-beta-conditional-statements--gridbuilder)
+- [**Alignment**](#11-alignment)
+- [**Content updates can be animated**](#12-animations)
+- [**Caching**](#13-caching)
+- [**Conditional statements / @GridBuilder**](#14-beta-conditional-statements--gridbuilder)
 - [**Release notes**](#release-notes)
 - [**Roadmap**](#roadmap)
 
@@ -691,7 +692,60 @@ var body: some View {
 
 ------------
 
-### 11. Animations
+### 11. Alignment
+
+#### gridItemAlignment
+Use this to specify the alignment for a specific single grid item. It has higher priority than `gridCommonItemsAlignment`
+
+#### gridCommonItemsAlignment
+Applies to every item as `gridItemAlignment`, but doesn't override its individual `gridItemAlignment` value. 
+
+#### gridContentAlignment
+
+Applies to the whole grid content. Takes effect when content size is less than the space available for the grid.
+
+Example:
+
+<img align="right" width="35%" height="35%" src="https://github.com/exyte/Grid/raw/media/Assets/alignments.png"/>
+
+```swift
+struct SingleAlignmentExample: View {
+  var body: some View {
+    Grid(tracks: 3) {
+      TextCardView(text: "Hello", color: .red)
+        .gridItemAlignment(.leading)
+
+      TextCardView(text: "world", color: .blue)
+    }
+    .gridCommonItemsAlignment(.center)
+    .gridContentAlignment(.trailing)
+  }
+}
+
+struct TextCardView: View {
+  let text: String
+  let color: UIColor
+  var textColor: UIColor = .white
+
+  var body: some View {
+    Text(self.text)
+      .foregroundColor(Color(self.textColor))
+      .padding(5)
+      .gridCellBackground { _ in
+        ColorView(color)
+      }
+      .gridCellOverlay { _ in
+        RoundedRectangle(cornerRadius: 5)
+          .strokeBorder(Color(self.color.darker()),
+                        lineWidth: 3)
+      }
+  }
+}
+
+```
+------------
+
+### 12. Animations
 You can define a specific animation that will be applied to the inner `ZStack` using `.gridAnimation()` grid modifier.  
 By default, every view in the grid is associated with subsequent index as it's ID. Hence SwiftUI relies on the grid view position in the initial and final state to perform animation transition.
 You can associate a specific ID to a grid view using [ForEach](#foreach) or [GridGroup](#gridgroup) initialized by `Identifiable` models or by explicit KeyPath as ID to force an animation to perform in the right way.
@@ -700,7 +754,7 @@ You can associate a specific ID to a grid view using [ForEach](#foreach) or [Gri
 
 ------------
 
-### 12. Caching
+### 13. Caching
 It's possible to cache grid layouts through the lifecycle of Grid.
 
 *Supported for iOS only*
@@ -715,7 +769,7 @@ No cache is used. Layout calculations will be executed at every step of Grid lif
 
 ------------
 
-### 13. Conditional statements / @GridBuilder
+### 14. Conditional statements / @GridBuilder
 
 Starting with Swift 5.3 we can use custom function builders without [any issues](https://github.com/apple/swift/pull/29626). 
 That gives us:

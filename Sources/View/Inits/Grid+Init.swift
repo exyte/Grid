@@ -18,7 +18,7 @@ extension Grid {
     commonItemsAlignment: GridAlignment? = nil,
     contentAlignment: GridAlignment? = nil,
     cache: GridCacheMode? = nil,
-    @GridBuilder content: () -> ConstructionItem) {
+    @GridBuilder content: @escaping () -> ConstructionItem) {
     self.trackSizes = tracks
     self.spacing = spacing
     self.internalContentMode = contentMode
@@ -28,8 +28,10 @@ extension Grid {
     self.internalCommonItemsAlignment = commonItemsAlignment
     self.internalContentAlignment = contentAlignment
 
-    let content = content()
-    var index = 0
-    self.items = content.contentViews.asGridElements(index: &index)
+    itemsBuilder = {
+      let content = content()
+      var index = 0
+      return content.contentViews.asGridElements(index: &index)
+    }
   }
 }

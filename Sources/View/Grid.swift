@@ -23,8 +23,8 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
   @Environment(\.gridCache) private var environmentCacheMode
   @Environment(\.gridCommonItemsAlignment) private var environmentCommonItemsAlignment
   @Environment(\.gridContentAlignment) private var environmentContentAlignment
-  
-  let items: [GridElement]
+
+  let itemsBuilder: () -> [GridElement]
   let spacing: GridSpacing
   let trackSizes: [GridTrack]
   var internalFlow: GridFlow?
@@ -33,7 +33,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
   var internalCacheMode: GridCacheMode?
   var internalCommonItemsAlignment: GridAlignment?
   var internalContentAlignment: GridAlignment?
-  
+
   private var flow: GridFlow {
     self.internalFlow ?? self.environmentFlow ?? Constants.defaultFlow
   }
@@ -81,9 +81,9 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
   #endif
   
   public var body: some View {
-    return GeometryReader { mainGeometry in
+    GeometryReader { mainGeometry in
       ZStack(alignment: .topLeading) {
-        ForEach(self.items) { item in
+        ForEach(itemsBuilder()) { item in
           item.view
             .padding(spacing: self.spacing)
             .background(self.positionsPreferencesSetter(item: item,

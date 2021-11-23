@@ -22,11 +22,16 @@ extension Grid {
     cache: GridCacheMode? = nil,
     @GridBuilder item: @escaping (Data.Element) -> ConstructionItem
   ) where Data: RandomAccessCollection, ID: Hashable {
-    var index = 0
-    self.items = data.flatMap {
-      item($0).contentViews.asGridElements(index: &index,
-                                           baseHash: AnyHashable([AnyHashable($0[keyPath: id]), AnyHashable(id)]))
+    itemsBuilder = {
+      var index = 0
+      return data.flatMap {
+        item($0).contentViews.asGridElements(
+          index: &index,
+          baseHash: AnyHashable([AnyHashable($0[keyPath: id]), AnyHashable(id)])
+        )
+      }
     }
+
     self.trackSizes = tracks
     self.spacing = spacing
     self.internalContentMode = contentMode
@@ -49,10 +54,13 @@ extension Grid {
     cache: GridCacheMode? = nil,
     @GridBuilder item: @escaping (Int) -> ConstructionItem
   ) {
-    var index = 0
-    self.items = data.flatMap {
-      item($0).contentViews.asGridElements(index: &index)
+    itemsBuilder = {
+      var index = 0
+      return data.flatMap {
+        item($0).contentViews.asGridElements(index: &index)
+      }
     }
+
     self.trackSizes = tracks
     self.spacing = spacing
     self.internalContentMode = contentMode
@@ -75,11 +83,16 @@ extension Grid {
     cache: GridCacheMode? = nil,
     @GridBuilder item: @escaping (Data.Element) -> ConstructionItem
   ) where Data: RandomAccessCollection, Data.Element: Identifiable {
-    var index = 0
-    self.items = data.flatMap {
-      item($0).contentViews.asGridElements(index: &index,
-                                           baseHash: AnyHashable($0.id))
+    itemsBuilder = {
+      var index = 0
+      return data.flatMap {
+        item($0).contentViews.asGridElements(
+          index: &index,
+          baseHash: AnyHashable($0.id)
+        )
+      }
     }
+
     self.trackSizes = tracks
     self.spacing = spacing
     self.internalContentMode = contentMode

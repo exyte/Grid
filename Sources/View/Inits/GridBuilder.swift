@@ -15,7 +15,7 @@ public struct ConstructionItem: View {
   var contentViews: [IdentifiedView]
 }
 
-@_functionBuilder
+@resultBuilder
 public struct GridBuilder {
   public static func buildBlock() -> ConstructionItem {
     return ConstructionItem(contentViews: [])

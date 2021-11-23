@@ -795,14 +795,32 @@ func headerSegment(flag: Bool) -> some View {
 ------------
 
 ## Release notes:
+##### [v1.4.1](https://github.com/exyte/Grid/releases/tag/1.4.1):
+- fixes the issue when Grid doesn’t update its content
+
+Issue:
+If any content item within GridBuilder uses any outer data then Grid doesn't update it.
+For example:
+
+```
+@State var titleText: String = "title"
+
+Grid(tracks: 2) {
+  Text(titleText)
+  Text("hello")
+}
+
+```
+
+Grid didn't update titleText even if it's changed.
+
+<details>
+  <summary>Previous releases</summary>
 
 ##### [v1.4.0](https://github.com/exyte/Grid/releases/tag/1.4.0):
 - adds `gridItemAlignment` modifier to align per item
 - adds `gridCommonItemsAlignment` modifier to align all items
 - adds `gridContentAlignment` modifier to align the whole grid content
-
-<details>
-  <summary>Previous releases</summary>
 	
 ##### [v1.3.1.beta](https://github.com/exyte/Grid/releases/tag/1.3.1.beta):
 - adds `gridAlignment` modifier to align per item

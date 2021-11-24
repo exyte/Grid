@@ -20,13 +20,13 @@ struct SpacingExample: View {
       
       Grid(tracks: 3, spacing: [hSpacing, vSpacing]) {
         ForEach(0..<21) {
-          //Inner image used to measure size
+          // Inner image used to measure size
           self.image
             .aspectRatio(contentMode: .fit)
             .opacity(0)
             .gridSpan(column: max(1, $0 % 4))
             .gridCellOverlay {
-              //This one is to display
+              // This one is to display
               self.image
                 .aspectRatio(contentMode: .fill)
                 .frame(width: $0?.width, height: $0?.height)

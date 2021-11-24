@@ -18,7 +18,7 @@ extension Grid {
     commonItemsAlignment: GridAlignment? = nil,
     contentAlignment: GridAlignment? = nil,
     cache: GridCacheMode? = nil,
-    @GridBuilder content: @escaping () -> ConstructionItem) {
+    @GridBuilder content: @escaping () -> GridBuilderResult) {
     self.trackSizes = tracks
     self.spacing = spacing
     self.internalContentMode = contentMode

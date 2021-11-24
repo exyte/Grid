@@ -10,11 +10,11 @@ import SwiftUI
 
 /// Fundamental identifiable element in a grid view
 public struct GridElement: Identifiable {
-  public let id: AnyHashable
+  public var id: AnyHashable?
   public let view: AnyView
   let debugID = UUID()
   
-  public init<T: View>(_ view: T, id: AnyHashable) {
+  public init<T: View>(_ view: T, id: AnyHashable?) {
     self.view = AnyView(view)
     self.id = id
   }

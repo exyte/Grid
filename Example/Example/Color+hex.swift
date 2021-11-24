@@ -6,7 +6,7 @@
 //  Copyright © 2020 Exyte. All rights reserved.
 //
 
-//swiftlint:disable identifier_name
+// swiftlint:disable identifier_name
 
 import SwiftUI
 

@@ -20,7 +20,7 @@ extension Grid {
     commonItemsAlignment: GridAlignment? = nil,
     contentAlignment: GridAlignment? = nil,
     cache: GridCacheMode? = nil,
-    @GridBuilder item: @escaping (Data.Element) -> ConstructionItem
+    @GridBuilder item: @escaping (Data.Element) -> GridBuilderResult
   ) where Data: RandomAccessCollection, ID: Hashable {
     itemsBuilder = {
       var index = 0
@@ -52,7 +52,7 @@ extension Grid {
     commonItemsAlignment: GridAlignment? = nil,
     contentAlignment: GridAlignment? = nil,
     cache: GridCacheMode? = nil,
-    @GridBuilder item: @escaping (Int) -> ConstructionItem
+    @GridBuilder item: @escaping (Int) -> GridBuilderResult
   ) {
     itemsBuilder = {
       var index = 0
@@ -81,7 +81,7 @@ extension Grid {
     commonItemsAlignment: GridAlignment? = nil,
     contentAlignment: GridAlignment? = nil,
     cache: GridCacheMode? = nil,
-    @GridBuilder item: @escaping (Data.Element) -> ConstructionItem
+    @GridBuilder item: @escaping (Data.Element) -> GridBuilderResult
   ) where Data: RandomAccessCollection, Data.Element: Identifiable {
     itemsBuilder = {
       var index = 0

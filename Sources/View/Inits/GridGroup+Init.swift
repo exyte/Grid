@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension GridGroup {
-  public init(@GridBuilder content: () -> ConstructionItem) {
+  public init(@GridBuilder content: () -> GridBuilderResult) {
     self.contentViews = content().contentViews
   }
 }

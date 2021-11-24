@@ -86,15 +86,21 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
         ForEach(itemsBuilder()) { item in
           item.view
             .padding(spacing: self.spacing)
-            .background(self.positionsPreferencesSetter(item: item,
-                                                        boundingSize: mainGeometry.size))
+            .background(
+              self.positionsPreferencesSetter(
+                item: item,
+                boundingSize: mainGeometry.size
+              )
+            )
             .transformPreference(GridPreferenceKey.self) { preference in
               preference.itemsInfo = preference.itemsInfo.mergedToSingleValue
             }
-            .frame(flow: self.flow,
-                   size: self.positions[item]?.bounds.size,
-                   contentMode: self.contentMode,
-                   alignment: self.alignments[item] ?? commonItemsAlignment)
+            .frame(
+              flow: self.flow,
+              size: self.positions[item]?.bounds.size,
+              contentMode: self.contentMode,
+              alignment: self.alignments[item] ?? commonItemsAlignment
+            )
             .alignmentGuide(.leading, computeValue: { _ in self.leadingGuide(item: item) })
             .alignmentGuide(.top, computeValue: { _ in self.topGuide(item: item) })
             .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
@@ -106,16 +112,20 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
         }
       }
       .animation(self.gridAnimation)
-      .frame(flow: self.flow,
-             size: mainGeometry.size,
-             contentMode: self.contentMode,
-             alignment: self.contentAlignment)
+      .frame(
+        flow: self.flow,
+        size: mainGeometry.size,
+        contentMode: self.contentMode,
+        alignment: self.contentAlignment
+      )
       .if(contentMode == .scroll) { content in
         ScrollView(self.scrollAxis) { content }
       }
       .onPreferenceChange(GridPreferenceKey.self) { preference in
-        self.calculateLayout(preference: preference,
-                             boundingSize: mainGeometry.size)
+        self.calculateLayout(
+          preference: preference,
+          boundingSize: mainGeometry.size
+        )
         self.saveAlignmentsFrom(preference: preference)
       }
     }
@@ -135,20 +145,20 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
       calculatedLayout = cachedLayout
     } else {
       calculatedLayout = self.arrange(task: task)
-      self.layoutCache?.setObject(calculatedLayout,
-                                  forKey: task)
-      
+      self.layoutCache?.setObject(calculatedLayout, forKey: task)
     }
     #else
     calculatedLayout = self.arrange(task: task)
     #endif
     
-    let positionTask = PositioningTask(items: preference.itemsInfo.compactMap(\.positionedItem),
-                                       arrangement: calculatedLayout,
-                                       boundingSize: self.corrected(size: boundingSize),
-                                       tracks: self.trackSizes,
-                                       contentMode: self.contentMode,
-                                       flow: self.flow)
+    let positionTask = PositioningTask(
+      items: preference.itemsInfo.compactMap(\.positionedItem),
+      arrangement: calculatedLayout,
+      boundingSize: self.corrected(size: boundingSize),
+      tracks: self.trackSizes,
+      contentMode: self.contentMode,
+      flow: self.flow
+    )
     let positions: PositionedLayout
     
     #if os(iOS) || os(watchOS) || os(tvOS)
@@ -156,8 +166,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
       positions = cachedPositions
     } else {
       positions = self.reposition(positionTask)
-      self.positionsCache?.setObject(positions,
-                                     forKey: positionTask)
+      self.positionsCache?.setObject(positions, forKey: positionTask)
     }
     #else
     positions = self.reposition(positionTask)
@@ -182,14 +191,16 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
   }
   
   private var scrollAxis: Axis.Set {
-    if case .fill = self.contentMode {
+    switch self.contentMode {
+    case .fill:
       return []
+    case .scroll:
+      return self.flow == .rows ? .vertical : .horizontal
     }
-    return self.flow == .rows ? .vertical : .horizontal
   }
   
   private func leadingGuide(item: GridElement) -> CGFloat {
-    return -(self.positions[item]?.bounds.origin.x ?? CGFloat(-self.spacing.horizontal) / 2.0)
+    -(self.positions[item]?.bounds.origin.x ?? CGFloat(-self.spacing.horizontal) / 2.0)
   }
   
   private func topGuide(item: GridElement) -> CGFloat {
@@ -201,22 +212,28 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
       preference.content(geometry.size)
     }
     .padding(spacing: self.spacing)
-    .frame(width: self.positions[item]?.bounds.width,
-           height: self.positions[item]?.bounds.height)
+    .frame(
+      width: self.positions[item]?.bounds.width,
+      height: self.positions[item]?.bounds.height
+    )
   }
   
   private func positionsPreferencesSetter(item: GridElement, boundingSize: CGSize) -> some View {
     GeometryReader { geometry in
       Color.clear
         .transformPreference(GridPreferenceKey.self, { preference in
-          let positionedItem = PositionedItem(bounds: CGRect(origin: .zero, size: geometry.size),
-                                              gridElement: item)
+          let positionedItem = PositionedItem(
+            bounds: CGRect(origin: .zero, size: geometry.size),
+            gridElement: item
+          )
           let info = GridPreference.ItemInfo(positionedItem: positionedItem)
-          let environment = GridPreference.Environment(tracks: self.trackSizes,
-                                                       contentMode: self.contentMode,
-                                                       flow: self.flow,
-                                                       packing: self.packing,
-                                                       boundingSize: boundingSize)
+          let environment = GridPreference.Environment(
+            tracks: self.trackSizes,
+            contentMode: self.contentMode,
+            flow: self.flow,
+            packing: self.packing,
+            boundingSize: boundingSize
+          )
           preference = GridPreference(itemsInfo: [info], environment: environment)
         })
     }
@@ -243,7 +260,7 @@ extension View {
     }
     return frame(width: width, height: height, alignment: alignment)
   }
-  
+
   fileprivate func padding(spacing: GridSpacing) -> some View {
     var edgeInsets = EdgeInsets()
     edgeInsets.top = spacing.vertical / 2

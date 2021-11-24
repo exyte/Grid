@@ -9,7 +9,7 @@
 import SwiftUI
 
 extension ForEach: GridForEachRangeInt where Data == Range<Int>, ID == Int, Content: View {
-  var contentViews: [IdentifiedView] {
+  var contentViews: [GridElement] {
     self.data.flatMap {
       self.content($0).extractContentViews()
     }
@@ -17,26 +17,30 @@ extension ForEach: GridForEachRangeInt where Data == Range<Int>, ID == Int, Cont
 }
 
 extension ForEach: GridForEachIdentifiable where ID == Data.Element.ID, Content: View, Data.Element: Identifiable {
-  var contentViews: [IdentifiedView] {
-    self.data.enumerated().flatMap { (_, dataElement: Data.Element) -> [IdentifiedView] in
+  var contentViews: [GridElement] {
+    self.data.enumerated().flatMap { (_, dataElement: Data.Element) -> [GridElement] in
       let view = self.content(dataElement)
       return view.extractContentViews().enumerated().map {
-        var indentifiedView = $0.element
-        if let identifiedHash = indentifiedView.hash {
-          indentifiedView.hash = AnyHashable([identifiedHash,
-                                              AnyHashable(dataElement.id)])
+        var identifiedView = $0.element
+        if let identifiedHash = identifiedView.id {
+          identifiedView.id = AnyHashable([
+            identifiedHash,
+            AnyHashable(dataElement.id)
+          ])
         } else {
-          indentifiedView.hash = AnyHashable([AnyHashable(dataElement.id),
-                                              AnyHashable($0.offset)])
+          identifiedView.id = AnyHashable([
+            AnyHashable(dataElement.id),
+            AnyHashable($0.offset)
+          ])
         }
-        return indentifiedView
+        return identifiedView
       }
     }
   }
 }
 
 extension ForEach: GridForEachID where Content: View {
-  var contentViews: [IdentifiedView] {
+  var contentViews: [GridElement] {
     self.data.flatMap {
       self.content($0).extractContentViews()
     }
@@ -48,19 +52,19 @@ extension ForEach: GridForEachID where Content: View {
 // To be available on preview canvas
 
 extension ModifiedContent: GridForEachRangeInt where Content: GridForEachRangeInt, Modifier == _IdentifiedModifier<__DesignTimeSelectionIdentifier> {
-  var contentViews: [IdentifiedView] {
+  var contentViews: [GridElement] {
     return self.content.contentViews
   }
 }
 
 extension ModifiedContent: GridForEachIdentifiable where Content: GridForEachIdentifiable, Modifier == _IdentifiedModifier<__DesignTimeSelectionIdentifier> {
-  var contentViews: [IdentifiedView] {
+  var contentViews: [GridElement] {
     return self.content.contentViews
   }
 }
 
 extension ModifiedContent: GridForEachID where Content: GridForEachID, Modifier == _IdentifiedModifier<__DesignTimeSelectionIdentifier> {
-  var contentViews: [IdentifiedView] {
+  var contentViews: [GridElement] {
     return self.content.contentViews
   }
 }

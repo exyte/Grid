@@ -55,29 +55,35 @@ extension LayoutPositioning {
     /// 1. Calculate growing track sizes as max of all the items within a track
     let growingTracks: [GridTrack]
     let growingBoundingSize: CGFloat
-    if task.contentMode == .scroll {
+    switch task.contentMode {
+    case .scroll:
       growingTracks = [GridTrack](repeating: .fit, count: arrangement[keyPath: flow.arrangementCount(.growing)])
       growingBoundingSize = .infinity
-    } else {
+    case .fill:
       growingTracks = [GridTrack](repeating: .fr(1), count: arrangement[keyPath: flow.arrangementCount(.growing)])
       growingBoundingSize = boundingSize[keyPath: flow.size(.growing)]
     }
-
-    let growingTracksSizes: [CGFloat] = self.calculateTrackSizes(task: task,
-                                                                 boundingSize: growingBoundingSize,
-                                                                 tracks: growingTracks,
-                                                                 dimension: .growing)
+    let growingTracksSizes: [CGFloat] = self.calculateTrackSizes(
+      task: task,
+      boundingSize: growingBoundingSize,
+      tracks: growingTracks,
+      dimension: .growing
+    )
 
     /// 2. Calculate fixed track sizes
-    let fixedTracksSizes = self.calculateTrackSizes(task: task,
-                                                    boundingSize: boundingSize[keyPath: flow.size(.fixed)],
-                                                    tracks: tracks,
-                                                    dimension: .fixed)
+    let fixedTracksSizes = self.calculateTrackSizes(
+      task: task,
+      boundingSize: boundingSize[keyPath: flow.size(.fixed)],
+      tracks: tracks,
+      dimension: .fixed
+    )
     return positionedItems(task: task, growingTracksSizes: growingTracksSizes, fixedTracksSizes: fixedTracksSizes)
   }
 
-  private func calculateTrackSizes(task: PositioningTask, boundingSize: CGFloat,
-                                   tracks: [GridTrack], dimension: GridFlowDimension) -> [CGFloat] {
+  private func calculateTrackSizes(
+    task: PositioningTask, boundingSize: CGFloat,
+    tracks: [GridTrack], dimension: GridFlowDimension
+  ) -> [CGFloat] {
     let flow = task.flow
     let arrangement = task.arrangement
 
@@ -96,8 +102,10 @@ extension LayoutPositioning {
 
     /// 2. Resolve Intrinsic Track Sizes
     /// 2.1. Size tracks to fit non-spanning items
-    self.sizeToFitNonSpanning(growingTracksSizes: &growingTracksSizes, arrangement: arrangement,
-                              flow: flow, dimension: dimension, task: task)
+    self.sizeToFitNonSpanning(
+      growingTracksSizes: &growingTracksSizes, arrangement: arrangement,
+      flow: flow, dimension: dimension, task: task
+    )
 
     /// 2.2. Increase sizes to accommodate spanning items
     let arrangedSpannedItems = arrangement.items
@@ -115,7 +123,7 @@ extension LayoutPositioning {
         let start = arrangedItem.startIndex[keyPath: flow.index(dimension)]
         let end = arrangedItem.endIndex[keyPath: flow.index(dimension)]
 
-        ///Consider the items that do not span a track with a flexible size
+        /// Consider the items that do not span a track with a flexible size
         if (tracks[start...end].contains { $0.isFlexible }) { continue }
 
         let trackSizes = growingTracksSizes[start...end].map(\.baseSize).reduce(0, +)
@@ -207,11 +215,14 @@ extension LayoutPositioning {
 
     totalSize[keyPath: flow.size(.fixed)] = totalFixedSize.rounded()
     totalSize[keyPath: flow.size(.growing)] = totalGrowingSize.rounded()
+    print("Calculated total size: \(totalSize)")
     return PositionedLayout(items: newPositions, totalSize: totalSize)
   }
 
-  private func sizeToFitNonSpanning(growingTracksSizes: inout [PositionedTrack], arrangement: LayoutArrangement,
-                                    flow: GridFlow, dimension: GridFlowDimension, task: PositioningTask) {
+  private func sizeToFitNonSpanning(
+    growingTracksSizes: inout [PositionedTrack], arrangement: LayoutArrangement,
+    flow: GridFlow, dimension: GridFlowDimension, task: PositioningTask
+  ) {
     /// 2.1. Size tracks to fit non-spanning items
     for (trackIndex, _) in growingTracksSizes.enumerated().filter({ $0.element.track.isIntrinsic }) {
       let arrangedNoSpanItems = arrangement.items.filter {

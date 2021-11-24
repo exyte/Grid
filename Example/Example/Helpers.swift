@@ -9,7 +9,7 @@
 import Foundation
 import ExyteGrid
 
-//swiftlint:disable line_length
+// swiftlint:disable line_length
 func placeholderText(length: Int? = nil) -> String {
   let placeholderText =
     """

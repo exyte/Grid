@@ -795,6 +795,11 @@ func headerSegment(flag: Bool) -> some View {
 ------------
 
 ## Release notes:
+##### [v1.4.2](https://github.com/exyte/Grid/releases/tag/1.4.2):
+- fixes not working gridItemAlignment and gridCommonItemsAlignment for vertical axis
+
+<details>
+  <summary>Previous releases</summary>
 ##### [v1.4.1](https://github.com/exyte/Grid/releases/tag/1.4.1):
 - fixes the issue when Grid doesn’t update its content
 
@@ -813,9 +818,6 @@ Grid(tracks: 2) {
 ```
 
 Grid didn't update titleText even if it's changed.
-
-<details>
-  <summary>Previous releases</summary>
 
 ##### [v1.4.0](https://github.com/exyte/Grid/releases/tag/1.4.0):
 - adds `gridItemAlignment` modifier to align per item

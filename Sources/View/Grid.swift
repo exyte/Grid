@@ -99,16 +99,22 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
               flow: self.flow,
               size: self.positions[item]?.bounds.size,
               contentMode: self.contentMode,
-              alignment: self.alignments[item] ?? commonItemsAlignment
+              alignment: alignmentForItem(item)
             )
+            .backgroundPreferenceValue(
+              GridBackgroundPreferenceKey.self,
+              alignment: alignmentForItem(item)
+            ) { preference in
+              self.cellPreferenceView(item: item, preference: preference)
+            }
+            .overlayPreferenceValue(
+              GridOverlayPreferenceKey.self,
+              alignment: alignmentForItem(item)
+            ) { preference in
+              self.cellPreferenceView(item: item, preference: preference)
+            }
             .alignmentGuide(.leading, computeValue: { _ in self.leadingGuide(item: item) })
             .alignmentGuide(.top, computeValue: { _ in self.topGuide(item: item) })
-            .backgroundPreferenceValue(GridBackgroundPreferenceKey.self) { preference in
-              self.cellPreferenceView(item: item, preference: preference)
-            }
-            .overlayPreferenceValue(GridOverlayPreferenceKey.self) { preference in
-              self.cellPreferenceView(item: item, preference: preference)
-            }
         }
       }
       .animation(self.gridAnimation)
@@ -116,7 +122,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
         flow: self.flow,
         size: mainGeometry.size,
         contentMode: self.contentMode,
-        alignment: self.contentAlignment
+        alignment: self.contentAlignment.swiftUIAlignment
       )
       .if(contentMode == .scroll) { content in
         ScrollView(self.scrollAxis) { content }
@@ -150,9 +156,13 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
     #else
     calculatedLayout = self.arrange(task: task)
     #endif
-    
+    let positionedItems = preference.itemsInfo.compactMap {
+      var item = $0.positionedItem
+      item?.alignment = $0.alignment ?? commonItemsAlignment
+      return item
+    }
     let positionTask = PositioningTask(
-      items: preference.itemsInfo.compactMap(\.positionedItem),
+      items: positionedItems,
       arrangement: calculatedLayout,
       boundingSize: self.corrected(size: boundingSize),
       tracks: self.trackSizes,
@@ -238,6 +248,10 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
         })
     }
   }
+  
+  private func alignmentForItem(_ item: GridElement) -> Alignment {
+    self.alignments[item]?.swiftUIAlignment ?? commonItemsAlignment.swiftUIAlignment
+  }
 }
 
 extension View {
@@ -245,7 +259,7 @@ extension View {
     flow: GridFlow,
     size: CGSize?,
     contentMode: GridContentMode,
-    alignment: Alignment
+    alignment: Alignment = .center
   ) -> some View {
     let width: CGFloat?
     let height: CGFloat?
@@ -258,6 +272,7 @@ extension View {
       width = (flow == .rows ? size?.width : nil)
       height = (flow == .columns ? size?.height : nil)
     }
+    
     return frame(width: width, height: height, alignment: alignment)
   }
 

@@ -188,17 +188,49 @@ extension LayoutPositioning {
         itemGrowingSize = growingSize * CGFloat(arrangedItem[keyPath: flow.arrangedItemCount(.growing)])
         growingPosition = growingSize * CGFloat(arrangedItem.startIndex[keyPath: flow.index(.growing)])
       case .scroll:
-        itemGrowingSize = (arrangedItem.startIndex[keyPath: flow.index(.growing)]...arrangedItem.endIndex[keyPath: flow.index(.growing)]).reduce(0, { result, index in
+        let indexRange = arrangedItem.startIndex[keyPath: flow.index(.growing)]...arrangedItem.endIndex[keyPath: flow.index(.growing)]
+        itemGrowingSize = indexRange.reduce(0, { result, index in
           return result + growingTracksSizes[index]
         })
-        let centringCorrection = (itemGrowingSize - positionedItem.bounds.size[keyPath: flow.size(.growing)]) / 2
+        let alignmentCorrection: CGFloat
+        
+        switch (flow, positionedItem.alignment) {
+        case
+          (_, .center),
+          (_, .none),
+          (.rows, .leading),
+          (.columns, .top),
+          (.rows, .trailing),
+          (.columns, .bottom):
+          alignmentCorrection = (itemGrowingSize - positionedItem.bounds.size[keyPath: flow.size(.growing)]) / 2
+        
+        case
+          (.columns, .leading),
+          (.columns, .bottomLeading),
+          (.columns, .topLeading),
+          (.rows, .top),
+          (.rows, .topLeading),
+          (.rows, .topTrailing):
+          alignmentCorrection = 0
+          
+        case
+          (.columns, .trailing),
+          (.columns, .topTrailing),
+          (.columns, .bottomTrailing),
+          (.rows, .bottom),
+          (.rows, .bottomTrailing),
+          (.rows, .bottomLeading):
+          alignmentCorrection = (itemGrowingSize - positionedItem.bounds.size[keyPath: flow.size(.growing)])
+        }
+          
         growingPosition = (0..<arrangedItem.startIndex[keyPath: flow.index(.growing)]).reduce(0, { result, index in
           return result + growingTracksSizes[index]
-        }) + centringCorrection
+        }) + alignmentCorrection
       }
 
       let fixedTrackStart = fixedTracksSizes[0..<arrangedItem.startIndex[keyPath: flow.index(.fixed)]].reduce(0, +)
-      let fixedTrackSize = fixedTracksSizes[arrangedItem.startIndex[keyPath: flow.index(.fixed)]...arrangedItem.endIndex[keyPath: flow.index(.fixed)]].reduce(0, +)
+      let fixedTracksRange = arrangedItem.startIndex[keyPath: flow.index(.fixed)]...arrangedItem.endIndex[keyPath: flow.index(.fixed)]
+      let fixedTrackSize = fixedTracksSizes[fixedTracksRange].reduce(0, +)
 
       var newBounds = CGRect.zero
       newBounds.size[keyPath: flow.size(.growing)] = itemGrowingSize
@@ -215,7 +247,6 @@ extension LayoutPositioning {
 
     totalSize[keyPath: flow.size(.fixed)] = totalFixedSize.rounded()
     totalSize[keyPath: flow.size(.growing)] = totalGrowingSize.rounded()
-    print("Calculated total size: \(totalSize)")
     return PositionedLayout(items: newPositions, totalSize: totalSize)
   }
 

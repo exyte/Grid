@@ -13,4 +13,5 @@ import CoreGraphics
 struct PositionedItem: Equatable, Hashable {
   let bounds: CGRect
   let gridElement: GridElement
+  var alignment: GridAlignment?
 }

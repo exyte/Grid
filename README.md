@@ -795,6 +795,9 @@ func headerSegment(flag: Bool) -> some View {
 ------------
 
 ## Release notes:
+##### [v1.5.0](https://github.com/exyte/Grid/releases/tag/1.5.0):
+- add tvOS support, migrate Examples project to Xcode universal target, swift app lifecycle, SPM
+
 ##### [v1.4.2](https://github.com/exyte/Grid/releases/tag/1.4.2):
 - fixes not working gridItemAlignment and gridCommonItemsAlignment for vertical axis
 

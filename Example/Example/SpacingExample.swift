@@ -44,6 +44,7 @@ struct SpacingExample: View {
   
   var sliders: some View {
     VStack(spacing: 10) {
+#if !os(tvOS)
       HStack {
         Text("hSpace: ")
         Slider(value: $hSpacing, in: 0...50, step: 1)
@@ -52,6 +53,7 @@ struct SpacingExample: View {
         Text("vSpace: ")
         Slider(value: $vSpacing, in: 0...50, step: 1)
       }
+#endif
     }
     .padding()
     .background(Color.white)

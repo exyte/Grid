@@ -47,20 +47,20 @@ struct ContentView: View {
     }
   }
 #endif
-    
-#if os(macOS)
-    var body: some View {
-        NavigationView {
-            List {
-                NavigationLink("Spans", destination: SpansExample())
-                NavigationLink("Starts", destination: StartsExample())
-                NavigationLink("Flow", destination: FlowExample())
-                NavigationLink("Content mode", destination: ContentModeExample())
-                NavigationLink("Packing", destination: PackingExample())
-                NavigationLink("Spacing", destination: SpacingExample())
-            }
-        }
+  
+#if os(macOS) || os(tvOS)
+  var body: some View {
+    NavigationView {
+      List {
+        NavigationLink("Spans", destination: SpansExample())
+        NavigationLink("Starts", destination: StartsExample())
+        NavigationLink("Flow", destination: FlowExample())
+        NavigationLink("Content mode", destination: ContentModeExample())
+        NavigationLink("Packing", destination: PackingExample())
+        NavigationLink("Spacing", destination: SpacingExample())
+      }
     }
+  }
 #endif
 }
 

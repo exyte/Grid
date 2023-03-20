@@ -18,6 +18,7 @@ struct ContentView: View {
   @State var showingPacking = false
   @State var showingSpacing = false
   
+#if os(iOS)
   var body: some View {
     NavigationView {
       List {
@@ -45,6 +46,22 @@ struct ContentView: View {
       .navigationBarTitle(Text("ExyteGrid"), displayMode: .inline)
     }
   }
+#endif
+    
+#if os(macOS)
+    var body: some View {
+        NavigationView {
+            List {
+                NavigationLink("Spans", destination: SpansExample())
+                NavigationLink("Starts", destination: StartsExample())
+                NavigationLink("Flow", destination: FlowExample())
+                NavigationLink("Content mode", destination: ContentModeExample())
+                NavigationLink("Packing", destination: PackingExample())
+                NavigationLink("Spacing", destination: SpacingExample())
+            }
+        }
+    }
+#endif
 }
 
 struct ContentView_Previews: PreviewProvider {

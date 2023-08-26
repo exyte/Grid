@@ -237,7 +237,6 @@ extension LayoutPositioning {
       newBounds.size[keyPath: flow.size(.fixed)] = fixedTrackSize
       newBounds.origin[keyPath: flow.cgPointIndex(.growing)] = growingPosition
       newBounds.origin[keyPath: flow.cgPointIndex(.fixed)] = fixedTrackStart
-      newBounds = newBounds.integral
       newPositions.append(PositionedItem(bounds: newBounds, gridElement: positionedItem.gridElement))
     }
 

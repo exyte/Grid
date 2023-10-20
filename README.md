@@ -9,6 +9,8 @@
 
 Grid view inspired by CSS Grid and written with SwiftUI
 
+<a href="https://exyte.com/blog/implementing-grid-layout-in-swiftui">Read Article »</a>
+
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fexyte%2FGrid%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/exyte/Grid)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fexyte%2FGrid%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/exyte/Grid)
 [![SPM Compatible](https://img.shields.io/badge/SwiftPM-Compatible-brightgreen.svg)](https://swiftpackageindex.com/exyte/Grid)

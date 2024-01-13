@@ -13,6 +13,9 @@ public enum GridContentMode {
   /// Scrolls inside parent container
   case scroll
   
+  /// Fits the content
+  case contentFit
+  
   /// Fills the entire space of the parent container
   case fill
 }

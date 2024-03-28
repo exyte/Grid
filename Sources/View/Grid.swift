@@ -117,7 +117,6 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
             .alignmentGuide(.top, computeValue: { _ in self.topGuide(item: item) })
         }
       }
-      .animation(self.gridAnimation)
       .frame(
         flow: self.flow,
         size: mainGeometry.size,
@@ -128,11 +127,13 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
         ScrollView(self.scrollAxis) { content }
       }
       .onPreferenceChange(GridPreferenceKey.self) { preference in
-        self.calculateLayout(
-          preference: preference,
-          boundingSize: mainGeometry.size
-        )
-        self.saveAlignmentsFrom(preference: preference)
+        withAnimation(self.gridAnimation) {
+          self.calculateLayout(
+            preference: preference,
+            boundingSize: mainGeometry.size
+          )
+          self.saveAlignmentsFrom(preference: preference)
+        }
       }
     }
     .id(self.isLoaded)

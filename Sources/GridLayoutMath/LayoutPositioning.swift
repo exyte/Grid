@@ -56,6 +56,8 @@ extension LayoutPositioning {
     let growingTracks: [GridTrack]
     let growingBoundingSize: CGFloat
     switch task.contentMode {
+    case .contentFit:
+      fallthrough
     case .scroll:
       growingTracks = [GridTrack](repeating: .fit, count: arrangement[keyPath: flow.arrangementCount(.growing)])
       growingBoundingSize = .infinity
@@ -187,6 +189,8 @@ extension LayoutPositioning {
         let growingSize = boundingSize[keyPath: flow.size(.growing)] / CGFloat(arrangement[keyPath: flow.arrangementCount(.growing)])
         itemGrowingSize = growingSize * CGFloat(arrangedItem[keyPath: flow.arrangedItemCount(.growing)])
         growingPosition = growingSize * CGFloat(arrangedItem.startIndex[keyPath: flow.index(.growing)])
+      case .contentFit:
+        fallthrough
       case .scroll:
         let indexRange = arrangedItem.startIndex[keyPath: flow.index(.growing)]...arrangedItem.endIndex[keyPath: flow.index(.growing)]
         itemGrowingSize = indexRange.reduce(0, { result, index in

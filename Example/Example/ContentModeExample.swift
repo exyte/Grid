@@ -16,19 +16,30 @@ struct ContentModeExample: View {
     let color = GridColor.random.lighter(by: 50)
   }
   
-  @State var contentMode: GridContentMode = .scroll
+  @State var contentMode: GridContentMode = .contentFit
   
   var body: some View {
     VStack {
       self.modesPicker
       
+      if self.contentMode == .contentFit {
+        ScrollView {
+          myView
+        }
+      } else {
+        myView
+      }
+    }
+  }
+  
+  var myView: some View {
       Grid(models, id: \.self, tracks: 3) {
         VCardView(text: $0.text, color: $0.color)
           .gridSpan($0.span)
       }
       .gridContentMode(self.contentMode)
       .gridFlow(.rows)
-    }
+      .background(Color.blue)
   }
   
   private let models: [Model] = [
@@ -46,9 +57,12 @@ struct ContentModeExample: View {
   
   private var modesPicker: some View {
     Picker("Mode", selection: $contentMode) {
-      ForEach([GridContentMode.scroll, GridContentMode.fill], id: \.self) {
-        Text($0 == .scroll ? "Scroll" : "Fill")
-          .tag($0)
+      ForEach([GridContentMode.contentFit, GridContentMode.scroll, GridContentMode.fill], id: \.self) {
+        switch($0) {
+        case .contentFit: Text("ContentFit").tag($0)
+        case .scroll: Text("Scroll").tag($0)
+        case .fill: Text("Fill").tag($0)
+        }
       }
     }
     .pickerStyle(SegmentedPickerStyle())

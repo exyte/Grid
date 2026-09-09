@@ -22,7 +22,7 @@ extension Grid {
     cache: GridCacheMode? = nil,
     @GridBuilder item: @escaping (Data.Element) -> GridBuilderResult
   ) where Data: RandomAccessCollection, ID: Hashable {
-    itemsBuilder = {
+    let itemsBuilder = {
       var index = 0
       return data.flatMap {
         item($0).contentViews.asGridElements(
@@ -32,16 +32,19 @@ extension Grid {
       }
     }
 
-    self.trackSizes = tracks
-    self.spacing = spacing
-    self.internalContentMode = contentMode
-    self.internalFlow = flow
-    self.internalPacking = packing
-    self.internalCacheMode = cache
-    self.internalCommonItemsAlignment = commonItemsAlignment
-    self.internalContentAlignment = contentAlignment
+    self.init(
+      itemsBuilder: itemsBuilder,
+      spacing: spacing,
+      trackSizes: tracks,
+      internalFlow: flow,
+      internalPacking: packing,
+      internalContentMode: contentMode,
+      internalCacheMode: cache,
+      internalCommonItemsAlignment: commonItemsAlignment,
+      internalContentAlignment: contentAlignment
+    )
   }
-  
+
   public init(
     _ data: Range<Int>,
     tracks: [GridTrack] = 1,
@@ -54,23 +57,26 @@ extension Grid {
     cache: GridCacheMode? = nil,
     @GridBuilder item: @escaping (Int) -> GridBuilderResult
   ) {
-    itemsBuilder = {
+    let itemsBuilder = {
       var index = 0
       return data.flatMap {
         item($0).contentViews.asGridElements(index: &index)
       }
     }
 
-    self.trackSizes = tracks
-    self.spacing = spacing
-    self.internalContentMode = contentMode
-    self.internalFlow = flow
-    self.internalPacking = packing
-    self.internalCacheMode = cache
-    self.internalCommonItemsAlignment = commonItemsAlignment
-    self.internalContentAlignment = contentAlignment
+    self.init(
+      itemsBuilder: itemsBuilder,
+      spacing: spacing,
+      trackSizes: tracks,
+      internalFlow: flow,
+      internalPacking: packing,
+      internalContentMode: contentMode,
+      internalCacheMode: cache,
+      internalCommonItemsAlignment: commonItemsAlignment,
+      internalContentAlignment: contentAlignment
+    )
   }
-  
+
   public init<Data>(
     _ data: Data,
     tracks: [GridTrack] = 1,
@@ -83,7 +89,7 @@ extension Grid {
     cache: GridCacheMode? = nil,
     @GridBuilder item: @escaping (Data.Element) -> GridBuilderResult
   ) where Data: RandomAccessCollection, Data.Element: Identifiable {
-    itemsBuilder = {
+    let itemsBuilder = {
       var index = 0
       return data.flatMap {
         item($0).contentViews.asGridElements(
@@ -93,13 +99,16 @@ extension Grid {
       }
     }
 
-    self.trackSizes = tracks
-    self.spacing = spacing
-    self.internalContentMode = contentMode
-    self.internalFlow = flow
-    self.internalPacking = packing
-    self.internalCacheMode = cache
-    self.internalCommonItemsAlignment = commonItemsAlignment
-    self.internalContentAlignment = contentAlignment
+    self.init(
+      itemsBuilder: itemsBuilder,
+      spacing: spacing,
+      trackSizes: tracks,
+      internalFlow: flow,
+      internalPacking: packing,
+      internalContentMode: contentMode,
+      internalCacheMode: cache,
+      internalCommonItemsAlignment: commonItemsAlignment,
+      internalContentAlignment: contentAlignment
+    )
   }
 }

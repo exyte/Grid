@@ -19,19 +19,21 @@ extension Grid {
     contentAlignment: GridAlignment? = nil,
     cache: GridCacheMode? = nil,
     @GridBuilder content: @escaping () -> GridBuilderResult) {
-    self.trackSizes = tracks
-    self.spacing = spacing
-    self.internalContentMode = contentMode
-    self.internalFlow = flow
-    self.internalPacking = packing
-    self.internalCacheMode = cache
-    self.internalCommonItemsAlignment = commonItemsAlignment
-    self.internalContentAlignment = contentAlignment
-
-    itemsBuilder = {
+    let itemsBuilder = {
       let content = content()
       var index = 0
       return content.contentViews.asGridElements(index: &index)
     }
+    self.init(
+      itemsBuilder: itemsBuilder,
+      spacing: spacing,
+      trackSizes: tracks,
+      internalFlow: flow,
+      internalPacking: packing,
+      internalContentMode: contentMode,
+      internalCacheMode: cache,
+      internalCommonItemsAlignment: commonItemsAlignment,
+      internalContentAlignment: contentAlignment
+    )
   }
 }

@@ -19,6 +19,7 @@ struct PositioningTask: Equatable, Hashable {
   var tracks: [GridTrack]
   var contentMode: GridContentMode
   var flow: GridFlow
+  var displayScale: CGFloat = 1
 
   subscript(arrangedItem: ArrangedItem) -> PositionedItem? {
     items.first(where: { $0.gridElement == arrangedItem.gridElement })
@@ -237,7 +238,7 @@ extension LayoutPositioning {
       newBounds.size[keyPath: flow.size(.fixed)] = fixedTrackSize
       newBounds.origin[keyPath: flow.cgPointIndex(.growing)] = growingPosition
       newBounds.origin[keyPath: flow.cgPointIndex(.fixed)] = fixedTrackStart
-      newBounds = newBounds.integral
+      newBounds = newBounds.pixelAligned(scale: task.displayScale)
       newPositions.append(PositionedItem(bounds: newBounds, gridElement: positionedItem.gridElement))
     }
 

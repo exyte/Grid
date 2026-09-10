@@ -16,3 +16,13 @@ extension CGRect: Hashable {
     hasher.combine(maxY)
   }
 }
+
+extension CGRect {
+  func pixelAligned(scale: CGFloat) -> CGRect {
+    let x = (origin.x * scale).rounded() / scale
+    let y = (origin.y * scale).rounded() / scale
+    let maxX = ((origin.x + size.width) * scale).rounded() / scale
+    let maxY = ((origin.y + size.height) * scale).rounded() / scale
+    return CGRect(x: x, y: y, width: maxX - x, height: maxY - y)
+  }
+}

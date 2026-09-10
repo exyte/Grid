@@ -26,6 +26,7 @@
 		36B11E512475539700CDAE27 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B11E502475539700CDAE27 /* Calculator.swift */; platformFilter = ios; };
 		36BECA6E29C82DF30077D30F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 36AA6FE225304C110072AEBA /* Assets.xcassets */; };
 		36F6C22A2476D919001818F2 /* Color+hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36F6C2292476D919001818F2 /* Color+hex.swift */; };
+		5BB1A29B30528D3A00AFBDB9 /* PixelTestExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB1A29A30528D3A00AFBDB9 /* PixelTestExample.swift */; };
 		5BF557CC30512F18009B7EF3 /* HoverZoomExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF557CB30512F18009B7EF3 /* HoverZoomExample.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		36AA6FE225304C110072AEBA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		36B11E502475539700CDAE27 /* Calculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculator.swift; sourceTree = "<group>"; };
 		36F6C2292476D919001818F2 /* Color+hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+hex.swift"; sourceTree = "<group>"; };
+		5BB1A29A30528D3A00AFBDB9 /* PixelTestExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelTestExample.swift; sourceTree = "<group>"; };
 		5BF557CB30512F18009B7EF3 /* HoverZoomExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverZoomExample.swift; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* Grid_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Grid_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				36AA6FE225304C110072AEBA /* Assets.xcassets */,
 				5BF557CB30512F18009B7EF3 /* HoverZoomExample.swift */,
+				5BB1A29A30528D3A00AFBDB9 /* PixelTestExample.swift */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -243,6 +246,7 @@
 				36A6C9FD247FBBDC005F5E7E /* Color+brightness.swift in Sources */,
 				36A6CA03247FBC7C005F5E7E /* CardViews.swift in Sources */,
 				36A6C9FF247FBC25005F5E7E /* FlowExample.swift in Sources */,
+				5BB1A29B30528D3A00AFBDB9 /* PixelTestExample.swift in Sources */,
 				360BA32B247E87D6006C51FC /* MathOperation.swift in Sources */,
 				36A6C9FB247FBB8E005F5E7E /* ColorView.swift in Sources */,
 				360BA329247E87AF006C51FC /* CalcButton.swift in Sources */,

@@ -16,6 +16,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
   @State private var internalLayoutCache = Cache<ArrangingTask, LayoutArrangement>()
   @State private var internalPositionsCache = Cache<PositioningTask, PositionedLayout>()
   #endif
+  @Environment(\.displayScale) private var displayScale
   @Environment(\.gridContentMode) private var environmentContentMode
   @Environment(\.gridFlow) private var environmentFlow
   @Environment(\.gridPacking) private var environmentPacking
@@ -167,7 +168,8 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
       boundingSize: self.corrected(size: boundingSize),
       tracks: self.trackSizes,
       contentMode: self.contentMode,
-      flow: self.flow
+      flow: self.flow,
+      displayScale: self.displayScale
     )
     let positions: PositionedLayout
     

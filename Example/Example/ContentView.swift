@@ -17,6 +17,7 @@ struct ContentView: View {
   @State var showingContentMode = false
   @State var showingPacking = false
   @State var showingSpacing = false
+  @State var showingHoverZoom = false
   
 #if os(iOS)
   var body: some View {
@@ -42,6 +43,9 @@ struct ContentView: View {
         
         Button("Spacing") { self.showingSpacing.toggle() }
           .sheet(isPresented: $showingSpacing) { SpacingExample() }
+        
+        Button("Hover Zoom") { self.showingHoverZoom.toggle() }
+          .sheet(isPresented: $showingHoverZoom) { HoverZoomExample() }
       }
       .navigationBarTitle(Text("ExyteGrid"), displayMode: .inline)
     }
@@ -58,6 +62,7 @@ struct ContentView: View {
         NavigationLink("Content mode", destination: ContentModeExample())
         NavigationLink("Packing", destination: PackingExample())
         NavigationLink("Spacing", destination: SpacingExample())
+        NavigationLink("Hover Zoom", destination: HoverZoomExample())
       }
     }
   }

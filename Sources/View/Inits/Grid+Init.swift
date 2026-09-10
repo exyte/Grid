@@ -10,6 +10,29 @@ import SwiftUI
 
 extension Grid {
   public init(
+    tracks: Int,
+    contentMode: GridContentMode? = nil,
+    flow: GridFlow? = nil,
+    packing: GridPacking? = nil,
+    spacing: GridSpacing = Constants.defaultSpacing,
+    commonItemsAlignment: GridAlignment? = nil,
+    contentAlignment: GridAlignment? = nil,
+    cache: GridCacheMode? = nil,
+    @GridBuilder content: @escaping () -> GridBuilderResult) {
+    self.init(
+      tracks: [GridTrack](integerLiteral: tracks),
+      contentMode: contentMode,
+      flow: flow,
+      packing: packing,
+      spacing: spacing,
+      commonItemsAlignment: commonItemsAlignment,
+      contentAlignment: contentAlignment,
+      cache: cache,
+      content: content
+    )
+  }
+
+  public init(
     tracks: [GridTrack] = 1,
     contentMode: GridContentMode? = nil,
     flow: GridFlow? = nil,

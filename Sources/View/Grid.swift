@@ -136,6 +136,9 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
         self.saveAlignmentsFrom(preference: preference)
       }
     }
+    .if(contentMode == .contentFit) { content in
+      content.frame(height: self.positions.totalSize?.height ?? 0)
+    }
     .id(self.isLoaded)
   }
   
@@ -206,6 +209,8 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
     switch self.contentMode {
     case .fill:
       return []
+    case .contentFit:
+      fallthrough
     case .scroll:
       return self.flow == .rows ? .vertical : .horizontal
     }
@@ -270,6 +275,8 @@ extension View {
     case .fill:
       width = size?.width
       height = size?.height
+    case .contentFit:
+      fallthrough
     case .scroll:
       width = (flow == .rows ? size?.width : nil)
       height = (flow == .columns ? size?.height : nil)

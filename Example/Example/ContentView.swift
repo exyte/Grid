@@ -19,6 +19,7 @@ struct ContentView: View {
   @State var showingSpacing = false
   @State var showingHoverZoom = false
   @State var showingPixelTest = false
+  @State var showingDragReorder = false
 
 #if os(iOS)
   var body: some View {
@@ -50,6 +51,9 @@ struct ContentView: View {
 
         Button("Pixel Test") { self.showingPixelTest.toggle() }
           .sheet(isPresented: $showingPixelTest) { PixelTestExample() }
+
+        Button("Drag Reorder") { self.showingDragReorder.toggle() }
+          .sheet(isPresented: $showingDragReorder) { DragReorderExample() }
       }
       .navigationBarTitle(Text("ExyteGrid"), displayMode: .inline)
     }
@@ -68,6 +72,7 @@ struct ContentView: View {
         NavigationLink("Spacing", destination: SpacingExample())
         NavigationLink("Hover Zoom", destination: HoverZoomExample())
         NavigationLink("Pixel Test", destination: PixelTestExample())
+        NavigationLink("Drag Reorder", destination: DragReorderExample())
       }
     }
   }

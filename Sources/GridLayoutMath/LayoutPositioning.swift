@@ -128,11 +128,15 @@ extension LayoutPositioning {
         if (tracks[start...end].contains { $0.isFlexible }) { continue }
 
         let trackSizes = growingTracksSizes[start...end].map(\.baseSize).reduce(0, +)
-        let itemSize = task[arrangedItem]?.bounds.size[keyPath: flow.size(dimension)]
-        let spaceToDistribute = max(0, (itemSize ?? 0) - trackSizes)
-        (start...end).forEach {
-          let plannedIncrease = plannedIncreases[$0] ?? 0
-          plannedIncreases[$0] = max(plannedIncrease, spaceToDistribute / CGFloat(span))
+        guard let itemSize = task[arrangedItem]?.bounds.size[keyPath: flow.size(dimension)],
+              itemSize > trackSizes else { continue }
+
+        let equalShare = itemSize / CGFloat(span)
+        (start...end).forEach { index in
+          let currentSize = growingTracksSizes[index].baseSize
+          guard currentSize < equalShare else { return }
+          let plannedIncrease = plannedIncreases[index] ?? 0
+          plannedIncreases[index] = max(plannedIncrease, equalShare - currentSize)
         }
       }
 

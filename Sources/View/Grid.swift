@@ -12,6 +12,7 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
   @State private var positions: PositionedLayout = .empty
   @State private var isLoaded: Bool = false
   @State private var alignments: [GridElement: GridAlignment] = [:]
+  @State private var scrollFallbackSize: CGFloat? = nil
   #if os(iOS) || os(watchOS) || os(tvOS)
   @State private var internalLayoutCache = Cache<ArrangingTask, LayoutArrangement>()
   @State private var internalPositionsCache = Cache<PositioningTask, PositionedLayout>()
@@ -137,6 +138,10 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
       }
     }
     .id(self.isLoaded)
+    .frame(
+      width: flow == .columns ? scrollFallbackSize : nil,
+      height: flow == .rows ? scrollFallbackSize : nil
+    )
   }
   
   private func calculateLayout(preference: GridPreference, boundingSize: CGSize) {
@@ -162,17 +167,27 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
       item?.alignment = $0.alignment ?? commonItemsAlignment
       return item
     }
+
+    let correctedBoundingSize = self.corrected(size: boundingSize)
+
+    // When in fill mode but the growing dimension is unconstrained (e.g., Grid inside an
+    // external ScrollView), GeometryReader receives SwiftUI's default flexible size (~10 pt)
+    // rather than a real container height. Fall back to scroll-mode sizing so rows are sized
+    // to their content instead of all collapsing to the same position.
+    let rawGrowingSize = boundingSize[keyPath: flow.size(.growing)]
+    let effectiveContentMode: GridContentMode = contentMode == .fill && rawGrowingSize < 20 ? .scroll : contentMode
+
     let positionTask = PositioningTask(
       items: positionedItems,
       arrangement: calculatedLayout,
-      boundingSize: self.corrected(size: boundingSize),
+      boundingSize: correctedBoundingSize,
       tracks: self.trackSizes,
-      contentMode: self.contentMode,
+      contentMode: effectiveContentMode,
       flow: self.flow,
       displayScale: self.displayScale
     )
     let positions: PositionedLayout
-    
+
     #if os(iOS) || os(watchOS) || os(tvOS)
     if let cachedPositions = self.positionsCache?.object(forKey: positionTask) {
       positions = cachedPositions
@@ -183,8 +198,13 @@ public struct Grid: View, LayoutArranging, LayoutPositioning {
     #else
     positions = self.reposition(positionTask)
     #endif
-    
+
     self.positions = positions
+
+    if effectiveContentMode != contentMode {
+      self.scrollFallbackSize = positions.totalSize?[keyPath: flow.size(.growing)]
+    }
+
     self.isLoaded = true
   }
   
